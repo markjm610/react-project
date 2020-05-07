@@ -1,1 +1,3 @@
 # Endpoints
+
+* '/'
