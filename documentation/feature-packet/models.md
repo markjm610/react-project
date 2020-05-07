@@ -17,8 +17,9 @@
 * ID (primary key)
 * Heading (not null)
 * Description (allow null)
+* Creator ID (foreign key referencing ID in Users)
 * Column ID (foreign key referencing ID in Columns)
-* Row ID - stores the location of the task on the page
+* Row ID - stores the location of the task in a column
 
 ## Users
 
