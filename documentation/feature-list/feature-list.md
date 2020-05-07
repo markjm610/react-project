@@ -5,18 +5,15 @@
 * A user can create a project
   
 * Each project can have tasks added, deleted, edited, and rearranged on the screen
-
-* Only the creator of the project can add, remove, edit, and rearrange tasks
   
 ## Tasks
 
 * Each task has a heading and an optional description
+* STRETCH GOAL: Each task can only be edited or deleted by the user who created it
 
 ## Teams
 
-* The project creator can invite other users to be team members for that project
-
-* Team members have access to the same project, but only the project creator can make changes to the project
+* The project creator can invite other users to be team members for that project, giving them access
 
 ## Profiles
 
