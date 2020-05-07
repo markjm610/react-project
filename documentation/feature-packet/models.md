@@ -10,6 +10,7 @@
 
 * ID (primary key)
 * Name
+* PageColumnID - stores the location of the column on the page
 
 ## Tasks
 
@@ -17,7 +18,7 @@
 * Heading (not null)
 * Description (allow null)
 * Column ID (foreign key referencing ID in Columns)
-* Row ID
+* Row ID - stores the location of the task on the page
 
 ## Users
 
@@ -25,14 +26,14 @@
 * Name (not null)
 * Hashed password (not null)
 
-## NonCreatorsProjects
-
-* nonCreatorId (foreign key referencing ID in Users)
-* projectId (foreign key referencing ID in Projects)
-
-## UsersTasks
+## UsersProjects
 
 * userId (foreign key referencing ID in Users)
+* projectId (foreign key referencing ID in Projects)
+
+## NonCreatorsTasks
+
+* nonCreatorId (foreign key referencing ID in Users)
 * taskId (foreign key referencing ID in Tasks)
 
 ## Associations
