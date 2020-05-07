@@ -9,4 +9,3 @@
 * POST '/users/:userId' - posts a user
 * PUT '/users/:userId' - checks the database for a user with specified credentials
 * PATCH '/users/:userId' - edits a user
-  
