@@ -2,6 +2,7 @@
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
     name: DataTypes.STRING,
+    email: DataTypes.STRING,
     hashedPassword: DataTypes.STRING,
     profilePicture: DataTypes.STRING
   }, {});
@@ -13,5 +14,10 @@ module.exports = (sequelize, DataTypes) => {
     })
     User.hasMany(models.Task, { foreignKey: 'creatorId' })
   };
+
+  User.prototype.validatePassword = function (password) {
+    return bcrypt.compareSync(password, this.hashedPassword.toString());
+  };
+
   return User;
 };
