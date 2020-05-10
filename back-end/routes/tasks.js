@@ -7,6 +7,7 @@ const { asyncHandler, handleValidationErrors } = require('../utils');
 
 const router = express.Router();
 
+
 router.use(requireAuth);
 
 module.exports = router;
