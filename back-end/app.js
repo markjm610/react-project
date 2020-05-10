@@ -8,6 +8,18 @@ const app = express();
 app.use(express.json());
 app.use(cors({ origin: true }));
 
+
+const usersRouter = require('./routes/users');
+const columnsRouter = require('./routes/columns');
+const projectsRouter = require('./routes/projects');
+const tasksRouter = require('./routes/tasks');
+
+app.use(usersRouter);
+app.use(columnsRouter);
+app.use(projectsRouter);
+app.use(tasksRouter);
+
+
 // Catch unhandled requests and forward to error handler.
 app.use((req, res, next) => {
     const err = new Error("The requested resource couldn't be found.");
