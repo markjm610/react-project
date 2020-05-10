@@ -19,6 +19,11 @@ app.use(columnsRouter);
 app.use(projectsRouter);
 app.use(tasksRouter);
 
+app.get('/', (req, res) => {
+    res.json({
+        message: 'TEST INDEX ROOT'
+    })
+});
 
 // Catch unhandled requests and forward to error handler.
 app.use((req, res, next) => {
