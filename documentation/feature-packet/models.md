@@ -26,6 +26,7 @@
 * ID (primary key)
 * Name (not null)
 * Hashed password (not null)
+* Profile picture
 
 ## UsersProjects
 
