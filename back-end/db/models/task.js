@@ -8,11 +8,6 @@ module.exports = (sequelize, DataTypes) => {
     rowId: DataTypes.INTEGER
   }, {});
   Task.associate = function (models) {
-    Task.belongsToMany(models.User, {
-      through: 'NonCreatorTask',
-      foreignKey: 'taskId',
-      otherKey: 'nonCreatorId'
-    })
     Task.belongsTo(models.User, { foreignKey: 'creatorId' })
     Task.belongsTo(models.Column, { foreignKey: 'columnId' })
   };

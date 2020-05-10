@@ -34,15 +34,9 @@
 * userId (foreign key referencing ID in Users)
 * projectId (foreign key referencing ID in Projects)
 
-## NonCreatorsTasks
-
-* nonCreatorId (foreign key referencing ID in Users)
-* taskId (foreign key referencing ID in Tasks)
-
 ## Associations
 
 * Projects and Users: many-to-many
-* Users and Tasks: one-to-many (creator)
-* Users and Tasks: many-to-many (non-creator)
+* Users and Tasks: one-to-many
 * Projects and Columns: one-to-many
 * Columns and Tasks: one-to-many
