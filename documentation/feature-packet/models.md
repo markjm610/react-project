@@ -40,7 +40,6 @@
 
 ## Associations
 
-* Projects and Tasks: one-to-many
 * Projects and Users: many-to-many
 * Tasks and Users: many-to-many
 * Projects and Columns: one-to-many
