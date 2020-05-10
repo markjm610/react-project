@@ -7,8 +7,14 @@ module.exports = (sequelize, DataTypes) => {
     columnId: DataTypes.INTEGER,
     rowId: DataTypes.INTEGER
   }, {});
-  Task.associate = function(models) {
-    // associations can be defined here
+  Task.associate = function (models) {
+    Task.belongsToMany(models.User, {
+      through: 'NonCreatorTask',
+      foreignKey: 'taskId',
+      otherKey: 'nonCreatorId'
+    })
+    Task.belongsTo(models.User, { foreignKey: 'creatorId' })
+    Task.belongsTo(models.Column, { foreignKey: 'columnId' })
   };
   return Task;
 };

@@ -10,6 +10,7 @@
 
 * ID (primary key)
 * Name
+* Project ID (foreign key referencing ID in Projects)
 * PageColumnID - stores the location of the column on the page
 
 ## Tasks
@@ -41,6 +42,7 @@
 ## Associations
 
 * Projects and Users: many-to-many
-* Tasks and Users: many-to-many
+* Users and Tasks: one-to-many (creator)
+* Users and Tasks: many-to-many (non-creator)
 * Projects and Columns: one-to-many
 * Columns and Tasks: one-to-many
