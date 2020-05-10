@@ -9,13 +9,17 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       name: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       pageColumnId: {
+        allowNull: false,
         type: Sequelize.INTEGER
       },
       projectId: {
-        type: Sequelize.INTEGER
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: { model: 'Projects' }
       },
       createdAt: {
         allowNull: false,
