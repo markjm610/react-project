@@ -1,20 +1,17 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Columns', {
+    return queryInterface.createTable('NonCreatorTasks', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      name: {
-        type: Sequelize.STRING
-      },
-      pageColumnId: {
+      nonCreatorId: {
         type: Sequelize.INTEGER
       },
-      projectId: {
+      taskId: {
         type: Sequelize.INTEGER
       },
       createdAt: {
@@ -28,6 +25,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Columns');
+    return queryInterface.dropTable('NonCreatorTasks');
   }
 };

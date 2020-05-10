@@ -5,7 +5,12 @@ module.exports = (sequelize, DataTypes) => {
     creatorId: DataTypes.INTEGER
   }, {});
   Project.associate = function (models) {
-
+    Project.hasMany(models.Column, { foreignKey: 'projectId' })
+    Project.belongsToMany(models.User, {
+      through: 'UsersProject',
+      foreignKey: 'projectId',
+      otherKey: 'userId'
+    })
   };
   return Project;
 };
