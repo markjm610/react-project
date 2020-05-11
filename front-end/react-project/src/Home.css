@@ -1,4 +1,3 @@
-
 html, body {
     margin: 0;
     padding: 0;
@@ -10,31 +9,73 @@ html, body {
     width: 100%;
     height: 100%;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 10% 1fr 10%;
     grid-template-rows: 1fr;
 }
 
-.column-1 {
+.sidebar-left {
     grid-column-start: 1;
     background-color: lightblue;
 }
 
-.column-2 {
+.working-area {
+    display: flex;
     grid-column-start: 2;
     background-color: white;
 }
 
-.column-3 {
+.sidebar-right {
     grid-column-start: 3;
     background-color: lightblue;
 }
 
-.column-4 {
-    grid-column-start: 4;
-    background-color: white;
+.column-drop-zone {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 500px;
+    background-color: yellow;
 }
 
-.column-5 {
-    grid-column-start: 5;
-    background-color: lightblue;
+.column {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 10% 1fr;
+    width: 400px;
+    background-color: gray;
+    margin: auto;
+}
+
+.add-column {
+    grid-row: 1/ 2;
+    background-color: lightgreen;
+}
+
+.task-drop-zone {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    width: 100%;
+    background-color: red;
+}
+
+.task {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 20% 1fr;
+    background-color: green;
+    height: 180px;
+    width: 350px;
+}
+
+.task__heading {
+    grid-row: 1 / 2;
+    background-color: orange;
+    
+}
+
+.task__description {
+    grid-row: 2 / 3;
+    background-color: white;
 }
