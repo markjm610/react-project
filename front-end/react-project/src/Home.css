@@ -15,8 +15,17 @@ html, body {
 
 .sidebar-left {
     grid-column-start: 1;
-    background-color: lightblue;
+    background-color: lightblue; 
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
 }
+
+.navbar__navlinks {
+    grid-row: 2 / 3;
+    display: flex;
+    flex-direction: column;
+}
+
 
 .working-area {
     display: flex;
@@ -33,14 +42,16 @@ html, body {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 500px;
+    width: 100%;
+    height: 100%;
     background-color: yellow;
+    padding: 20px;
 }
 
 .column {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 10% 1fr;
+    grid-template-rows: 35px 1fr;
     width: 400px;
     background-color: gray;
     margin: auto;
