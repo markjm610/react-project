@@ -1,13 +1,10 @@
 import React, { useContext } from 'react';
-import { Route, Switch } from 'react-router-dom';
-import NavBar from './NavBar';
+import { Switch } from 'react-router-dom';
 import AuthRoute from './AuthRoute';
-import { Box } from 'grommet';
 import ProtectedRoute from './ProtectedRoute';
-import LogInForm from './LogInForm';
-import SignUpForm from './SignUpForm';
 import Context from './Context';
 import LogInAndSignUp from './LogInAndSignUp';
+import Home from './Home';
 
 function App() {
 
@@ -22,7 +19,9 @@ function App() {
 
   return (
     <Switch>
+      <ProtectedRoute exact={true} path='/home' component={Home} currentUserId={currentUserId}></ProtectedRoute>
       <AuthRoute exact={true} path='/' component={LogInAndSignUp} currentUserId={currentUserId}></AuthRoute>
+      <AuthRoute exact={true} path='/signup' component={LogInAndSignUp} currentUserId={currentUserId}></AuthRoute>
     </Switch>
   );
 }

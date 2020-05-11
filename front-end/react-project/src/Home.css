@@ -1,0 +1,40 @@
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#root {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+}
+
+.column-1 {
+    grid-column-start: 1;
+    background-color: lightblue;
+}
+
+.column-2 {
+    grid-column-start: 2;
+    background-color: white;
+}
+
+.column-3 {
+    grid-column-start: 3;
+    background-color: lightblue;
+}
+
+.column-4 {
+    grid-column-start: 4;
+    background-color: white;
+}
+
+.column-5 {
+    grid-column-start: 5;
+    background-color: lightblue;
+}

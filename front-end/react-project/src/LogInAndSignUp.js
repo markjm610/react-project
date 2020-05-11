@@ -1,15 +1,10 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import AuthRoute from './AuthRoute';
 import { Box } from 'grommet';
 import LogInForm from './LogInForm';
 import SignUpForm from './SignUpForm';
-import Context from './Context';
 
 const LogInAndSignUp = () => {
-
-    const { appState: { currentUserId } } = useContext(Context);
-
 
     return (
         <Box border={{
