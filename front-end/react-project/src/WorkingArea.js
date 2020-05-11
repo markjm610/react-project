@@ -2,13 +2,20 @@ import React from 'react';
 import Column from './Column';
 
 
-const columnArray = [0, 1]
 
-const WorkingArea = () => {
-    return (
-        columnArray.map(column => <Column></Column>)
 
-    )
+const WorkingArea = ({ projectId }) => {
+    // console.log(props);
+    let columnArray = [0];
+    if (projectId === 1) {
+        columnArray = [0, 1]
+    } else if (projectId === 2) {
+        columnArray = [0]
+    } else if (projectId === 3) {
+        columnArray = [0, 1, 2]
+    }
+    return columnArray.map(column => <Column></Column>)
+
 }
 
 export default WorkingArea;
