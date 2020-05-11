@@ -1,28 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Form, Box, FormField, TextInput, Button } from 'grommet';
 import { NavLink } from 'react-router-dom';
-import LogInForm from './LogInForm';
+
 import { apiBaseUrl } from './config';
+import Context from './Context';
+
 const SignUpForm = () => {
     const [value, setValue] = useState({});
-
+    const { appState, setAppState } = useContext(Context);
     const handleSubmit = async () => {
-        console.log(value);
-        const res = await fetch(`${apiBaseUrl}/users`, {
-            method: 'POST',
-            body: JSON.stringify(value),
-            headers: {
-                "Content-Type": 'application/json',
+
+        try {
+            const res = await fetch(`http://localhost:8000/users`, {
+                method: 'POST',
+                body: JSON.stringify(value),
+                headers: {
+                    "Content-Type": 'application/json',
+                }
+            })
+
+            if (!res.ok) {
+                throw res;
             }
-        })
+            const { token, user: { id } } = await res.json();
 
-        if (!res.ok) {
-            throw res;
+            localStorage.setItem('TOKEN', token);
+            localStorage.setItem('USER_ID', id);
+            setAppState({ authToken: token, currentUserId: id })
+        } catch (e) {
+            console.error(e)
         }
-        const { token, user: { id } } = await res.json();
 
-        localStorage.setItem('TOKEN', token);
-        localStorage.setItem('USER_ID', id);
         // window.location.href = '/home';
     }
     return (
@@ -38,8 +46,8 @@ const SignUpForm = () => {
                 <FormField name="email" htmlfor="text-input-id" label="Email:">
                     <TextInput id="text-input-id" name="email" />
                 </FormField>
-                <FormField name="username" htmlfor="text-input-id" label="Username:">
-                    <TextInput id="text-input-id" name="username" />
+                <FormField name="name" htmlfor="text-input-id" label="Name:">
+                    <TextInput id="text-input-id" name="name" />
                 </FormField>
                 <FormField name="password" htmlfor="text-input-id" label="Password:">
                     <TextInput type='password' id="text-input-id" name="password" />

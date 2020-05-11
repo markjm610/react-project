@@ -1,30 +1,29 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import NavBar from './NavBar';
 import AuthRoute from './AuthRoute';
 import { Box } from 'grommet';
 import ProtectedRoute from './ProtectedRoute';
-import SidebarComponent from './grommet/Sidebar';
-import GridContainer from './grommet/Grid';
-import LogInForm from './grommet/LogInForm';
-import SignUpForm from './grommet/SignUpForm';
+import LogInForm from './LogInForm';
+import SignUpForm from './SignUpForm';
+import Context from './Context';
+import LogInAndSignUp from './LogInAndSignUp';
 
 function App() {
+
+  const { appState: { currentUserId }, setAppState } = useContext(Context);
+
+  if (currentUserId === '') {
+    setAppState({
+      authToken: localStorage.getItem('TOKEN'),
+      currentUserId: localStorage.getItem('USER_ID')
+    })
+  }
+
   return (
-    <Box border={{
-      "color": "lightblue",
-      "size": "medium",
-      "style": "solid",
-      "side": "all"
-    }} width='600px'
-      height='600px'
-      round='large'
-    >
-      <Switch>
-        <Route exact path='/' component={LogInForm}></Route>
-        <Route path='/signup' component={SignUpForm}></Route>
-      </Switch>
-    </Box>
+    <Switch>
+      <AuthRoute exact={true} path='/' component={LogInAndSignUp} currentUserId={currentUserId}></AuthRoute>
+    </Switch>
   );
 }
 

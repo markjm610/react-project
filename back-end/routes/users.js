@@ -21,39 +21,46 @@ const validateEmailAndPassword = [
 ];
 
 const validateUsername = [
-    check("username")
+    check("name")
         .exists({ checkFalsy: true })
         .withMessage("Please provide a username."),
 ]
 
 router.post('/users', validateUsername, validateEmailAndPassword, asyncHandler(async (req, res, next) => {
-    const { username, email, password } = req.body;
+    // try {
+    const { name, email, password } = req.body;
+    console.log(name);
     const hashedPassword = await bcrypt.hash(password, 10);
-    const user = await User.create({ userName: username, userEmail: email, hashedPassword });
+    const user = await User.create({ name, email, hashedPassword });
     const token = getUserToken(user);
     res.json({ token, user: { id: user.id } });
+    // } catch (e) {
+    //     console.log(e)
+    // }
 }));
 
 router.put('/users', validateEmailAndPassword, handleValidationErrors, asyncHandler(async (req, res, next) => {
     // Get values from form:
-    const { email, password } = req.body;
+    try {
+        const { email, password } = req.body;
 
-    // Find user with email:
-    const user = await User.findOne({ where: { userEmail: email } });
+        // Find user with email:
+        const user = await User.findOne({ where: { email } });
 
-    // If user is not found or password does not match, make new error object:
-    if (!user || !user.validatePassword(password)) {
-        const err = new Error("Login failed");
-        err.status = 401;
-        err.title = "Login failed";
-        err.errors = ["The provided credentials were invalid."];
+        // If user is not found or password does not match, make new error object:
+        if (!user || !user.validatePassword(password)) {
+            const err = new Error("Login failed");
+            err.status = 401;
+            err.title = "Login failed";
+            err.errors = ["The provided credentials were invalid."];
 
-        return next(err);
-    }
+            return next(err);
+        }
 
-    // Generate JWT token and send JSON response with token and user ID
-    const token = getUserToken(user);
-    res.json({ token, user: { id: user.id, name: user.userName }, });
+        // Generate JWT token and send JSON response with token and user ID
+        const token = getUserToken(user);
+        res.json({ token, user: { id: user.id }, });
+    } catch (e) { console.log(e) }
 }));
 
 
