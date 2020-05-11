@@ -5,7 +5,7 @@ import Column from './Column';
 
 
 const WorkingArea = ({ projectId }) => {
-    // console.log(props);
+
     let columnArray = [0];
     if (projectId === 1) {
         columnArray = [0, 1]

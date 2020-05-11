@@ -3,9 +3,7 @@ import { Route } from 'react-router-dom';
 import WorkingArea from './WorkingArea';
 
 const ProjectArea = ({ projectArr }) => {
-    // console.log(projectArr)
     return projectArr.map(projectId => {
-        // console.log(projectId)
         return (
             <Route
                 exact

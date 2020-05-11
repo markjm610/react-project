@@ -17,7 +17,7 @@ html, body {
     grid-column-start: 1;
     background-color: lightblue; 
     display: grid;
-    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 5%;
 }
 
 .navbar__navlinks {
@@ -26,6 +26,11 @@ html, body {
     flex-direction: column;
 }
 
+.log-out {
+    grid-row: 3 / 4;
+    display: flex;
+    align-items: flex-end;
+}
 
 .working-area {
     display: flex;
