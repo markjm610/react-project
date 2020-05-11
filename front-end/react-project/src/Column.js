@@ -11,6 +11,7 @@ const Column = () => {
                     <div className='add-column'><Add className='plus'></Add></div>
                     <Task></Task>
                     <Task></Task>
+
                 </div>
             </div>
         </>

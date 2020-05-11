@@ -19,7 +19,7 @@ function App() {
 
   return (
     <Switch>
-      <ProtectedRoute exact={true} path='/home' component={Home} currentUserId={currentUserId}></ProtectedRoute>
+      <ProtectedRoute path='/home' component={Home} currentUserId={currentUserId}></ProtectedRoute>
       <AuthRoute exact={true} path='/' component={LogInAndSignUp} currentUserId={currentUserId}></AuthRoute>
       <AuthRoute exact={true} path='/signup' component={LogInAndSignUp} currentUserId={currentUserId}></AuthRoute>
     </Switch>
