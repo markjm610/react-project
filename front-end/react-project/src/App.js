@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Switch } from 'react-router-dom';
 import AuthRoute from './AuthRoute';
 import ProtectedRoute from './ProtectedRoute';
@@ -10,12 +10,14 @@ function App() {
 
   const { appState: { currentUserId }, setAppState } = useContext(Context);
 
-  if (currentUserId === '') {
+  useEffect(() => {
+    console.log('setting')
     setAppState({
       authToken: localStorage.getItem('TOKEN'),
       currentUserId: localStorage.getItem('USER_ID')
     })
-  }
+  }, [])
+
 
   return (
     <Switch>

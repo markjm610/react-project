@@ -3,6 +3,7 @@ import './Home.css';
 import NavBar from './NavBar';
 import ProjectArea from './ProjectArea';
 import { Route } from 'react-router-dom';
+import LogOut from './LogOut';
 
 const projectArr = [1, 2, 3]
 
@@ -12,6 +13,7 @@ const Home = () => {
         <>
             <div className='sidebar-left'>
                 <NavBar projectArr={projectArr}></NavBar>
+                <LogOut></LogOut>
             </div>
             <div className='working-area'>
                 <ProjectArea projectArr={projectArr}></ProjectArea>

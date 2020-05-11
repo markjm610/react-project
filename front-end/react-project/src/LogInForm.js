@@ -5,9 +5,9 @@ import Context from './Context';
 
 
 const LogInForm = () => {
-    const [value, setValue] = useState({});
+    const [value, setValue] = useState({ email: '', password: '' });
     const { appState, setAppState } = useContext(Context);
-    console.log(appState);
+    // console.log(appState);
     // contextValue.setAppState({ 'test': 'test' })
     // console.log(contextValue.appState);
     const handleSubmit = async () => {
@@ -29,13 +29,14 @@ const LogInForm = () => {
             localStorage.setItem('TOKEN', token);
             localStorage.setItem('USER_ID', id);
             setAppState({ authToken: token, currentUserId: id })
-            console.log(appState)
+            // console.log(appState)
         } catch (e) {
             console.error(e)
         }
 
         // window.location.href = '/home';
     }
+    console.log(value);
 
     return (
 
@@ -44,7 +45,7 @@ const LogInForm = () => {
             <Form
                 value={value}
                 onChange={nextValue => setValue(nextValue)}
-                onReset={() => setValue({})}
+                // onReset={() => setValue({})}
                 onSubmit={handleSubmit}
             >
                 <FormField name="email" htmlfor="text-input-id" label="Email:">

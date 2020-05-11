@@ -6,7 +6,7 @@ import { NavLink } from 'react-router-dom';
 import Context from './Context';
 
 const SignUpForm = () => {
-    const [value, setValue] = useState({});
+    const [value, setValue] = useState({ email: '', name: '', password: '' });
     const { setAppState } = useContext(Context);
     const handleSubmit = async () => {
 
