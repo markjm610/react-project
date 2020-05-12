@@ -1,8 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Form, Box, FormField, TextInput, Button } from 'grommet';
 import { NavLink } from 'react-router-dom';
-
-// import { apiBaseUrl } from './config';
+import { apiBaseUrl } from './config';
 import Context from './Context';
 
 const SignUpForm = () => {
@@ -11,7 +10,7 @@ const SignUpForm = () => {
     const handleSubmit = async () => {
 
         try {
-            const res = await fetch(`http://localhost:8000/users`, {
+            const res = await fetch(`${apiBaseUrl}/users`, {
                 method: 'POST',
                 body: JSON.stringify(value),
                 headers: {
