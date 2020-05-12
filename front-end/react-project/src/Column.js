@@ -1,6 +1,6 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import Task from './Task';
-import { Add } from 'grommet-icons'
+import { Add, Close } from 'grommet-icons'
 import { useDrag, useDrop } from 'react-dnd';
 import { ItemTypes } from './ItemTypes';
 import Context from './Context';
@@ -37,7 +37,11 @@ const Column = ({ columnId, currentlyDragging, setCurrentlyDragging }) => {
         <>
             <div className='column-drop-zone' ref={drop}>
                 <div className='column' ref={drag}>
-                    <div className='add-column'><Add className='plus'></Add></div>
+                    <div className='column__header'>
+                        <div className='add-column'><Add></Add></div>
+                        <div className='column__name'>Column Name</div>
+                        <div className='delete-column'><Close></Close></div>
+                    </div>
                     {appState[columnId].map((task, i) => <Task
                         key={i}
                         taskid={task.taskId}
