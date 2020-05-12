@@ -36,6 +36,7 @@ html, body {
     display: flex;
     grid-column-start: 2;
     background-color: white;
+    overflow-y: scroll;
 }
 
 .sidebar-right {
