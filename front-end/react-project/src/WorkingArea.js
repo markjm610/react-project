@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Column from './Column';
 
 
 
 
 const WorkingArea = ({ projectId }) => {
+
+    const [currentlyDragging, setCurrentlyDragging] = useState(null)
 
     let columnArray = [0];
     if (projectId === 1) {
@@ -14,7 +16,11 @@ const WorkingArea = ({ projectId }) => {
     } else if (projectId === 3) {
         columnArray = [0, 1, 2]
     }
-    return columnArray.map(column => <Column columnId={column.columnId}></Column>)
+    return columnArray.map((column, i) => <Column
+        key={i}
+        columnId={column.columnId}
+        currentlyDragging={currentlyDragging}
+        setCurrentlyDragging={setCurrentlyDragging}></Column>)
 
 }
 
