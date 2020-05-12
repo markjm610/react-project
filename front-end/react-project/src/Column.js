@@ -48,6 +48,8 @@ const Column = ({ columnId }) => {
                         currentlyDragging={currentlyDragging}
                         setCurrentlyDragging={setCurrentlyDragging}
                         columnId={task.columnId}
+                    // dragColumnId={dragColumnId}
+                    // setDragColumnId={setDragColumnId}
                     ></Task>)}
 
                 </div>
