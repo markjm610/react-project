@@ -5,6 +5,7 @@ const LogOut = () => {
     const logOutUser = () => {
         localStorage.removeItem('TOKEN');
         localStorage.removeItem('USER_ID');
+        window.location.href = '/';
     }
 
     return (
