@@ -12,7 +12,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
-      pageColumnId: {
+      pagePosition: {
         allowNull: false,
         type: Sequelize.INTEGER
       },

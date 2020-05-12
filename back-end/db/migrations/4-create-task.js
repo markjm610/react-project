@@ -25,7 +25,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         references: { model: 'Columns' }
       },
-      rowId: {
+      columnPosition: {
         allowNull: false,
         type: Sequelize.INTEGER
       },
