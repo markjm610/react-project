@@ -14,7 +14,9 @@ const ContextWrapper = () => {
             { taskId: 4, rowId: 2, heading: 'Task 4', description: 'This is task 4', columnId: 1 },
             { taskId: null, rowId: 3, columnId: 1 }],
         2: [{ taskId: 3, rowId: 0, heading: 'Task 3', description: 'This is task 3', columnId: 2 },
-        { taskId: null, rowId: 1, columnId: 2 }]
+        { taskId: null, rowId: 1, columnId: 2 }],
+        3: [{ taskId: 5, rowId: 0, heading: 'Task 5', description: 'This is task 5', columnId: 3 },
+        { taskId: 6, rowId: 1, heading: 'Task 6', description: 'This is task 6', columnId: 3 }]
     })
 
 

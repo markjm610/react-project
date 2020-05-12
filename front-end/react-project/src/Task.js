@@ -21,14 +21,12 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
     })
 
     const changePositions = () => {
-        console.log('dragColumnId', appState.dragColumnId)
-        console.log('columnId', columnId)
+
         if (appState.dragColumnId === columnId) {
             if (taskdropzoneid === taskArrLength - 1) {
                 return;
             }
             const drag = currentlyDragging;
-            console.log('if');
             setCurrentlyDragging(taskdropzoneid)
             const startingColumn = appState[columnId].slice();
             const moved = startingColumn.splice(drag, 1);
@@ -40,7 +38,7 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
 
             const drag = currentlyDragging;
             const saveDragColumnId = appState.dragColumnId;
-            console.log('else');
+
 
             setCurrentlyDragging(taskdropzoneid)
             const startingColumn = appState[saveDragColumnId].slice();
