@@ -42,12 +42,33 @@ html, body {
 .sidebar-right {
     grid-column-start: 3;
     background-color: lightblue;
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+}
+
+.invite {
+    grid-row: 1 / 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.project-members {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    grid-row: 2 / 3;
+}
+
+.each-member {
+    padding: 5px;
+}
+
+.each-member:hover {
+
 }
 
 .column-drop-zone {
-    /* display: flex; */
-    /* justify-content: center;
-    align-items: flex-start; */
     width: 100%;
     height: 100%;
     background-color: yellow;

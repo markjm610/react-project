@@ -13,7 +13,7 @@
 
 ## Teams
 
-* The project creator can invite other users to be team members for that project, giving them access
+* Project members can invite other users to be team members for that project, giving them access
 
 ## Profiles
 

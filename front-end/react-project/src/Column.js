@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import Task from './Task';
-import { Add, Close } from 'grommet-icons'
+import { AddCircle, FormClose } from 'grommet-icons'
 import { useDrag, useDrop } from 'react-dnd';
 import { ItemTypes } from './ItemTypes';
 import Context from './Context';
@@ -38,9 +38,9 @@ const Column = ({ columnId, currentlyDragging, setCurrentlyDragging }) => {
             <div className='column-drop-zone' ref={drop}>
                 <div className='column' ref={drag}>
                     <div className='column__header'>
-                        <div className='add-column'><Add></Add></div>
+                        <div className='add-column'><AddCircle></AddCircle></div>
                         <div className='column__name'>Column Name</div>
-                        <div className='delete-column'><Close></Close></div>
+                        <div className='delete-column'><FormClose></FormClose></div>
                     </div>
                     {appState[columnId].map((task, i) => <Task
                         key={i}
