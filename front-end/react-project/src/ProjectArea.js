@@ -3,12 +3,12 @@ import { Route } from 'react-router-dom';
 import WorkingArea from './WorkingArea';
 
 const ProjectArea = ({ projectArr }) => {
-    return projectArr.map(projectId => {
+    return projectArr.map((projectId, i) => {
         return (
-            <Route
+            <Route key={i}
                 exact
                 path={`/home/project/${projectId}`}
-                render={() => <WorkingArea projectId={projectId}></WorkingArea>}>
+                render={() => <WorkingArea key={i} projectId={projectId}></WorkingArea>}>
             </Route>)
     })
 }
