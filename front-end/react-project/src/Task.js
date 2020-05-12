@@ -21,12 +21,14 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
     })
 
     const changePositions = () => {
-
+        console.log('dragColumnId', appState.dragColumnId)
+        console.log('columnId', columnId)
         if (appState.dragColumnId === columnId) {
             if (taskdropzoneid === taskArrLength - 1) {
                 return;
             }
             const drag = currentlyDragging;
+            console.log('if');
             setCurrentlyDragging(taskdropzoneid)
             const startingColumn = appState[columnId].slice();
             const moved = startingColumn.splice(drag, 1);
@@ -37,12 +39,13 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
         } else {
 
             const drag = currentlyDragging;
-            console.log('drag=', drag);
+            const saveDragColumnId = appState.dragColumnId;
+            console.log('else');
+
             setCurrentlyDragging(taskdropzoneid)
-            const startingColumn = appState[appState.dragColumnId].slice();
+            const startingColumn = appState[saveDragColumnId].slice();
 
             const newColumn = appState[columnId].slice();
-
 
             const moved = startingColumn.splice(drag, 1)
 
@@ -50,7 +53,12 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
             newColumn.splice(taskdropzoneid, 0, moved[0])
             newColumn[taskdropzoneid].columnId = columnId;
 
-            setAppState({ ...appState, [appState.dragColumnId]: startingColumn, [columnId]: newColumn })
+            setAppState({
+                ...appState,
+                [saveDragColumnId]: startingColumn,
+                [columnId]: newColumn,
+                dragColumnId: columnId
+            })
 
         }
 
@@ -67,8 +75,8 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
         hover: (item) => {
             // console.log('currentlyDragging=', currentlyDragging);
             // console.log('taskdropzoneid=', taskdropzoneid);
-            console.log('item.columnId=', item.columnId)
-            console.log('columnId=', columnId)
+            // console.log('item.columnId=', item.columnId)
+            // console.log('columnId=', columnId)
             if (currentlyDragging === taskdropzoneid && item.columnId === columnId) {
                 return
             }
