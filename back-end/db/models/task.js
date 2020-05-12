@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.TEXT,
     creatorId: DataTypes.INTEGER,
     columnId: DataTypes.INTEGER,
-    rowId: DataTypes.INTEGER
+    columnPosition: DataTypes.INTEGER
   }, {});
   Task.associate = function (models) {
     Task.belongsTo(models.User, { foreignKey: 'creatorId' })

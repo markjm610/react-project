@@ -2,7 +2,7 @@
 module.exports = (sequelize, DataTypes) => {
   const Column = sequelize.define('Column', {
     name: DataTypes.STRING,
-    pageColumnId: DataTypes.INTEGER,
+    pagePosition: DataTypes.INTEGER,
     projectId: DataTypes.INTEGER
   }, {});
   Column.associate = function (models) {

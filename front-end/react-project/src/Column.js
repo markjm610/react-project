@@ -33,7 +33,6 @@ const Column = ({ columnId, currentlyDragging, setCurrentlyDragging }) => {
     })
 
 
-
     return (
         <>
             <div className='column-drop-zone' ref={drop}>
