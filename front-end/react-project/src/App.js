@@ -8,11 +8,12 @@ import Home from './Home';
 
 function App() {
 
-  const { appState: { currentUserId }, setAppState } = useContext(Context);
+  const { appState, appState: { currentUserId }, setAppState } = useContext(Context);
 
   useEffect(() => {
-    console.log('setting')
+    // console.log('setting')
     setAppState({
+      ...appState,
       authToken: localStorage.getItem('TOKEN'),
       currentUserId: localStorage.getItem('USER_ID')
     })
