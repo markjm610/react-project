@@ -4,16 +4,15 @@ import { useDrag, useDrop } from 'react-dnd';
 import { ItemTypes } from './ItemTypes';
 import Context from './Context';
 
-const Task = ({ columnId, currentlyDragging, setCurrentlyDragging, taskId, taskDropZoneId, heading, description }) => {
+const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging, taskid, taskdropzoneid, heading, description }) => {
 
     const { appState, setAppState } = useContext(Context);
 
-    // const [currentlyDragging, setCurrentlyDragging] = useState(null);
 
     const [{ isDragging }, drag] = useDrag({
-        item: { type: ItemTypes.TASK, taskId, taskDropZoneId },
+        item: { type: ItemTypes.TASK, taskid, taskdropzoneid },
         begin: () => {
-            setCurrentlyDragging(taskDropZoneId);
+            setCurrentlyDragging(taskdropzoneid);
             setAppState({ ...appState, dragColumnId: columnId })
         },
         collect: monitor => ({
@@ -24,15 +23,19 @@ const Task = ({ columnId, currentlyDragging, setCurrentlyDragging, taskId, taskD
     const changePositions = () => {
 
         if (appState.dragColumnId === columnId) {
+
             const drag = currentlyDragging;
-            setCurrentlyDragging(taskDropZoneId)
+            setCurrentlyDragging(taskdropzoneid)
             const startingColumn = appState[columnId].slice();
             const moved = startingColumn.splice(drag, 1);
-            startingColumn.splice(taskDropZoneId, 0, moved[0])
+            startingColumn.splice(taskdropzoneid, 0, moved[0])
+
             setAppState({ ...appState, [columnId]: startingColumn })
+
         } else {
             const drag = currentlyDragging;
-            setCurrentlyDragging(taskDropZoneId)
+            console.log('drag=', drag);
+            setCurrentlyDragging(taskdropzoneid)
             const startingColumn = appState[appState.dragColumnId].slice();
 
             const newColumn = appState[columnId].slice();
@@ -41,23 +44,17 @@ const Task = ({ columnId, currentlyDragging, setCurrentlyDragging, taskId, taskD
             const moved = startingColumn.splice(drag, 1)
 
 
-            newColumn.splice(taskDropZoneId, 0, moved[0])
+            newColumn.splice(taskdropzoneid, 0, moved[0])
+            newColumn[taskdropzoneid].columnId = columnId;
 
-            console.log(appState.dragColumnId)
-            setAppState({ ...appState, [appState.dragColumnId]: startingColumn })
-            console.log(startingColumn);
-            console.log(appState[appState.dragColumnId])
-            setAppState({ ...appState, [columnId]: newColumn })
+            setAppState({ ...appState, [appState.dragColumnId]: startingColumn, [columnId]: newColumn })
+
         }
 
 
-        // setAppState({ ...appState, dragColumnId: null })
     }
 
-    // const changePositionsUseCB = useCallback(
-    //     changePositions, [appState[appState.dragColumnId]]
-    // )
-    const ref = useRef(null)
+    // const ref = useRef(null)
 
     const [{ isOver }, drop] = useDrop({
         accept: ItemTypes.TASK,
@@ -65,8 +62,9 @@ const Task = ({ columnId, currentlyDragging, setCurrentlyDragging, taskId, taskD
             // changePositions()
         },
         hover: () => {
-
-            if (currentlyDragging === taskDropZoneId) {
+            console.log('currentlyDragging=', currentlyDragging);
+            console.log('taskdropzoneid=', taskdropzoneid);
+            if (currentlyDragging === taskdropzoneid) {
                 return
             }
             changePositions()
@@ -77,20 +75,31 @@ const Task = ({ columnId, currentlyDragging, setCurrentlyDragging, taskId, taskD
         }),
     })
 
-    drop(ref)
+    // drop(ref)
+    if (taskdropzoneid === taskArrLength - 1) {
+        return (
+            <>
+                <div className='task-drop-zone' ref={drop} taskdropzoneid={taskdropzoneid}>
 
-    return (
+                </div>
 
-        <div className='task-drop-zone' ref={ref} taskDropZoneId={taskDropZoneId}>
-            <div className='task' ref={drag} taskId={taskId} style={{
-                opacity: isOver ? 0 : 1
-            }}>
-                <div className='task__heading'>{heading}</div>
-                <div className='task__description'>{description}</div>
+            </>
+        )
+    } else {
+        return (
+
+            <div className='task-drop-zone' ref={drop} taskdropzoneid={taskdropzoneid}>
+                <div className='task' ref={drag} taskid={taskid} style={{
+                    opacity: isOver ? 0 : 1
+                }}>
+                    <div className='task__heading'>{heading}</div>
+                    <div className='task__description'>{description}</div>
+                </div>
             </div>
-        </div>
 
-    )
+        )
+    }
+
 }
 
 export default Task;

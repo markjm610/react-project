@@ -6,10 +6,10 @@ import { ItemTypes } from './ItemTypes';
 import Context from './Context';
 
 
-const Column = ({ columnId }) => {
+const Column = ({ columnId, currentlyDragging, setCurrentlyDragging }) => {
 
     const { appState, setAppState } = useContext(Context);
-    const [currentlyDragging, setCurrentlyDragging] = useState(null)
+    // const [currentlyDragging, setCurrentlyDragging] = useState(null)
 
 
 
@@ -41,13 +41,14 @@ const Column = ({ columnId }) => {
                     <div className='add-column'><Add className='plus'></Add></div>
                     {appState[columnId].map((task, i) => <Task
                         key={i}
-                        taskId={task.taskId}
-                        taskDropZoneId={i}
+                        taskid={task.taskId}
+                        taskdropzoneid={i}
                         heading={task.heading}
                         description={task.description}
                         currentlyDragging={currentlyDragging}
                         setCurrentlyDragging={setCurrentlyDragging}
                         columnId={task.columnId}
+                        taskArrLength={appState[columnId].length}
                     // dragColumnId={dragColumnId}
                     // setDragColumnId={setDragColumnId}
                     ></Task>)}
