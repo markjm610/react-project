@@ -10,7 +10,7 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
 
 
     const [{ isDragging }, drag] = useDrag({
-        item: { type: ItemTypes.TASK, taskid, taskdropzoneid },
+        item: { type: ItemTypes.TASK, taskid, taskdropzoneid, columnId },
         begin: () => {
             setCurrentlyDragging(taskdropzoneid);
             setAppState({ ...appState, dragColumnId: columnId })
@@ -23,7 +23,9 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
     const changePositions = () => {
 
         if (appState.dragColumnId === columnId) {
-
+            if (taskdropzoneid === taskArrLength - 1) {
+                return;
+            }
             const drag = currentlyDragging;
             setCurrentlyDragging(taskdropzoneid)
             const startingColumn = appState[columnId].slice();
@@ -33,6 +35,7 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
             setAppState({ ...appState, [columnId]: startingColumn })
 
         } else {
+
             const drag = currentlyDragging;
             console.log('drag=', drag);
             setCurrentlyDragging(taskdropzoneid)
@@ -61,12 +64,15 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
         drop: () => {
             // changePositions()
         },
-        hover: () => {
-            console.log('currentlyDragging=', currentlyDragging);
-            console.log('taskdropzoneid=', taskdropzoneid);
-            if (currentlyDragging === taskdropzoneid) {
+        hover: (item) => {
+            // console.log('currentlyDragging=', currentlyDragging);
+            // console.log('taskdropzoneid=', taskdropzoneid);
+            console.log('item.columnId=', item.columnId)
+            console.log('columnId=', columnId)
+            if (currentlyDragging === taskdropzoneid && item.columnId === columnId) {
                 return
             }
+            item.columnId = columnId;
             changePositions()
 
         },
