@@ -1,19 +1,20 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useRef, useCallback } from 'react';
 // import { Add } from 'grommet-icons'
 import { useDrag, useDrop } from 'react-dnd';
 import { ItemTypes } from './ItemTypes';
 import Context from './Context';
 
 const Task = ({ columnId, currentlyDragging, setCurrentlyDragging, taskId, taskDropZoneId, heading, description }) => {
-    // console.log(taskDropZoneId)
+
     const { appState, setAppState } = useContext(Context);
 
     // const [currentlyDragging, setCurrentlyDragging] = useState(null);
 
     const [{ isDragging }, drag] = useDrag({
-        item: { type: ItemTypes.TASK },
+        item: { type: ItemTypes.TASK, taskId, taskDropZoneId },
         begin: () => {
             setCurrentlyDragging(taskDropZoneId);
+            setAppState({ ...appState, dragColumnId: columnId })
         },
         collect: monitor => ({
             isDragging: monitor.isDragging()
@@ -21,30 +22,68 @@ const Task = ({ columnId, currentlyDragging, setCurrentlyDragging, taskId, taskD
     })
 
     const changePositions = () => {
-        // Need to find columnId of drop target
 
-        const newPositions = appState[columnId].slice();
+        if (appState.dragColumnId === columnId) {
+            const drag = currentlyDragging;
+            setCurrentlyDragging(taskDropZoneId)
+            const startingColumn = appState[columnId].slice();
+            const moved = startingColumn.splice(drag, 1);
+            startingColumn.splice(taskDropZoneId, 0, moved[0])
+            setAppState({ ...appState, [columnId]: startingColumn })
+        } else {
+            const drag = currentlyDragging;
+            setCurrentlyDragging(taskDropZoneId)
+            const startingColumn = appState[appState.dragColumnId].slice();
 
-        const moved = newPositions.splice(currentlyDragging, 1)
+            const newColumn = appState[columnId].slice();
 
-        newPositions.splice(taskDropZoneId, 0, moved[0])
 
-        return newPositions;
+            const moved = startingColumn.splice(drag, 1)
+
+
+
+            newColumn.splice(taskDropZoneId, 0, moved[0])
+
+            console.log(appState.dragColumnId)
+            setAppState({ ...appState, [appState.dragColumnId]: startingColumn })
+            console.log(startingColumn);
+            console.log(appState[appState.dragColumnId])
+            setAppState({ ...appState, [columnId]: newColumn })
+        }
+
+
+        // setAppState({ ...appState, dragColumnId: null })
     }
 
+    // const changePositionsUseCB = useCallback(
+    //     changePositions, [appState[appState.dragColumnId]]
+    // )
+    const ref = useRef(null)
 
     const [{ isOver }, drop] = useDrop({
         accept: ItemTypes.TASK,
-        drop: () => setAppState({ ...appState, [columnId]: changePositions() }),
+        drop: () => {
+            // changePositions()
+        },
+        hover: () => {
+
+            console.log(currentlyDragging);
+            if (currentlyDragging === taskDropZoneId) {
+                return
+            }
+            changePositions()
+
+        },
         collect: monitor => ({
             isOver: !!monitor.isOver(),
         }),
     })
 
+    drop(ref)
 
     return (
 
-        <div className='task-drop-zone' ref={drop} taskDropZoneId={taskDropZoneId}>
+        <div className='task-drop-zone' ref={ref} taskDropZoneId={taskDropZoneId}>
             <div className='task' ref={drag} taskId={taskId}>
                 <div className='task__heading'>{heading}</div>
                 <div className='task__description'>{description}</div>
