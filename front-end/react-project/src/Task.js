@@ -41,7 +41,6 @@ const Task = ({ columnId, currentlyDragging, setCurrentlyDragging, taskId, taskD
             const moved = startingColumn.splice(drag, 1)
 
 
-
             newColumn.splice(taskDropZoneId, 0, moved[0])
 
             console.log(appState.dragColumnId)
@@ -67,7 +66,6 @@ const Task = ({ columnId, currentlyDragging, setCurrentlyDragging, taskId, taskD
         },
         hover: () => {
 
-            console.log(currentlyDragging);
             if (currentlyDragging === taskDropZoneId) {
                 return
             }
@@ -84,7 +82,9 @@ const Task = ({ columnId, currentlyDragging, setCurrentlyDragging, taskId, taskD
     return (
 
         <div className='task-drop-zone' ref={ref} taskDropZoneId={taskDropZoneId}>
-            <div className='task' ref={drag} taskId={taskId}>
+            <div className='task' ref={drag} taskId={taskId} style={{
+                opacity: isOver ? 0 : 1
+            }}>
                 <div className='task__heading'>{heading}</div>
                 <div className='task__description'>{description}</div>
             </div>
