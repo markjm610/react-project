@@ -26,7 +26,8 @@ const WorkingArea = () => {
         name={name}
         pagePosition={pagePosition}
         currentlyDragging={currentlyDragging}
-        setCurrentlyDragging={setCurrentlyDragging}></Column>)
+        setCurrentlyDragging={setCurrentlyDragging}
+    ></Column>)
 
 }
 
