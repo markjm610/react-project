@@ -51,6 +51,11 @@ html, body {
     display: flex;
     justify-content: center;
     align-items: center;
+    
+}
+
+.invite-icon:hover {
+    cursor: pointer;
 }
 
 .project-members {
