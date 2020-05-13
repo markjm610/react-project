@@ -39,7 +39,7 @@ router.post('/users', validateUsername, validateEmailAndPassword, asyncHandler(a
     // }
 }));
 
-router.put('/users', validateEmailAndPassword, handleValidationErrors, asyncHandler(async (req, res, next) => {
+router.put('/users/token', validateEmailAndPassword, handleValidationErrors, asyncHandler(async (req, res, next) => {
     // Get values from form:
     try {
         const { email, password } = req.body;
@@ -63,15 +63,12 @@ router.put('/users', validateEmailAndPassword, handleValidationErrors, asyncHand
     } catch (e) { console.log(e) }
 }));
 
+router.put('/users', asyncHandler(async (req, res, next) => {
+    const { name } = req.body;
 
-// router.get('/projects/:projectId/users', asyncHandler(async (req, res) => {
-//     const projectId = parseInt(req.params.projectId, 10);
+    const user = await User.findOne({ name: name });
 
-//     const users = await Project.findByPk(projectId, { include: User })
-
-//     res.json({ users })
-
-// }))
-
+    res.json({ user })
+}));
 
 module.exports = router;
