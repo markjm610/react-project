@@ -2,7 +2,7 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 const { check } = require("express-validator");
 
-const { User } = require('../db/models');
+const { User, Project } = require('../db/models');
 const { asyncHandler, handleValidationErrors } = require('../utils');
 const { getUserToken, requireAuth } = require('../auth');
 
@@ -62,6 +62,16 @@ router.put('/users', validateEmailAndPassword, handleValidationErrors, asyncHand
         res.json({ token, user: { id: user.id }, });
     } catch (e) { console.log(e) }
 }));
+
+
+// router.get('/projects/:projectId/users', asyncHandler(async (req, res) => {
+//     const projectId = parseInt(req.params.projectId, 10);
+
+//     const users = await Project.findByPk(projectId, { include: User })
+
+//     res.json({ users })
+
+// }))
 
 
 module.exports = router;

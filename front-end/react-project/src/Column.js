@@ -1,17 +1,26 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Task from './Task';
 import { AddCircle, FormClose } from 'grommet-icons'
 import { useDrag, useDrop } from 'react-dnd';
 import { ItemTypes } from './ItemTypes';
 import Context from './Context';
+import { apiBaseUrl } from './config';
 
-
-const Column = ({ columnId, currentlyDragging, setCurrentlyDragging }) => {
+const Column = ({ name, pagePosition, columnId, currentlyDragging, setCurrentlyDragging }) => {
 
     const { appState, setAppState } = useContext(Context);
-    // const [currentlyDragging, setCurrentlyDragging] = useState(null)
 
+    useEffect(() => {
+        async function loadTasks() {
+            console.log(columnId)
+            const tasksRes = await fetch(`${apiBaseUrl}/columns/${columnId}/tasks`);
+            const parsedTasksRes = await tasksRes.json();
+            console.log(parsedTasksRes.tasks)
+            setAppState({ ...appState, [columnId]: parsedTasksRes.tasks })
+        }
 
+        loadTasks()
+    }, [])
 
 
     const [{ isDragging }, drag] = useDrag({
@@ -39,10 +48,10 @@ const Column = ({ columnId, currentlyDragging, setCurrentlyDragging }) => {
                 <div className='column' ref={drag}>
                     <div className='column__header'>
                         <div className='add-column'><AddCircle></AddCircle></div>
-                        <div className='column__name'>Column Name</div>
+                        <div className='column__name'>{name}</div>
                         <div className='delete-column'><FormClose></FormClose></div>
                     </div>
-                    {appState[columnId].map((task, i) => <Task
+                    {/* {appState[columnId].map((task, i) => <Task
                         key={i}
                         taskid={task.taskId}
                         taskdropzoneid={i}
@@ -54,7 +63,7 @@ const Column = ({ columnId, currentlyDragging, setCurrentlyDragging }) => {
                         taskArrLength={appState[columnId].length}
                     // dragColumnId={dragColumnId}
                     // setDragColumnId={setDragColumnId}
-                    ></Task>)}
+                    ></Task>)} */}
 
                 </div>
             </div>

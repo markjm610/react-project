@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Home.css';
-import ProjectArea from './ProjectArea';
+import WorkingAreaRoutes from './WorkingAreaRoutes';
 import LogOut from './LogOut';
 import ProjectMembers from './ProjectMembers';
 import Invite from './Invite';
@@ -26,6 +26,8 @@ const Home = () => {
         fetchProjects();
     }, [])
 
+
+
     return (
         <>
             <div className='sidebar-left'>
@@ -34,7 +36,7 @@ const Home = () => {
                 <LogOut></LogOut>
             </div>
             <div className='working-area'>
-                <ProjectArea projectArr={projectArr}></ProjectArea>
+                <WorkingAreaRoutes projectArr={projectArr}></WorkingAreaRoutes>
             </div>
             <div className='sidebar-right'>
                 <Invite></Invite>
