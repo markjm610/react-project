@@ -11,7 +11,7 @@ const LogInForm = () => {
     const handleSubmit = async () => {
 
         try {
-            const res = await fetch(`${apiBaseUrl}/users`, {
+            const res = await fetch(`${apiBaseUrl}/users/token`, {
                 method: 'PUT',
                 body: JSON.stringify(value),
                 headers: {
