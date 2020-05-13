@@ -3,6 +3,7 @@ html, body {
     padding: 0;
     width: 100%;
     height: 100%;
+    
 }
 
 #root {
@@ -29,6 +30,19 @@ html, body {
     grid-row: 2 / 3;
     display: flex;
     flex-direction: column;
+}
+
+.project-navlink {
+    background-color: white;
+    padding: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    /* border: solid 2px black; */
+}
+
+.project-navlink:visited {
+    border-right: none;
 }
 
 .log-out {

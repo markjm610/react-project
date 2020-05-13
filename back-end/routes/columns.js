@@ -23,7 +23,7 @@ router.get('/projects/:projectId/columns', asyncHandler(async (req, res) => {
 
 router.post('/projects/:projectId/columns', asyncHandler(async (req, res) => {
     const projectId = parseInt(req.params.projectId, 10);
-    const { name, pagePosition, projectId } = req.body;
+    const { name, pagePosition } = req.body;
     const newColumn = await Column.create({ name, pagePosition, projectId });
 
     res.json({ newColumn })

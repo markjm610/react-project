@@ -35,7 +35,14 @@ router.get('/projects/:projectId/users', asyncHandler(async (req, res, next) => 
 
 }))
 
+router.post('/users/:userId/projects', asyncHandler(async (req, res, next) => {
+    const userId = parseInt(req.params.userId, 10);
+    const { name } = req.body;
+    const newProject = await Project.create({ name, creatorId: userId })
+    await UsersProject.create({ userId, projectId: newProject.id })
 
+    res.json({ newProject })
+}))
 
 
 module.exports = router;

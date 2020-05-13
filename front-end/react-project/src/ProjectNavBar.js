@@ -33,7 +33,8 @@ const ProjectNavBar = ({ projectArr }) => {
                     id={id}
                     name={name}
                     onClick={handleProjectNavBarClick}>
-                    {name}
+                    <div className='project-navlink'>{name}</div>
+
                 </NavLink>
             }
             )}

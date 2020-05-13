@@ -35,7 +35,7 @@ const LogInForm = () => {
     }
     return (
 
-        <div style={{ margin: 'auto', width: '400px' }}>
+        <div className='log-in-form' style={{ margin: 'auto', width: '400px' }}>
             <h2>Log In</h2>
             <Form
                 value={value}
