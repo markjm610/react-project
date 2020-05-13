@@ -29,7 +29,7 @@ const Home = () => {
 
 
     return (
-        <>
+        <div id='home'>
             <div className='sidebar-left'>
                 <UserDisplay></UserDisplay>
                 <ProjectNavBar projectArr={projectArr}></ProjectNavBar>
@@ -42,7 +42,7 @@ const Home = () => {
                 <Invite></Invite>
                 <ProjectMembers></ProjectMembers>
             </div>
-        </>
+        </div>
     )
 
 }
