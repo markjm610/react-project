@@ -15,7 +15,7 @@ const router = express.Router();
 router.get('/projects/:projectId/columns', asyncHandler(async (req, res) => {
     const projectId = parseInt(req.params.projectId, 10);
 
-    const columns = await Column.findAll({ where: { projectId: projectId } });
+    const columns = await Column.findAll({ where: { projectId: projectId }, order: [['pagePosition']] });
 
     res.json({ columns })
 

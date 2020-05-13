@@ -1,12 +1,13 @@
-import React from 'react';
-
+import React, { useContext } from 'react';
+import Context from './Context';
 
 
 const ProjectMembers = () => {
-    const memberArray = [0, 1, 2]
+    // const memberArray = [0, 1, 2]
+    const { appState: { projectMembers } } = useContext(Context);
     return (
         <div className='project-members'>
-            {memberArray.map(member => <div className='each-member'>Project Member</div>)}
+            {projectMembers.map(({ name }, i) => <div key={i} className='each-member'>{name}</div>)}
         </div>
     )
 
