@@ -7,7 +7,8 @@ import SignUpForm from './SignUpForm';
 const LogInAndSignUp = () => {
 
     return (
-        <Box border={{
+
+        <Box className='log-in-sign-up-box' border={{
             "color": "lightblue",
             "size": "medium",
             "style": "solid",
@@ -23,6 +24,7 @@ const LogInAndSignUp = () => {
                 <AuthRoute exact={true} path='/signup' component={SignUpForm} currentUserId={currentUserId}></AuthRoute> */}
             </Switch>
         </Box>
+
     )
 }
 

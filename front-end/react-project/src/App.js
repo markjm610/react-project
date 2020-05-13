@@ -3,7 +3,7 @@ import { Switch } from 'react-router-dom';
 import AuthRoute from './AuthRoute';
 import ProtectedRoute from './ProtectedRoute';
 import Context from './Context';
-import LogInAndSignUp from './LogInAndSignUp';
+import LandingPage from './LandingPage';
 import Home from './Home';
 
 function App() {
@@ -23,8 +23,8 @@ function App() {
   return (
     <Switch>
       <ProtectedRoute path='/home' component={Home} currentUserId={currentUserId}></ProtectedRoute>
-      <AuthRoute exact={true} path='/' component={LogInAndSignUp} currentUserId={currentUserId}></AuthRoute>
-      <AuthRoute exact={true} path='/signup' component={LogInAndSignUp} currentUserId={currentUserId}></AuthRoute>
+      <AuthRoute exact={true} path='/' component={LandingPage} currentUserId={currentUserId}></AuthRoute>
+      <AuthRoute exact={true} path='/signup' component={LandingPage} currentUserId={currentUserId}></AuthRoute>
     </Switch>
   );
 }

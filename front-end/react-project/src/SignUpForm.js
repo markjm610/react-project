@@ -33,7 +33,7 @@ const SignUpForm = () => {
         // window.location.href = '/home';
     }
     return (
-        <div style={{ margin: 'auto', width: '400px' }}>
+        <div className='sign-up-form' style={{ margin: 'auto', width: '400px' }}>
             <h2>Sign Up</h2>
             <Form
                 value={value}
