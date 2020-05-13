@@ -19,5 +19,21 @@ router.get('/columns/:columnId/tasks', asyncHandler(async (req, res) => {
 
 }))
 
+router.post('/columns/:columnId/tasks', asyncHandler(async (req, res) => {
+    const columnId = parseInt(req.params.columnId, 10);
+    const { heading, description, columnPosition } = req.body;
+    const newTask = await Task.create({ heading, description, columnPosition, columnId });
+
+    res.json({ newTask })
+}))
+
+router.delete('/tasks/:taskId', asyncHandler(async (req, res) => {
+
+    const taskId = parseInt(req.params.taskId, 10);
+    const task = await Task.findByPk(taskId);
+
+    await task.destroy(taskId);
+
+}))
 
 module.exports = router;

@@ -21,4 +21,22 @@ router.get('/projects/:projectId/columns', asyncHandler(async (req, res) => {
 
 }))
 
+router.post('/projects/:projectId/columns', asyncHandler(async (req, res) => {
+    const projectId = parseInt(req.params.projectId, 10);
+    const { name, pagePosition, projectId } = req.body;
+    const newColumn = await Column.create({ name, pagePosition, projectId });
+
+    res.json({ newColumn })
+
+}))
+
+router.delete('/columns/:columnId', asyncHandler(async (req, res) => {
+    const columnId = parseInt(req.params.columnId, 10);
+
+    const column = await Column.findByPk(columnId);
+
+    await column.destroy();
+
+}))
+
 module.exports = router;

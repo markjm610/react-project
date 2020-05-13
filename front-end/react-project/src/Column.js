@@ -43,12 +43,28 @@ const Column = ({ name, pagePosition, columnId, currentlyDragging, setCurrentlyD
     })
 
 
+    const addTaskClick = async () => {
+
+        // Display blank task that serves as form
+        // Get heading, description, and columnPosition
+
+        // await fetch(`${apiBaseUrl}/columns/${columnId}/tasks`, {
+        //     method: 'POST',
+        //     body: JSON.stringify({ heading, description, columnPosition }),
+        //     headers: {
+        //         "Content-Type": 'application/json',
+        //     }
+        // })
+    }
+
+
+
     return (
         <>
             <div className='column-drop-zone' ref={drop}>
                 <div className='column' ref={drag}>
                     <div className='column__header'>
-                        <div className='add-column'><AddCircle></AddCircle></div>
+                        <div className='add-task'><AddCircle onClick={addTaskClick}></AddCircle></div>
                         <div className='column__name'>{name}</div>
                         <div className='delete-column'><FormClose></FormClose></div>
                     </div>{console.log(appState[columnId])}
