@@ -24,4 +24,3 @@
 * The name and photo are set by the user
 
 * The project role is set by the project creator and is visible when viewing a user through a specific project page
-  

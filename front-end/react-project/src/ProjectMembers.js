@@ -1,12 +1,18 @@
-import React from 'react';
-
-
+import React, { useContext } from 'react';
+import Context from './Context';
+// import { Accordion, AccordionPanel, Box, Text } from 'grommet';
 
 const ProjectMembers = () => {
-    const memberArray = [0, 1, 2]
+
+    const { projectMembers } = useContext(Context);
+
     return (
         <div className='project-members'>
-            {memberArray.map(member => <div className='each-member'>Project Member</div>)}
+            {projectMembers.map(({ name }, i) => {
+                return (
+                    <div key={i} className='each-member'>{name}</div>
+                )
+            })}
         </div>
     )
 

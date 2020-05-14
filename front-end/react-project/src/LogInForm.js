@@ -2,18 +2,18 @@ import React, { useState, useContext } from 'react';
 import { Form, Box, FormField, TextInput, Button } from 'grommet';
 import { NavLink } from 'react-router-dom';
 import Context from './Context';
-
+import { apiBaseUrl } from './config';
 
 const LogInForm = () => {
     const [value, setValue] = useState({ email: '', password: '' });
-    const { appState, setAppState } = useContext(Context);
-    // console.log(appState);
-    // contextValue.setAppState({ 'test': 'test' })
-    // console.log(contextValue.appState);
+    const { setAuthToken, setCurrentUserId, invites, setInvites } = useContext(Context);
+
+
+
     const handleSubmit = async () => {
 
         try {
-            const res = await fetch(`http://localhost:8000/users`, {
+            const res = await fetch(`${apiBaseUrl}/users/token`, {
                 method: 'PUT',
                 body: JSON.stringify(value),
                 headers: {
@@ -24,23 +24,27 @@ const LogInForm = () => {
             if (!res.ok) {
                 throw res;
             }
-            const { token, user: { id } } = await res.json();
+            const { token, user: { id, name } } = await res.json();
 
             localStorage.setItem('TOKEN', token);
             localStorage.setItem('USER_ID', id);
-            setAppState({ authToken: token, currentUserId: id })
-            // console.log(appState)
+            localStorage.setItem('USER_NAME', name);
+
+            setAuthToken(token);
+            setCurrentUserId(id);
+
+
+
+
+
         } catch (e) {
             console.error(e)
         }
 
-        // window.location.href = '/home';
     }
-    console.log(value);
-
     return (
 
-        <div style={{ margin: 'auto', width: '400px' }}>
+        <div className='log-in-form' style={{ margin: 'auto', width: '400px' }}>
             <h2>Log In</h2>
             <Form
                 value={value}

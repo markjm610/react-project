@@ -2,7 +2,7 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 const { check } = require("express-validator");
 
-const { User } = require('../db/models');
+const { User, Invite } = require('../db/models');
 const { asyncHandler, handleValidationErrors } = require('../utils');
 const { getUserToken, requireAuth } = require('../auth');
 
@@ -33,19 +33,19 @@ router.post('/users', validateUsername, validateEmailAndPassword, asyncHandler(a
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = await User.create({ name, email, hashedPassword });
     const token = getUserToken(user);
-    res.json({ token, user: { id: user.id } });
+    res.json({ token, user: { id: user.id, name: user.name } });
     // } catch (e) {
     //     console.log(e)
     // }
 }));
 
-router.put('/users', validateEmailAndPassword, handleValidationErrors, asyncHandler(async (req, res, next) => {
+router.put('/users/token', validateEmailAndPassword, handleValidationErrors, asyncHandler(async (req, res, next) => {
     // Get values from form:
     try {
         const { email, password } = req.body;
 
         // Find user with email:
-        const user = await User.findOne({ where: { email } });
+        const user = await User.findOne({ where: { email }, include: Invite });
 
         // If user is not found or password does not match, make new error object:
         if (!user || !user.validatePassword(password)) {
@@ -59,9 +59,17 @@ router.put('/users', validateEmailAndPassword, handleValidationErrors, asyncHand
 
         // Generate JWT token and send JSON response with token and user ID
         const token = getUserToken(user);
-        res.json({ token, user: { id: user.id }, });
+        res.json({ token, user: { id: user.id, name: user.name, invites: user.Invites }, });
     } catch (e) { console.log(e) }
+    // { id: user.id,  },
 }));
 
+router.put('/users', asyncHandler(async (req, res, next) => {
+    const { name } = req.body;
+    // console.log(name);
+    const user = await User.findOne({ where: { name: name } });
+
+    res.json({ user })
+}));
 
 module.exports = router;
