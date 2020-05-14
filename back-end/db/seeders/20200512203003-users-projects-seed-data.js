@@ -5,37 +5,37 @@ module.exports = {
     return queryInterface.bulkInsert('UsersProjects', [
       {
         userId: 1,
-        projectId: 1,
+        projectId: 4,
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         userId: 2,
-        projectId: 1,
+        projectId: 4,
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         userId: 1,
-        projectId: 2,
+        projectId: 5,
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         userId: 1,
-        projectId: 3,
+        projectId: 6,
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         userId: 3,
-        projectId: 1,
+        projectId: 4,
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         userId: 2,
-        projectId: 2,
+        projectId: 5,
         createdAt: new Date(),
         updatedAt: new Date()
       }
@@ -49,7 +49,8 @@ module.exports = {
       Return a promise to correctly handle asynchronicity.
 
       Example:
-      return queryInterface.bulkDelete('People', null, {});
+      
     */
+    return queryInterface.bulkDelete('UsersProjects', null, {});
   }
 };
