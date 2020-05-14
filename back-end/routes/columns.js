@@ -2,7 +2,7 @@ const express = require('express');
 const { check } = require("express-validator");
 const { requireAuth } = require('../auth');
 
-const { Column } = require('../db/models');
+const { Column, Task } = require('../db/models');
 const { asyncHandler, handleValidationErrors } = require('../utils');
 
 
@@ -31,11 +31,18 @@ router.post('/projects/:projectId/columns', asyncHandler(async (req, res) => {
 }))
 
 router.delete('/columns/:columnId', asyncHandler(async (req, res) => {
-    const columnId = parseInt(req.params.columnId, 10);
+    try {
+        const columnId = parseInt(req.params.columnId, 10);
 
-    const column = await Column.findByPk(columnId);
+        await Task.destroy({ where: { columnId } })
 
-    await column.destroy();
+        const column = await Column.findByPk(columnId);
+
+        await column.destroy();
+
+    } catch (e) {
+        console.error(e)
+    }
 
 }))
 

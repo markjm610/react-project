@@ -1,9 +1,9 @@
 import React from 'react';
 import Task from './Task';
-import { FormClose } from 'grommet-icons';
 import { useDrag, useDrop } from 'react-dnd';
 import { ItemTypes } from './ItemTypes';
 import AddTask from './AddTask';
+import DeleteColumn from './DeleteColumn';
 // import Context from './Context';
 // import { apiBaseUrl } from './config';
 
@@ -42,7 +42,8 @@ const Column = ({ tasksArray, name, pagePosition, columnId, currentlyDragging, s
                             columnId={columnId}
                             taskArrLength={tasksArray.length}></AddTask>
                         <div className='column__name'>{name}</div>
-                        <div className='delete-column'><FormClose></FormClose></div>
+                        <DeleteColumn columnId={columnId}></DeleteColumn>
+                        {/* <div className='delete-column'><FormClose></FormClose></div> */}
                     </div>
 
                     {tasksArray.map((task, i) => <Task
