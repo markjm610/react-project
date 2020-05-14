@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import './Home.css';
 import WorkingAreaRoutes from './WorkingAreaRoutes';
 import LogOut from './LogOut';
@@ -6,11 +6,12 @@ import ProjectMembers from './ProjectMembers';
 import Invite from './Invite';
 import UserDisplay from './UserDisplay';
 import ProjectNavBar from './ProjectNavBar';
+import Context from './Context';
 import { apiBaseUrl } from './config';
 
 const Home = () => {
 
-
+    const { setInvites } = useContext(Context);
 
     const [projectArr, setProjectArr] = useState([])
 
@@ -26,7 +27,10 @@ const Home = () => {
         fetchProjects();
 
         // async function fetchInvites() {
-
+        //     const inviteRes = await fetch(`${apiBaseUrl}/users/${userId}/invites`);
+        //     if (inviteRes.ok) {
+        //         setInvites()
+        //     }
         // }
     }, [])
 

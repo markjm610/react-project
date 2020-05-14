@@ -9,8 +9,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       inviteSender: {
-        type: Sequelize.INTEGER,
-        references: { model: 'Users' },
+        type: Sequelize.STRING,
         allowNull: false
       },
       inviteReceiver: {

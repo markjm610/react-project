@@ -1,7 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Invite = sequelize.define('Invite', {
-    inviteSender: DataTypes.INTEGER,
+    inviteSender: DataTypes.STRING,
     inviteReceiver: DataTypes.INTEGER,
     projectId: DataTypes.INTEGER
   }, {});

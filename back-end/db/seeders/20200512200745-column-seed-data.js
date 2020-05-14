@@ -8,42 +8,42 @@ module.exports = {
       {
         name: 'Seed Column One',
         pagePosition: 0,
-        projectId: 1,
+        projectId: 4,
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         name: 'Seed Column Two',
         pagePosition: 1,
-        projectId: 1,
+        projectId: 4,
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         name: 'Seed Column Three',
         pagePosition: 2,
-        projectId: 1,
+        projectId: 4,
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         name: 'Seed Column Four',
         pagePosition: 0,
-        projectId: 2,
+        projectId: 5,
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         name: 'Seed Column Five',
         pagePosition: 1,
-        projectId: 2,
+        projectId: 5,
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         name: 'Seed Column Six',
         pagePosition: 0,
-        projectId: 3,
+        projectId: 6,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -59,5 +59,6 @@ module.exports = {
       Example:
       return queryInterface.bulkDelete('People', null, {});
     */
+    return queryInterface.bulkDelete('Columns', null, {});
   }
 };

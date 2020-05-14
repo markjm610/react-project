@@ -19,7 +19,7 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
             // setAppState({ ...appState, dragColumnId: columnId })
         },
         collect: monitor => ({
-            isDragging: monitor.isDragging()
+            isDragging: !!monitor.isDragging()
         })
     })
 
@@ -29,11 +29,11 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
             if (taskdropzoneid === taskArrLength - 1) {
                 return;
             }
-            // console.log('in if')
+            console.log('in if')
             const drag = currentlyDragging;
-            setCurrentlyDragging(taskdropzoneid);
+            // setCurrentlyDragging(taskdropzoneid);
             let startingColumn;
-            let copy = displayedColumns;
+            let copy = [...displayedColumns];
 
             copy.forEach(column => {
                 if (column.id === columnId) {
@@ -51,23 +51,26 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
                     })
                 }
             })
+            // console.log(taskdropzoneid)
             setDragColumnId(dragColumnId);
-            setDisplayedColumns(copy)
+            setDisplayedColumns(copy);
+            setCurrentlyDragging(taskdropzoneid);
             // console.log(displayedColumns)
             // setAppState({ ...appState, [columnId]: startingColumn })
 
         } else {
-            // console.log('in else');
+            console.log('in else');
 
             const drag = currentlyDragging;
             const saveDragColumnId = dragColumnId;
 
 
-            setCurrentlyDragging(taskdropzoneid)
+            // setCurrentlyDragging(taskdropzoneid)
+
             // const startingColumn = appState[saveDragColumnId].slice();
 
             let startingColumn;
-            let copy = displayedColumns;
+            let copy = [...displayedColumns];
 
             copy.forEach(column => {
                 if (column.id === saveDragColumnId) {
@@ -80,6 +83,7 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
             copy.forEach(column => {
                 if (column.id === columnId) {
                     newColumn = column.Tasks.slice();
+                    console.log(newColumn[taskdropzoneid])
                 }
             })
 
@@ -90,9 +94,10 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
 
 
             newColumn.splice(taskdropzoneid, 0, moved[0])
-            // console.log(taskdropzoneid)
+            // console.log(newColumn)
+            // console.log(newColumn[taskdropzoneid])
             newColumn[taskdropzoneid].columnId = columnId;
-
+            // console.log(newColumn[taskdropzoneid])
 
             copy.forEach(column => {
                 if (column.id === columnId) {
@@ -110,8 +115,11 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
                 }
             })
 
+            setDragColumnId(columnId);
 
             setDisplayedColumns(copy);
+
+            setCurrentlyDragging(taskdropzoneid);
         }
 
 
