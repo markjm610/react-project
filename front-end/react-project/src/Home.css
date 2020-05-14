@@ -164,7 +164,6 @@ html, body {
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 20% 1fr;
-    background-color: green;
     height: 180px;
     width: 350px;
 }
@@ -172,10 +171,14 @@ html, body {
 .task__heading {
     grid-row: 1 / 2;
     background-color: orange;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     
 }
 
 .task__description {
     grid-row: 2 / 3;
     background-color: white;
+    padding: 5px;
 }
