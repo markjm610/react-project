@@ -21,10 +21,11 @@ const SignUpForm = () => {
             if (!res.ok) {
                 throw res;
             }
-            const { token, user: { id } } = await res.json();
+            const { token, user: { id, name } } = await res.json();
 
             localStorage.setItem('TOKEN', token);
             localStorage.setItem('USER_ID', id);
+            localStorage.setItem('USER_NAME', name);
 
             setAuthToken(token);
             setCurrentUserId(id);

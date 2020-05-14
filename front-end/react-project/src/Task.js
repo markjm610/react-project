@@ -1,6 +1,7 @@
 import React, { useState, useContext, useRef, useCallback } from 'react';
 // import { Add } from 'grommet-icons'
 import { useDrag, useDrop } from 'react-dnd';
+import { FormClose } from 'grommet-icons';
 import { ItemTypes } from './ItemTypes';
 import Context from './Context';
 import { apiBaseUrl } from './config';
@@ -169,7 +170,8 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
             <>
                 <div className='task-drop-zone'
                     ref={drop}
-                    taskdropzoneid={taskdropzoneid}>
+                    taskdropzoneid={taskdropzoneid}
+                >
 
                 </div>
 
@@ -184,10 +186,21 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
                 <div className='task'
                     ref={drag}
                     taskid={taskid} style={{
-                        opacity: isOver ? 0 : 1
+                        opacity: isOver ? 0.4 : 1,
+
+
                     }}>
-                    <div className='task__heading'>{heading}</div>
-                    <div className='task__description'>{description}</div>
+                    <div
+                        className='task__heading'
+                        style={{ backgroundColor: isOver && 'yellow', color: isOver && 'yellow' }}
+                    >
+                        <div className='task__heading-text'>{heading}</div>
+                        <div className='delete-task'><FormClose></FormClose></div>
+                    </div>
+                    <div
+                        className='task__description'
+                        style={{ backgroundColor: isOver && 'yellow', color: isOver && 'yellow' }}
+                    >{description}</div>
                 </div>
             </div>
 

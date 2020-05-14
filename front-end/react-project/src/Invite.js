@@ -5,13 +5,14 @@ import { apiBaseUrl } from './config';
 import Context from './Context';
 
 const Invite = () => {
-    const { currentUserId, currentProjectId } = useContext(Context);
+    const { currentProjectId } = useContext(Context);
     const [show, setShow] = useState();
     const [value, setValue] = useState({ name: '' });
     const [showConfirm, setShowConfirm] = useState()
 
     const submitInvite = async () => {
         console.log(value)
+        setShow(false)
         const findRes = await fetch(`${apiBaseUrl}/users`, {
             method: 'PUT',
             body: JSON.stringify(value),
@@ -27,13 +28,13 @@ const Invite = () => {
 
         const parsedFindRes = await findRes.json();
         const inviteId = parsedFindRes.user.id;
-        const userId = currentUserId;
+        // const userId = currentUserId;
         const projectId = currentProjectId;
-        console.log(parsedFindRes);
-        console.log(userId);
+        const name = localStorage.getItem('USER_NAME');
+
         const sendInviteRes = await fetch(`${apiBaseUrl}/users/invites`, {
             method: 'PUT',
-            body: JSON.stringify({ inviteReceiver: inviteId, inviteSender: userId, projectId }),
+            body: JSON.stringify({ inviteReceiver: inviteId, inviteSender: name, projectId }),
             headers: {
                 "Content-Type": 'application/json',
             }
@@ -44,7 +45,7 @@ const Invite = () => {
         }
 
         // Have to check for invites in database when the page loads
-
+        setValue({ name: '' })
     }
 
     return (<>

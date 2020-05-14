@@ -21,7 +21,6 @@ router.put('/users/invites', asyncHandler(async (req, res, next) => {
 router.get('/users/:userId/invites', asyncHandler(async (req, res, next) => {
     const userId = parseInt(req.params.userId, 10);
 
-    // Switch to storing name of invite sender in Invites table
 
     const invites = await Invite.findAll(
         {

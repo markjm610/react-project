@@ -11,13 +11,32 @@ import { apiBaseUrl } from './config';
 
 const Home = () => {
 
-    const { setInvites } = useContext(Context);
+    const { invites, setInvites } = useContext(Context);
 
     const [projectArr, setProjectArr] = useState([])
 
     const userId = localStorage.getItem('USER_ID');
 
+
     useEffect(() => {
+
+
+        async function fetchInvites() {
+            const inviteRes = await fetch(`${apiBaseUrl}/users/${userId}/invites`);
+            const parsedInviteRes = await inviteRes.json()
+            if (parsedInviteRes.invites) {
+                let newInviteArray = [];
+                parsedInviteRes.invites.forEach(invite => {
+                    newInviteArray.push(invite);
+                })
+                setInvites(newInviteArray)
+            }
+        }
+        fetchInvites();
+    }, [])
+
+    useEffect(() => {
+        console.log('fetching projects')
         async function fetchProjects() {
             const projectRes = await fetch(`${apiBaseUrl}/users/${userId}/projects`);
             const parsedProjectRes = await projectRes.json();
@@ -25,15 +44,7 @@ const Home = () => {
             setProjectArr(projects)
         }
         fetchProjects();
-
-        // async function fetchInvites() {
-        //     const inviteRes = await fetch(`${apiBaseUrl}/users/${userId}/invites`);
-        //     if (inviteRes.ok) {
-        //         setInvites()
-        //     }
-        // }
-    }, [])
-
+    }, [invites])
 
 
     return (
