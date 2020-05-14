@@ -136,32 +136,6 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
         })
     }
 
-
-    //     displayedColumns.forEach(column => {
-    //         if (column.id === columnId) {
-    //             column.Tasks.forEach(async ({ columnPosition }) => {
-    //                 await fetch(`${apiBaseUrl}/tasks`, {
-    //                     method: 'PATCH',
-    //                     body: JSON.stringify({ columnId: column.id, columnPosition }),
-    //                     headers: {
-    //                         "Content-Type": 'application/json',
-    //                     }
-    //                 })
-    //             })
-    //         } else if (column.id === dragColumnId) {
-    //             column.Tasks.forEach(async ({ columnPosition }) => {
-    //                 await fetch(`${apiBaseUrl}/tasks`, {
-    //                     method: 'PATCH',
-    //                     body: JSON.stringify({ columnId: column.id, columnPosition }),
-    //                     headers: {
-    //                         "Content-Type": 'application/json',
-    //                     }
-    //                 })
-    //             })
-    //         }
-    //     })
-    // }
-
     const [{ isOver }, drop] = useDrop({
         accept: ItemTypes.TASK,
         drop: () => {
