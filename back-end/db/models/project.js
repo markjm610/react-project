@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'projectId',
       otherKey: 'userId'
     })
+    Project.hasMany(models.Invite, { foreignKey: 'projectId' })
   };
   return Project;
 };

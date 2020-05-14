@@ -6,7 +6,7 @@ import { apiBaseUrl } from './config';
 
 const ProjectNavBar = ({ projectArr }) => {
 
-    const { appState, setAppState } = useContext(Context);
+    const { setProjectMembers, setDisplayedColumns, setCurrentProjectId, setTasksArray } = useContext(Context);
 
     return (
         <div className='navbar__navlinks'>
@@ -16,15 +16,18 @@ const ProjectNavBar = ({ projectArr }) => {
 
                     const usersRes = await fetch(`${apiBaseUrl}/projects/${id}/users`);
                     const parsedUsersRes = await usersRes.json();
-                    const columnsRes = await fetch(`${apiBaseUrl}/projects/${id}/columns`);
-                    const parsedColumnsRes = await columnsRes.json();
 
-                    setAppState(
-                        {
-                            ...appState,
-                            projectMembers: parsedUsersRes.projects.Users,
-                            displayedColumns: parsedColumnsRes.columns
-                        })
+                    const res = await fetch(`${apiBaseUrl}/projects/${id}`);
+                    const parsedRes = await res.json();
+                    const columns = parsedRes.projectInfo.Columns;
+                    columns.forEach(column => {
+                        column.Tasks.push({ id: null, heading: null, description: null, columnPosition: column.Tasks.length, columnId: column.id })
+                    })
+
+                    setProjectMembers(parsedUsersRes.projects.Users || []);
+                    setDisplayedColumns(columns);
+                    setCurrentProjectId(id);
+
                 }
 
                 return <NavLink

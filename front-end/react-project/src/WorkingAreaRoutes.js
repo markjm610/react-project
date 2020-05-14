@@ -11,7 +11,7 @@ const WorkingAreaRoutes = ({ projectArr }) => {
             <Route key={i}
                 exact
                 path={`/home/project/${id}`}
-                render={() => <WorkingArea key={i} projectId={id}></WorkingArea>}>
+                render={() => <WorkingArea key={i} projectId={id} />}>
             </Route>)
     })
 }

@@ -16,6 +16,8 @@ module.exports = (sequelize, DataTypes) => {
       otherKey: 'projectId'
     })
     User.hasMany(models.Task, { foreignKey: 'creatorId' })
+    User.hasMany(models.Invite, { foreignKey: 'inviteSender' })
+    User.hasMany(models.Invite, { foreignKey: 'inviteReceiver' })
   };
 
   User.prototype.validatePassword = function (password) {

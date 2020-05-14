@@ -2,7 +2,7 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 const { check } = require("express-validator");
 
-const { User, Project } = require('../db/models');
+const { User, Invite } = require('../db/models');
 const { asyncHandler, handleValidationErrors } = require('../utils');
 const { getUserToken, requireAuth } = require('../auth');
 
@@ -45,7 +45,7 @@ router.put('/users/token', validateEmailAndPassword, handleValidationErrors, asy
         const { email, password } = req.body;
 
         // Find user with email:
-        const user = await User.findOne({ where: { email } });
+        const user = await User.findOne({ where: { email }, include: Invite });
 
         // If user is not found or password does not match, make new error object:
         if (!user || !user.validatePassword(password)) {
@@ -59,8 +59,9 @@ router.put('/users/token', validateEmailAndPassword, handleValidationErrors, asy
 
         // Generate JWT token and send JSON response with token and user ID
         const token = getUserToken(user);
-        res.json({ token, user: { id: user.id }, });
+        res.json({ token, user: { id: user.id, invites: user.Invites }, });
     } catch (e) { console.log(e) }
+    // { id: user.id,  },
 }));
 
 router.put('/users', asyncHandler(async (req, res, next) => {
