@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Task from './Task';
-import { AddCircle, FormClose } from 'grommet-icons'
+import { AddCircle, FormClose } from 'grommet-icons';
 import { useDrag, useDrop } from 'react-dnd';
 import { ItemTypes } from './ItemTypes';
 import Context from './Context';
@@ -43,9 +43,6 @@ const Column = ({ tasksArray, name, pagePosition, columnId, currentlyDragging, s
         // })
     }
 
-    // if (!taskArrays[columnId]) {
-    //     return null;
-    // }
 
     return (
         <>

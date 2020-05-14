@@ -11,7 +11,7 @@ const ContextWrapper = () => {
     const [projectMembers, setProjectMembers] = useState([])
     const [currentProjectId, setCurrentProjectId] = useState(null)
     const [taskArrays, setTaskArrays] = useState({})
-    const [invites, setInvites] = useState(null)
+    const [invites, setInvites] = useState([])
 
 
     return (

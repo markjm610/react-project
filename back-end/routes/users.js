@@ -33,7 +33,7 @@ router.post('/users', validateUsername, validateEmailAndPassword, asyncHandler(a
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = await User.create({ name, email, hashedPassword });
     const token = getUserToken(user);
-    res.json({ token, user: { id: user.id } });
+    res.json({ token, user: { id: user.id, name: user.name } });
     // } catch (e) {
     //     console.log(e)
     // }
@@ -59,7 +59,7 @@ router.put('/users/token', validateEmailAndPassword, handleValidationErrors, asy
 
         // Generate JWT token and send JSON response with token and user ID
         const token = getUserToken(user);
-        res.json({ token, user: { id: user.id, invites: user.Invites }, });
+        res.json({ token, user: { id: user.id, name: user.name, invites: user.Invites }, });
     } catch (e) { console.log(e) }
     // { id: user.id,  },
 }));
