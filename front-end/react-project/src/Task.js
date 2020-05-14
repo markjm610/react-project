@@ -29,7 +29,7 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
             if (taskdropzoneid === taskArrLength - 1) {
                 return;
             }
-            console.log('in if')
+            // console.log('in if')
             const drag = currentlyDragging;
             setCurrentlyDragging(taskdropzoneid);
             let startingColumn;
@@ -54,7 +54,7 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
             // setAppState({ ...appState, [columnId]: startingColumn })
 
         } else {
-            console.log('in else');
+            // console.log('in else');
 
             const drag = currentlyDragging;
             const saveDragColumnId = dragColumnId;
@@ -87,7 +87,7 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
 
 
             newColumn.splice(taskdropzoneid, 0, moved[0])
-            console.log(taskdropzoneid)
+            // console.log(taskdropzoneid)
             newColumn[taskdropzoneid].columnId = columnId;
 
 
@@ -115,14 +115,22 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
     }
 
     const handleDrop = async () => {
+        // await fetch(`${apiBaseUrl}/tasks`, {
+        //     method: 'PATCH',
+        //     body: JSON.stringify({ columnId, dragColumnId }),
+        //     headers: {
+        //         "Content-Type": 'application/json',
+        //     }
+        // })
 
-        // const res = await fetch(`${apiBaseUrl}/`)
+
+
     }
 
     const [{ isOver }, drop] = useDrop({
         accept: ItemTypes.TASK,
         drop: () => {
-            // changePositions()
+            handleDrop();
         },
         hover: (item) => {
             // console.log('currentlyDragging=', currentlyDragging);

@@ -36,4 +36,11 @@ router.delete('/tasks/:taskId', asyncHandler(async (req, res) => {
 
 }))
 
+router.patch('/tasks', asyncHandler(async (req, res) => {
+    const { columnId, dragColumnId } = req.body;
+
+    await Task.update({ columnPosition }, { where: columnId })
+    await Task.update({ columnPosition }, { where: dragColumnId })
+}))
+
 module.exports = router;
