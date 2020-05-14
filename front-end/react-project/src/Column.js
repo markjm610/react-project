@@ -1,6 +1,6 @@
 import React from 'react';
 import Task from './Task';
-import { AddCircle, FormClose } from 'grommet-icons';
+import { FormClose } from 'grommet-icons';
 import { useDrag, useDrop } from 'react-dnd';
 import { ItemTypes } from './ItemTypes';
 import AddTask from './AddTask';
@@ -47,7 +47,7 @@ const Column = ({ tasksArray, name, pagePosition, columnId, currentlyDragging, s
 
                     {tasksArray.map((task, i) => <Task
                         key={i}
-                        taskid={task.taskId}
+                        taskid={task.id}
                         taskdropzoneid={i}
                         heading={task.heading}
                         description={task.description}

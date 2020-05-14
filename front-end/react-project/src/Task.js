@@ -5,10 +5,11 @@ import { FormClose } from 'grommet-icons';
 import { ItemTypes } from './ItemTypes';
 import Context from './Context';
 import { apiBaseUrl } from './config';
+import DeleteTask from './DeleteTask';
 
 
 const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging, taskid, taskdropzoneid, heading, description }) => {
-
+    console.log(taskid)
     const { dragColumnId, setDragColumnId, displayedColumns, setDisplayedColumns } = useContext(Context);
 
 
@@ -195,7 +196,8 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
                         style={{ backgroundColor: isOver && 'yellow', color: isOver && 'yellow' }}
                     >
                         <div className='task__heading-text'>{heading}</div>
-                        <div className='delete-task'><FormClose></FormClose></div>
+                        <DeleteTask taskid={taskid} columnId={columnId}></DeleteTask>
+                        {/* <div className='delete-task'><FormClose></FormClose></div> */}
                     </div>
                     <div
                         className='task__description'

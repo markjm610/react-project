@@ -14,8 +14,10 @@ const AddTask = ({ columnId, taskArrLength }) => {
     }
 
     const addTaskSubmit = async () => {
+        setShow(false)
+
         const columnPosition = taskArrLength - 1;
-        // console.log(columnPosition);
+
         const res = await fetch(`${apiBaseUrl}/columns/${columnId}/tasks`, {
             method: 'POST',
             body: JSON.stringify(
