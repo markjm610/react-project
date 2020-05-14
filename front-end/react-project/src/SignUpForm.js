@@ -1,17 +1,16 @@
 import React, { useState, useContext } from 'react';
 import { Form, Box, FormField, TextInput, Button } from 'grommet';
 import { NavLink } from 'react-router-dom';
-
-// import { apiBaseUrl } from './config';
+import { apiBaseUrl } from './config';
 import Context from './Context';
 
 const SignUpForm = () => {
     const [value, setValue] = useState({ email: '', name: '', password: '' });
-    const { setAppState } = useContext(Context);
+    const { setAuthToken, setCurrentUserId } = useContext(Context);
     const handleSubmit = async () => {
 
         try {
-            const res = await fetch(`http://localhost:8000/users`, {
+            const res = await fetch(`${apiBaseUrl}/users`, {
                 method: 'POST',
                 body: JSON.stringify(value),
                 headers: {
@@ -22,19 +21,23 @@ const SignUpForm = () => {
             if (!res.ok) {
                 throw res;
             }
-            const { token, user: { id } } = await res.json();
+            const { token, user: { id, name } } = await res.json();
 
             localStorage.setItem('TOKEN', token);
             localStorage.setItem('USER_ID', id);
-            setAppState({ authToken: token, currentUserId: id })
+            localStorage.setItem('USER_NAME', name);
+
+            setAuthToken(token);
+            setCurrentUserId(id);
+
         } catch (e) {
             console.error(e)
         }
 
-        // window.location.href = '/home';
+
     }
     return (
-        <div style={{ margin: 'auto', width: '400px' }}>
+        <div className='sign-up-form' style={{ margin: 'auto', width: '400px' }}>
             <h2>Sign Up</h2>
             <Form
                 value={value}

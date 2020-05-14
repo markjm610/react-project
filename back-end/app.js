@@ -13,11 +13,15 @@ const usersRouter = require('./routes/users');
 const columnsRouter = require('./routes/columns');
 const projectsRouter = require('./routes/projects');
 const tasksRouter = require('./routes/tasks');
+const invitesRouter = require('./routes/invites');
+const usersProjectsRouter = require('./routes/usersprojects');
 
 app.use(usersRouter);
 app.use(columnsRouter);
 app.use(projectsRouter);
 app.use(tasksRouter);
+app.use(invitesRouter);
+app.use(usersProjectsRouter);
 
 app.get('/', (req, res) => {
     res.json({
