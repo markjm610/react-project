@@ -14,15 +14,28 @@
 
 .log-in-sign-up-box {
     background-color: white;
+    color: black
    
 }
 
 .log-in-form {
     position: relative;
-    top: 100px;
+    top: 50px;
 }
 
 .sign-up-form {
     position: relative;
-    top: 55px;
+    top: 5px;
+}
+
+.title-div {
+    display: flex;
+    justify-content: center;
+
+}
+
+.title {
+    padding: 50px;
+    font-size: 36px;
+    font-weight: bold;
 }

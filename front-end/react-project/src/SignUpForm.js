@@ -6,7 +6,7 @@ import Context from './Context';
 
 const SignUpForm = () => {
     const [value, setValue] = useState({ email: '', name: '', password: '' });
-    const { setAppState } = useContext(Context);
+    const { setAuthToken, setCurrentUserId } = useContext(Context);
     const handleSubmit = async () => {
 
         try {
@@ -25,12 +25,15 @@ const SignUpForm = () => {
 
             localStorage.setItem('TOKEN', token);
             localStorage.setItem('USER_ID', id);
-            setAppState({ authToken: token, currentUserId: id })
+
+            setAuthToken(token);
+            setCurrentUserId(id);
+
         } catch (e) {
             console.error(e)
         }
 
-        // window.location.href = '/home';
+
     }
     return (
         <div className='sign-up-form' style={{ margin: 'auto', width: '400px' }}>

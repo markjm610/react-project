@@ -4,7 +4,8 @@ import Context from './Context';
 
 const ProjectMembers = () => {
 
-    const { appState: { projectMembers } } = useContext(Context);
+    const { projectMembers } = useContext(Context);
+
     return (
         <div className='project-members'>
             {projectMembers.map(({ name }, i) => {

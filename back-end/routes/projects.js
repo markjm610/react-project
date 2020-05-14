@@ -44,5 +44,22 @@ router.post('/users/:userId/projects', asyncHandler(async (req, res, next) => {
     res.json({ newProject })
 }))
 
+router.get('/projects/:projectId', asyncHandler(async (req, res, next) => {
+    const projectId = parseInt(req.params.projectId, 10);
+
+    const projectInfo = await Project.findByPk(projectId, {
+        include:
+        {
+            model: Column,
+            include: {
+                model: Task,
+            }
+        }, order: [[Column, 'pagePosition'], [Column, Task, 'columnPosition']]
+    })
+
+    res.json({ projectInfo })
+
+}))
+
 
 module.exports = router;

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Task from './Task';
 import { AddCircle, FormClose } from 'grommet-icons'
 import { useDrag, useDrop } from 'react-dnd';
@@ -6,22 +6,8 @@ import { ItemTypes } from './ItemTypes';
 import Context from './Context';
 import { apiBaseUrl } from './config';
 
-const Column = ({ name, pagePosition, columnId, currentlyDragging, setCurrentlyDragging, columnTasks, setColumnTasks }) => {
+const Column = ({ tasksArray, name, pagePosition, columnId, currentlyDragging, setCurrentlyDragging, columnTasks, setColumnTasks }) => {
 
-    const { appState, setAppState } = useContext(Context);
-
-    useEffect(() => {
-        async function loadTasks() {
-            console.log('load tasks')
-
-            const tasksRes = await fetch(`${apiBaseUrl}/columns/${columnId}/tasks`);
-            const parsedTasksRes = await tasksRes.json();
-
-            setAppState({ ...appState, [columnId]: parsedTasksRes.tasks })
-        }
-
-        loadTasks()
-    }, [])
 
 
     const [{ isDragging }, drag] = useDrag({
@@ -57,7 +43,9 @@ const Column = ({ name, pagePosition, columnId, currentlyDragging, setCurrentlyD
         // })
     }
 
-
+    // if (!taskArrays[columnId]) {
+    //     return null;
+    // }
 
     return (
         <>
@@ -67,8 +55,9 @@ const Column = ({ name, pagePosition, columnId, currentlyDragging, setCurrentlyD
                         <div className='add-task'><AddCircle onClick={addTaskClick}></AddCircle></div>
                         <div className='column__name'>{name}</div>
                         <div className='delete-column'><FormClose></FormClose></div>
-                    </div>{console.log(appState[columnId])}
-                    {/* {appState[columnId].map((task, i) => <Task
+                    </div>
+
+                    {tasksArray.map((task, i) => <Task
                         key={i}
                         taskid={task.taskId}
                         taskdropzoneid={i}
@@ -77,10 +66,10 @@ const Column = ({ name, pagePosition, columnId, currentlyDragging, setCurrentlyD
                         currentlyDragging={currentlyDragging}
                         setCurrentlyDragging={setCurrentlyDragging}
                         columnId={task.columnId}
-                        taskArrLength={appState[columnId].length}
+                        taskArrLength={tasksArray.length}
                     // dragColumnId={dragColumnId}
                     // setDragColumnId={setDragColumnId}
-                    ></Task>)} */}
+                    ></Task>)}
 
                 </div>
             </div>

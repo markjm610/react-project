@@ -10,7 +10,7 @@ import { apiBaseUrl } from './config';
 
 const Home = () => {
 
-    // const projectArr = [1, 2, 3]
+
 
     const [projectArr, setProjectArr] = useState([])
 
@@ -24,6 +24,10 @@ const Home = () => {
             setProjectArr(projects)
         }
         fetchProjects();
+
+        // async function fetchInvites() {
+
+        // }
     }, [])
 
 

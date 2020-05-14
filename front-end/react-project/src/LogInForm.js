@@ -6,7 +6,7 @@ import { apiBaseUrl } from './config';
 
 const LogInForm = () => {
     const [value, setValue] = useState({ email: '', password: '' });
-    const { appState, setAppState } = useContext(Context);
+    const { setAuthToken, setCurrentUserId } = useContext(Context);
 
     const handleSubmit = async () => {
 
@@ -26,7 +26,9 @@ const LogInForm = () => {
 
             localStorage.setItem('TOKEN', token);
             localStorage.setItem('USER_ID', id);
-            setAppState({ authToken: token, currentUserId: id })
+            // setAppState({ authToken: token, currentUserId: id })
+            setAuthToken(token);
+            setCurrentUserId(id)
 
         } catch (e) {
             console.error(e)
