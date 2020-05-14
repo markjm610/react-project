@@ -37,10 +37,17 @@ router.delete('/tasks/:taskId', asyncHandler(async (req, res) => {
 }))
 
 router.patch('/tasks', asyncHandler(async (req, res) => {
-    const { columnId, dragColumnId } = req.body;
+    try {
+        const { sendArr } = req.body;
+        sendArr.forEach(async (task) => {
+            console.log('column position', task.columnPosition);
+            console.log('columnId', task.columnId);
+            await Task.update({ columnPosition: task.columnPosition, columnId: task.columnId }, { where: { id: task.id } });
+        })
 
-    await Task.update({ columnPosition }, { where: columnId })
-    await Task.update({ columnPosition }, { where: dragColumnId })
+    } catch (e) {
+        console.error(e)
+    }
 }))
 
 module.exports = router;
