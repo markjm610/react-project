@@ -46,6 +46,9 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
             copy.forEach(column => {
                 if (column.id === columnId) {
                     column.Tasks = startingColumn;
+                    column.Tasks.forEach((task, i) => {
+                        task.columnPosition = i;
+                    })
                 }
             })
             setDragColumnId(dragColumnId);
@@ -115,17 +118,49 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
     }
 
     const handleDrop = async () => {
-        // await fetch(`${apiBaseUrl}/tasks`, {
-        //     method: 'PATCH',
-        //     body: JSON.stringify({ columnId, dragColumnId }),
-        //     headers: {
-        //         "Content-Type": 'application/json',
-        //     }
-        // })
-
-
-
+        let sendArr = [];
+        displayedColumns.forEach(column => {
+            if (column.id === columnId) {
+                sendArr.push(...column.Tasks.slice(0, column.Tasks.length - 1))
+            } else if (column.id === dragColumnId) {
+                sendArr.push(...column.Tasks.slice(0, column.Tasks.length - 1))
+            }
+        })
+        // console.log(sendArr);
+        await fetch(`${apiBaseUrl}/tasks`, {
+            method: 'PATCH',
+            body: JSON.stringify({ sendArr }),
+            headers: {
+                "Content-Type": 'application/json',
+            }
+        })
     }
+
+
+    //     displayedColumns.forEach(column => {
+    //         if (column.id === columnId) {
+    //             column.Tasks.forEach(async ({ columnPosition }) => {
+    //                 await fetch(`${apiBaseUrl}/tasks`, {
+    //                     method: 'PATCH',
+    //                     body: JSON.stringify({ columnId: column.id, columnPosition }),
+    //                     headers: {
+    //                         "Content-Type": 'application/json',
+    //                     }
+    //                 })
+    //             })
+    //         } else if (column.id === dragColumnId) {
+    //             column.Tasks.forEach(async ({ columnPosition }) => {
+    //                 await fetch(`${apiBaseUrl}/tasks`, {
+    //                     method: 'PATCH',
+    //                     body: JSON.stringify({ columnId: column.id, columnPosition }),
+    //                     headers: {
+    //                         "Content-Type": 'application/json',
+    //                     }
+    //                 })
+    //             })
+    //         }
+    //     })
+    // }
 
     const [{ isOver }, drop] = useDrop({
         accept: ItemTypes.TASK,
@@ -133,10 +168,7 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
             handleDrop();
         },
         hover: (item) => {
-            // console.log('currentlyDragging=', currentlyDragging);
-            // console.log('taskdropzoneid=', taskdropzoneid);
-            // console.log('item.columnId=', item.columnId)
-            // console.log('columnId=', columnId)
+
             if (currentlyDragging === taskdropzoneid && item.columnId === columnId) {
                 return
             }
@@ -181,5 +213,6 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
     }
 
 }
+
 
 export default Task;
