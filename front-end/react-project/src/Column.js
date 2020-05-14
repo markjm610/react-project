@@ -1,10 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React from 'react';
 import Task from './Task';
 import { AddCircle, FormClose } from 'grommet-icons';
 import { useDrag, useDrop } from 'react-dnd';
 import { ItemTypes } from './ItemTypes';
-import Context from './Context';
-import { apiBaseUrl } from './config';
+import AddTask from './AddTask';
+// import Context from './Context';
+// import { apiBaseUrl } from './config';
 
 const Column = ({ tasksArray, name, pagePosition, columnId, currentlyDragging, setCurrentlyDragging, columnTasks, setColumnTasks }) => {
 
@@ -29,19 +30,7 @@ const Column = ({ tasksArray, name, pagePosition, columnId, currentlyDragging, s
     })
 
 
-    const addTaskClick = async () => {
 
-        // Display blank task that serves as form
-        // Get heading, description, and columnPosition
-
-        // await fetch(`${apiBaseUrl}/columns/${columnId}/tasks`, {
-        //     method: 'POST',
-        //     body: JSON.stringify({ heading, description, columnPosition }),
-        //     headers: {
-        //         "Content-Type": 'application/json',
-        //     }
-        // })
-    }
 
 
     return (
@@ -49,7 +38,9 @@ const Column = ({ tasksArray, name, pagePosition, columnId, currentlyDragging, s
             <div className='column-drop-zone' ref={drop}>
                 <div className='column' ref={drag}>
                     <div className='column__header'>
-                        <div className='add-task'><AddCircle onClick={addTaskClick}></AddCircle></div>
+                        <AddTask
+                            columnId={columnId}
+                            taskArrLength={tasksArray.length}></AddTask>
                         <div className='column__name'>{name}</div>
                         <div className='delete-column'><FormClose></FormClose></div>
                     </div>

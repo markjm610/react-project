@@ -21,8 +21,8 @@ router.get('/columns/:columnId/tasks', asyncHandler(async (req, res) => {
 
 router.post('/columns/:columnId/tasks', asyncHandler(async (req, res) => {
     const columnId = parseInt(req.params.columnId, 10);
-    const { heading, description, columnPosition } = req.body;
-    const newTask = await Task.create({ heading, description, columnPosition, columnId });
+    const { heading, description, columnPosition, creatorId } = req.body;
+    const newTask = await Task.create({ heading, description, columnPosition, columnId, creatorId });
 
     res.json({ newTask })
 }))
