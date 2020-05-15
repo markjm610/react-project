@@ -3,12 +3,13 @@ html, body {
     padding: 0;
     width: 100%;
     height: 100%;
-    
+    font-family: 'Noto Sans JP', sans-serif;
 }
 
 #root {
     width: 100%;
     height: 100%;
+    font-family: 'Noto Sans JP', sans-serif;
 }
 
 #home {
@@ -28,13 +29,13 @@ html, body {
     grid-template-rows: 1fr 10% 1fr 5%;
 }
 
-.add-column {
+.add-project {
     grid-row: 2 / 3;
     display: flex;
     justify-content: center;
 }
 
-.add-column-icon:hover {
+.add-project-icon:hover {
     cursor: pointer;
 }
 

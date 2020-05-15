@@ -4,9 +4,9 @@ import { NavLink } from 'react-router-dom'
 import { apiBaseUrl } from './config';
 
 
-const ProjectNavBar = ({ projectArr }) => {
+const ProjectNavBar = () => {
 
-    const { setProjectMembers, setDisplayedColumns, setCurrentProjectId, setTasksArray } = useContext(Context);
+    const { projectArr, setProjectMembers, setDisplayedColumns, setCurrentProjectId } = useContext(Context);
 
     return (
         <div className='navbar__navlinks'>

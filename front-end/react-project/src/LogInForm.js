@@ -6,7 +6,7 @@ import { apiBaseUrl } from './config';
 
 const LogInForm = () => {
     const [value, setValue] = useState({ email: '', password: '' });
-    const { setAuthToken, setCurrentUserId, invites, setInvites } = useContext(Context);
+    const { setAuthToken, setCurrentUserId } = useContext(Context);
 
 
 
