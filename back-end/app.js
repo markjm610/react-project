@@ -30,17 +30,12 @@ app.use(invitesRouter);
 app.use(usersProjectsRouter);
 
 
-app.use(express.static(path.join(__dirname, '../front-end/react-project/build')));
+app.use(express.static(path.join(__dirname, '/../front-end/react-project/build')));
 
 
-app.get('/', (req, res) => {
-    res.json({
-        message: 'TEST INDEX ROOT'
-    })
-});
 
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname + '../front-end/react-project/build/index.html'));
+    res.sendFile(path.join(__dirname + '/../front-end/react-project/build/index.html'));
 });
 
 // Catch unhandled requests and forward to error handler.
