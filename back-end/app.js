@@ -28,6 +28,10 @@ app.use(tasksRouter);
 app.use(invitesRouter);
 app.use(usersProjectsRouter);
 
+
+app.use(express.static(path.join(__dirname, '../front-end/react-project/public')));
+
+
 app.get('/', (req, res) => {
     res.json({
         message: 'TEST INDEX ROOT'
