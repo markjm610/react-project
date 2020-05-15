@@ -45,21 +45,21 @@ const Column = ({ tasksArray, name, pagePosition, columnId, currentlyDragging, s
                         <DeleteColumn columnId={columnId}></DeleteColumn>
                         {/* <div className='delete-column'><FormClose></FormClose></div> */}
                     </div>
-
-                    {tasksArray.map((task, i) => <Task
-                        key={i}
-                        taskid={task.id}
-                        taskdropzoneid={i}
-                        heading={task.heading}
-                        description={task.description}
-                        currentlyDragging={currentlyDragging}
-                        setCurrentlyDragging={setCurrentlyDragging}
-                        columnId={task.columnId}
-                        taskArrLength={tasksArray.length}
-                    // dragColumnId={dragColumnId}
-                    // setDragColumnId={setDragColumnId}
-                    ></Task>)}
-
+                    <div className='task-container'>
+                        {tasksArray.map((task, i) => <Task
+                            key={i}
+                            taskid={task.id}
+                            taskdropzoneid={i}
+                            heading={task.heading}
+                            description={task.description}
+                            currentlyDragging={currentlyDragging}
+                            setCurrentlyDragging={setCurrentlyDragging}
+                            columnId={task.columnId}
+                            taskArrLength={tasksArray.length}
+                        // dragColumnId={dragColumnId}
+                        // setDragColumnId={setDragColumnId}
+                        ></Task>)}
+                    </div>
                 </div>
             </div>
         </>

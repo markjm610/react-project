@@ -171,6 +171,11 @@ html, body {
     cursor: pointer;
 }
 
+.task-container {
+    
+}
+
+
 .task-drop-zone {
     display: flex;
     justify-content: center;

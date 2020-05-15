@@ -39,6 +39,10 @@ app.get('/', (req, res) => {
     })
 });
 
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname + '../front-end/react-project/build'));
+});
+
 // Catch unhandled requests and forward to error handler.
 app.use((req, res, next) => {
     const err = new Error("The requested resource couldn't be found.");
