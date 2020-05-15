@@ -7,7 +7,7 @@ import DeleteColumn from './DeleteColumn';
 // import Context from './Context';
 // import { apiBaseUrl } from './config';
 
-const Column = ({ tasksArray, name, pagePosition, columnId, currentlyDragging, setCurrentlyDragging, columnTasks, setColumnTasks }) => {
+const Column = ({ tasksArray, name, pagePosition, columnId, currentlyDragging, setCurrentlyDragging }) => {
 
 
 
