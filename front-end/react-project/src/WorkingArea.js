@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
+import { Add } from 'grommet-icons';
 import Column from './Column';
 import Context from './Context';
-
 
 
 const WorkingArea = () => {
@@ -11,20 +11,21 @@ const WorkingArea = () => {
 
 
 
-    return displayedColumns.map(({ id, name, pagePosition, Tasks }, i) => {
-        // Tasks.push({ id: null, heading: null, description: null, columnPosition: Tasks.length, columnId: id })
+    return (
+        displayedColumns.map(({ id, name, pagePosition, Tasks }, i) => {
+            // Tasks.push({ id: null, heading: null, description: null, columnPosition: Tasks.length, columnId: id })
 
-        return (<Column
-            key={i}
-            columnId={id}
-            name={name}
-            pagePosition={pagePosition}
-            tasksArray={Tasks}
-            currentlyDragging={currentlyDragging}
-            setCurrentlyDragging={setCurrentlyDragging}
-        />)
-    })
-
+            return (<Column
+                key={i}
+                columnId={id}
+                name={name}
+                pagePosition={pagePosition}
+                tasksArray={Tasks}
+                currentlyDragging={currentlyDragging}
+                setCurrentlyDragging={setCurrentlyDragging}
+            />)
+        })
+    )
 }
 
 export default WorkingArea;
