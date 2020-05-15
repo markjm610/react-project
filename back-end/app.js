@@ -1,7 +1,12 @@
 const express = require("express");
-require('dotenv').config();
-const cors = require('cors');
 const { environment } = require('./config');
+
+if (environment !== 'production') {
+    require('dotenv').config();
+}
+
+const cors = require('cors');
+
 
 const app = express();
 
