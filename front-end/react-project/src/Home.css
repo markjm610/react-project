@@ -23,13 +23,24 @@ html, body {
     grid-column-start: 1;
     background-color: lightblue; 
     display: grid;
-    grid-template-rows: 1fr 1fr 5%;
+    grid-template-rows: 1fr 10% 1fr 5%;
+}
+
+.add-column {
+    grid-row: 2 / 3;
+    display: flex;
+    justify-content: center;
+}
+
+.add-column-icon:hover {
+    cursor: pointer;
 }
 
 .navbar__navlinks {
-    grid-row: 2 / 3;
+    grid-row: 3 / 4;
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
 }
 
 .project-navlink {
@@ -41,18 +52,17 @@ html, body {
     /* border: solid 2px black; */
 }
 
-.project-navlink:visited {
-    border-right: none;
-}
+
 
 .log-out {
-    grid-row: 3 / 4;
+    grid-row: 4 / 5;
     display: flex;
     align-items: flex-end;
 }
 
 .working-area {
     display: flex;
+    /* justify-content: flex-end; */
     grid-column-start: 2;
     background-color: lightgray;
     overflow-y: scroll;
@@ -78,6 +88,9 @@ html, body {
 .invite-icon:hover {
     cursor: pointer;
 }
+
+
+
 
 .project-members {
     display: flex;
@@ -210,4 +223,3 @@ html, body {
 .notification-icon:hover {
     cursor: pointer;
 }
-

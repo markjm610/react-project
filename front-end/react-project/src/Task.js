@@ -9,7 +9,7 @@ import DeleteTask from './DeleteTask';
 
 
 const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging, taskid, taskdropzoneid, heading, description }) => {
-    console.log(taskid)
+
     const { dragColumnId, setDragColumnId, displayedColumns, setDisplayedColumns } = useContext(Context);
 
 

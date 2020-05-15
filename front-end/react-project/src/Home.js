@@ -8,6 +8,7 @@ import UserDisplay from './UserDisplay';
 import ProjectNavBar from './ProjectNavBar';
 import Context from './Context';
 import { apiBaseUrl } from './config';
+import AddColumn from './AddColumn';
 
 const Home = () => {
 
@@ -51,6 +52,7 @@ const Home = () => {
         <div id='home'>
             <div className='sidebar-left'>
                 <UserDisplay></UserDisplay>
+                <AddColumn></AddColumn>
                 <ProjectNavBar projectArr={projectArr}></ProjectNavBar>
                 <LogOut></LogOut>
             </div>
