@@ -55,7 +55,7 @@ app.use((err, req, res, next) => {
     res.json({
         title: err.title || "Server Error",
         message: err.message,
-        stack: isProduction ? null : err.stack,
+        stack: isProduction ? err.stack : err.stack,
         errors: err.errors
     });
 });

@@ -4,29 +4,25 @@ import { Layer, Form, Box, FormField, TextInput, Button } from 'grommet';
 import Context from './Context';
 import { apiBaseUrl } from './config';
 
-const AddColumn = () => {
-
-    const { currentProjectId, displayedColumns, setDisplayedColumns } = useContext(Context)
+const AddProject = () => {
+    const { currentUserId, projectArr, setProjectArr } = useContext(Context)
     const [show, setShow] = useState();
     const [value, setValue] = useState({ name: '' });
 
-
-    const addColumnClick = () => {
+    const addProjectClick = () => {
         setShow(true)
     }
 
-    const addColumnSubmit = async () => {
+    const addProjectSubmit = async () => {
         setShow(false);
 
-        const columnsCopy = [...displayedColumns];
-
-        const pagePositionOfNewColumn = columnsCopy.length;
+        const projectsCopy = [...projectArr]
 
 
-        const res = await fetch(`${apiBaseUrl}/projects/${currentProjectId}/columns`, {
+        const res = await fetch(`${apiBaseUrl}/users/${currentUserId}/projects`, {
             method: 'POST',
             body: JSON.stringify(
-                { name: value.name, pagePosition: pagePositionOfNewColumn }
+                { name: value.name }
             ),
             headers: {
                 "Content-Type": 'application/json',
@@ -34,17 +30,20 @@ const AddColumn = () => {
         })
 
         const parsedRes = await res.json();
-        const newColumn = parsedRes.newColumn;
-        newColumn.Tasks = [{ id: null, heading: null, description: null, columnPosition: 0, columnId: newColumn.id }]
-        columnsCopy.push(parsedRes.newColumn);
+        const newProject = parsedRes.newProject;
+        projectsCopy.push(newProject)
 
-        setDisplayedColumns(columnsCopy);
+        setProjectArr(projectsCopy);
 
         value.name = ''
     }
 
+
+
+
+
     return (<>
-        {currentProjectId && <div className='add-column'><Add onClick={addColumnClick} className='add-column-icon'></Add></div>}
+        <div className='add-project'><Add onClick={addProjectClick} className='add-project-icon'></Add></div>
         {
             show && (
                 <Layer
@@ -55,10 +54,9 @@ const AddColumn = () => {
                         value={value}
                         onChange={nextValue => setValue(nextValue)}
                         onReset={() => setValue({})}
-                        onSubmit={addColumnSubmit}
+                        onSubmit={addProjectSubmit}
                     >
-                        {/* <h3 className=''>Add Column</h3> */}
-                        <FormField name="name" htmlfor="text-input-id" label="Add Column:">
+                        <FormField name="name" htmlfor="text-input-id" label="Add Project:">
                             <TextInput id="text-input-id" name="name" />
                         </FormField>
                         <Box direction="row" gap="medium">
@@ -67,9 +65,7 @@ const AddColumn = () => {
                     </Form>
                 </Layer>
             )
-        }
-    </>
-    )
+        }</>)
 }
 
-export default AddColumn;
+export default AddProject;

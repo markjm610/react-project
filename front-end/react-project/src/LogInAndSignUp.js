@@ -19,7 +19,7 @@ const LogInAndSignUp = () => {
             height='600px'
             round='large'
         >
-            <div className='title-div'><div className='title'></div></div>
+            <div className='title-div'><div className='title'>Taskflow</div></div>
             <Switch>
                 <Route exact path='/' component={LogInForm}></Route>
                 <Route exact path='/signup' component={SignUpForm}></Route>

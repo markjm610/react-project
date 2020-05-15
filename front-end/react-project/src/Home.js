@@ -9,12 +9,12 @@ import ProjectNavBar from './ProjectNavBar';
 import Context from './Context';
 import { apiBaseUrl } from './config';
 import AddColumn from './AddColumn';
+import AddProject from './AddProject';
 
 const Home = () => {
 
-    const { invites, setInvites } = useContext(Context);
+    const { invites, setInvites, setProjectArr } = useContext(Context);
 
-    const [projectArr, setProjectArr] = useState([])
 
     const userId = localStorage.getItem('USER_ID');
 
@@ -52,12 +52,12 @@ const Home = () => {
         <div id='home'>
             <div className='sidebar-left'>
                 <UserDisplay></UserDisplay>
-                <AddColumn></AddColumn>
-                <ProjectNavBar projectArr={projectArr}></ProjectNavBar>
+                <AddProject></AddProject>
+                <ProjectNavBar ></ProjectNavBar>
                 <LogOut></LogOut>
             </div>
             <div className='working-area'>
-                <WorkingAreaRoutes projectArr={projectArr}></WorkingAreaRoutes>
+                <WorkingAreaRoutes></WorkingAreaRoutes>
             </div>
             <div className='sidebar-right'>
                 <Invite></Invite>

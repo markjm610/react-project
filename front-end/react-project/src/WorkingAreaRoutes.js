@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Route } from 'react-router-dom';
 import WorkingArea from './WorkingArea';
+import Context from './Context';
 
-const WorkingAreaRoutes = ({ projectArr }) => {
+const WorkingAreaRoutes = () => {
 
-    // projectArr comes from fetch request and hook on Home component
+    const { projectArr } = useContext(Context);
 
     return projectArr.map(({ id }, i) => {
         return (
