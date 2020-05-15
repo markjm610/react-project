@@ -10,7 +10,8 @@ const SignUpForm = () => {
     const handleSubmit = async () => {
 
         try {
-            const res = await fetch(`${apiBaseUrl}/users`, {
+            const url = apiBaseUrl ? `${apiBaseUrl}/users` : '/users';
+            const res = await fetch(url, {
                 method: 'POST',
                 body: JSON.stringify(value),
                 headers: {
