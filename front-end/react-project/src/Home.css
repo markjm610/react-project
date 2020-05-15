@@ -234,3 +234,7 @@ html, body {
 .notification-icon:hover {
     cursor: pointer;
 }
+
+.add-column:hover {
+    cursor: pointer;
+}
