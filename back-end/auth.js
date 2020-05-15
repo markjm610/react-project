@@ -5,6 +5,7 @@ const bearerToken = require("express-bearer-token");
 
 const { secret, expiresIn } = jwtConfig;
 
+
 const getUserToken = (user) => {
     // Don't store the user's hashed password
     // in the token data.

@@ -29,10 +29,12 @@ const validateUsername = [
 router.post('/users', validateUsername, validateEmailAndPassword, asyncHandler(async (req, res, next) => {
     // try {
     const { name, email, password } = req.body;
-    console.log(name);
+    // console.log(name);
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = await User.create({ name, email, hashedPassword });
+    console.log(user);
     const token = getUserToken(user);
+    console.log(token)
     res.json({ token, user: { id: user.id, name: user.name } });
     // } catch (e) {
     //     console.log(e)
