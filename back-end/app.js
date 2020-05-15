@@ -1,5 +1,6 @@
 const express = require("express");
 const { environment } = require('./config');
+const path = require('path');
 
 if (environment !== 'production') {
     require('dotenv').config();
