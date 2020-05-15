@@ -134,7 +134,7 @@ html, body {
 
 .column__header {
     display: flex;
-    grid-row: 1/ 2;
+    grid-row: 1 / 2;
     background-color: lightsteelblue;
     justify-content: space-between;
 }
@@ -171,9 +171,11 @@ html, body {
     cursor: pointer;
 }
 
-.task-container {
-    
-}
+/* .task-container {
+    grid-row: 2 / 3;
+    display: flex;
+
+} */
 
 
 .task-drop-zone {
