@@ -188,7 +188,7 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
                     ref={drag}
                     taskid={taskid} style={{
                         opacity: isOver ? 0.4 : 1,
-
+                        // boxShadow: isDragging && 'none'
 
                     }}>
                     <div
