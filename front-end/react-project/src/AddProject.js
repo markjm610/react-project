@@ -32,7 +32,7 @@ const AddProject = () => {
         const parsedRes = await res.json();
         const newProject = parsedRes.newProject;
         projectsCopy.push(newProject)
-
+        console.log(projectsCopy)
         setProjectArr(projectsCopy);
 
         value.name = ''

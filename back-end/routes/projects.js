@@ -2,7 +2,7 @@ const express = require('express');
 const { check } = require("express-validator");
 const { requireAuth } = require('../auth');
 
-const { Project, User, Column, Task } = require('../db/models');
+const { Project, User, Column, Task, UsersProject } = require('../db/models');
 const { asyncHandler, handleValidationErrors } = require('../utils');
 
 const router = express.Router();
@@ -40,7 +40,7 @@ router.post('/users/:userId/projects', asyncHandler(async (req, res, next) => {
     const { name } = req.body;
     const newProject = await Project.create({ name, creatorId: userId })
     await UsersProject.create({ userId, projectId: newProject.id })
-
+    console.log(newProject);
     res.json({ newProject })
 }))
 
