@@ -6,28 +6,28 @@ import AddColumn from './AddColumn'
 
 const WorkingArea = () => {
 
-    const { displayedColumns, currentProjectId } = useContext(Context);
+    const { displayedColumns } = useContext(Context);
     const [currentlyDragging, setCurrentlyDragging] = useState(null)
 
 
 
     return (
-        // <React.Fragment key={}>
-        displayedColumns.map(({ id, name, pagePosition, Tasks }, i) => {
+        <>
+            {displayedColumns.map(({ id, name, pagePosition, Tasks }, i) => {
+                // Tasks.push({ id: null, heading: null, description: null, columnPosition: Tasks.length, columnId: id })
 
-            return (<Column
-                key={id}
-                columnId={id}
-                name={name}
-                pagePosition={pagePosition}
-                tasksArray={Tasks}
-                currentlyDragging={currentlyDragging}
-                setCurrentlyDragging={setCurrentlyDragging}
-
-            />)
-        })
-        // <AddColumn></AddColumn>
-        // </React.Fragment>
+                return (<Column
+                    key={id}
+                    columnId={id}
+                    name={name}
+                    pagePosition={pagePosition}
+                    tasksArray={Tasks}
+                    currentlyDragging={currentlyDragging}
+                    setCurrentlyDragging={setCurrentlyDragging}
+                />)
+            })}
+            <AddColumn></AddColumn>
+        </>
     )
 }
 
