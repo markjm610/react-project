@@ -38,6 +38,21 @@ const Column = ({ isOver, tasksArray, name, pagePosition, columnId, currentlyDra
 
                         ></Task>)}
                     </div>
+
+                    {tasksArray.map((task, i) => <Task
+                        key={task.id}
+                        taskid={task.id}
+                        taskdropzoneid={i}
+                        heading={task.heading}
+                        description={task.description}
+                        currentlyDragging={currentlyDragging}
+                        setCurrentlyDragging={setCurrentlyDragging}
+                        columnId={task.columnId}
+                        taskArrLength={tasksArray.length}
+                    // dragColumnId={dragColumnId}
+                    // setDragColumnId={setDragColumnId}
+                    ></Task>)}
+
                 </div>
             </div>
         </React.Fragment>
