@@ -1,7 +1,6 @@
 import React, { useState, useContext, useRef, useCallback } from 'react';
 // import { Add } from 'grommet-icons'
 import { useDrag, useDrop } from 'react-dnd';
-import { FormClose } from 'grommet-icons';
 import { ItemTypes } from './ItemTypes';
 import Context from './Context';
 import { apiBaseUrl } from './config';
