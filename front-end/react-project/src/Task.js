@@ -21,8 +21,10 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
             // setDragTaskId(taskid)
             // setAppState({ ...appState, dragColumnId: columnId })
         },
-        end: () => {
+        end: (item) => {
+            console.log(item)
             setDragTaskId('')
+            handleDrop(item);
         },
         collect: monitor => ({
             isDragging: !!monitor.isDragging()
@@ -55,6 +57,7 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
                     column.Tasks = startingColumn;
                     column.Tasks.forEach((task, i) => {
                         task.columnPosition = i;
+                        console.log(task.columnPosition)
                     })
                 }
             })
@@ -65,7 +68,7 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
             setDragTaskId(saveId);
 
         } else {
-            console.log('in else');
+            // console.log('in else');
 
             const drag = currentlyDragging;
             const saveDragColumnId = dragColumnId;
@@ -89,7 +92,7 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
             copy.forEach(column => {
                 if (column.id === columnId) {
                     newColumn = column.Tasks.slice();
-                    console.log(newColumn[taskdropzoneid])
+                    // console.log(newColumn[taskdropzoneid])
                 }
             })
 
@@ -130,16 +133,20 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
 
     }
 
-    const handleDrop = async () => {
+    const handleDrop = async (item) => {
+
         let sendArr = [];
+
         displayedColumns.forEach(column => {
             if (column.id === columnId) {
+                console.log('column.id === columnId')
                 sendArr.push(...column.Tasks.slice(0, column.Tasks.length - 1))
-            } else if (column.id === dragColumnId) {
+            } else if (column.id === item.columnId) {
+                console.log('column.id === dragColumnId')
                 sendArr.push(...column.Tasks.slice(0, column.Tasks.length - 1))
             }
         })
-        // console.log(sendArr);
+        console.log(sendArr);
         await fetch(`${apiBaseUrl}/tasks`, {
             method: 'PATCH',
             body: JSON.stringify({ sendArr }),
@@ -152,16 +159,16 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
     const [{ isOver }, drop] = useDrop({
         accept: ItemTypes.TASK,
         drop: () => {
-            handleDrop();
+            // handleDrop();
         },
         hover: (item) => {
-            console.log(dragTaskId)
-            console.log(taskid)
 
-            if (taskid !== null) {
+
+            if (taskid !== null && dragTaskId !== taskid) {
                 setDragTaskId(taskid)
             }
-
+            // console.log(dragTaskId)
+            // console.log(taskid)
             if (currentlyDragging === taskdropzoneid && item.columnId === columnId) {
                 return
             }

@@ -12,7 +12,7 @@ const WorkingArea = () => {
 
     return (
         <>
-            {displayedColumns.map(({ id, name, pagePosition, Tasks }, i) => {
+            {displayedColumns.map(({ id, name, pagePosition, Tasks }) => {
                 // Tasks.push({ id: null, heading: null, description: null, columnPosition: Tasks.length, columnId: id })
 
                 return (<Column
