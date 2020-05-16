@@ -38,12 +38,6 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname + '/../front-end/react-project/build/index.html'));
 });
 
-app.get('/', (req, res) => {
-    res.json({
-        message: 'TEST INDEX ROOT'
-    })
-});
-
 // Catch unhandled requests and forward to error handler.
 app.use((req, res, next) => {
     const err = new Error("The requested resource couldn't be found.");
