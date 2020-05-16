@@ -171,7 +171,15 @@ html, body {
     cursor: pointer;
 }
 
+.tasks-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
 .task-drop-zone {
+    /* grid-row: 1 /2; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -179,13 +187,14 @@ html, body {
     width: 100%;
     background-color: clear;
     /* opacity: 0; */
+    z-index: 5;
 }
 
 .task {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 20% 1fr;
-    height: 180px;
+    grid-template-rows: 35px 1fr;
+    min-height: 200px;
     width: 350px;
     /* box-shadow: 0px 0px 2px gray; */
     /* opacity: 1; */
