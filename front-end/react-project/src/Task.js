@@ -1,4 +1,4 @@
-import React, { useState, useContext, useRef } from 'react';
+import React, { useState, useContext, useRef, useCallback } from 'react';
 // import { Add } from 'grommet-icons'
 import { useDrag, useDrop } from 'react-dnd';
 import { FormClose } from 'grommet-icons';
@@ -9,7 +9,6 @@ import DeleteTask from './DeleteTask';
 
 
 const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging, taskid, taskdropzoneid, heading, description }) => {
-    // console.log(isOver)
 
     const { dragTaskId, setDragTaskId, dragColumnId, setDragColumnId, displayedColumns, setDisplayedColumns } = useContext(Context);
 
@@ -26,7 +25,7 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
             setDragTaskId('')
         },
         collect: monitor => ({
-            isDragging: monitor.isDragging()
+            isDragging: !!monitor.isDragging()
         })
     })
 
@@ -66,12 +65,15 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
             setDragTaskId(saveId);
 
         } else {
+            console.log('in else');
 
             const drag = currentlyDragging;
             const saveDragColumnId = dragColumnId;
             const saveId = dragTaskId;
 
+            // setCurrentlyDragging(taskdropzoneid)
 
+            // const startingColumn = appState[saveDragColumnId].slice();
 
             let startingColumn;
             let copy = [...displayedColumns];
@@ -87,7 +89,7 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
             copy.forEach(column => {
                 if (column.id === columnId) {
                     newColumn = column.Tasks.slice();
-
+                    console.log(newColumn[taskdropzoneid])
                 }
             })
 
@@ -98,6 +100,7 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
             newColumn.splice(taskdropzoneid, 0, moved[0])
 
             newColumn[taskdropzoneid].columnId = columnId;
+
 
             copy.forEach(column => {
                 if (column.id === columnId) {
@@ -116,7 +119,9 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
             })
 
             setDragColumnId(columnId);
+
             setDisplayedColumns(copy);
+
             setCurrentlyDragging(taskdropzoneid);
 
             setDragTaskId(saveId)
@@ -134,7 +139,7 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
                 sendArr.push(...column.Tasks.slice(0, column.Tasks.length - 1))
             }
         })
-
+        // console.log(sendArr);
         await fetch(`${apiBaseUrl}/tasks`, {
             method: 'PATCH',
             body: JSON.stringify({ sendArr }),
@@ -148,7 +153,6 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
         accept: ItemTypes.TASK,
         drop: () => {
             handleDrop();
-            // setDragTaskId(null)
         },
         hover: (item) => {
             console.log(dragTaskId)
@@ -170,8 +174,7 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
         }),
     })
 
-    // drag(drop(ref))
-
+    // drop(ref)
     if (taskdropzoneid === taskArrLength - 1) {
         return (
             <>
@@ -211,7 +214,6 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
                     >{description}</div>
                 </div>
             </div>
-
 
         )
     }
