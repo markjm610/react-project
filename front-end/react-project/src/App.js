@@ -30,6 +30,7 @@ function App() {
       <ProtectedRoute path='/home' component={Home} currentUserId={currentUserId}></ProtectedRoute>
       <AuthRoute exact={true} path='/' component={LandingPage} currentUserId={currentUserId}></AuthRoute>
       <AuthRoute exact={true} path='/signup' component={LandingPage} currentUserId={currentUserId}></AuthRoute>
+      <AuthRoute exact={true} path='/demo' component={LandingPage} currentUserId={currentUserId}></AuthRoute>
     </Switch>
   );
 }

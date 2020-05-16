@@ -47,7 +47,7 @@ const AddTask = ({ columnId, taskArrLength }) => {
         })
 
         setDisplayedColumns(columnsCopy)
-
+        setValue({ name: '', description: '' })
     }
 
 
@@ -74,7 +74,7 @@ const AddTask = ({ columnId, taskArrLength }) => {
                             <TextInput id="text-input-id" name="description" />
                         </FormField>
                         <Box direction="row" gap="medium">
-                            <Button type="submit" primary label="Submit" />
+                            <Button type="submit" color='lightblue' primary label="Submit" />
 
                         </Box>
                     </Form>

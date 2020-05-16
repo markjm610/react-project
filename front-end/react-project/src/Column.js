@@ -11,23 +11,23 @@ const Column = ({ tasksArray, name, pagePosition, columnId, currentlyDragging, s
 
 
 
-    // const [{ isDragging }, drag] = useDrag({
-    //     item: { type: ItemTypes.COLUMN },
-    //     begin: () => {
-    //         console.log('drag column begin')
-    //     },
-    //     collect: monitor => ({
-    //         isDragging: monitor.isDragging()
-    //     })
-    // })
+    const [{ isDragging }, drag] = useDrag({
+        item: { type: ItemTypes.COLUMN },
+        begin: () => {
+            console.log('drag column begin')
+        },
+        collect: monitor => ({
+            isDragging: monitor.isDragging()
+        })
+    })
 
-    // const [{ isOver }, drop] = useDrop({
-    //     accept: ItemTypes.COLUMN,
-    //     drop: () => console.log('drop column'),
-    //     collect: monitor => ({
-    //         isOver: !!monitor.isOver(),
-    //     }),
-    // })
+    const [{ isOver }, drop] = useDrop({
+        accept: ItemTypes.COLUMN,
+        drop: () => console.log('drop column'),
+        collect: monitor => ({
+            isOver: !!monitor.isOver(),
+        }),
+    })
 
 
 
