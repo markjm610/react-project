@@ -14,16 +14,16 @@ const Column = ({ isOver, tasksArray, name, pagePosition, columnId, currentlyDra
     return (
         <>
             <div key={columnId} className='column-drop-zone'>
-                <div key={columnId} className='column'>
-                    <div key={columnId} className='column__header'>
+                <div key={columnId + 1} className='column'>
+                    <div key={columnId + 2} className='column__header'>
                         <AddTask
-                            key={columnId}
+                            key={columnId + 3}
                             columnId={columnId}
                             taskArrLength={tasksArray.length}></AddTask>
-                        <div key={columnId + 1} className='column__name'>{name}</div>
-                        <DeleteColumn key={columnId + 3} columnId={columnId}></DeleteColumn>
+                        <div key={columnId + 4} className='column__name'>{name}</div>
+                        <DeleteColumn key={columnId + 5} columnId={columnId}></DeleteColumn>
                     </div>
-                    <div key={columnId + 1} className='task-container'>
+                    <div key={columnId + 6} className='task-container'>
                         {tasksArray.map((task, i) => <Task
                             key={task.id}
                             taskid={task.id}
