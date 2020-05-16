@@ -67,7 +67,7 @@ html, body {
 }
 
 .working-area {
-    display: flex;
+    /* display: flex; */
     /* justify-content: flex-end; */
     grid-column-start: 2;
     background-color: lightgray;
@@ -172,6 +172,7 @@ html, body {
     grid-row: 1 / 2;
     background-color: lightsteelblue;
     justify-content: space-between;
+    width: 400px;
     
 }
 
@@ -188,7 +189,7 @@ html, body {
     grid-template-columns: 1fr;
     grid-template-rows: 35px 1fr;
     min-height: 200px;
-    width: 90%;
+    width: 200px;
     margin: 10px;
     /* box-shadow: 0px 0px 2px gray; */
     /* opacity: 1; */

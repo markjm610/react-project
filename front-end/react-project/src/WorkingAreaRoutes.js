@@ -16,10 +16,10 @@ const WorkingAreaRoutes = ({ isOver }) => {
 
     return projectArr.map(({ id }, i) => {
         return (
-            <Route key={i}
+            <Route key={id}
                 exact
                 path={`/home/project/${id}`}
-                render={() => <WorkingArea key={i} projectId={id} isOver={isOver} />}>
+                render={() => <WorkingArea key={id} projectId={id} isOver={isOver} />}>
             </Route>)
     })
 }

@@ -60,14 +60,14 @@ const WorkingArea = () => {
                     <>
                         <div key={task.columnId} className='column__header'>
                             <AddTask
-                                key={task.columnId}
+                                key={task.columnId + 1}
                                 columnId={task.columnId}
                                 taskArrLength={task.taskArrLength}></AddTask>
-                            <div key={task.columnId + 1} className='column__name'>{task.columnName}</div>
+                            <div key={task.columnId + 2} className='column__name'>{task.columnName}</div>
                             <DeleteColumn key={task.columnId + 3} columnId={task.columnId}></DeleteColumn>
                         </div>
                         <Task
-                            key={task.id}
+                            key={`${task.columnId}${task.id}`}
                             taskid={task.id}
                             taskdropzoneid={task.columnPosition}
                             heading={task.heading}
@@ -83,7 +83,7 @@ const WorkingArea = () => {
             } else {
                 return (
                     <Task
-                        key={task.id}
+                        key={`${task.columnId}${task.id}`}
                         taskid={task.id}
                         taskdropzoneid={task.columnPosition}
                         heading={task.heading}
