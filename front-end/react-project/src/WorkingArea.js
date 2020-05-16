@@ -1,5 +1,4 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Add } from 'grommet-icons';
 import Column from './Column';
 import Context from './Context';
 import AddColumn from './AddColumn'
