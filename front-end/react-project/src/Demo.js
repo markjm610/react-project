@@ -4,8 +4,8 @@ import { NavLink } from 'react-router-dom';
 import Context from './Context';
 import { apiBaseUrl } from './config';
 
-const LogInForm = () => {
-    const [value, setValue] = useState({ email: '', password: '' });
+const Demo = () => {
+    const [value, setValue] = useState({ email: 'demo@user.com', password: 'password' });
     const { setAuthToken, setCurrentUserId } = useContext(Context);
 
 
@@ -45,11 +45,9 @@ const LogInForm = () => {
     return (
 
         <div className='log-in-form' style={{ margin: 'auto', width: '400px' }}>
-            <h2>Log In</h2>
+            <h2>Demo</h2>
             <Form
                 value={value}
-                onChange={nextValue => setValue(nextValue)}
-                // onReset={() => setValue({})}
                 onSubmit={handleSubmit}
             >
                 <FormField name="email" htmlfor="text-input-id" label="Email:">
@@ -63,7 +61,7 @@ const LogInForm = () => {
                 <Box justify='between' direction="row" gap="medium">
 
                     <Button color='lightblue' type="submit" primary label="Submit" />
-                    <NavLink to='/demo'><Button color='lightblue' label="Demo" /></NavLink>
+                    <NavLink to='/'><Button color='lightblue' label="Log In" /></NavLink>
                     <NavLink to='/signup'><Button color='lightblue' label="Sign up" /></NavLink>
 
                 </Box>
@@ -72,4 +70,4 @@ const LogInForm = () => {
     );
 }
 
-export default LogInForm;
+export default Demo;

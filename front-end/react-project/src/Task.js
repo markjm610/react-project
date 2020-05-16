@@ -36,7 +36,6 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
             if (taskdropzoneid === taskArrLength - 1) {
                 return;
             }
-            console.log('in if')
             const saveId = dragTaskId;
             const drag = currentlyDragging;
             // setCurrentlyDragging(taskdropzoneid);
@@ -166,8 +165,7 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
             if (taskid !== null && dragTaskId !== taskid) {
                 setDragTaskId(taskid)
             }
-            // console.log(dragTaskId)
-            // console.log(taskid)
+
             if (currentlyDragging === taskdropzoneid && item.columnId === columnId) {
                 return
             }

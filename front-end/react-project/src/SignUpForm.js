@@ -58,7 +58,7 @@ const SignUpForm = () => {
                 </FormField>
                 <Box justify='between' direction="row" gap="medium">
                     <Button color='lightblue' type="submit" primary label="Submit" />
-                    {/* <Button color='lightblue' type="reset" label="Reset" /> */}
+                    <NavLink to='/demo'><Button color='lightblue' label="Demo" /></NavLink>
                     <NavLink to='/'><Button color='lightblue' label="Log in" /></NavLink>
                 </Box>
             </Form>
