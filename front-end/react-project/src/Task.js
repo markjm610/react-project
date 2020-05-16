@@ -196,30 +196,31 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
     } else {
         return (
 
-            <div className='task-drop-zone'
-                ref={drop}
-                taskdropzoneid={taskdropzoneid}>
-                <div className='task'
-                    ref={drag}
-                    taskid={taskid} style={{
-                        // opacity: (isDragging || dragTaskId === taskid && (isOver || !isOver)) ? 0.4 : 1,
-                        opacity: (isDragging || (!isDragging && (dragTaskId === taskid))) ? 0.4 : 1,
-                        // opacity: (isDragging || (!isDragging && ((dragTaskId === taskid) && (isOver || !isOver)))) ? 0.4 : 1,
-                    }}>
-                    <div
-                        className='task__heading'
-                        style={{ backgroundColor: (isDragging || (!isDragging && (dragTaskId === taskid))) && 'yellow', color: (isDragging || (!isDragging && (dragTaskId === taskid))) && 'yellow' }}
-                    >
-                        <div className='task__heading-text'>{heading}</div>
-                        <DeleteTask taskid={taskid} columnId={columnId}></DeleteTask>
-                        {/* <div className='delete-task'><FormClose></FormClose></div> */}
-                    </div>
-                    <div
-                        className='task__description'
-                        style={{ backgroundColor: (isDragging || (!isDragging && (dragTaskId === taskid))) && 'yellow', color: (isDragging || (!isDragging && (dragTaskId === taskid))) && 'yellow' }}
-                    >{description}</div>
+
+            <div className='task'
+                ref={drag}
+                taskid={taskid} style={{
+                    // opacity: (isDragging || dragTaskId === taskid && (isOver || !isOver)) ? 0.4 : 1,
+                    opacity: (isDragging || (!isDragging && (dragTaskId === taskid))) ? 0.4 : 1,
+                    // opacity: (isDragging || (!isDragging && ((dragTaskId === taskid) && (isOver || !isOver)))) ? 0.4 : 1,
+                }}>
+                <div className='task-drop-zone'
+                    ref={drop}
+                    taskdropzoneid={taskdropzoneid}></div>
+                <div
+                    className='task__heading'
+                    style={{ backgroundColor: (isDragging || (!isDragging && (dragTaskId === taskid))) && 'yellow', color: (isDragging || (!isDragging && (dragTaskId === taskid))) && 'yellow' }}
+                >
+                    <div className='task__heading-text'>{heading}</div>
+                    <DeleteTask taskid={taskid} columnId={columnId}></DeleteTask>
+                    {/* <div className='delete-task'><FormClose></FormClose></div> */}
                 </div>
+                <div
+                    className='task__description'
+                    style={{ backgroundColor: (isDragging || (!isDragging && (dragTaskId === taskid))) && 'yellow', color: (isDragging || (!isDragging && (dragTaskId === taskid))) && 'yellow' }}
+                >{description}</div>
             </div>
+
 
         )
     }
