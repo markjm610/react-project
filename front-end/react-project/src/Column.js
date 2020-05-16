@@ -47,7 +47,7 @@ const Column = ({ tasksArray, name, pagePosition, columnId, currentlyDragging, s
                     </div>
 
                     {tasksArray.map((task, i) => <Task
-                        key={i}
+                        key={task.id}
                         taskid={task.id}
                         taskdropzoneid={i}
                         heading={task.heading}
