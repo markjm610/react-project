@@ -10,7 +10,7 @@ import DeleteTask from './DeleteTask';
 
 const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging, taskid, taskdropzoneid, heading, description }) => {
 
-    const { dragColumnId, setDragColumnId, displayedColumns, setDisplayedColumns } = useContext(Context);
+    const { dragTaskId, setDragTaskId, dragColumnId, setDragColumnId, displayedColumns, setDisplayedColumns } = useContext(Context);
 
 
     const [{ isDragging }, drag] = useDrag({
@@ -18,7 +18,11 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
         begin: () => {
             setCurrentlyDragging(taskdropzoneid);
             setDragColumnId(columnId);
+            // setDragTaskId(taskid)
             // setAppState({ ...appState, dragColumnId: columnId })
+        },
+        end: () => {
+            setDragTaskId('')
         },
         collect: monitor => ({
             isDragging: !!monitor.isDragging()
@@ -32,6 +36,7 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
                 return;
             }
             console.log('in if')
+            const saveId = dragTaskId;
             const drag = currentlyDragging;
             // setCurrentlyDragging(taskdropzoneid);
             let startingColumn;
@@ -57,15 +62,14 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
             setDragColumnId(dragColumnId);
             setDisplayedColumns(copy);
             setCurrentlyDragging(taskdropzoneid);
-            // console.log(displayedColumns)
-            // setAppState({ ...appState, [columnId]: startingColumn })
+            setDragTaskId(saveId);
 
         } else {
             console.log('in else');
 
             const drag = currentlyDragging;
             const saveDragColumnId = dragColumnId;
-
+            const saveId = dragTaskId;
 
             // setCurrentlyDragging(taskdropzoneid)
 
@@ -90,16 +94,13 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
             })
 
 
-            // const newColumn = appState[columnId].slice();
-
             const moved = startingColumn.splice(drag, 1)
 
 
             newColumn.splice(taskdropzoneid, 0, moved[0])
-            // console.log(newColumn)
-            // console.log(newColumn[taskdropzoneid])
+
             newColumn[taskdropzoneid].columnId = columnId;
-            // console.log(newColumn[taskdropzoneid])
+
 
             copy.forEach(column => {
                 if (column.id === columnId) {
@@ -107,13 +108,13 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
                     column.Tasks.forEach((task, i) => {
                         task.columnPosition = i;
                     })
-                    // console.log(column.Tasks)
+
                 } else if (column.id === saveDragColumnId) {
                     column.Tasks = startingColumn;
                     column.Tasks.forEach((task, i) => {
                         task.columnPosition = i;
                     })
-                    // console.log(column.Tasks)
+
                 }
             })
 
@@ -122,6 +123,8 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
             setDisplayedColumns(copy);
 
             setCurrentlyDragging(taskdropzoneid);
+
+            setDragTaskId(saveId)
         }
 
 
@@ -152,6 +155,12 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
             handleDrop();
         },
         hover: (item) => {
+            console.log(dragTaskId)
+            console.log(taskid)
+
+            if (taskid !== null) {
+                setDragTaskId(taskid)
+            }
 
             if (currentlyDragging === taskdropzoneid && item.columnId === columnId) {
                 return
@@ -187,13 +196,13 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
                 <div className='task'
                     ref={drag}
                     taskid={taskid} style={{
-                        opacity: isOver ? 0.4 : 1,
-                        // boxShadow: isDragging && 'none'
-
+                        // opacity: (isDragging || dragTaskId === taskid && (isOver || !isOver)) ? 0.4 : 1,
+                        opacity: (isDragging || (!isDragging && (dragTaskId === taskid))) ? 0.4 : 1,
+                        // opacity: (isDragging || (!isDragging && ((dragTaskId === taskid) && (isOver || !isOver)))) ? 0.4 : 1,
                     }}>
                     <div
                         className='task__heading'
-                        style={{ backgroundColor: isOver && 'yellow', color: isOver && 'yellow' }}
+                        style={{ backgroundColor: (isDragging || (!isDragging && (dragTaskId === taskid))) && 'yellow', color: (isDragging || (!isDragging && (dragTaskId === taskid))) && 'yellow' }}
                     >
                         <div className='task__heading-text'>{heading}</div>
                         <DeleteTask taskid={taskid} columnId={columnId}></DeleteTask>
@@ -201,7 +210,7 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
                     </div>
                     <div
                         className='task__description'
-                        style={{ backgroundColor: isOver && 'yellow', color: isOver && 'yellow' }}
+                        style={{ backgroundColor: (isDragging || (!isDragging && (dragTaskId === taskid))) && 'yellow', color: (isDragging || (!isDragging && (dragTaskId === taskid))) && 'yellow' }}
                     >{description}</div>
                 </div>
             </div>

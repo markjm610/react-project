@@ -13,6 +13,7 @@ const ContextWrapper = () => {
     const [taskArrays, setTaskArrays] = useState({})
     const [invites, setInvites] = useState([])
     const [projectArr, setProjectArr] = useState([])
+    const [dragTaskId, setDragTaskId] = useState('')
 
     return (
         <Context.Provider value={
@@ -25,7 +26,8 @@ const ContextWrapper = () => {
                 currentProjectId, setCurrentProjectId,
                 taskArrays, setTaskArrays,
                 invites, setInvites,
-                projectArr, setProjectArr
+                projectArr, setProjectArr,
+                dragTaskId, setDragTaskId
             }
         } >
             <App />
