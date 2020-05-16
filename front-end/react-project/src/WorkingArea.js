@@ -14,16 +14,16 @@ const WorkingArea = () => {
     return (
         <>
             {displayedColumns.map(({ id, name, pagePosition, Tasks }, i) => {
-                // Tasks.push({ id: null, heading: null, description: null, columnPosition: Tasks.length, columnId: id })
 
                 return (<Column
-                    key={i}
+                    key={id}
                     columnId={id}
                     name={name}
                     pagePosition={pagePosition}
                     tasksArray={Tasks}
                     currentlyDragging={currentlyDragging}
                     setCurrentlyDragging={setCurrentlyDragging}
+
                 />)
             })}
             <AddColumn></AddColumn>

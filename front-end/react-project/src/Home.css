@@ -20,6 +20,7 @@ html, body {
     grid-template-rows: 1fr;
     font-family: 'Noto Sans JP', sans-serif;
     font-size: 14px;
+    /* font-size: 100px; */
 }
 
 .sidebar-left {
@@ -123,21 +124,7 @@ html, body {
     padding: 20px;
 }
 
-.column {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 35px 1fr;
-    width: 400px;
-    background-color: lightgray;
-    margin: auto;
-}
 
-.column__header {
-    display: flex;
-    grid-row: 1 / 2;
-    background-color: lightsteelblue;
-    justify-content: space-between;
-}
 
 .add-task {
     display: flex;
@@ -171,45 +158,68 @@ html, body {
     cursor: pointer;
 }
 
+.column {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 35px 1fr;
+    width: 400px;
+    background-color: lightgray;
+    margin: auto;
+}
+
+.column__header {
+    display: flex;
+    grid-row: 1 / 2;
+    background-color: lightsteelblue;
+    justify-content: space-between;
+    
+}
+
 .task-container {
     grid-row: 2 / 3;
     display: flex;
     flex-direction: column;
-    height: 100%;
-}
-
-
-.task-drop-zone {
-    display: flex;
     justify-content: center;
     align-items: center;
-    height: 100%;
-    width: 100%;
-    background-color: clear;
-    /* opacity: 0; */
 }
 
 .task {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 20% 1fr;
-    height: 100%;
-    width: 350px;
+    grid-template-rows: 35px 1fr;
+    min-height: 200px;
+    width: 90%;
+    margin: 10px;
     /* box-shadow: 0px 0px 2px gray; */
     /* opacity: 1; */
 }
 
-.task:hover {
-    cursor: pointer;
-     /* box-shadow: 0px 0px 2px gray; */
+.task-drop-zone {
+    grid-row: 1 / 2;
+    height: 200px;
+    width: 100%;
+    background-color: clear;
+    z-index: 5;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 35px 1fr;
 }
 
+.task:hover {
+    cursor: pointer;
+}
 
 .task__heading {
     grid-row: 1 / 2;
     background-color: lightblue;
     display: grid;
     grid-template-columns: 10% 1fr 10%;
+}
+
+.task__description {
+    grid-row: 2 / 3;
+    background-color: whitesmoke;
+    padding: 5px;
 }
 
 .task__heading-text {
@@ -233,11 +243,7 @@ html, body {
     cursor: pointer;
 }
 
-.task__description {
-    grid-row: 2 / 3;
-    background-color: whitesmoke;
-    padding: 5px;
-}
+
 
 .notification-icon:hover {
     cursor: pointer;
