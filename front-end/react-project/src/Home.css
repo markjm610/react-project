@@ -180,22 +180,46 @@ html, body {
 
 .task-drop-zone {
     /* grid-row: 1 /2; */
-    display: flex;
+    /* display: flex;
     justify-content: center;
     align-items: center;
     height: 200px;
     width: 100%;
-    background-color: clear;
+    background-color: clear; */
     /* opacity: 0; */
+    /* z-index: 5; */
+
+    grid-row: 1 / 2;
+    height: 200px;
+    width: 100%;
+    background-color: clear;
     z-index: 5;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 35px 1fr;
 }
+
+/* .task-drop-zone {
+    grid-row: 1 / 2;
+    height: 200px;
+    width: 100%;
+    background-color: clear;
+    z-index: 5;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 35px 1fr;
+} */
+
+
+
 
 .task {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 35px 1fr 1fr;
+    grid-template-rows: 35px 1fr;
     min-height: 200px;
     width: 350px;
+    margin: 15px;
     /* box-shadow: 0px 0px 2px gray; */
     /* opacity: 1; */
 }
