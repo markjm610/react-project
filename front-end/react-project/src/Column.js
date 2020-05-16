@@ -12,7 +12,7 @@ const Column = ({ isOver, tasksArray, name, pagePosition, columnId, currentlyDra
 
 
     return (
-        <>
+        <React.Fragment key={columnId}>
             <div key={columnId} className='column-drop-zone'>
                 <div key={columnId + 1} className='column'>
                     <div key={columnId + 2} className='column__header'>
@@ -25,7 +25,7 @@ const Column = ({ isOver, tasksArray, name, pagePosition, columnId, currentlyDra
                     </div>
                     <div key={columnId + 6} className='task-container'>
                         {tasksArray.map((task, i) => <Task
-                            key={task.id}
+                            key={`${task.columnId}${task.id}`}
                             taskid={task.id}
                             taskdropzoneid={i}
                             heading={task.heading}
@@ -40,7 +40,7 @@ const Column = ({ isOver, tasksArray, name, pagePosition, columnId, currentlyDra
                     </div>
                 </div>
             </div>
-        </>
+        </React.Fragment>
     )
 }
 

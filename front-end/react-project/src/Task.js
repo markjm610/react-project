@@ -11,7 +11,7 @@ import DeleteTask from './DeleteTask';
 const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging, taskid, taskdropzoneid, heading, description }) => {
     // console.log(isOver)
 
-    const { setDragTaskId, dragColumnId, setDragColumnId, displayedColumns, setDisplayedColumns } = useContext(Context);
+    const { dragTaskId, setDragTaskId, dragColumnId, setDragColumnId, displayedColumns, setDisplayedColumns } = useContext(Context);
 
     // const ref = useRef(null)
 
@@ -63,7 +63,7 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
             setDragColumnId(dragColumnId);
             setDisplayedColumns(copy);
             setCurrentlyDragging(taskdropzoneid);
-            // setDragTaskId(taskid)
+            setDragTaskId(taskid)
             // item.taskid = taskid;
 
         } else {
@@ -120,7 +120,7 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
             setDisplayedColumns(copy);
             setCurrentlyDragging(taskdropzoneid);
             // item.taskid = taskid;
-            // setDragTaskId(taskid)
+            setDragTaskId(taskid)
 
         }
 
@@ -189,7 +189,8 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
                 taskid={taskid}
                 taskdropzoneid={taskdropzoneid}
                 style={{
-                    opacity: isDragging ? 0.4 : 1,
+                    // opacity: isDragging ? 0.4 : 1,
+                    opacity: isOver ? 0.4 : 1,
                     // opacity: (isDragging && !hasSwapped) ? 0 : 1,
                     // opacity: dragTaskId === taskid ? 0.4 : 1
                 }}>
@@ -199,8 +200,8 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
                     taskid={taskid}>
                     <div
                         className='task__heading'
-                        style={{ backgroundColor: isDragging && 'yellow', color: isDragging && 'yellow' }}
-                    // style={{ backgroundColor: dragTaskId === taskid && 'yellow', color: dragTaskId === taskid && 'yellow' }}
+                        // style={{ backgroundColor: isDragging && 'yellow', color: isDragging && 'yellow' }}
+                        style={{ backgroundColor: isOver && 'yellow', color: isOver && 'yellow' }}
 
                     >
                         <div className='task__heading-text'>{heading}</div>
@@ -209,8 +210,8 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
 
                 <div
                     className='task__description'
-                    style={{ backgroundColor: isDragging && 'yellow', color: isDragging && 'yellow' }}
-                // style={{ backgroundColor: dragTaskId === taskid && 'yellow', color: dragTaskId === taskid && 'yellow' }}
+                    // style={{ backgroundColor: isDragging && 'yellow', color: isDragging && 'yellow' }}
+                    style={{ backgroundColor: isOver && 'yellow', color: isOver && 'yellow' }}
                 >{description}</div>
             </div>
 
