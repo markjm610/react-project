@@ -30,8 +30,13 @@ app.use(invitesRouter);
 app.use(usersProjectsRouter);
 
 
-app.use(express.static(path.join(__dirname, '../front-end/react-project/build')));
+app.use(express.static(path.join(__dirname, '/../front-end/react-project/build')));
 
+
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname + '/../front-end/react-project/build/index.html'));
+});
 
 app.get('/', (req, res) => {
     res.json({
