@@ -1,7 +1,5 @@
 import React, { useContext } from 'react';
 import { Route } from 'react-router-dom';
-import { useDrop } from 'react-dnd';
-import { ItemTypes } from './ItemTypes';
 import WorkingArea from './WorkingArea';
 import Context from './Context';
 
