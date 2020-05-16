@@ -7,36 +7,43 @@ import DeleteColumn from './DeleteColumn';
 // import Context from './Context';
 // import { apiBaseUrl } from './config';
 
-const Column = ({ isOver, tasksArray, name, pagePosition, columnId, currentlyDragging, setCurrentlyDragging }) => {
+const Column = ({ tasksArray, name, pagePosition, columnId, currentlyDragging, setCurrentlyDragging }) => {
+
+
+
+    // const [{ isDragging }, drag] = useDrag({
+    //     item: { type: ItemTypes.COLUMN },
+    //     begin: () => {
+    //         console.log('drag column begin')
+    //     },
+    //     collect: monitor => ({
+    //         isDragging: monitor.isDragging()
+    //     })
+    // })
+
+    // const [{ isOver }, drop] = useDrop({
+    //     accept: ItemTypes.COLUMN,
+    //     drop: () => console.log('drop column'),
+    //     collect: monitor => ({
+    //         isOver: !!monitor.isOver(),
+    //     }),
+    // })
+
+
 
 
 
     return (
-        <React.Fragment key={columnId}>
-            <div key={columnId} className='column-drop-zone'>
-                <div key={columnId + 1} className='column'>
-                    <div key={columnId + 2} className='column__header'>
+        <>
+            <div className='column-drop-zone'>
+                <div className='column'>
+                    <div className='column__header'>
                         <AddTask
-                            key={columnId + 3}
                             columnId={columnId}
                             taskArrLength={tasksArray.length}></AddTask>
-                        <div key={columnId + 4} className='column__name'>{name}</div>
-                        <DeleteColumn key={columnId + 5} columnId={columnId}></DeleteColumn>
-                    </div>
-                    <div key={columnId + 6} className='task-container'>
-                        {tasksArray.map((task, i) => <Task
-                            key={`${task.columnId}${task.id}`}
-                            taskid={task.id}
-                            taskdropzoneid={i}
-                            heading={task.heading}
-                            description={task.description}
-                            currentlyDragging={currentlyDragging}
-                            setCurrentlyDragging={setCurrentlyDragging}
-                            columnId={task.columnId}
-                            taskArrLength={tasksArray.length}
-                            isOver={isOver}
-
-                        ></Task>)}
+                        <div className='column__name'>{name}</div>
+                        <DeleteColumn columnId={columnId}></DeleteColumn>
+                        {/* <div className='delete-column'><FormClose></FormClose></div> */}
                     </div>
 
                     {tasksArray.map((task, i) => <Task
@@ -55,7 +62,7 @@ const Column = ({ isOver, tasksArray, name, pagePosition, columnId, currentlyDra
 
                 </div>
             </div>
-        </React.Fragment>
+        </>
     )
 }
 
