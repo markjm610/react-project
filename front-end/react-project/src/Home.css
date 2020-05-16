@@ -193,7 +193,7 @@ html, body {
 .task {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 35px 1fr;
+    grid-template-rows: 35px 1fr 1fr;
     min-height: 200px;
     width: 350px;
     /* box-shadow: 0px 0px 2px gray; */
