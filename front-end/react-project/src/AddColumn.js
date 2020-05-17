@@ -57,12 +57,12 @@ const AddColumn = () => {
                         onReset={() => setValue({})}
                         onSubmit={addColumnSubmit}
                     >
-                        {/* <h3 className=''>Add Column</h3> */}
+
                         <FormField name="name" htmlfor="text-input-id" label="Add Column:">
                             <TextInput id="text-input-id" name="name" />
                         </FormField>
                         <Box direction="row" gap="medium">
-                            <Button type="submit" primary label="Submit" />
+                            <Button type="submit" color='lightblue' primary label="Submit" />
                         </Box>
                     </Form>
                 </Layer>
