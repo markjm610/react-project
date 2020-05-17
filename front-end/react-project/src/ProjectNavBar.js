@@ -30,7 +30,8 @@ const ProjectNavBar = () => {
 
                 }
 
-                return <NavLink
+                return <NavLink className='navlink'
+                    style={{ textDecoration: 'none' }}
                     key={i}
                     to={`/home/project/${id}`}
                     id={id}

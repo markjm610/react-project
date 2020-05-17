@@ -79,8 +79,10 @@ const Home = () => {
         <div id='home'>
             <div className='sidebar-left'>
                 <UserDisplay></UserDisplay>
-                <AddProject></AddProject>
-                <ProjectNavBar ></ProjectNavBar>
+                <div className='project-stuff'>
+                    <ProjectNavBar ></ProjectNavBar>
+                    <AddProject></AddProject>
+                </div>
                 <LogOut></LogOut>
             </div>
             <div className='working-area' ref={drop}>
