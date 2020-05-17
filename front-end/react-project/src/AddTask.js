@@ -59,7 +59,10 @@ const AddTask = ({ columnId, taskArrLength }) => {
             show && (
                 <Layer
                     onEsc={() => setShow(false)}
-                    onClickOutside={() => setShow(false)}
+                    onClickOutside={() => {
+                        setShow(false)
+                        setValue({ name: '', description: '' })
+                    }}
                 >
                     <Form
                         value={value}

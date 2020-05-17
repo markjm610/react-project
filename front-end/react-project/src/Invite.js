@@ -27,24 +27,27 @@ const Invite = () => {
         // // if (findRes.ok) maybe
 
         const parsedFindRes = await findRes.json();
-        const inviteId = parsedFindRes.user.id;
-        // const userId = currentUserId;
-        const projectId = currentProjectId;
-        const name = localStorage.getItem('USER_NAME');
+        if (parsedFindRes.user) {
+            const inviteId = parsedFindRes.user.id;
+            // const userId = currentUserId;
+            const projectId = currentProjectId;
+            const name = localStorage.getItem('USER_NAME');
 
-        const sendInviteRes = await fetch(`${apiBaseUrl}/users/invites`, {
-            method: 'PUT',
-            body: JSON.stringify({ inviteReceiver: inviteId, inviteSender: name, projectId }),
-            headers: {
-                "Content-Type": 'application/json',
-            }
-        })
+            const sendInviteRes = await fetch(`${apiBaseUrl}/users/invites`, {
+                method: 'PUT',
+                body: JSON.stringify({ inviteReceiver: inviteId, inviteSender: name, projectId }),
+                headers: {
+                    "Content-Type": 'application/json',
+                }
+            })
 
-        if (sendInviteRes.ok) {
-            console.log('invite sent')
+            // if (sendInviteRes.ok) {
+            //     console.log('invite sent')
+            // }
         }
 
-        // Have to check for invites in database when the page loads
+
+
         setValue({ name: '' })
     }
 
@@ -55,7 +58,10 @@ const Invite = () => {
         {show && (
             <Layer
                 onEsc={() => setShow(false)}
-                onClickOutside={() => setShow(false)}
+                onClickOutside={() => {
+                    setShow(false)
+                    setValue({ name: '' })
+                }}
             >
                 <Form
                     value={value}
@@ -67,8 +73,7 @@ const Invite = () => {
                         <TextInput id="text-input-id" name="name" />
                     </FormField>
                     <Box direction="row" gap="medium">
-                        <Button type="submit" primary label="Submit" />
-                        <Button type="reset" label="Reset" />
+                        <Button type="submit" color='lightblue' primary label="Submit" />
                     </Box>
                 </Form>
             </Layer>
