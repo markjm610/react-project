@@ -12,7 +12,7 @@ const router = express.Router();
 router.get('/users/:userId/projects', asyncHandler(async (req, res, next) => {
     const userId = parseInt(req.params.userId, 10);
 
-    const projects = await User.findByPk(userId, { include: { model: Project } });
+    const projects = await User.findByPk(userId, { include: { model: Project }, order: [[Project, UsersProject, 'createdAt']] });
 
     res.json({ projects })
 }))
