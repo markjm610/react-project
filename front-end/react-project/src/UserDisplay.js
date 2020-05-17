@@ -7,7 +7,6 @@ import { apiBaseUrl } from './config';
 const UserDisplay = () => {
     const { invites, setInvites, currentUserId } = useContext(Context);
     const [show, setShow] = useState();
-    const [value, setValue] = useState({ name: '' });
     const clickNotification = () => {
         setShow(true)
     }
