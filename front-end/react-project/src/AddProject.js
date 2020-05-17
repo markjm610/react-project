@@ -60,7 +60,7 @@ const AddProject = () => {
                             <TextInput id="text-input-id" name="name" />
                         </FormField>
                         <Box direction="row" gap="medium">
-                            <Button type="submit" primary label="Submit" />
+                            <Button type="submit" color='lightblue' primary label="Submit" />
                         </Box>
                     </Form>
                 </Layer>

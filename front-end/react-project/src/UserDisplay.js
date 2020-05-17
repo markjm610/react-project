@@ -23,8 +23,7 @@ const UserDisplay = () => {
             }
         })
         invitesCopy.splice(spliceId, 1)
-        // console.log(spliceId)
-        // console.log(invitesCopy);
+
         setInvites(invitesCopy)
 
         await fetch(`${apiBaseUrl}/usersprojects`, {

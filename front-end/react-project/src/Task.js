@@ -38,7 +38,7 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
             }
             const saveId = dragTaskId;
             const drag = currentlyDragging;
-            // setCurrentlyDragging(taskdropzoneid);
+
             let startingColumn;
             let copy = [...displayedColumns];
 
@@ -66,15 +66,13 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
             setDragTaskId(saveId);
 
         } else {
-            // console.log('in else');
+
 
             const drag = currentlyDragging;
             const saveDragColumnId = dragColumnId;
             const saveId = dragTaskId;
 
-            // setCurrentlyDragging(taskdropzoneid)
 
-            // const startingColumn = appState[saveDragColumnId].slice();
 
             let startingColumn;
             let copy = [...displayedColumns];
@@ -90,7 +88,7 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
             copy.forEach(column => {
                 if (column.id === columnId) {
                     newColumn = column.Tasks.slice();
-                    // console.log(newColumn[taskdropzoneid])
+
                 }
             })
 
