@@ -49,9 +49,9 @@ const Invite = () => {
     }
 
     return (<>
-        <div className='invite'>{currentProjectId && <ShareOption
+        {currentProjectId && <div className='invite'>Invite Team Member<ShareOption
             className='invite-icon'
-            onClick={() => setShow(true)}></ShareOption>}</div>
+            onClick={() => setShow(true)}></ShareOption></div>}
         {show && (
             <Layer
                 onEsc={() => setShow(false)}
