@@ -135,23 +135,32 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
 
         let sendArr = [];
 
-        displayedColumns.forEach(column => {
+        let copy = [...displayedColumns];
+
+        copy.forEach(column => {
             if (column.id === columnId) {
                 console.log('column.id === columnId')
                 sendArr.push(...column.Tasks.slice(0, column.Tasks.length - 1))
             } else if (column.id === item.columnId) {
-                console.log('column.id === dragColumnId')
+                console.log('column.id === item.columnId')
                 sendArr.push(...column.Tasks.slice(0, column.Tasks.length - 1))
             }
         })
-        console.log(sendArr);
-        await fetch(`${apiBaseUrl}/tasks`, {
-            method: 'PATCH',
-            body: JSON.stringify({ sendArr }),
-            headers: {
-                "Content-Type": 'application/json',
-            }
-        })
+
+        // console.log(sendArr);
+
+        try {
+            await fetch(`${apiBaseUrl}/tasks`, {
+                method: 'PUT',
+                body: JSON.stringify({ sendArr }),
+                headers: {
+                    "Content-Type": 'application/json',
+                }
+            })
+
+        } catch (e) {
+            console.error(e)
+        }
     }
 
     const [{ isOver }, drop] = useDrop({
