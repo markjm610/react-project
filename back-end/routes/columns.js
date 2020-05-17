@@ -40,6 +40,7 @@ router.delete('/columns/:columnId', asyncHandler(async (req, res) => {
 
         await column.destroy();
 
+        res.json({ message: 'deleted' })
     } catch (e) {
         console.error(e)
     }

@@ -34,6 +34,7 @@ router.delete('/tasks/:taskId', asyncHandler(async (req, res) => {
     const task = await Task.findByPk(taskId);
 
     await task.destroy();
+    res.json({ message: 'deleted' })
 
 }))
 
@@ -47,7 +48,7 @@ router.put('/tasks', asyncHandler(async (req, res) => {
                 { columnPosition: task.columnPosition, columnId: task.columnId },
                 { where: { id: task.id } });
         })
-
+        res.json({ message: 'success' })
     } catch (e) {
         console.error(e)
     }

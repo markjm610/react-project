@@ -21,7 +21,7 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
             // setAppState({ ...appState, dragColumnId: columnId })
         },
         end: (item) => {
-            console.log(item)
+            // console.log(item)
             setDragTaskId('')
             handleDrop(item);
         },
@@ -55,7 +55,7 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
                     column.Tasks = startingColumn;
                     column.Tasks.forEach((task, i) => {
                         task.columnPosition = i;
-                        console.log(task.columnPosition)
+                        // console.log(task.columnPosition)
                     })
                 }
             })
@@ -132,17 +132,17 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
     }
 
     const handleDrop = async (item) => {
-
+        // console.log('handle drop')
         let sendArr = [];
 
         let copy = [...displayedColumns];
 
         copy.forEach(column => {
             if (column.id === columnId) {
-                console.log('column.id === columnId')
+                // console.log('column.id === columnId')
                 sendArr.push(...column.Tasks.slice(0, column.Tasks.length - 1))
             } else if (column.id === item.columnId) {
-                console.log('column.id === item.columnId')
+                // console.log('column.id === item.columnId')
                 sendArr.push(...column.Tasks.slice(0, column.Tasks.length - 1))
             }
         })
