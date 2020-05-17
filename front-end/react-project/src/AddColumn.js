@@ -49,7 +49,10 @@ const AddColumn = () => {
             show && (
                 <Layer
                     onEsc={() => setShow(false)}
-                    onClickOutside={() => setShow(false)}
+                    onClickOutside={() => {
+                        setShow(false)
+                        setValue({ name: '' })
+                    }}
                 >
                     <Form
                         value={value}
