@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { Layer, Form, Box, FormField, TextInput, Button } from 'grommet';
-import { Notification } from 'grommet-icons';
+import { Notification, UserAdd } from 'grommet-icons';
 import Context from './Context';
 import { apiBaseUrl } from './config';
 
@@ -43,8 +43,11 @@ const UserDisplay = () => {
 
     return (
         <div className='user-display'>
-            <div className='user-profile-picture'>Profile picture goes here</div>
-            {invites[0] && <div><Notification className='notification-icon' onClick={clickNotification}></Notification></div>}
+            <div className='user-profile-picture'>
+                <UserAdd size='large' className='add-profile-picture-icon'></UserAdd>
+                <div className='add-profile-picture-text'>Add Profile Picture</div>
+            </div>
+            {!invites[0] && <div className='notification-icon-container'><Notification className='notification-icon' onClick={clickNotification}></Notification></div>}
             {show && (
                 <Layer
                     onEsc={() => setShow(false)}
