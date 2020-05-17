@@ -41,13 +41,19 @@ const UserDisplay = () => {
 
     }
 
+
+
     return (
         <div className='user-display'>
             <div className='user-profile-picture'>
                 <UserAdd size='large' className='add-profile-picture-icon'></UserAdd>
                 <div className='add-profile-picture-text'>Add Profile Picture</div>
             </div>
-            {!invites[0] && <div className='notification-icon-container'><Notification className='notification-icon' onClick={clickNotification}></Notification></div>}
+            {invites[0] && <div className='notification-icon-container'><Notification
+                color='white'
+                className='notification-icon' onClick={clickNotification}></Notification>
+                <div className='invite-message'>You have {invites.length} invite{invites.length !== 1 ? 's' : ''}!</div>
+            </div>}
             {show && (
                 <Layer
                     onEsc={() => setShow(false)}

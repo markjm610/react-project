@@ -249,11 +249,13 @@ html, body {
 
 .notification-icon-container {
     display: flex;
-    justify-content: center;
+    /* justify-content: center; */
+    flex-direction: column;
+    align-items: center;
 }
 
 .notification-icon{
-    padding-top: 100px;
+    padding: 10px;
 }
 
 .notification-icon:hover {
