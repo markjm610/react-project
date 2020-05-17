@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { AddCircle } from 'grommet-icons';
-import { Layer, Form, Box, FormField, TextInput, Button } from 'grommet';
+import { Layer, Form, Box, FormField, TextInput, Button, TextArea } from 'grommet';
 import Context from './Context';
 import { apiBaseUrl } from './config';
 
@@ -74,7 +74,7 @@ const AddTask = ({ columnId, taskArrLength }) => {
                             <TextInput id="text-input-id" name="name" />
                         </FormField>
                         <FormField name="description" htmlfor="text-input-id" label="Description:">
-                            <TextInput id="text-input-id" name="description" />
+                            <TextArea id="text-input-id" name="description" />
                         </FormField>
                         <Box direction="row" gap="medium">
                             <Button type="submit" color='lightblue' primary label="Submit" />
