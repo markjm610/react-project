@@ -58,12 +58,12 @@ const UserDisplay = () => {
                     onClickOutside={() => setShow(false)}
                 >   {invites.map(invite => {
                     return (
-                        <>
+                        <React.Fragment key={invite.id}>
                             <div className='invite-message'>
                                 {invite.inviteSender} invited you to {invite.Project.name}
                             </div>
-                            <Button onClick={() => acceptInvite(invite)} primary label="Join project" />
-                        </>)
+                            <Button onClick={() => acceptInvite(invite)} color='lightblue' primary label="Join project" />
+                        </React.Fragment>)
                 })}
                 </Layer>
             )}

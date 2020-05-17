@@ -16,6 +16,8 @@ router.post('/usersprojects', asyncHandler(async (req, res, next) => {
 
     const invite = await Invite.findByPk(inviteId)
     await invite.destroy()
+
+    res.json({ message: 'confirmed' })
 }))
 
 module.exports = router;
