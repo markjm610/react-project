@@ -9,37 +9,125 @@ import Context from './Context';
 // import Context from './Context';
 // import { apiBaseUrl } from './config';
 
-const Column = ({ tasksArray, name, pagePosition, columnId, currentlyDragging, setCurrentlyDragging }) => {
+const Column = ({ columnDropZoneId, tasksArray, name, pagePosition, columnId, currentlyDragging, setCurrentlyDragging }) => {
 
-    const { dragRef, setDragRef } = useContext(Context)
+    const {
+        dragRef,
+        setDragRef,
+        // draggingColumnId,
+        // setDraggingColumnId,
+        currentlyDraggingColumn,
+        setCurrentlyDraggingColumn,
+        displayedColumns,
+        setDisplayedColumns
+    } = useContext(Context)
 
     const [{ isDragging }, drag] = useDrag({
-        item: { type: ItemTypes.COLUMN },
+        item: { type: ItemTypes.COLUMN, columnId },
         begin: () => {
             console.log('drag column begin')
-
+            setCurrentlyDraggingColumn(columnDropZoneId)
+        },
+        end: (item) => {
+            // console.log(item)
+            // setDragTaskId('')
+            handleDrop(item);
         },
         collect: monitor => ({
             isDragging: monitor.isDragging()
         })
     })
 
+
+
+    const changePositions = () => {
+
+
+        // if (columnDropZoneId === columnArrLength - 1) {
+        //     return;
+        // }
+        // const saveId = dragTaskId;
+        const drag = currentlyDraggingColumn;
+
+        // let startingColumn;
+
+        let copy = [...displayedColumns];
+
+
+
+        const moved = copy.splice(drag, 1);
+
+        copy.splice(columnDropZoneId, 0, moved[0])
+
+        copy.forEach((column, i) => {
+            column.pagePosition = i;
+        })
+
+
+
+        // setDragColumnId(dragColumnId);
+
+        setDisplayedColumns(copy);
+
+        setCurrentlyDraggingColumn(columnDropZoneId);
+        // setDragTaskId(saveId);
+
+    }
+
+
     const [{ isOver }, drop] = useDrop({
         accept: ItemTypes.COLUMN,
-        drop: () => console.log('drop column'),
+        drop: () => {
+            // handleDrop();
+        },
+        hover: (item) => {
+            console.log('hover')
+
+            // if (taskid !== null && dragTaskId !== taskid) {
+            //     setDragTaskId(taskid)
+            // }
+            console.log(currentlyDraggingColumn)
+            console.log(columnDropZoneId)
+            if (currentlyDraggingColumn === columnDropZoneId) {
+                return
+            }
+
+            // item.columnId = columnId;
+            changePositions()
+
+        },
         collect: monitor => ({
             isOver: !!monitor.isOver(),
         }),
     })
 
 
+    const handleDrop = async (item) => {
+        // console.log('handle drop')
+        let sendArr = [...displayedColumns];
 
+
+        // console.log(sendArr);
+
+        // try {
+        //     await fetch(`${apiBaseUrl}/tasks`, {
+        //         method: 'PUT',
+        //         body: JSON.stringify({ sendArr }),
+        //         headers: {
+        //             "Content-Type": 'application/json',
+        //         }
+        //     })
+
+        // } catch (e) {
+        //     console.error(e)
+        // }
+    }
 
 
     return (
         <>
-            <div className='column-drop-zone'>
-                {dragRef && <div ref={drag} className='column'>
+            <div ref={drop} className='column-drop-zone'>
+                {dragRef && <div ref={drag} className='column' style={{ opacity: isDragging ? 0 : 1 }}>
                     <div className='column__header'>
                         <AddTask
                             columnId={columnId}

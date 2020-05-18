@@ -12,11 +12,12 @@ const WorkingArea = () => {
 
     return (
         <>
-            {displayedColumns.map(({ id, name, pagePosition, Tasks }) => {
+            {displayedColumns.map(({ id, name, pagePosition, Tasks }, i) => {
                 // Tasks.push({ id: null, heading: null, description: null, columnPosition: Tasks.length, columnId: id })
 
                 return (<Column
                     key={id}
+                    columnDropZoneId={i}
                     columnId={id}
                     name={name}
                     pagePosition={pagePosition}
