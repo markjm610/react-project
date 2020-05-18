@@ -20,7 +20,7 @@ import { ItemTypes } from './ItemTypes';
 
 const Home = () => {
 
-    const { invites, setInvites, setProjectArr } = useContext(Context);
+    const { invites, setInvites, setProjectArr, setDragRef } = useContext(Context);
 
 
     const userId = localStorage.getItem('USER_ID');
@@ -76,7 +76,7 @@ const Home = () => {
 
 
     return (
-        <div id='home'>
+        <div id='home' onMouseUp={() => setDragRef(true)}>
             <div className='sidebar-left'>
                 <UserDisplay></UserDisplay>
                 <div className='project-stuff'>

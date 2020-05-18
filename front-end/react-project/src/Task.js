@@ -18,7 +18,6 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
             setCurrentlyDragging(taskdropzoneid);
             setDragColumnId(columnId);
             // setDragTaskId(taskid)
-            // setAppState({ ...appState, dragColumnId: columnId })
         },
         end: (item) => {
             // console.log(item)
