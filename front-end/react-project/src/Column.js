@@ -86,8 +86,7 @@ const Column = ({ columnDropZoneId, tasksArray, name, pagePosition, columnId, cu
             // if (taskid !== null && dragTaskId !== taskid) {
             //     setDragTaskId(taskid)
             // }
-            console.log(currentlyDraggingColumn)
-            console.log(columnDropZoneId)
+
             if (currentlyDraggingColumn === columnDropZoneId) {
                 return
             }
@@ -127,7 +126,10 @@ const Column = ({ columnDropZoneId, tasksArray, name, pagePosition, columnId, cu
     return (
         <>
             <div ref={drop} className='column-drop-zone'>
-                {dragRef && <div ref={drag} className='column' style={{ opacity: isDragging ? 0 : 1 }}>
+                {dragRef && <div ref={drag} className='column' style={
+                    {
+                        opacity: isDragging ? 0 : 1
+                    }}>
                     <div className='column__header'>
                         <AddTask
                             columnId={columnId}
