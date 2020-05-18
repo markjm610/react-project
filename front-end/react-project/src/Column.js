@@ -5,11 +5,14 @@ import { ItemTypes } from './ItemTypes';
 import AddTask from './AddTask';
 import DeleteColumn from './DeleteColumn';
 import Context from './Context';
+import { apiBaseUrl } from './config';
+
+
 
 // import Context from './Context';
 // import { apiBaseUrl } from './config';
 
-const Column = ({ columnDropZoneId, tasksArray, name, pagePosition, columnId, currentlyDragging, setCurrentlyDragging }) => {
+const Column = ({ columnDropZoneId, tasksArray, name, columnId, currentlyDragging, setCurrentlyDragging }) => {
 
     const {
         dragRef,
@@ -81,7 +84,7 @@ const Column = ({ columnDropZoneId, tasksArray, name, pagePosition, columnId, cu
             // handleDrop();
         },
         hover: (item) => {
-            console.log('hover')
+            // console.log('hover')
 
             // if (taskid !== null && dragTaskId !== taskid) {
             //     setDragTaskId(taskid)
@@ -106,20 +109,20 @@ const Column = ({ columnDropZoneId, tasksArray, name, pagePosition, columnId, cu
         let sendArr = [...displayedColumns];
 
 
-        // console.log(sendArr);
 
-        // try {
-        //     await fetch(`${apiBaseUrl}/tasks`, {
-        //         method: 'PUT',
-        //         body: JSON.stringify({ sendArr }),
-        //         headers: {
-        //             "Content-Type": 'application/json',
-        //         }
-        //     })
 
-        // } catch (e) {
-        //     console.error(e)
-        // }
+        try {
+            await fetch(`${apiBaseUrl}/columns`, {
+                method: 'PUT',
+                body: JSON.stringify({ sendArr }),
+                headers: {
+                    "Content-Type": 'application/json',
+                }
+            })
+
+        } catch (e) {
+            console.error(e)
+        }
     }
 
 
@@ -137,7 +140,9 @@ const Column = ({ columnDropZoneId, tasksArray, name, pagePosition, columnId, cu
                         <div className='column__name'>{name}</div>
                         <DeleteColumn columnId={columnId}></DeleteColumn>
                     </div>
-                    <div onMouseDown={() => setDragRef(false)} className='tasks-container'>
+                    <div
+                        onMouseDown={() => setDragRef(false)}
+                        className='tasks-container'>
                         {tasksArray.map((task, i) => <Task
                             key={task.id}
                             taskid={task.id}
@@ -163,7 +168,7 @@ const Column = ({ columnDropZoneId, tasksArray, name, pagePosition, columnId, cu
                         <div className='column__name'>{name}</div>
                         <DeleteColumn columnId={columnId}></DeleteColumn>
                     </div>
-                    <div onMouseDown={() => setDragRef(false)} className='tasks-container'>
+                    <div className='tasks-container'>
                         {tasksArray.map((task, i) => <Task
                             key={task.id}
                             taskid={task.id}
