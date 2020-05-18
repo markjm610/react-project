@@ -155,6 +155,10 @@ html, body {
     justify-content: space-between;
 }
 
+.column__header:hover {
+    cursor: pointer;
+}
+
 .add-task {
     display: flex;
     align-items: center;

@@ -204,9 +204,9 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
             <div className='task'
                 ref={drag}
                 taskid={taskid} style={{
-                    // opacity: (isDragging || dragTaskId === taskid && (isOver || !isOver)) ? 0.4 : 1,
+
                     opacity: (isDragging || (!isDragging && (dragTaskId === taskid))) ? 0.4 : 1,
-                    // opacity: (isDragging || (!isDragging && ((dragTaskId === taskid) && (isOver || !isOver)))) ? 0.4 : 1,
+
                 }}>
                 <div className='task-drop-zone'
                     ref={drop}
