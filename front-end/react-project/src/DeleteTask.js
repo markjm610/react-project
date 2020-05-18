@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { FormClose } from 'grommet-icons';
 import Context from './Context';
 import { apiBaseUrl } from './config';
@@ -6,8 +6,17 @@ import { apiBaseUrl } from './config';
 const DeleteTask = ({ taskid, columnId }) => {
     const { displayedColumns, setDisplayedColumns } = useContext(Context);
 
+    // const [allowTaskDelete, setAllowTaskDelete] = useState();
+
+    // const handleMouseDown = () => {
+
+    //     setAllowTaskDelete(true);
+    //     // console.log(allowTaskDelete)
+    // }
+
 
     const deleteTaskClick = async () => {
+        // console.log(allowTaskDelete)
 
         const columnsCopy = [...displayedColumns];
 
@@ -34,9 +43,15 @@ const DeleteTask = ({ taskid, columnId }) => {
 
     }
 
+
+
+
+
     return (
         <div className='delete-task'>
-            <FormClose onClick={deleteTaskClick}></FormClose>
+            <FormClose className='delete-task-icon'
+                onMouseUp={deleteTaskClick}
+            ></FormClose>
         </div>
     )
 }

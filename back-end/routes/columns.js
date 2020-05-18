@@ -47,4 +47,19 @@ router.delete('/columns/:columnId', asyncHandler(async (req, res) => {
 
 }))
 
+router.put('/columns', asyncHandler(async (req, res) => {
+    try {
+        const { sendArr } = req.body;
+        sendArr.forEach(async (column) => {
+            await Column.update(
+                { pagePosition: column.pagePosition },
+                { where: { id: column.id } });
+        })
+        res.json({ message: 'success' })
+    } catch (e) {
+        console.error(e)
+    }
+}))
+
+
 module.exports = router;

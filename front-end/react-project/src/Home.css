@@ -296,3 +296,6 @@ html, body {
     cursor: pointer;
 }
 
+.delete-task-icon {
+    z-index: 10;
+}
