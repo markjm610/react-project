@@ -5,7 +5,7 @@ import { ItemTypes } from './ItemTypes';
 import Context from './Context';
 import { apiBaseUrl } from './config';
 import DeleteTask from './DeleteTask';
-
+import { Draggable } from 'react-beautiful-dnd'
 
 const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging, taskid, taskdropzoneid, heading, description }) => {
 
@@ -201,32 +201,42 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
     } else {
         return (
 
+            <Draggable draggableId={`${taskid}`} index={taskdropzoneid}>
+                {(provided) => {
+                    console.log(provided)
+                    return (
+                        <div
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                            ref={provided.innerRef}>
+                            <div className='task'
+                                // ref={drag}
+                                taskid={taskid}
 
-            <div className='task'
-                ref={drag}
-                taskid={taskid} style={{
+                                style={{
+                                    // opacity: (isDragging || (!isDragging && (dragTaskId === taskid))) ? 0.4 : 1,
+                                }}>
+                                <div className='task-drop-zone'
+                                    // ref={drop}
+                                    taskdropzoneid={taskdropzoneid}>
+                                    <div
+                                        className='task__heading'
+                                    // style={{ backgroundColor: (isDragging || (!isDragging && (dragTaskId === taskid))) && 'yellow', color: (isDragging || (!isDragging && (dragTaskId === taskid))) && 'yellow' }}
+                                    >
+                                        <div className='task__heading-text'>{heading}</div>
+                                        <DeleteTask taskid={taskid} columnId={columnId}></DeleteTask>
+                                    </div></div>
 
-                    opacity: (isDragging || (!isDragging && (dragTaskId === taskid))) ? 0.4 : 1,
+                                <div
+                                    className='task__description'
+                                // style={{ backgroundColor: (isDragging || (!isDragging && (dragTaskId === taskid))) && 'yellow', color: (isDragging || (!isDragging && (dragTaskId === taskid))) && 'yellow' }}
+                                >{description}</div>
+                            </div>
+                        </div>)
+                }
+                }
 
-                }}>
-                <div className='task-drop-zone'
-                    ref={drop}
-                    taskdropzoneid={taskdropzoneid}>
-                    <div
-                        className='task__heading'
-                        style={{ backgroundColor: (isDragging || (!isDragging && (dragTaskId === taskid))) && 'yellow', color: (isDragging || (!isDragging && (dragTaskId === taskid))) && 'yellow' }}
-                    >
-                        <div className='task__heading-text'>{heading}</div>
-                        <DeleteTask taskid={taskid} columnId={columnId}></DeleteTask>
-                        {/* <div className='delete-task'><FormClose></FormClose></div> */}
-                    </div></div>
-
-                <div
-                    className='task__description'
-                    style={{ backgroundColor: (isDragging || (!isDragging && (dragTaskId === taskid))) && 'yellow', color: (isDragging || (!isDragging && (dragTaskId === taskid))) && 'yellow' }}
-                >{description}</div>
-            </div>
-
+            </Draggable >
 
         )
     }

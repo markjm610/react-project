@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
+import { DragDropContext } from 'react-beautiful-dnd'
 import Column from './Column';
 import Context from './Context';
 import AddColumn from './AddColumn'
@@ -8,13 +9,13 @@ const WorkingArea = () => {
     const { displayedColumns } = useContext(Context);
     const [currentlyDragging, setCurrentlyDragging] = useState(null)
 
+    const onDragEnd = () => {
 
+    }
 
     return (
-        <>
+        <DragDropContext onDragEnd={onDragEnd}>
             {displayedColumns.map(({ id, name, pagePosition, Tasks }, i) => {
-                // Tasks.push({ id: null, heading: null, description: null, columnPosition: Tasks.length, columnId: id })
-
                 return (<Column
                     key={id}
                     columnDropZoneId={i}
@@ -27,7 +28,7 @@ const WorkingArea = () => {
                 />)
             })}
             <AddColumn></AddColumn>
-        </>
+        </DragDropContext>
     )
 }
 

@@ -55,7 +55,7 @@ const ProjectNavMain = ({ id, name, position, dropZone }) => {
 
         // let startingColumn;
 
-        let copy = [...projectArr];
+        let copy = [...mainProjectArr];
 
         const moved = copy.splice(drag, 1);
 
@@ -69,7 +69,7 @@ const ProjectNavMain = ({ id, name, position, dropZone }) => {
 
         // setDragColumnId(dragColumnId);
 
-        setProjectArr(copy);
+        setMainProjectArr(copy);
 
         setCurrentlyDraggingProject(dropZone);
         // setDragTaskId(saveId);
