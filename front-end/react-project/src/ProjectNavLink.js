@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom'
 import { apiBaseUrl } from './config';
 
 
-const ProjectNavBar = () => {
+const ProjectNavLink = () => {
 
     const { projectArr, setProjectMembers, setDisplayedColumns, setCurrentProjectId } = useContext(Context);
 
@@ -12,7 +12,7 @@ const ProjectNavBar = () => {
         <div className='navbar__navlinks'>
             {projectArr.map(({ id, name }, i) => {
 
-                const handleProjectNavBarClick = async () => {
+                const handleProjectNavLinkClick = async () => {
 
                     const usersRes = await fetch(`${apiBaseUrl}/projects/${id}/users`);
                     const parsedUsersRes = await usersRes.json();

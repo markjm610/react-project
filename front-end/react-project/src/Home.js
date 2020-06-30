@@ -47,6 +47,7 @@ const Home = () => {
         async function fetchProjects() {
             const projectRes = await fetch(`${apiBaseUrl}/users/${userId}/projects`);
             const parsedProjectRes = await projectRes.json();
+            console.log(parsedProjectRes)
             const projects = parsedProjectRes.projects.Projects;
             setProjectArr(projects)
         }
