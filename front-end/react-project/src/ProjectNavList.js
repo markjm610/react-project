@@ -7,7 +7,7 @@ import { ItemTypes } from './ItemTypes';
 
 const ProjectNavList = ({ id, name, position, dropZone }) => {
 
-    const { projectArr, setProjectArr, setProjectMembers, setDisplayedColumns, setCurrentProjectId, currentlyDraggingProject, setCurrentlyDraggingProject } = useContext(Context);
+    const { listProjectArr, setListProjectArr, setProjectMembers, setDisplayedColumns, setCurrentProjectId, currentlyDraggingProject, setCurrentlyDraggingProject } = useContext(Context);
 
     const handleProjectNavLinkClick = async () => {
 
@@ -55,7 +55,7 @@ const ProjectNavList = ({ id, name, position, dropZone }) => {
 
         // let startingColumn;
 
-        let copy = [...projectArr];
+        let copy = [...listProjectArr];
 
         const moved = copy.splice(drag, 1);
 
@@ -69,7 +69,7 @@ const ProjectNavList = ({ id, name, position, dropZone }) => {
 
         // setDragColumnId(dragColumnId);
 
-        setProjectArr(copy);
+        setListProjectArr(copy);
 
         setCurrentlyDraggingProject(dropZone);
         // setDragTaskId(saveId);
@@ -104,7 +104,7 @@ const ProjectNavList = ({ id, name, position, dropZone }) => {
 
     const handleDrop = async (item) => {
         // console.log('handle drop')
-        // let sendArr = [...projectArr];
+        // let sendArr = [...listProjectArr];
 
         // try {
         //     await fetch(`${apiBaseUrl}/projects`, {

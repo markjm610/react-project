@@ -10,12 +10,10 @@ import './index.css';
 import ContextWrapper from './ContextWrapper';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <DndProvider backend={Backend}>
-      <BrowserRouter>
-        <ContextWrapper />
-      </BrowserRouter>
-    </DndProvider>
-  </React.StrictMode>,
+  <DndProvider backend={Backend}>
+    <BrowserRouter>
+      <ContextWrapper />
+    </BrowserRouter>
+  </DndProvider>,
   document.getElementById('root')
 );

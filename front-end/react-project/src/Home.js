@@ -20,7 +20,7 @@ import { ItemTypes } from './ItemTypes';
 
 const Home = () => {
 
-    const { invites, setInvites, setProjectArr, setDragRef } = useContext(Context);
+    const { setMainProjectArr, setListProjectArr, invites, setInvites, setDragRef } = useContext(Context);
 
 
     const userId = localStorage.getItem('USER_ID');

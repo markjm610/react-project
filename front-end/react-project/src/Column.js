@@ -6,7 +6,7 @@ import AddTask from './AddTask';
 import DeleteColumn from './DeleteColumn';
 import Context from './Context';
 import { apiBaseUrl } from './config';
-
+import { Droppable } from 'react-beautiful-dnd'
 
 
 // import Context from './Context';
@@ -127,68 +127,82 @@ const Column = ({ columnDropZoneId, tasksArray, name, columnId, currentlyDraggin
 
 
     return (
-        <>
-            <div ref={drop} className='column-drop-zone'>
-                {dragRef && <div ref={drag} className='column' style={
-                    {
-                        opacity: isDragging ? 0 : 1
-                    }}>
-                    <div className='column__header'>
-                        <AddTask
-                            columnId={columnId}
-                            taskArrLength={tasksArray.length}></AddTask>
-                        <div className='column__name'>{name}</div>
-                        <DeleteColumn columnId={columnId}></DeleteColumn>
-                    </div>
-                    <div
-                        onMouseDown={() => setDragRef(false)}
-                        className='tasks-container'>
-                        {tasksArray.map((task, i) => <Task
-                            key={task.id}
-                            taskid={task.id}
-                            taskdropzoneid={i}
-                            heading={task.heading}
-                            description={task.description}
-                            currentlyDragging={currentlyDragging}
-                            setCurrentlyDragging={setCurrentlyDragging}
-                            columnId={task.columnId}
-                            taskArrLength={tasksArray.length}
-                        // dragColumnId={dragColumnId}
-                        // setDragColumnId={setDragColumnId}
-                        ></Task>)}
+        <Droppable droppableId={`${columnId}`}>
+            {(provided) => {
+                return (
+                    <div ref={provided.innerRef}
+                        {...provided.droppableProps}>
+                        <div
 
-                    </div>
+                            // ref={drop} 
+                            className='column-drop-zone'>
+                            <div className='column'>
+                                <div className='column__header'>
+                                    <AddTask
+                                        columnId={columnId}
+                                        taskArrLength={tasksArray.length}></AddTask>
+                                    <div className='column__name'>{name}</div>
+                                    <DeleteColumn columnId={columnId}></DeleteColumn>
+                                </div>
+                                <div className='tasks-container'>
+                                    {tasksArray.map((task, i) => <Task
+                                        key={task.id}
+                                        taskid={task.id}
+                                        taskdropzoneid={i}
+                                        heading={task.heading}
+                                        description={task.description}
+                                        currentlyDragging={currentlyDragging}
+                                        setCurrentlyDragging={setCurrentlyDragging}
+                                        columnId={task.columnId}
+                                        taskArrLength={tasksArray.length}
+                                    // dragColumnId={dragColumnId}
+                                    // setDragColumnId={setDragColumnId}
+                                    />)}
 
-                </div>}
-                {!dragRef && <div className='column'>
-                    <div className='column__header'>
-                        <AddTask
-                            columnId={columnId}
-                            taskArrLength={tasksArray.length}></AddTask>
-                        <div className='column__name'>{name}</div>
-                        <DeleteColumn columnId={columnId}></DeleteColumn>
-                    </div>
-                    <div className='tasks-container'>
-                        {tasksArray.map((task, i) => <Task
-                            key={task.id}
-                            taskid={task.id}
-                            taskdropzoneid={i}
-                            heading={task.heading}
-                            description={task.description}
-                            currentlyDragging={currentlyDragging}
-                            setCurrentlyDragging={setCurrentlyDragging}
-                            columnId={task.columnId}
-                            taskArrLength={tasksArray.length}
-                        // dragColumnId={dragColumnId}
-                        // setDragColumnId={setDragColumnId}
-                        ></Task>)}
+                                </div>
 
-                    </div>
+                            </div>
+                            {provided.placeholder}
+                        </div>
+                    </div>)
+            }}
 
-                </div>}
-            </div>
-        </>
+        </Droppable>
     )
 }
 
 export default Column;
+
+
+
+// {/* {dragRef && <div className='column' style={
+//                     {
+//                         opacity: isDragging ? 0 : 1
+//                     }}>
+//                     <div className='column__header'>
+//                         <AddTask
+//                             columnId={columnId}
+//                             taskArrLength={tasksArray.length}></AddTask>
+//                         <div className='column__name'>{name}</div>
+//                         <DeleteColumn columnId={columnId}></DeleteColumn>
+//                     </div>
+//                     <div
+//                         onMouseDown={() => setDragRef(false)}
+//                         className='tasks-container'>
+//                         {tasksArray.map((task, i) => <Task
+//                             key={task.id}
+//                             taskid={task.id}
+//                             taskdropzoneid={i}
+//                             heading={task.heading}
+//                             description={task.description}
+//                             currentlyDragging={currentlyDragging}
+//                             setCurrentlyDragging={setCurrentlyDragging}
+//                             columnId={task.columnId}
+//                             taskArrLength={tasksArray.length}
+//                         // dragColumnId={dragColumnId}
+//                         // setDragColumnId={setDragColumnId}
+//                         ></Task>)}
+
+//                     </div>
+
+//                 </div>} */}

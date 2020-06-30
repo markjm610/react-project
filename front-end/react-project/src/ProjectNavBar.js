@@ -8,7 +8,7 @@ import ProjectNavList from './ProjectNavList';
 
 const ProjectNavBar = () => {
 
-    const { mainProjectArr, listProjectArr, setProjectMembers, setDisplayedColumns, setCurrentProjectId } = useContext(Context);
+    const { mainProjectArr, listProjectArr } = useContext(Context);
 
 
 
