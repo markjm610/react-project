@@ -12,7 +12,7 @@ const router = express.Router();
 router.get('/users/:userId/projects', asyncHandler(async (req, res, next) => {
     const userId = parseInt(req.params.userId, 10);
 
-    const projects = await User.findByPk(userId, { include: { model: Project }, order: [[Project, UsersProject, 'createdAt']] });
+    const projects = await User.findByPk(userId, { include: { model: Project }, order: [[Project, UsersProject, 'position']] });
 
     res.json({ projects })
 }))
@@ -37,10 +37,9 @@ router.get('/projects/:projectId/users', asyncHandler(async (req, res, next) => 
 
 router.post('/users/:userId/projects', asyncHandler(async (req, res, next) => {
     const userId = parseInt(req.params.userId, 10);
-    const { name } = req.body;
+    const { name, position } = req.body;
     const newProject = await Project.create({ name, creatorId: userId })
-    await UsersProject.create({ userId, projectId: newProject.id })
-    console.log(newProject);
+    await UsersProject.create({ userId, projectId: newProject.id, position })
     res.json({ newProject })
 }))
 

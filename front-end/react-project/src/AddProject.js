@@ -22,7 +22,7 @@ const AddProject = () => {
         const res = await fetch(`${apiBaseUrl}/users/${currentUserId}/projects`, {
             method: 'POST',
             body: JSON.stringify(
-                { name: value.name }
+                { name: value.name, position: projectsCopy.length }
             ),
             headers: {
                 "Content-Type": 'application/json',
@@ -32,7 +32,7 @@ const AddProject = () => {
         const parsedRes = await res.json();
         const newProject = parsedRes.newProject;
         projectsCopy.push(newProject)
-        console.log(projectsCopy)
+
         setProjectArr(projectsCopy);
 
         value.name = ''

@@ -13,6 +13,10 @@ module.exports = {
         type: Sequelize.INTEGER,
         references: { model: 'Users' }
       },
+      position: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+      },
       projectId: {
         allowNull: false,
         type: Sequelize.INTEGER,
