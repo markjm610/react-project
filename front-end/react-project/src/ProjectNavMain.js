@@ -7,7 +7,7 @@ import { ItemTypes } from './ItemTypes';
 
 const ProjectNavMain = ({ id, name, position, dropZone }) => {
 
-    const { projectArr, setProjectArr, setProjectMembers, setDisplayedColumns, setCurrentProjectId, currentlyDraggingProject, setCurrentlyDraggingProject } = useContext(Context);
+    const { mainProjectArr, setMainProjectArr, setProjectMembers, setDisplayedColumns, setCurrentProjectId, currentlyDraggingProject, setCurrentlyDraggingProject } = useContext(Context);
 
     const handleProjectNavLinkClick = async () => {
 
@@ -82,11 +82,6 @@ const ProjectNavMain = ({ id, name, position, dropZone }) => {
         drop: () => {
         },
         hover: (item) => {
-            // console.log('hover')
-
-            // if (taskid !== null && dragTaskId !== taskid) {
-            //     setDragTaskId(taskid)
-            // }
 
             if (currentlyDraggingProject === dropZone) {
                 return
@@ -104,20 +99,20 @@ const ProjectNavMain = ({ id, name, position, dropZone }) => {
 
     const handleDrop = async (item) => {
         // console.log('handle drop')
-        let sendArr = [...projectArr];
+        let sendArr = [...mainProjectArr];
 
-        try {
-            await fetch(`${apiBaseUrl}/projects`, {
-                method: 'PUT',
-                body: JSON.stringify({ sendArr }),
-                headers: {
-                    "Content-Type": 'application/json',
-                }
-            })
+        // try {
+        //     await fetch(`${apiBaseUrl}/projects`, {
+        //         method: 'PUT',
+        //         body: JSON.stringify({ sendArr }),
+        //         headers: {
+        //             "Content-Type": 'application/json',
+        //         }
+        //     })
 
-        } catch (e) {
-            console.error(e)
-        }
+        // } catch (e) {
+        //     console.error(e)
+        // }
     }
 
 

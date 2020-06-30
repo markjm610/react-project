@@ -12,13 +12,13 @@ const ContextWrapper = () => {
     const [currentProjectId, setCurrentProjectId] = useState(null)
     const [taskArrays, setTaskArrays] = useState({})
     const [invites, setInvites] = useState([])
-    const [projectArr, setProjectArr] = useState([])
     const [dragTaskId, setDragTaskId] = useState('')
     const [dragRef, setDragRef] = useState(true)
     const [draggingColumnId, setDraggingColumnId] = useState('')
     const [currentlyDraggingColumn, setCurrentlyDraggingColumn] = useState(null)
     const [currentlyDraggingProject, setCurrentlyDraggingProject] = useState(null)
-
+    const [mainProjectArr, setMainProjectArr] = useState([])
+    const [listProjectArr, setListProjectArr] = useState([])
 
     return (
         <Context.Provider value={
@@ -31,12 +31,13 @@ const ContextWrapper = () => {
                 currentProjectId, setCurrentProjectId,
                 taskArrays, setTaskArrays,
                 invites, setInvites,
-                projectArr, setProjectArr,
                 dragTaskId, setDragTaskId,
                 dragRef, setDragRef,
                 draggingColumnId, setDraggingColumnId,
                 currentlyDraggingColumn, setCurrentlyDraggingColumn,
-                currentlyDraggingProject, setCurrentlyDraggingProject
+                currentlyDraggingProject, setCurrentlyDraggingProject,
+                mainProjectArr, setMainProjectArr,
+                listProjectArr, setListProjectArr
             }
         } >
             <App />
