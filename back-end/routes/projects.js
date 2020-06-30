@@ -60,5 +60,23 @@ router.get('/projects/:projectId', asyncHandler(async (req, res, next) => {
 
 }))
 
+router.put('/projects', asyncHandler(async (req, res, next) => {
+    try {
+        const { sendArr } = req.body;
+        console.log('SENDARR')
+        console.log(sendArr)
+        sendArr.forEach(async (project) => {
+            await UsersProject.update(
+                { position: project.UsersProject.position },
+                { where: { projectId: project.id } });
+        })
+        res.json({ message: 'success' })
+    } catch (e) {
+        console.error(e)
+    }
+
+
+}))
+
 
 module.exports = router;

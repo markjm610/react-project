@@ -17,6 +17,8 @@ const ContextWrapper = () => {
     const [dragRef, setDragRef] = useState(true)
     const [draggingColumnId, setDraggingColumnId] = useState('')
     const [currentlyDraggingColumn, setCurrentlyDraggingColumn] = useState(null)
+    const [currentlyDraggingProject, setCurrentlyDraggingProject] = useState(null)
+
 
     return (
         <Context.Provider value={
@@ -33,7 +35,8 @@ const ContextWrapper = () => {
                 dragTaskId, setDragTaskId,
                 dragRef, setDragRef,
                 draggingColumnId, setDraggingColumnId,
-                currentlyDraggingColumn, setCurrentlyDraggingColumn
+                currentlyDraggingColumn, setCurrentlyDraggingColumn,
+                currentlyDraggingProject, setCurrentlyDraggingProject
             }
         } >
             <App />

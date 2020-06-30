@@ -1,4 +1,5 @@
 export const ItemTypes = {
     COLUMN: 'column',
-    TASK: 'task'
+    TASK: 'task',
+    PROJECT: 'project'
 }

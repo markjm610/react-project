@@ -2,53 +2,38 @@ import React, { useContext } from 'react';
 import Context from './Context';
 import { NavLink } from 'react-router-dom'
 import { apiBaseUrl } from './config';
+import ProjectNavMain from './ProjectNavMain';
 
 
 const ProjectNavBar = () => {
 
     const { projectArr, setProjectMembers, setDisplayedColumns, setCurrentProjectId } = useContext(Context);
 
+
+
     return (
         <div className='navbar__navlinks'>
-            {projectArr.map(({ id, name }, i) => {
+            {projectArr.map(({ id, name, UsersProject: { position } }, i) => {
 
-                const handleProjectNavBarClick = async () => {
-
-                    const usersRes = await fetch(`${apiBaseUrl}/projects/${id}/users`);
-                    const parsedUsersRes = await usersRes.json();
-
-                    const res = await fetch(`${apiBaseUrl}/projects/${id}`);
-                    const parsedRes = await res.json();
-                    const columns = parsedRes.projectInfo.Columns;
-                    columns.forEach(column => {
-                        column.Tasks.push({ id: null, heading: null, description: null, columnPosition: column.Tasks.length, columnId: column.id })
-                    })
-
-                    setProjectMembers(parsedUsersRes.projects.Users || []);
-                    setDisplayedColumns(columns);
-                    setCurrentProjectId(id);
-
-                }
-
-                if (i < 5) {
-                    return (
-                        <NavLink className='navlink'
-                            style={{ textDecoration: 'none' }}
-                            key={i}
-                            to={`/home/project/${id}`}
-                            id={id}
-                            name={name}
-                            onClick={handleProjectNavBarClick}>
-                            <div className='project-navlink'>{name}</div>
-
-                        </NavLink>
-                    )
-                }
+                return (
+                    <ProjectNavMain
+                        dropZone={i}
+                        key={id}
+                        to={`/home/project/${id}`}
+                        id={id}
+                        name={name}
+                        position={position}
+                    />
+                )
 
             }
             )}
-
-        </div>
+            {/* {projectArr.map(({ id }, i) => {
+                if (i >= 5) {
+                    return <div key={id}>{i}</div>
+                }
+            })} */}
+        </div >
     )
 }
 
