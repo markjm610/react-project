@@ -48,7 +48,10 @@ const Home = () => {
             const projectRes = await fetch(`${apiBaseUrl}/users/${userId}/projects`);
             const parsedProjectRes = await projectRes.json();
             const projects = parsedProjectRes.projects.Projects;
-            setProjectArr(projects)
+            const mainProjectArr = projects.slice(0, 5)
+            const listProjectArr = projects.slice(5)
+            setMainProjectArr(mainProjectArr)
+            setListProjectArr(listProjectArr)
         }
         fetchProjects();
     }, [invites])

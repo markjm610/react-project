@@ -35,6 +35,7 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
             if (taskdropzoneid === taskArrLength - 1) {
                 return;
             }
+
             const saveId = dragTaskId;
             const drag = currentlyDragging;
 
