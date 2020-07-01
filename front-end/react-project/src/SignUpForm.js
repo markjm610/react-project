@@ -6,9 +6,9 @@ import Context from './Context';
 import { Draggable, Droppable } from 'react-beautiful-dnd'
 
 
-const SignUpForm = () => {
+const SignUpForm = ({ index }) => {
     const [value, setValue] = useState({ email: '', name: '', password: '' });
-    const { setAuthToken, setCurrentUserId } = useContext(Context);
+    const { setAuthToken, setCurrentUserId, formPositions } = useContext(Context);
     const handleSubmit = async () => {
 
         try {
@@ -40,10 +40,7 @@ const SignUpForm = () => {
 
     }
     return (
-
-
-
-        <Draggable draggableId={'sign-up'} index={2}>
+        <Draggable draggableId={'sign-up'} index={index}>
             {(provided) => {
                 return (
                     <div

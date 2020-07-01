@@ -203,7 +203,6 @@ const Task = ({ taskArrLength, columnId, currentlyDragging, setCurrentlyDragging
 
             <Draggable draggableId={`${taskid}`} index={taskdropzoneid}>
                 {(provided) => {
-
                     return (
                         <div
                             {...provided.draggableProps}

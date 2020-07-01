@@ -25,8 +25,6 @@ const WorkingArea = () => {
 
         if (destination.droppableId === source.droppableId) {
             let startingColumn;
-
-
             copy.forEach(column => {
                 if (`${column.id}` === destination.droppableId) {
                     startingColumn = column.Tasks.slice();
