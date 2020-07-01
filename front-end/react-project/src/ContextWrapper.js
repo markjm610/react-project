@@ -19,6 +19,9 @@ const ContextWrapper = () => {
     const [currentlyDraggingProject, setCurrentlyDraggingProject] = useState(null)
     const [mainProjectArr, setMainProjectArr] = useState([])
     const [listProjectArr, setListProjectArr] = useState([])
+    const [formPositions, setFormPositions] = useState(['demo', 'logIn', 'signUp'])
+    const [updateFormPosition, setUpdateFormPosition] = useState(['demo', 'logIn', 'signUp'])
+    const [currentSourceIndex, setCurrentSourceIndex] = useState(null)
 
     return (
         <Context.Provider value={
@@ -37,7 +40,10 @@ const ContextWrapper = () => {
                 currentlyDraggingColumn, setCurrentlyDraggingColumn,
                 currentlyDraggingProject, setCurrentlyDraggingProject,
                 mainProjectArr, setMainProjectArr,
-                listProjectArr, setListProjectArr
+                listProjectArr, setListProjectArr,
+                formPositions, setFormPositions,
+                updateFormPosition, setUpdateFormPosition,
+                currentSourceIndex, setCurrentSourceIndex
             }
         } >
             <App />

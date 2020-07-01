@@ -6,9 +6,9 @@ import { apiBaseUrl } from './config';
 import { Draggable, Droppable, DragDropContext } from 'react-beautiful-dnd'
 
 
-const LogInForm = () => {
+const LogInForm = ({ index }) => {
     const [value, setValue] = useState({ email: '', password: '' });
-    const { setAuthToken, setCurrentUserId } = useContext(Context);
+    const { setAuthToken, setCurrentUserId, updateFormPosition } = useContext(Context);
 
 
 
@@ -67,7 +67,7 @@ const LogInForm = () => {
         //     round='large'
         // >
         //     <div className='title-div'><div className='title'>Taskflow</div></div>
-        <Draggable draggableId={'log-in'} index={1}>
+        <Draggable draggableId={'log-in'} index={index}>
             {(provided) => {
                 return (
                     <div

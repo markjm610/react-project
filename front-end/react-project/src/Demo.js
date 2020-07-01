@@ -7,9 +7,9 @@ import { Draggable, Droppable, DragDropContext } from 'react-beautiful-dnd'
 
 
 
-const Demo = () => {
+const Demo = ({ index }) => {
     const [value, setValue] = useState({ email: 'demo@user.com', password: 'password' });
-    const { setAuthToken, setCurrentUserId } = useContext(Context);
+    const { setAuthToken, setCurrentUserId, formPositions } = useContext(Context);
 
 
 
@@ -48,7 +48,7 @@ const Demo = () => {
 
     return (
 
-        <Draggable draggableId={'demo'} index={0}>
+        <Draggable draggableId={'demo'} index={index}>
             {(provided, snapshot) => {
                 return (
                     <div
