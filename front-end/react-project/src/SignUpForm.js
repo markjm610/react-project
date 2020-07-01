@@ -40,7 +40,7 @@ const SignUpForm = ({ index }) => {
 
     }
     return (
-        <Draggable draggableId={'sign-up'} index={index}>
+        <Draggable draggableId={'sign-up'} index={index} isDragDisabled={updateFormPosition[1] === 'signUp'}>
             {(provided) => {
                 return (
                     <div

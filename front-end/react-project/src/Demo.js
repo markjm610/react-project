@@ -48,7 +48,7 @@ const Demo = ({ index }) => {
 
     return (
 
-        <Draggable draggableId={'demo'} index={index}>
+        <Draggable draggableId={'demo'} index={index} isDragDisabled={updateFormPosition[1] === 'demo'}>
             {(provided, snapshot) => {
                 return (
                     <div
