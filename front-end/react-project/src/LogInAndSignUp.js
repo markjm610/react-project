@@ -3,27 +3,42 @@ import { Switch, Route } from 'react-router-dom';
 import { Box } from 'grommet';
 import LogInForm from './LogInForm';
 import SignUpForm from './SignUpForm';
-import Demo from './Demo';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
 const LogInAndSignUp = () => {
 
+
+    const onDragEnd = result => {
+
+    }
+
     return (
 
-        <Box className='log-in-sign-up-box'
+        <Droppable
+            direction='horizontal'
+            droppableId='log-in'
+            isCombineEnabled={true}
+        >{provided => {
+            return (
+                <>
+                    <div
+                        ref={provided.innerRef}
+                        {...provided.droppableProps}
+                    >
+                        <Box className='log-in-sign-up-box'
 
-            width='600px'
-            height='600px'
-            round='large'
-        >
-            <div className='title-div'><div className='title'>Taskflow</div></div>
-            <Switch>
-                <Route exact path='/' component={LogInForm}></Route>
-                <Route exact path='/signup' component={SignUpForm}></Route>
-                <Route exact path='/demo' component={Demo}></Route>
+                            width='600px'
+                            height='600px'
+                            round='large'
+                        >
+                            <div className='title-div'><div className='title'>Taskflow</div></div>
 
-            </Switch>
-        </Box >
-
+                        </Box >
+                    </div>
+                    {provided.placeholder}
+                </>)
+        }}
+        </Droppable>
     )
 }
 
