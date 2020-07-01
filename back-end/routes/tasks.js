@@ -41,6 +41,7 @@ router.delete('/tasks/:taskId', asyncHandler(async (req, res) => {
 router.put('/tasks', asyncHandler(async (req, res) => {
     try {
         const { sendArr } = req.body;
+        console.log(sendArr)
         sendArr.forEach(async (task) => {
             await Task.update(
                 { columnPosition: task.columnPosition, columnId: task.columnId },
