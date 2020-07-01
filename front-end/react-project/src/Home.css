@@ -219,10 +219,6 @@ html, body {
     
 }
 
-.task:hover {
-    cursor: pointer;
-}
-
 
 .task__heading {
     grid-row: 1 / 2;
