@@ -3,6 +3,8 @@ import { Form, Box, FormField, TextInput, Button } from 'grommet';
 import { NavLink } from 'react-router-dom';
 import Context from './Context';
 import { apiBaseUrl } from './config';
+import { Draggable, Droppable, DragDropContext } from 'react-beautiful-dnd'
+
 
 const LogInForm = () => {
     const [value, setValue] = useState({ email: '', password: '' });
@@ -42,33 +44,71 @@ const LogInForm = () => {
         }
 
     }
+
+    // const onDragEnd = result => {
+    //     const { destination, source, combine } = result
+
+    //     // if (!destination) {
+    //     //     return
+    //     // }
+
+    //     setValue({ email: 'demo@user.com', password: 'password' })
+
+
+
+    // }
+
     return (
 
-        <div className='log-in-form' style={{ margin: 'auto', width: '400px' }}>
-            <h2>Log In</h2>
-            <Form
-                value={value}
-                onChange={nextValue => setValue(nextValue)}
-                // onReset={() => setValue({})}
-                onSubmit={handleSubmit}
-            >
-                <FormField name="email" htmlfor="text-input-id" label="Email:">
-                    <TextInput id="text-input-id" name="email" />
-                </FormField>
+        // <Box className='log-in-sign-up-box'
 
-                <FormField name="password" htmlfor="text-input-id" label="Password:">
-                    <TextInput type='password' id="text-input-id" name="password" />
-                </FormField>
+        //     width='600px'
+        //     height='600px'
+        //     round='large'
+        // >
+        //     <div className='title-div'><div className='title'>Taskflow</div></div>
+        <Draggable draggableId={'log-in'} index={1}>
+            {(provided) => {
+                return (
+                    <div
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        ref={provided.innerRef}
+                    >
+                        <div className='log-in-form' style={{ margin: 'auto', width: '400px' }}>
+                            <h2>Log In</h2>
+                            <Form
+                                value={value}
+                                onChange={nextValue => setValue(nextValue)}
+                                // onReset={() => setValue({})}
+                                onSubmit={handleSubmit}
+                            >
 
-                <Box justify='between' direction="row" gap="medium">
+                                <FormField name="email" htmlfor="text-input-id" label="Email:">
+                                    <TextInput id="text-input-id" name="email" />
+                                </FormField>
+                                <FormField name="password" htmlfor="text-input-id" label="Password:">
+                                    <TextInput type='password' id="text-input-id" name="password" />
 
-                    <Button color='lightblue' type="submit" primary label="Submit" />
-                    <NavLink to='/demo'><Button color='lightblue' label="Demo" /></NavLink>
-                    <NavLink to='/signup'><Button color='lightblue' label="Sign up" /></NavLink>
+                                </FormField>
 
-                </Box>
-            </Form>
-        </div>
+
+                                <Box justify='between' direction="row" gap="medium">
+
+                                    <Button color='lightblue' type="submit" primary label="Submit" />
+                                    {/* 
+                                    <Button color='lightblue' label="Demo" />
+                                    <NavLink to='/signup'><Button color='lightblue' label="Sign up" /></NavLink> */}
+
+                                </Box>
+                            </Form>
+                        </div>
+                    </div>)
+            }}
+        </Draggable>
+        // {/* </Box > */ }
+
+
     );
 }
 

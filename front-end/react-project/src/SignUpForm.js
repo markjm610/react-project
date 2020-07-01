@@ -3,6 +3,8 @@ import { Form, Box, FormField, TextInput, Button } from 'grommet';
 import { NavLink } from 'react-router-dom';
 import { apiBaseUrl } from './config';
 import Context from './Context';
+import { Draggable, Droppable } from 'react-beautiful-dnd'
+
 
 const SignUpForm = () => {
     const [value, setValue] = useState({ email: '', name: '', password: '' });
@@ -38,31 +40,48 @@ const SignUpForm = () => {
 
     }
     return (
-        <div className='sign-up-form' style={{ margin: 'auto', width: '400px' }}>
-            <h2>Sign Up</h2>
-            <Form
-                value={value}
-                onChange={nextValue => setValue(nextValue)}
-                onReset={() => setValue({})}
-                // onSubmit={({ value }) => { }}
-                onSubmit={handleSubmit}
-            >
-                <FormField name="email" htmlfor="text-input-id" label="Email:">
-                    <TextInput id="text-input-id" name="email" />
-                </FormField>
-                <FormField name="name" htmlfor="text-input-id" label="Name:">
-                    <TextInput id="text-input-id" name="name" />
-                </FormField>
-                <FormField name="password" htmlfor="text-input-id" label="Password:">
-                    <TextInput type='password' id="text-input-id" name="password" />
-                </FormField>
-                <Box justify='between' direction="row" gap="medium">
-                    <Button color='lightblue' type="submit" primary label="Submit" />
-                    <NavLink to='/demo'><Button color='lightblue' label="Demo" /></NavLink>
-                    <NavLink to='/'><Button color='lightblue' label="Log in" /></NavLink>
-                </Box>
-            </Form>
-        </div>
+
+
+
+        <Draggable draggableId={'sign-up'} index={2}>
+            {(provided) => {
+                return (
+                    <div
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        ref={provided.innerRef}
+                    >
+                        <div className='sign-up-form' style={{ margin: 'auto', width: '400px' }}>
+                            <h2>Sign Up</h2>
+                            <Form
+                                value={value}
+                                onChange={nextValue => setValue(nextValue)}
+                                onReset={() => setValue({})}
+                                // onSubmit={({ value }) => { }}
+                                onSubmit={handleSubmit}
+                            >
+                                <FormField name="email" htmlfor="text-input-id" label="Email:">
+                                    <TextInput id="text-input-id" name="email" />
+                                </FormField>
+                                <FormField name="name" htmlfor="text-input-id" label="Name:">
+                                    <TextInput id="text-input-id" name="name" />
+                                </FormField>
+                                <FormField name="password" htmlfor="text-input-id" label="Password:">
+                                    <TextInput type='password' id="text-input-id" name="password" />
+                                </FormField>
+                                <Box justify='between' direction="row" gap="medium">
+                                    <Button color='lightblue' type="submit" primary label="Submit" />
+
+                                    {/* <NavLink to='/'><Button color='lightblue' label="Log in" /></NavLink> */}
+                                </Box>
+                            </Form>
+                        </div>
+                    </div>)
+            }}
+        </Draggable>
+
+
+
     );
 }
 
