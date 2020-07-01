@@ -75,7 +75,7 @@ const LogInForm = ({ index }) => {
                         {...provided.dragHandleProps}
                         ref={provided.innerRef}
                     >
-                        <div className='log-in-form' style={{ margin: 'auto', width: '400px' }}>
+                        {updateFormPosition[1] === 'logIn' ? <div className='log-in-form' style={{ margin: 'auto', width: '400px' }}>
                             <h2>Log In</h2>
                             <Form
                                 value={value}
@@ -102,7 +102,8 @@ const LogInForm = ({ index }) => {
 
                                 </Box>
                             </Form>
-                        </div>
+                        </div> : <h2 className='form-name'>Log In</h2>}
+
                     </div>)
             }}
         </Draggable>
