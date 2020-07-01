@@ -67,7 +67,7 @@ const LogInForm = ({ index }) => {
         //     round='large'
         // >
         //     <div className='title-div'><div className='title'>Taskflow</div></div>
-        <Draggable draggableId={'log-in'} index={index}>
+        <Draggable draggableId={'log-in'} index={index} isDragDisabled={updateFormPosition[1] === 'logIn'}>
             {(provided) => {
                 return (
                     <div
