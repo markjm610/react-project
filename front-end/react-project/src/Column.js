@@ -6,7 +6,7 @@ import AddTask from './AddTask';
 import DeleteColumn from './DeleteColumn';
 import Context from './Context';
 import { apiBaseUrl } from './config';
-import { Droppable } from 'react-beautiful-dnd'
+import { Droppable, Draggable } from 'react-beautiful-dnd'
 
 
 // import Context from './Context';
@@ -127,47 +127,63 @@ const Column = ({ columnDropZoneId, tasksArray, name, columnId, currentlyDraggin
 
 
     return (
-        <Droppable droppableId={`${columnId}`}>
-            {(provided) => {
+        <Draggable draggableId={`column-${columnId}`} index={columnDropZoneId}>
+            {provided => {
                 return (
-                    <div ref={provided.innerRef}
-                        {...provided.droppableProps}>
-                        <div
+                    <div
+                        {...provided.draggableProps}
+                        // {...provided.dragHandleProps}
+                        ref={provided.innerRef}>
+                        <Droppable droppableId={`${columnId}`} type='task'>
+                            {(provided) => {
+                                return (
+                                    <div ref={provided.innerRef}
+                                        {...provided.droppableProps}>
+                                        <div
+                                            // ref={drop} 
+                                            className='column-drop-zone'>
+                                            <div className='column'>
+                                                <div className='column__header'>
+                                                    <AddTask
+                                                        columnId={columnId}
+                                                        taskArrLength={tasksArray.length}></AddTask>
+                                                    <div className='column__name'>{name}</div>
+                                                    <DeleteColumn columnId={columnId}></DeleteColumn>
+                                                </div>
+                                                <div className='tasks-container'>
+                                                    {tasksArray.map((task, i) => {
+                                                        if (i === tasksArray.length - 1) {
+                                                            return
+                                                        }
+                                                        return (<Task
+                                                            key={task.id}
+                                                            taskid={task.id}
+                                                            taskdropzoneid={i}
+                                                            heading={task.heading}
+                                                            description={task.description}
+                                                            currentlyDragging={currentlyDragging}
+                                                            setCurrentlyDragging={setCurrentlyDragging}
+                                                            columnId={task.columnId}
+                                                            taskArrLength={tasksArray.length}
+                                                        />)
+                                                    }
+                                                    )}
 
-                            // ref={drop} 
-                            className='column-drop-zone'>
-                            <div className='column'>
-                                <div className='column__header'>
-                                    <AddTask
-                                        columnId={columnId}
-                                        taskArrLength={tasksArray.length}></AddTask>
-                                    <div className='column__name'>{name}</div>
-                                    <DeleteColumn columnId={columnId}></DeleteColumn>
-                                </div>
-                                <div className='tasks-container'>
-                                    {tasksArray.map((task, i) => <Task
-                                        key={task.id}
-                                        taskid={task.id}
-                                        taskdropzoneid={i}
-                                        heading={task.heading}
-                                        description={task.description}
-                                        currentlyDragging={currentlyDragging}
-                                        setCurrentlyDragging={setCurrentlyDragging}
-                                        columnId={task.columnId}
-                                        taskArrLength={tasksArray.length}
-                                    // dragColumnId={dragColumnId}
-                                    // setDragColumnId={setDragColumnId}
-                                    />)}
+                                                </div>
 
-                                </div>
+                                            </div>
+                                        </div>
+                                        {provided.placeholder}
+                                    </div>)
+                            }}
+                        </Droppable>
 
-                            </div>
-                            {provided.placeholder}
-                        </div>
-                    </div>)
+
+                    </div>
+                )
             }}
 
-        </Droppable>
+        </Draggable>
     )
 }
 
