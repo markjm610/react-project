@@ -8,7 +8,7 @@ import { Draggable, Droppable } from 'react-beautiful-dnd'
 
 const SignUpForm = ({ index }) => {
     const [value, setValue] = useState({ email: '', name: '', password: '' });
-    const { setAuthToken, setCurrentUserId, updateFormPosition } = useContext(Context);
+    const { noForms, setAuthToken, setCurrentUserId, updateFormPosition } = useContext(Context);
     const handleSubmit = async () => {
 
         try {
@@ -40,7 +40,11 @@ const SignUpForm = ({ index }) => {
 
     }
     return (
-        <Draggable draggableId={'sign-up'} index={index} isDragDisabled={updateFormPosition[1] === 'signUp'}>
+        <Draggable
+            draggableId={'sign-up'}
+            index={index}
+            isDragDisabled={updateFormPosition[1] === 'signUp'}
+        >
             {(provided) => {
                 return (
                     <div
@@ -48,7 +52,7 @@ const SignUpForm = ({ index }) => {
                         {...provided.dragHandleProps}
                         ref={provided.innerRef}
                     >
-                        {updateFormPosition[1] === 'signUp' ? <div className='sign-up-form' style={{ margin: 'auto', width: '400px' }}>
+                        {updateFormPosition[1] === 'signUp' && !noForms ? <div className='sign-up-form' style={{ margin: 'auto', width: '400px' }}>
                             <h2>Sign Up</h2>
                             <Form
                                 value={value}
