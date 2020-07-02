@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react';
 import './LandingPage.css';
-import LogInAndSignUp from './LogInAndSignUp';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd'
 import LogInForm from './LogInForm'
 import Demo from './Demo';
