@@ -22,6 +22,7 @@ const ContextWrapper = () => {
     const [formPositions, setFormPositions] = useState(['demo', 'logIn', 'signUp'])
     const [updateFormPosition, setUpdateFormPosition] = useState(['demo', 'logIn', 'signUp'])
     const [currentSourceIndex, setCurrentSourceIndex] = useState(null)
+    const [noForms, setNoForms] = useState(false)
 
     return (
         <Context.Provider value={
@@ -43,7 +44,8 @@ const ContextWrapper = () => {
                 listProjectArr, setListProjectArr,
                 formPositions, setFormPositions,
                 updateFormPosition, setUpdateFormPosition,
-                currentSourceIndex, setCurrentSourceIndex
+                currentSourceIndex, setCurrentSourceIndex,
+                noForms, setNoForms
             }
         } >
             <App />

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import './LandingPage.css';
 import LogInAndSignUp from './LogInAndSignUp';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd'
@@ -17,8 +17,12 @@ const LandingPage = () => {
         updateFormPosition,
         setUpdateFormPosition,
         currentSourceIndex,
-        setCurrentSourceIndex
+        setCurrentSourceIndex,
+        setNoForms
     } = useContext(Context)
+
+    const [startPositions, setStartPositions] = useState(null)
+
 
     const onDragEnd = result => {
         // keep track of positions in array of 3
@@ -35,9 +39,15 @@ const LandingPage = () => {
         // }
         // console.log(copy)
         // setFormPositions(copy)
+
+
+
         const { destination, source, draggableId } = result
 
         if (!destination) {
+            const updateCopy = [...startPositions]
+            setUpdateFormPosition(updateCopy)
+            setNoForms(false)
             return
         }
 
@@ -58,14 +68,32 @@ const LandingPage = () => {
 
         const { destination, source, draggableId } = result
 
+        // Even if there's no destination, need to update positions so what's currently over the middle
+        // shows form and others don't
 
+
+        if (!destination) {
+            console.log('!destination')
+            // can use this if statement to prevent unwanted behavior in this situation maybe
+            setNoForms(true)
+            return
+        }
 
         let copy = [...updateFormPosition];
+
 
         const moved = copy.splice(currentSourceIndex, 1);
         copy.splice(destination.index, 0, moved[0])
         console.log(copy)
         setUpdateFormPosition(copy)
+
+
+        // let otherCopy = [...formPositions];
+
+        // const otherMoved = otherCopy.splice(currentSourceIndex, 1);
+        // otherCopy.splice(destination.index, 0, otherMoved[0])
+
+        // setFormPositions(otherCopy)
 
         setCurrentSourceIndex(destination.index)
     }
@@ -73,6 +101,8 @@ const LandingPage = () => {
     const onDragStart = (initial) => {
         const { source } = initial
         setCurrentSourceIndex(source.index)
+        let updateCopy = [...updateFormPosition]
+        setStartPositions(updateCopy)
     }
 
 

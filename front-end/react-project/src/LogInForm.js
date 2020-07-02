@@ -8,7 +8,7 @@ import { Draggable, Droppable, DragDropContext } from 'react-beautiful-dnd'
 
 const LogInForm = ({ index }) => {
     const [value, setValue] = useState({ email: '', password: '' });
-    const { setAuthToken, setCurrentUserId, updateFormPosition } = useContext(Context);
+    const { noForms, setAuthToken, setCurrentUserId, updateFormPosition } = useContext(Context);
 
 
 
@@ -60,14 +60,11 @@ const LogInForm = ({ index }) => {
 
     return (
 
-        // <Box className='log-in-sign-up-box'
-
-        //     width='600px'
-        //     height='600px'
-        //     round='large'
-        // >
-        //     <div className='title-div'><div className='title'>Taskflow</div></div>
-        <Draggable draggableId={'log-in'} index={index} isDragDisabled={updateFormPosition[1] === 'logIn'}>
+        <Draggable
+            draggableId={'log-in'}
+            index={index}
+            isDragDisabled={updateFormPosition[1] === 'logIn'}
+        >
             {(provided) => {
                 return (
                     <div
@@ -75,7 +72,7 @@ const LogInForm = ({ index }) => {
                         {...provided.dragHandleProps}
                         ref={provided.innerRef}
                     >
-                        {updateFormPosition[1] === 'logIn' ? <div className='log-in-form' style={{ margin: 'auto', width: '400px' }}>
+                        {updateFormPosition[1] === 'logIn' && !noForms ? <div className='log-in-form' style={{ margin: 'auto', width: '400px' }}>
                             <h2>Log In</h2>
                             <Form
                                 value={value}
