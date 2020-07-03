@@ -43,7 +43,12 @@ const AddProject = () => {
 
 
     return (<>
-        <div className='add-project'><Add onClick={addProjectClick} className='add-project-icon'></Add></div>
+        <div className='add-project'>
+            <Add onClick={addProjectClick} className='add-project-icon'>
+            </Add>
+            <div className='add-profile-picture-text'>Add Project</div>
+        </div>
+
         {
             show && (
                 <Layer

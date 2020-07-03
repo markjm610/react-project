@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom'
 import { apiBaseUrl } from './config';
 import { useDrag, useDrop } from 'react-dnd';
 import { ItemTypes } from './ItemTypes';
+import { Draggable } from 'react-beautiful-dnd';
 
 const ProjectNavMain = ({ id, name, position, dropZone }) => {
 
@@ -66,7 +67,6 @@ const ProjectNavMain = ({ id, name, position, dropZone }) => {
         })
 
 
-
         // setDragColumnId(dragColumnId);
 
         setMainProjectArr(copy);
@@ -120,27 +120,39 @@ const ProjectNavMain = ({ id, name, position, dropZone }) => {
 
 
     return (
-        <div ref={drop}>
-            <NavLink
-                className='navlink'
-                to={`/home/project/${id}`}
-                onClick={handleProjectNavLinkClick}
-                style={
-                    {
-                        textDecoration: 'none'
-                    }}>
-                <div
-                    ref={drag}
-                    className='project-navlink'
-                    style={
-                        {
-                            textDecoration: 'none',
-                            opacity: isDragging ? 0 : 1
-                        }}>
-                    {name}
-                </div>
-            </NavLink>
-        </div>
+        // <div ref={drop}>
+        <Draggable
+            draggableId={`project-${id}`}
+            index={dropZone}
+        >
+            {provided => {
+                return (
+                    <div {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        ref={provided.innerRef}>
+                        <NavLink
+                            className='navlink'
+                            to={`/home/project/${id}`}
+                            onClick={handleProjectNavLinkClick}
+                            style={
+                                {
+                                    textDecoration: 'none'
+                                }}>
+
+
+                            <div
+                                className='project-navlink'
+                                style={
+                                    {
+                                        textDecoration: 'none',
+                                        opacity: isDragging ? 0 : 1
+                                    }}>
+                                {name}
+                            </div>
+                        </NavLink>
+                    </div>)
+            }}
+        </Draggable>
     )
 }
 

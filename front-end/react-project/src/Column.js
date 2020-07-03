@@ -132,7 +132,7 @@ const Column = ({ columnDropZoneId, tasksArray, name, columnId, currentlyDraggin
                 return (
                     <div
                         {...provided.draggableProps}
-                        // {...provided.dragHandleProps}
+                        {...provided.dragHandleProps}
                         ref={provided.innerRef}>
                         <Droppable droppableId={`${columnId}`} type='task'>
                             {(provided) => {
