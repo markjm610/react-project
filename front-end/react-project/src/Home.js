@@ -21,7 +21,15 @@ import { Droppable, DragDropContext } from 'react-beautiful-dnd';
 
 const Home = () => {
 
-    const { setDisplayedColumns, displayedColumns, setMainProjectArr, setListProjectArr, invites, setInvites, setDragRef } = useContext(Context);
+    const {
+        setDisplayedColumns,
+        displayedColumns,
+        mainProjectArr,
+        setMainProjectArr,
+        setListProjectArr,
+        invites,
+        setInvites,
+        setDragRef } = useContext(Context);
 
 
     const userId = localStorage.getItem('USER_ID');
@@ -226,8 +234,54 @@ const Home = () => {
 
             setDisplayedColumns(copy);
 
+            // const sendArr = [...displayedColumns];
+
+
+            try {
+                await fetch(`${apiBaseUrl}/columns`, {
+                    method: 'PUT',
+                    body: JSON.stringify({ sendArr: copy }),
+                    headers: {
+                        "Content-Type": 'application/json',
+                    }
+                })
+
+            } catch (e) {
+                console.error(e)
+            }
             // setCurrentlyDraggingColumn(columnDropZoneId);
             // setDragTaskId(saveId);
+        } else if (type === 'project') {
+            let copy = [...mainProjectArr];
+
+            const moved = copy.splice(source.index, 1);
+
+            copy.splice(destination.index, 0, moved[0])
+
+            copy.forEach((project, i) => {
+                project.UsersProject.position = i;
+            })
+
+
+            // setDragColumnId(dragColumnId);
+
+            setMainProjectArr(copy);
+
+            // use copy maybe
+            // let sendArr = [...mainProjectArr];
+
+            // try {
+            //     await fetch(`${apiBaseUrl}/projects`, {
+            //         method: 'PUT',
+            //         body: JSON.stringify({ sendArr }),
+            //         headers: {
+            //             "Content-Type": 'application/json',
+            //         }
+            //     })
+
+            // } catch (e) {
+            //     console.error(e)
+            // }
         }
 
 
@@ -245,10 +299,11 @@ const Home = () => {
         <DragDropContext onDragEnd={onDragEnd}>
             <div id='home' onMouseUp={() => setDragRef(true)}>
                 <div className='sidebar-left'>
-                    <UserDisplay></UserDisplay>
+                    {/* <UserDisplay></UserDisplay> */}
+                    <AddProject></AddProject>
                     <div className='project-stuff'>
                         <ProjectNavBar ></ProjectNavBar>
-                        <AddProject></AddProject>
+
                     </div>
                     <LogOut></LogOut>
                 </div>
