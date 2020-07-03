@@ -4,6 +4,9 @@ import { NavLink } from 'react-router-dom'
 import { apiBaseUrl } from './config';
 import { useDrag, useDrop } from 'react-dnd';
 import { ItemTypes } from './ItemTypes';
+import { Draggable } from 'react-beautiful-dnd';
+
+
 
 const ProjectNavList = ({ id, name, position, dropZone }) => {
 
@@ -125,27 +128,44 @@ const ProjectNavList = ({ id, name, position, dropZone }) => {
 
 
     return (
-        <div ref={drop}>
-            <NavLink
-                className='navlink'
-                to={`/home/project/${id}`}
-                onClick={handleProjectNavLinkClick}
-                style={
-                    {
-                        textDecoration: 'none'
-                    }}>
-                <div
-                    ref={drag}
-                    className='project-navlink'
-                    style={
-                        {
-                            textDecoration: 'none',
-                            opacity: isDragging ? 0 : 1
-                        }}>
-                    {name}
-                </div>
-            </NavLink>
-        </div>
+        <Draggable
+            draggableId={`list-${id}`}
+            index={dropZone}
+        >
+            {(provided, snapshot) => {
+                return (
+                    <div {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        // style={{
+                        //     // transitionDuration: snapshot.isDropAnimating && '0.001s'
+                        //     backgroundColor: 'red'
+                        // }}
+                        ref={provided.innerRef}
+                    >
+                        <NavLink
+                            className='navlink'
+                            to={`/home/project/${id}`}
+                            onClick={handleProjectNavLinkClick}
+                            style={
+                                {
+                                    textDecoration: 'none',
+                                    transitionDuration: snapshot.isDropAnimating && '0.001s'
+                                }}>
+
+                            <div
+                                className='project-navlink'
+                                style={
+                                    {
+                                        textDecoration: 'none',
+                                        transitionDuration: snapshot.isDropAnimating && '0.001s'
+                                    }}>
+                                {name}
+                            </div>
+
+                        </NavLink>
+                    </div>)
+            }}
+        </Draggable>
     )
 }
 

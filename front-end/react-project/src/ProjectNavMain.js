@@ -122,7 +122,7 @@ const ProjectNavMain = ({ id, name, position, dropZone }) => {
     return (
         // <div ref={drop}>
         <Draggable
-            draggableId={`project-${id}`}
+            draggableId={`main-${id}`}
             index={dropZone}
         >
             {provided => {
