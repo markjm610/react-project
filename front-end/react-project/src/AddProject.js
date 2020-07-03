@@ -5,7 +5,7 @@ import Context from './Context';
 import { apiBaseUrl } from './config';
 
 const AddProject = () => {
-    const { currentUserId, projectArr, setProjectArr } = useContext(Context)
+    const { currentUserId, mainProjectArr, setMainProjectArr, listProjectArr, setListProjectArr } = useContext(Context)
     const [show, setShow] = useState();
     const [value, setValue] = useState({ name: '' });
 
@@ -16,7 +16,10 @@ const AddProject = () => {
     const addProjectSubmit = async () => {
         setShow(false);
 
-        const projectsCopy = [...projectArr]
+
+        const projectsCopy = [...mainProjectArr]
+
+        projectsCopy.push(...listProjectArr)
 
 
         const res = await fetch(`${apiBaseUrl}/users/${currentUserId}/projects`, {
@@ -33,7 +36,9 @@ const AddProject = () => {
         const newProject = parsedRes.newProject;
         projectsCopy.push(newProject)
 
-        setProjectArr(projectsCopy);
+        setMainProjectArr(projectsCopy.slice(0, 5))
+        setListProjectArr(projectsCopy.slice(5))
+
 
         value.name = ''
     }

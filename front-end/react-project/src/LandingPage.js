@@ -17,6 +17,7 @@ const LandingPage = () => {
         setUpdateFormPosition,
         currentSourceIndex,
         setCurrentSourceIndex,
+        noForms,
         setNoForms
     } = useContext(Context)
 
@@ -39,14 +40,14 @@ const LandingPage = () => {
         // console.log(copy)
         // setFormPositions(copy)
 
-
+        setNoForms(false)
 
         const { destination, source, draggableId } = result
 
         if (!destination) {
             const updateCopy = [...startPositions]
             setUpdateFormPosition(updateCopy)
-            setNoForms(false)
+            // setNoForms(false)
             return
         }
 
@@ -71,11 +72,15 @@ const LandingPage = () => {
         // shows form and others don't
 
 
+        console.log(result)
         if (!destination) {
-            console.log('!destination')
-            // can use this if statement to prevent unwanted behavior in this situation maybe
+
             setNoForms(true)
             return
+        }
+
+        if (noForms) {
+            setNoForms(false)
         }
 
         let copy = [...updateFormPosition];
