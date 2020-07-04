@@ -10,7 +10,7 @@ import { Draggable } from 'react-beautiful-dnd';
 
 const ProjectNavList = ({ id, name, position, dropZone }) => {
 
-    const { mainProjectArr, setLinkDragging, dragProjectId, setDragProjectId, listProjectArr, setListProjectArr, setProjectMembers, setDisplayedColumns, setCurrentProjectId, currentlyDraggingProject, setCurrentlyDraggingProject } = useContext(Context);
+    const { topOfList, mainProjectArr, setLinkDragging, dragProjectId, setDragProjectId, listProjectArr, setListProjectArr, setProjectMembers, setDisplayedColumns, setCurrentProjectId, currentlyDraggingProject, setCurrentlyDraggingProject } = useContext(Context);
 
     const handleProjectNavLinkClick = async () => {
 
@@ -131,32 +131,59 @@ const ProjectNavList = ({ id, name, position, dropZone }) => {
         }
     }
 
+    if (dropZone === 0) {
+        return (
+            <div ref={topOfList}>
+                <NavLink
+                    className='navlink'
+                    to={`/home/project/${id}`}
+                    onClick={handleProjectNavLinkClick}
+                    style={
+                        {
+                            textDecoration: 'none',
+                        }}>
 
-    return (
-        // <div ref={drop}>
+                    <div
+                        ref={drag}
+                        className='project-navlink'
+                        style={
+                            {
+                                textDecoration: 'none',
+                                opacity: (isDragging || (!isDragging && (dragProjectId === id))) ? 0 : 1
+                            }}>
+                        {name}
+                    </div>
+                </NavLink>
+            </div>
+        )
+    } else {
+        return (
+            // <div ref={drop}>
 
-        <NavLink
-            className='navlink'
-            to={`/home/project/${id}`}
-            onClick={handleProjectNavLinkClick}
-            style={
-                {
-                    textDecoration: 'none',
-                }}>
-
-            <div
-                ref={drag}
-                className='project-navlink'
+            <NavLink
+                className='navlink'
+                to={`/home/project/${id}`}
+                onClick={handleProjectNavLinkClick}
                 style={
                     {
                         textDecoration: 'none',
-                        opacity: (isDragging || (!isDragging && (dragProjectId === id))) ? 0 : 1
                     }}>
-                {name}
-            </div>
-        </NavLink>
-        // </div>
-    )
+
+                <div
+                    ref={drag}
+                    className='project-navlink'
+                    style={
+                        {
+                            textDecoration: 'none',
+                            opacity: (isDragging || (!isDragging && (dragProjectId === id))) ? 0 : 1
+                        }}>
+                    {name}
+                </div>
+            </NavLink>
+            // </div>
+        )
+    }
+
 
 
     // return (

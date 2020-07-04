@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useCallback } from 'react';
+import React, { useState, useEffect, useContext, useCallback, useRef } from 'react';
 import './Home.css';
 import WorkingAreaRoutes from './WorkingAreaRoutes';
 import LogOut from './LogOut';
@@ -30,7 +30,8 @@ const Home = () => {
         setListProjectArr,
         invites,
         setInvites,
-        setDragRef } = useContext(Context);
+        setDragRef,
+        topOfList } = useContext(Context);
 
 
     const userId = localStorage.getItem('USER_ID');
@@ -480,6 +481,7 @@ const Home = () => {
 
     //     drag.drop();
     // }
+    // const target = useRef(null)
 
     function useMyCoolSensor(api) {
         const start = useCallback(function start(event) {
@@ -488,6 +490,16 @@ const Home = () => {
             if (!preDrag) {
                 return;
             }
+            const target = topOfList
+
+            const endX = target.current && target.current.getBoundingClientRect().x
+            const endY = target.current && target.current.getBoundingClientRect().y
+
+            console.log(target.current.getBoundingClientRect())
+            console.log(endX)
+            console.log(endY)
+
+
             const startSpot = { x: 0, y: 0 }
             const drag = preDrag.fluidLift(startSpot)
 
@@ -496,7 +508,7 @@ const Home = () => {
 
             // console.log('drag', drag)
 
-            const end = { x: 0, y: -300 }
+            const end = { x: endX, y: endY }
             // drag.move(end)
             // drag.drop()
 
@@ -545,6 +557,11 @@ const Home = () => {
             };
         }, []);
     }
+
+
+
+
+
 
     return (
         <DragDropContext onDragEnd={onDragEnd} sensors={[useMyCoolSensor]}>
