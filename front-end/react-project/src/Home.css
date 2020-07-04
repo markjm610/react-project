@@ -57,8 +57,8 @@ html, body {
     border-top-left-radius: 10px;
     background-color: white;
     padding: 5px;
-    margin-top: 5px;
-    margin-bottom: 5px;
+    /* margin-top: 5px;
+    margin-bottom: 5px; */
     margin-left: 5px;
     color: black;
     text-decoration: none;

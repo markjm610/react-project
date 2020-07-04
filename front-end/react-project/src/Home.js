@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
 import './Home.css';
 import WorkingAreaRoutes from './WorkingAreaRoutes';
 import LogOut from './LogOut';
@@ -15,7 +15,7 @@ import { useDrop } from 'react-dnd';
 
 import { ItemTypes } from './ItemTypes';
 import { Droppable, DragDropContext } from 'react-beautiful-dnd';
-
+import * as tweenFunctions from "tween-functions";
 
 
 
@@ -89,7 +89,7 @@ const Home = () => {
 
     const onDragEnd = async (result) => {
         const { destination, source, draggableId, type } = result
-
+        console.log(result)
         if (!destination) {
             return
         }
@@ -323,19 +323,231 @@ const Home = () => {
         // }
     }
 
+    // let api;
+    // const sensor = value => {
+    //     api = value
+    // }
 
+    // const startDrag = targetRef => {
+    //     const preDrag = api.tryGetLock("draggable-item");
+    //     if (!preDrag) {
+    //         return;
+    //     }
+
+    //     const endX =
+    //         targetRef.current && targetRef.current.getBoundingClientRect().x;
+
+    //     const start = { x: 0, y: 0 };
+    //     const end = { x: endX, y: 0 };
+    //     const drag = preDrag.fluidLift(start);
 
 
 
     // }
 
-    // const onDragStart = (e) => {
-    //     console.log(e)
+    // function App() {
+
+
+    //     const startDrag = function start(targetRef) {
+    //         
+
+    //         const endX =
+    //             targetRef.current && targetRef.current.getBoundingClientRect().x;
+
+    //         const start = { x: 0, y: 0 };
+    //         const end = { x: endX, y: 0 };
+    //         const drag = preDrag.fluidLift(start);
+
+    //         const points = [];
+
+    //         for (let i = 0; i < 20; i++) {
+    //             points.push({
+    //                 x: tweenFunctions.easeOutCirc(i, start.x, end.x, 20),
+    //                 y: tweenFunctions.easeOutCirc(i, start.y, end.y, 20)
+    //             });
+    //         }
+    //         moveStepByStep(drag, points);
+    //     };
+
+    //     const [isDropped, setIsDropped] = useState(false);
+    //     const target = useRef(null);
+
+    //     return (
+    //         <div className="App">
+    //             <DragDropContext
+    //                 enableDefaultSensors={false}
+    //                 onDragStart={() => { }}
+    //                 onDragEnd={e => {
+    //                     console.log(e);
+    //                     if (e.destination.droppableId === "endZone") {
+    //                         setIsDropped(true);
+    //                     }
+    //                 }}
+    //                 sensors={[useMyCoolSensor]}
+    //             >
+    //                 <Droppable droppableId="startZone" direction="horizontal">
+    //                     {(provided, snapshot) => (
+    //                         <div
+    //                             className="Column"
+    //                             ref={provided.innerRef}
+    //                             style={getListStyle(snapshot.isDraggingOver)}
+    //                         >
+    //                             <Draggable draggableId="draggable-item" index={0}>
+    //                                 {(provided, snapshot) => (
+    //                                     <div
+    //                                         ref={provided.innerRef}
+    //                                         {...provided.draggableProps}
+    //                                         {...provided.dragHandleProps}
+    //                                         style={getItemStyle(
+    //                                             snapshot.isDragging,
+    //                                             provided.draggableProps.style
+    //                                         )}
+    //                                     >
+    //                                         {!isDropped && <Item />}
+    //                                     </div>
+    //                                 )}
+    //                             </Draggable>
+    //                             {provided.placeholder}
+    //                         </div>
+    //                     )}
+    //                 </Droppable>
+    //                 <Droppable droppableId="endZone" direction="horizontal">
+    //                     {(provided, snapshot) => (
+    //                         <div
+    //                             className="Column"
+    //                             ref={provided.innerRef}
+    //                             style={getListStyle(snapshot.isDraggingOver)}
+    //                         >
+    //                             <div ref={target}>
+    //                                 {isDropped && <Item />}
+    //                                 {provided.placeholder}
+    //                             </div>
+    //                         </div>
+    //                     )}
+    //                 </Droppable>
+    //             </DragDropContext>
+    //             <div>
+    //                 <button
+    //                     onClick={() => (isDropped ? setIsDropped(false) : startDrag(target))}
+    //                 >
+    //                     {isDropped ? "Reset" : "Move"}
+    //                 </button>
+    //             </div>
+    //         </div>
+    //     );
     // }
 
+    // function moveStepByStep(drag, values) {
+    //     requestAnimationFrame(() => {
+    //         const newPosition = values.shift();
+    //         drag.move(newPosition);
+
+    //         if (values.length) {
+    //             moveStepByStep(drag, values);
+    //         } else {
+    //             drag.drop();
+    //         }
+    //     });
+    // }
+
+
+    // function useMyCoolSensor(api) {
+    //     const startDrag = function start() {
+    //         const preDrag = api.tryGetLock("task-45");
+    //         if (!preDrag) {
+    //             return;
+    //         }
+
+    //         const drag = preDrag.fluidLift({ x: 0, y: 0 });
+    //         const end = { x: 400, y: 500 };
+    //         drag.move(end);
+    //         drag.drop()
+    //     };
+    // }
+
+    // function mySimpleSensor(api) {
+    //     const preDrag = api.tryGetLock('task-45');
+    //     // Could not get lock
+    //     if (!preDrag) {
+    //         return;
+    //     }
+
+    //     const drag = preDrag.snapLift();
+
+    //     drag.moveDown();
+    //     // drag.moveDown();
+    //     // drag.moveDown();
+
+    //     drag.drop();
+    // }
+
+    function useMyCoolSensor(api) {
+        const start = useCallback(function start(event) {
+            const preDrag = api.tryGetLock('task-47');
+
+            if (!preDrag) {
+                return;
+            }
+            const startSpot = { x: 0, y: 0 }
+            const drag = preDrag.fluidLift(startSpot)
+
+
+            // const drag = preDrag.snapLift();
+
+            // console.log('drag', drag)
+
+            const end = { x: 0, y: -300 }
+            // drag.move(end)
+            // drag.drop()
+
+            const points = [];
+
+            // we want to generate 20 points between the start and the end
+            const numberOfPoints = 50;
+
+            for (let i = 0; i < numberOfPoints; i++) {
+                points.push({
+                    x: tweenFunctions.easeOutCirc(i, startSpot.x, end.x, numberOfPoints),
+                    y: tweenFunctions.easeOutCirc(i, startSpot.y, end.y, numberOfPoints)
+                });
+            }
+
+
+
+
+            function moveStepByStep(drag, values) {
+                requestAnimationFrame(() => {
+                    const newPosition = values.shift();
+                    drag.move(newPosition);
+                    if (values.length) {
+                        moveStepByStep(drag, values);
+                    }
+                    else {
+                        drag.drop();
+                    }
+                });
+            }
+
+            moveStepByStep(drag, points)
+
+
+
+        }, []);
+
+
+
+
+        useEffect(() => {
+            window.addEventListener('click', start);
+
+            return () => {
+                window.removeEventListener('click', start);
+            };
+        }, []);
+    }
 
     return (
-        <DragDropContext onDragEnd={onDragEnd}>
+        <DragDropContext onDragEnd={onDragEnd} sensors={[useMyCoolSensor]}>
             <div id='home' onMouseUp={() => setDragRef(true)}>
                 <div className='sidebar-left'>
                     {/* <UserDisplay></UserDisplay> */}
@@ -344,6 +556,7 @@ const Home = () => {
                         <ProjectNavBar ></ProjectNavBar>
 
                     </div>
+                    {/* <button onClick={() => startDrag()}>See if this works</button> */}
                     <LogOut></LogOut>
                 </div>
                 <Droppable droppableId={`working-area`} direction='horizontal' type='column'>
