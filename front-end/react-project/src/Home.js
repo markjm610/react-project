@@ -24,8 +24,7 @@ function moveStepByStep(drag, values) {
         drag.move(newPosition);
         if (values.length) {
             moveStepByStep(drag, values);
-        }
-        else {
+        } else {
             drag.drop();
         }
     });
@@ -246,13 +245,7 @@ const Home = () => {
                 column.pagePosition = i;
             })
 
-
-
-            // setDragColumnId(dragColumnId);
-
             setDisplayedColumns(copy);
-
-            // const sendArr = [...displayedColumns];
 
 
             try {
@@ -267,27 +260,35 @@ const Home = () => {
             } catch (e) {
                 console.error(e)
             }
-            // setCurrentlyDraggingColumn(columnDropZoneId);
-            // setDragTaskId(saveId);
+
         }
         else if (type === 'project') {
             // if in main list, rearrange
-            if (draggableId.startsWith('m')) {
+            if (draggableId.startsWith('m') && destination.droppableId === 'project-nav-main') {
+
                 let copy = [...mainProjectArr];
 
                 const moved = copy.splice(source.index, 1);
 
                 copy.splice(destination.index, 0, moved[0])
 
-                // copy.forEach((project, i) => {
+                copy.forEach((project, i) => {
 
-                //     project.UsersProject.position = i;
-                // })
+                    project.UsersProject.position = i;
+                })
                 setMainProjectArr(copy);
-            } else {
-                // if in extra list, insert and remove last element from main list, 
-                // then insert to beginning of extra list
-                // what if drop on end of main list? 
+            } else if (draggableId.startsWith('l') && destination.droppableId === 'project-nav-list') {
+                let copy = [...listProjectArr];
+
+                const moved = copy.splice(source.index, 1);
+
+                copy.splice(destination.index, 0, moved[0])
+
+                copy.forEach((project, i) => {
+                    project.UsersProject.position = i;
+                })
+                setListProjectArr(copy);
+            } else if (draggableId.startsWith('l') && destination.droppableId === 'project-nav-main') {
 
                 let mainCopy = [...mainProjectArr];
                 let listCopy = [...listProjectArr]
@@ -295,9 +296,28 @@ const Home = () => {
 
                 mainCopy.splice(destination.index, 0, moved[0])
 
-                // const toOtherList = mainCopy.pop()
-                // console.log(toOtherList)
-                // listCopy.unshift(toOtherList)
+                mainCopy.forEach((project, i) => {
+
+                    project.UsersProject.position = i;
+                })
+
+                listCopy.forEach((project, i) => {
+                    project.UsersProject.position = i + 5
+                })
+
+                // console.log('mainCopy', mainCopy)
+                // console.log('listCopy', listCopy)
+
+
+                setMainProjectArr(mainCopy)
+                setListProjectArr(listCopy);
+            } else if (draggableId.startsWith('m') && destination.droppableId === 'project-nav-list') {
+                let mainCopy = [...mainProjectArr];
+                let listCopy = [...listProjectArr]
+                const moved = mainCopy.splice(source.index, 1);
+
+                listCopy.splice(destination.index, 0, moved[0])
+
 
                 mainCopy.forEach((project, i) => {
 
@@ -336,7 +356,7 @@ const Home = () => {
     }
 
     useEffect(() => {
-        // console.log(mainProjectArr)
+        console.log(mainProjectArr)
         if (mainProjectArr.length > 5) {
             const preDrag = sensorState.tryGetLock(`main-${mainProjectArr[5].id}`);
 
