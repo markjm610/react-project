@@ -10,7 +10,7 @@ import { Draggable } from 'react-beautiful-dnd';
 
 const ProjectNavList = ({ id, name, position, dropZone }) => {
 
-    const { listProjectArr, setListProjectArr, setProjectMembers, setDisplayedColumns, setCurrentProjectId, currentlyDraggingProject, setCurrentlyDraggingProject } = useContext(Context);
+    const { mainProjectArr, setLinkDragging, dragProjectId, setDragProjectId, listProjectArr, setListProjectArr, setProjectMembers, setDisplayedColumns, setCurrentProjectId, currentlyDraggingProject, setCurrentlyDraggingProject } = useContext(Context);
 
     const handleProjectNavLinkClick = async () => {
 
@@ -36,9 +36,13 @@ const ProjectNavList = ({ id, name, position, dropZone }) => {
         item: { type: ItemTypes.PROJECT, id },
         begin: () => {
             setCurrentlyDraggingProject(dropZone)
+            // setDragProjectId(id)
+            // setLinkDragging(true)
         },
         end: (item) => {
             handleDrop()
+            setDragProjectId(null)
+            // setLinkDragging(false)
         },
         collect: monitor => ({
             isDragging: monitor.isDragging()
@@ -47,126 +51,150 @@ const ProjectNavList = ({ id, name, position, dropZone }) => {
 
 
 
-    const changePositions = () => {
+    // const changePositions = () => {
 
 
-        // if (columnDropZoneId === columnArrLength - 1) {
-        //     return;
-        // }
-        // const saveId = dragTaskId;
-        const drag = currentlyDraggingProject;
+    //     // if (columnDropZoneId === columnArrLength - 1) {
+    //     //     return;
+    //     // }
+    //     // const saveId = dragTaskId;
+    //     const drag = currentlyDraggingProject;
 
-        // let startingColumn;
+    //     // let startingColumn;
 
-        let copy = [...listProjectArr];
+    //     let copy = [...listProjectArr];
 
-        const moved = copy.splice(drag, 1);
+    //     const moved = copy.splice(drag, 1);
 
-        copy.splice(dropZone, 0, moved[0])
+    //     copy.splice(dropZone, 0, moved[0])
 
-        copy.forEach((project, i) => {
-            project.UsersProject.position = i;
-        })
-
-
-
-        // setDragColumnId(dragColumnId);
-
-        setListProjectArr(copy);
-
-        setCurrentlyDraggingProject(dropZone);
-        // setDragTaskId(saveId);
-
-    }
+    //     copy.forEach((project, i) => {
+    //         project.UsersProject.position = i;
+    //     })
 
 
-    const [{ isOver }, drop] = useDrop({
-        accept: ItemTypes.PROJECT,
-        drop: () => {
-        },
-        hover: (item) => {
-            // console.log('hover')
 
-            // if (taskid !== null && dragTaskId !== taskid) {
-            //     setDragTaskId(taskid)
-            // }
+    //     // setDragColumnId(dragColumnId);
 
-            if (currentlyDraggingProject === dropZone) {
-                return
-            }
+    //     setListProjectArr(copy);
 
-            // item.columnId = columnId;
-            changePositions()
+    //     setCurrentlyDraggingProject(dropZone);
+    //     // setDragTaskId(saveId);
 
-        },
-        collect: monitor => ({
-            isOver: !!monitor.isOver(),
-        }),
-    })
+    // }
+
+
+    // const [{ isOver }, drop] = useDrop({
+    //     accept: ItemTypes.PROJECT,
+    //     drop: () => {
+    //     },
+    //     hover: (item) => {
+    //         // console.log('hover')
+
+    //         // if (taskid !== null && dragTaskId !== taskid) {
+    //         //     setDragTaskId(taskid)
+    //         // }
+
+    //         if (currentlyDraggingProject === dropZone) {
+    //             return
+    //         }
+
+    //         // item.columnId = columnId;
+    //         changePositions()
+
+    //     },
+    //     collect: monitor => ({
+    //         isOver: !!monitor.isOver(),
+    //     }),
+    // })
 
 
     const handleDrop = async (item) => {
         // console.log('handle drop')
-        // let sendArr = [...listProjectArr];
+        let sendArr = [...mainProjectArr];
+        let listCopy = [...listProjectArr]
 
-        // try {
-        //     await fetch(`${apiBaseUrl}/projects`, {
-        //         method: 'PUT',
-        //         body: JSON.stringify({ sendArr }),
-        //         headers: {
-        //             "Content-Type": 'application/json',
-        //         }
-        //     })
+        sendArr.push(...listCopy)
 
-        // } catch (e) {
-        //     console.error(e)
-        // }
+
+        try {
+            await fetch(`${apiBaseUrl}/projects`, {
+                method: 'PUT',
+                body: JSON.stringify({ sendArr }),
+                headers: {
+                    "Content-Type": 'application/json',
+                }
+            })
+
+        } catch (e) {
+            console.error(e)
+        }
     }
 
 
-
-
-
     return (
-        <Draggable
-            draggableId={`list-${id}`}
-            index={dropZone}
-        >
-            {(provided, snapshot) => {
-                return (
-                    <div {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                        // style={{
-                        //     // transitionDuration: snapshot.isDropAnimating && '0.001s'
-                        //     backgroundColor: 'red'
-                        // }}
-                        ref={provided.innerRef}
-                    >
-                        <NavLink
-                            className='navlink'
-                            to={`/home/project/${id}`}
-                            onClick={handleProjectNavLinkClick}
-                            style={
-                                {
-                                    textDecoration: 'none',
-                                    transitionDuration: snapshot.isDropAnimating && '0.001s'
-                                }}>
+        // <div ref={drop}>
 
-                            <div
-                                className='project-navlink'
-                                style={
-                                    {
-                                        textDecoration: 'none',
-                                        transitionDuration: snapshot.isDropAnimating && '0.001s'
-                                    }}>
-                                {name}
-                            </div>
+        <NavLink
+            className='navlink'
+            to={`/home/project/${id}`}
+            onClick={handleProjectNavLinkClick}
+            style={
+                {
+                    textDecoration: 'none',
+                }}>
 
-                        </NavLink>
-                    </div>)
-            }}
-        </Draggable>
+            <div
+                ref={drag}
+                className='project-navlink'
+                style={
+                    {
+                        textDecoration: 'none',
+                        opacity: (isDragging || (!isDragging && (dragProjectId === id))) ? 0 : 1
+                    }}>
+                {name}
+            </div>
+        </NavLink>
+        // </div>
     )
+
+
+    // return (
+    //     <Draggable
+    //         draggableId={`list-${id}`}
+    //         index={dropZone}
+    //     >
+    //         {(provided, snapshot) => {
+    //             return (
+    //                 <div {...provided.draggableProps}
+    //                     {...provided.dragHandleProps}
+    //                     ref={provided.innerRef}
+    //                 >
+    //                     <NavLink
+    //                         className='navlink'
+    //                         to={`/home/project/${id}`}
+    //                         onClick={handleProjectNavLinkClick}
+    //                         style={
+    //                             {
+    //                                 textDecoration: 'none',
+    //                                 transitionDuration: snapshot.isDropAnimating && '0.001s'
+    //                             }}>
+
+    //                         <div
+    //                             className='project-navlink'
+    //                             style={
+    //                                 {
+    //                                     textDecoration: 'none',
+    //                                     transitionDuration: snapshot.isDropAnimating && '0.001s'
+    //                                 }}>
+    //                             {name}
+    //                         </div>
+
+    //                     </NavLink>
+    //                 </div>)
+    //         }}
+    //     </Draggable>
+    // )
 }
 
 export default ProjectNavList;

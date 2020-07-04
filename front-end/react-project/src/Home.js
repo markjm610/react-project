@@ -89,7 +89,7 @@ const Home = () => {
 
     const onDragEnd = async (result) => {
         const { destination, source, draggableId, type } = result
-        console.log(type)
+
         if (!destination) {
             return
         }
@@ -252,81 +252,82 @@ const Home = () => {
             }
             // setCurrentlyDraggingColumn(columnDropZoneId);
             // setDragTaskId(saveId);
-        } else if (type === 'project') {
-            // if in main list, rearrange
-            if (draggableId.startsWith('m')) {
-                let copy = [...mainProjectArr];
-
-                const moved = copy.splice(source.index, 1);
-
-                copy.splice(destination.index, 0, moved[0])
-
-                // copy.forEach((project, i) => {
-
-                //     project.UsersProject.position = i;
-                // })
-                setMainProjectArr(copy);
-            } else {
-                // if in extra list, insert and remove last element from main list, 
-                // then insert to beginning of extra list
-                // what if drop on end of main list? 
-
-                let mainCopy = [...mainProjectArr];
-                let listCopy = [...listProjectArr]
-                const moved = listCopy.splice(source.index, 1);
-
-                mainCopy.splice(destination.index, 0, moved[0])
-
-                const toOtherList = mainCopy.pop()
-                console.log(toOtherList)
-                listCopy.unshift(toOtherList)
-
-
-
-                mainCopy.forEach((project, i) => {
-
-                    project.UsersProject.position = i;
-                })
-
-                listCopy.forEach((project, i) => {
-                    project.UsersProject.position = i + 5
-                })
-
-                console.log('mainCopy', mainCopy)
-                console.log('listCopy', listCopy)
-
-
-                setMainProjectArr(mainCopy)
-                setListProjectArr(listCopy);
-            }
-
-
-            // setDragColumnId(dragColumnId);
-
-
-
-            // use copy maybe
-            // let sendArr = [...mainProjectArr];
-
-            // try {
-            //     await fetch(`${apiBaseUrl}/projects`, {
-            //         method: 'PUT',
-            //         body: JSON.stringify({ sendArr }),
-            //         headers: {
-            //             "Content-Type": 'application/json',
-            //         }
-            //     })
-
-            // } catch (e) {
-            //     console.error(e)
-            // }
         }
+        // else if (type === 'project') {
+        //     // if in main list, rearrange
+        //     if (draggableId.startsWith('m')) {
+        //         let copy = [...mainProjectArr];
+
+        //         const moved = copy.splice(source.index, 1);
+
+        //         copy.splice(destination.index, 0, moved[0])
+
+        //         // copy.forEach((project, i) => {
+
+        //         //     project.UsersProject.position = i;
+        //         // })
+        //         setMainProjectArr(copy);
+        //     } else {
+        //         // if in extra list, insert and remove last element from main list, 
+        //         // then insert to beginning of extra list
+        //         // what if drop on end of main list? 
+
+        //         let mainCopy = [...mainProjectArr];
+        //         let listCopy = [...listProjectArr]
+        //         const moved = listCopy.splice(source.index, 1);
+
+        //         mainCopy.splice(destination.index, 0, moved[0])
+
+        //         const toOtherList = mainCopy.pop()
+        //         console.log(toOtherList)
+        //         listCopy.unshift(toOtherList)
 
 
 
+        //         mainCopy.forEach((project, i) => {
+
+        //             project.UsersProject.position = i;
+        //         })
+
+        //         listCopy.forEach((project, i) => {
+        //             project.UsersProject.position = i + 5
+        //         })
+
+        //         console.log('mainCopy', mainCopy)
+        //         console.log('listCopy', listCopy)
 
 
+        //         setMainProjectArr(mainCopy)
+        //         setListProjectArr(listCopy);
+        //     }
+
+
+        // setDragColumnId(dragColumnId);
+
+
+
+        // use copy maybe
+        // let sendArr = [...mainProjectArr];
+
+        // try {
+        //     await fetch(`${apiBaseUrl}/projects`, {
+        //         method: 'PUT',
+        //         body: JSON.stringify({ sendArr }),
+        //         headers: {
+        //             "Content-Type": 'application/json',
+        //         }
+        //     })
+
+        // } catch (e) {
+        //     console.error(e)
+        // }
     }
+
+
+
+
+
+    // }
 
     // const onDragStart = (e) => {
     //     console.log(e)

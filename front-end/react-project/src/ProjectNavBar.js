@@ -13,54 +13,91 @@ const ProjectNavBar = () => {
 
     const [showList, setShowList] = useState(false)
 
+
     return (
         <>
-            <Droppable droppableId={'project-nav-main'} type='project'>
-                {provided => {
-                    return (
-                        <div className='navbar__navlinks'
-                            ref={provided.innerRef}
-                            {...provided.droppableProps}>
-                            {mainProjectArr.map(({ id, name, UsersProject: { position } }, i) => {
-                                return (
-                                    <ProjectNavMain
-                                        dropZone={i}
-                                        key={id}
-                                        // to={`/home/project/${id}`}
-                                        id={id}
-                                        name={name}
-                                        position={position}
-                                    />
-                                )
-                            })}
-                            {provided.placeholder}
-                        </div >
-                    )
-                }}
 
-            </Droppable>
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <More onClick={() => setShowList(!showList)} />
-            </div>
-            <Droppable droppableId={'project-nav-list'} isDropDisabled type='project'>
-                {provided => {
+            <div className='navbar__navlinks'>
+                {mainProjectArr.map(({ id, name, UsersProject: { position } }, i) => {
                     return (
-                        <div ref={provided.innerRef}
-                            {...provided.droppableProps}
-                            className='project-nav-list-container'>
-                            {showList && <div>
-                                {listProjectArr.map(({ id, name, position }, i) => {
-                                    return <ProjectNavList id={id} dropZone={i} key={id} position={position} name={name} />
-                                })}
-                            </div>}
-                            {provided.placeholder}
-                        </div>
+                        <ProjectNavMain
+                            dropZone={i}
+                            key={id}
+                            // to={`/home/project/${id}`}
+                            id={id}
+                            name={name}
+                            position={position}
+                        />
                     )
-                }}
-            </Droppable>
+                })}
+
+            </div >
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <More onClick={() => setShowList(!showList)} className='more-projects' />
+            </div>
+
+            <div className='project-nav-list-container'>
+                {showList && <div>
+                    {listProjectArr.map(({ id, name, position }, i) => {
+                        return <ProjectNavList id={id} dropZone={i} key={id} position={position} name={name} />
+                    })}
+                </div>}
+
+            </div>
 
         </>
     )
+
+
+
+    // return (
+    //     <>
+    //         <Droppable droppableId={'project-nav-main'} type='project'>
+    //             {provided => {
+    //                 return (
+    //                     <div className='navbar__navlinks'
+    //                         ref={provided.innerRef}
+    //                         {...provided.droppableProps}>
+    //                         {mainProjectArr.map(({ id, name, UsersProject: { position } }, i) => {
+    //                             return (
+    //                                 <ProjectNavMain
+    //                                     dropZone={i}
+    //                                     key={id}
+    //                                     // to={`/home/project/${id}`}
+    //                                     id={id}
+    //                                     name={name}
+    //                                     position={position}
+    //                                 />
+    //                             )
+    //                         })}
+    //                         {provided.placeholder}
+    //                     </div >
+    //                 )
+    //             }}
+
+    //         </Droppable>
+    //         <div style={{ display: 'flex', justifyContent: 'center' }}>
+    //             <More onClick={() => setShowList(!showList)} />
+    //         </div>
+    //         <Droppable droppableId={'project-nav-list'} isDropDisabled type='project'>
+    //             {provided => {
+    //                 return (
+    //                     <div ref={provided.innerRef}
+    //                         {...provided.droppableProps}
+    //                         className='project-nav-list-container'>
+    //                         {showList && <div>
+    //                             {listProjectArr.map(({ id, name, position }, i) => {
+    //                                 return <ProjectNavList id={id} dropZone={i} key={id} position={position} name={name} />
+    //                             })}
+    //                         </div>}
+    //                         {provided.placeholder}
+    //                     </div>
+    //                 )
+    //             }}
+    //         </Droppable>
+
+    //     </>
+    // )
 }
 
 export default ProjectNavBar;
