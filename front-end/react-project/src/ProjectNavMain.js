@@ -168,7 +168,12 @@ const ProjectNavMain = ({ id, name, position, dropZone }) => {
     return (
         <>
 
-            <div ref={drop} style={{ height: isOver ? '30px' : '10px', backgroundColor: isOver && 'yellow' }} />
+            <div
+                ref={drop}
+                style={{
+                    height: '10px',
+                    backgroundColor: isOver && 'yellow'
+                }} />
             <NavLink
                 className='navlink'
                 to={`/home/project/${id}`}
