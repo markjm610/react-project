@@ -8,7 +8,7 @@ import { Draggable } from 'react-beautiful-dnd';
 
 const ProjectNavMain = ({ id, name, position, dropZone }) => {
 
-    const { mainProjectArr, setMainProjectArr, setProjectMembers, setDisplayedColumns, setCurrentProjectId, currentlyDraggingProject, setCurrentlyDraggingProject } = useContext(Context);
+    const { linkDragging, dragProjectId, setDragProjectId, listProjectArr, setListProjectArr, mainProjectArr, setMainProjectArr, setProjectMembers, setDisplayedColumns, setCurrentProjectId, currentlyDraggingProject, setCurrentlyDraggingProject } = useContext(Context);
 
     const handleProjectNavLinkClick = async () => {
 
@@ -31,12 +31,13 @@ const ProjectNavMain = ({ id, name, position, dropZone }) => {
 
 
     const [{ isDragging }, drag] = useDrag({
-        item: { type: ItemTypes.PROJECT, id },
+        item: { type: ItemTypes.PROJECT, id, isMain: true },
         begin: () => {
             setCurrentlyDraggingProject(dropZone)
         },
         end: (item) => {
             handleDrop()
+            setDragProjectId(null)
         },
         collect: monitor => ({
             isDragging: monitor.isDragging()
@@ -45,50 +46,94 @@ const ProjectNavMain = ({ id, name, position, dropZone }) => {
 
 
 
-    const changePositions = () => {
+    const changePositions = (item) => {
 
 
         // if (columnDropZoneId === columnArrLength - 1) {
         //     return;
         // }
         // const saveId = dragTaskId;
-        const drag = currentlyDraggingProject;
 
-        // let startingColumn;
+        if (item.isMain) {
+            const drag = currentlyDraggingProject;
 
-        let copy = [...mainProjectArr];
+            // let startingColumn;
 
-        const moved = copy.splice(drag, 1);
+            let copy = [...mainProjectArr];
 
-        copy.splice(dropZone, 0, moved[0])
+            const moved = copy.splice(drag, 1);
 
-        copy.forEach((project, i) => {
-            project.UsersProject.position = i;
-        })
+            copy.splice(dropZone, 0, moved[0])
+
+            copy.forEach((project, i) => {
+                project.UsersProject.position = i;
+            })
 
 
-        // setDragColumnId(dragColumnId);
+            // setDragColumnId(dragColumnId);
 
-        setMainProjectArr(copy);
+            setMainProjectArr(copy);
 
-        setCurrentlyDraggingProject(dropZone);
-        // setDragTaskId(saveId);
+            setCurrentlyDraggingProject(dropZone);
+            // setDragTaskId(saveId);
+        } else {
+            item.isMain = true
+            const drag = currentlyDraggingProject
+
+            let mainCopy = [...mainProjectArr]
+            let listCopy = [...listProjectArr]
+
+            const moved = listCopy.splice(drag, 1)
+
+
+            mainCopy.splice(dropZone, 0, moved[0])
+
+
+
+            const toList = mainCopy.pop()
+
+            listCopy.unshift(toList)
+
+            mainCopy.forEach((project, i) => {
+
+                project.UsersProject.position = i;
+            })
+
+            listCopy.forEach((project, i) => {
+                project.UsersProject.position = i + 5
+            })
+
+            console.log('mainCopy', mainCopy)
+            console.log('listCopy', listCopy)
+
+            setCurrentlyDraggingProject(dropZone);
+            setListProjectArr(listCopy);
+            setMainProjectArr(mainCopy)
+
+
+        }
+
 
     }
 
 
     const [{ isOver }, drop] = useDrop({
         accept: ItemTypes.PROJECT,
-        drop: () => {
+        drop: (item) => {
+            changePositions(item)
         },
         hover: (item) => {
+            // console.log('hover')
+            if (dragProjectId !== item.id) {
+                setDragProjectId(item.id)
+            }
+            // console.log(currentlyDraggingProject)
 
-            if (currentlyDraggingProject === dropZone) {
+            if (currentlyDraggingProject === dropZone && item.isMain === true) {
+
                 return
             }
 
-            // item.columnId = columnId;
-            changePositions()
 
         },
         collect: monitor => ({
@@ -99,7 +144,11 @@ const ProjectNavMain = ({ id, name, position, dropZone }) => {
 
     const handleDrop = async (item) => {
         // console.log('handle drop')
-        let sendArr = [...mainProjectArr];
+        // let sendArr = [...mainProjectArr];
+        // let listCopy = [...listProjectArr]
+
+        // sendArr.push(...listCopy)
+
 
         // try {
         //     await fetch(`${apiBaseUrl}/projects`, {
@@ -116,44 +165,70 @@ const ProjectNavMain = ({ id, name, position, dropZone }) => {
     }
 
 
-
-
-
     return (
-        // <div ref={drop}>
-        <Draggable
-            draggableId={`main-${id}`}
-            index={dropZone}
-        >
-            {provided => {
-                return (
-                    <div {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                        ref={provided.innerRef}>
-                        <NavLink
-                            className='navlink'
-                            to={`/home/project/${id}`}
-                            onClick={handleProjectNavLinkClick}
-                            style={
-                                {
-                                    textDecoration: 'none'
-                                }}>
+        <>
+
+            <div ref={drop} style={{ height: isOver ? '30px' : '10px', backgroundColor: isOver && 'yellow' }} />
+            <NavLink
+                className='navlink'
+                to={`/home/project/${id}`}
+                onClick={handleProjectNavLinkClick}
+                style={
+                    {
+                        textDecoration: 'none'
+                    }}>
 
 
-                            <div
-                                className='project-navlink'
-                                style={
-                                    {
-                                        textDecoration: 'none',
-                                        opacity: isDragging ? 0 : 1
-                                    }}>
-                                {name}
-                            </div>
-                        </NavLink>
-                    </div>)
-            }}
-        </Draggable>
+                <div
+                    // ref={drag}
+                    className='project-navlink'
+                    style={
+                        {
+                            textDecoration: 'none',
+                            opacity: (isDragging || (!isDragging && (dragProjectId === id))) ? 0 : 1
+                        }}>
+                    {name}
+                </div>
+            </NavLink>
+        </>
     )
+
+
+    // return (
+    //     // <div ref={drop}>
+    //     <Draggable
+    //         draggableId={`main-${id}`}
+    //         index={dropZone}
+    //     >
+    //         {provided => {
+    //             return (
+    //                 <div {...provided.draggableProps}
+    //                     {...provided.dragHandleProps}
+    //                     ref={provided.innerRef}>
+    //                     <NavLink
+    //                         className='navlink'
+    //                         to={`/home/project/${id}`}
+    //                         onClick={handleProjectNavLinkClick}
+    //                         style={
+    //                             {
+    //                                 textDecoration: 'none'
+    //                             }}>
+
+
+    //                         <div
+    //                             className='project-navlink'
+    //                             style={
+    //                                 {
+    //                                     textDecoration: 'none',
+    //                                     opacity: isDragging ? 0 : 1
+    //                                 }}>
+    //                             {name}
+    //                         </div>
+    //                     </NavLink>
+    //                 </div>)
+    //         }}
+    //     </Draggable>
+    // )
 }
 
 export default ProjectNavMain;

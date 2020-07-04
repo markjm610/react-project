@@ -301,10 +301,14 @@ html, body {
 }
 
 .project-nav-list-container {
-    z-index: 5;
+    z-index: 50;
     margin-left: 150px;
     position: absolute;
-    width: 150px;
+    width: 200px;
     overflow-y: auto;
     height: 200px;
+}
+
+.more-projects:hover {
+    cursor: pointer;
 }
