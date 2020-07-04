@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Context from './Context';
 import App from './App';
 
@@ -25,6 +25,9 @@ const ContextWrapper = () => {
     const [noForms, setNoForms] = useState(false)
     const [dragProjectId, setDragProjectId] = useState(null)
     const [linkDragging, setLinkDragging] = useState(false)
+    const topOfList = useRef(null)
+
+
     return (
         <Context.Provider value={
             {
@@ -48,7 +51,8 @@ const ContextWrapper = () => {
                 currentSourceIndex, setCurrentSourceIndex,
                 noForms, setNoForms,
                 dragProjectId, setDragProjectId,
-                linkDragging, setLinkDragging
+                linkDragging, setLinkDragging,
+                topOfList
             }
         } >
             <App />
