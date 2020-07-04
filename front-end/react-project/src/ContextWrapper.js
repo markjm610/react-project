@@ -26,7 +26,7 @@ const ContextWrapper = () => {
     const [dragProjectId, setDragProjectId] = useState(null)
     const [linkDragging, setLinkDragging] = useState(false)
     const topOfList = useRef(null)
-
+    const bottomOfMain = useRef(null)
 
     return (
         <Context.Provider value={
@@ -52,7 +52,8 @@ const ContextWrapper = () => {
                 noForms, setNoForms,
                 dragProjectId, setDragProjectId,
                 linkDragging, setLinkDragging,
-                topOfList
+                topOfList,
+                bottomOfMain
             }
         } >
             <App />
