@@ -79,7 +79,7 @@ const ProjectNavBar = () => {
             <div style={{ display: 'flex', justifyContent: 'center' }}>
                 <More onClick={() => setShowList(!showList)} />
             </div>
-            <Droppable droppableId={'project-nav-list'} isDropDisabled type='project'>
+            <Droppable droppableId={'project-nav-list'} type='project'>
                 {provided => {
                     return (
                         <div ref={provided.innerRef}

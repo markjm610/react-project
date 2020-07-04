@@ -237,7 +237,6 @@ const ProjectNavMain = ({ id, name, position, dropZone }) => {
         )
     } else {
         return (
-            // <div ref={drop}>
             <Draggable
                 draggableId={`main-${id}`}
                 index={dropZone}
