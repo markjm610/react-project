@@ -131,97 +131,133 @@ const ProjectNavList = ({ id, name, position, dropZone }) => {
         }
     }
 
+    // if (dropZone === 0) {
+    //     return (
+    //         <div ref={topOfList}>
+    //             <NavLink
+    //                 className='navlink'
+    //                 to={`/home/project/${id}`}
+    //                 onClick={handleProjectNavLinkClick}
+    //                 style={
+    //                     {
+    //                         textDecoration: 'none',
+    //                     }}>
+
+    //                 <div
+    //                     ref={drag}
+    //                     className='project-navlink'
+    //                     style={
+    //                         {
+    //                             textDecoration: 'none',
+    //                             opacity: (isDragging || (!isDragging && (dragProjectId === id))) ? 0 : 1
+    //                         }}>
+    //                     {name}
+    //                 </div>
+    //             </NavLink>
+    //         </div>
+    //     )
+    // } else {
+    //     return (
+    //         // <div ref={drop}>
+
+    //         <NavLink
+    //             className='navlink'
+    //             to={`/home/project/${id}`}
+    //             onClick={handleProjectNavLinkClick}
+    //             style={
+    //                 {
+    //                     textDecoration: 'none',
+    //                 }}>
+
+    //             <div
+    //                 ref={drag}
+    //                 className='project-navlink'
+    //                 style={
+    //                     {
+    //                         textDecoration: 'none',
+    //                         opacity: (isDragging || (!isDragging && (dragProjectId === id))) ? 0 : 1
+    //                     }}>
+    //                 {name}
+    //             </div>
+    //         </NavLink>
+    //         // </div>
+    //     )
+    // }
+
+
     if (dropZone === 0) {
         return (
-            <div ref={topOfList}>
-                <NavLink
-                    className='navlink'
-                    to={`/home/project/${id}`}
-                    onClick={handleProjectNavLinkClick}
-                    style={
-                        {
-                            textDecoration: 'none',
-                        }}>
+            <Draggable
+                draggableId={`list-${id}`}
+                index={dropZone}
+            >
+                {(provided, snapshot) => {
+                    return (
+                        <div {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                            ref={provided.innerRef}
+                        >
+                            <NavLink
+                                className='navlink'
+                                to={`/home/project/${id}`}
+                                onClick={handleProjectNavLinkClick}
+                                style={
+                                    {
+                                        textDecoration: 'none'
+                                    }}>
 
-                    <div
-                        ref={drag}
-                        className='project-navlink'
-                        style={
-                            {
-                                textDecoration: 'none',
-                                opacity: (isDragging || (!isDragging && (dragProjectId === id))) ? 0 : 1
-                            }}>
-                        {name}
-                    </div>
-                </NavLink>
-            </div>
+                                <div
+                                    ref={topOfList}
+                                    className='project-navlink'
+                                    style={
+                                        {
+                                            textDecoration: 'none'
+                                        }}>
+                                    {name}
+                                </div>
+
+                            </NavLink>
+                        </div>)
+                }}
+            </Draggable>
         )
     } else {
         return (
-            // <div ref={drop}>
+            <Draggable
+                draggableId={`list-${id}`}
+                index={dropZone}
+            >
+                {(provided, snapshot) => {
+                    return (
+                        <div {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                            ref={provided.innerRef}
+                        >
+                            <NavLink
+                                className='navlink'
+                                to={`/home/project/${id}`}
+                                onClick={handleProjectNavLinkClick}
+                                style={
+                                    {
+                                        textDecoration: 'none'
+                                    }}>
 
-            <NavLink
-                className='navlink'
-                to={`/home/project/${id}`}
-                onClick={handleProjectNavLinkClick}
-                style={
-                    {
-                        textDecoration: 'none',
-                    }}>
+                                <div
+                                    className='project-navlink'
+                                    style={
+                                        {
+                                            textDecoration: 'none'
+                                        }}>
+                                    {name}
+                                </div>
 
-                <div
-                    ref={drag}
-                    className='project-navlink'
-                    style={
-                        {
-                            textDecoration: 'none',
-                            opacity: (isDragging || (!isDragging && (dragProjectId === id))) ? 0 : 1
-                        }}>
-                    {name}
-                </div>
-            </NavLink>
-            // </div>
+                            </NavLink>
+                        </div>)
+                }}
+            </Draggable>
         )
     }
 
-
-
-    // return (
-    //     <Draggable
-    //         draggableId={`list-${id}`}
-    //         index={dropZone}
-    //     >
-    //         {(provided, snapshot) => {
-    //             return (
-    //                 <div {...provided.draggableProps}
-    //                     {...provided.dragHandleProps}
-    //                     ref={provided.innerRef}
-    //                 >
-    //                     <NavLink
-    //                         className='navlink'
-    //                         to={`/home/project/${id}`}
-    //                         onClick={handleProjectNavLinkClick}
-    //                         style={
-    //                             {
-    //                                 textDecoration: 'none',
-    //                                 transitionDuration: snapshot.isDropAnimating && '0.001s'
-    //                             }}>
-
-    //                         <div
-    //                             className='project-navlink'
-    //                             style={
-    //                                 {
-    //                                     textDecoration: 'none',
-    //                                     transitionDuration: snapshot.isDropAnimating && '0.001s'
-    //                                 }}>
-    //                             {name}
-    //                         </div>
-
-    //                     </NavLink>
-    //                 </div>)
-    //         }}
-    //     </Draggable>
-    // )
 }
 
 export default ProjectNavList;

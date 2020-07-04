@@ -8,7 +8,7 @@ import { Draggable } from 'react-beautiful-dnd';
 
 const ProjectNavMain = ({ id, name, position, dropZone }) => {
 
-    const { linkDragging, dragProjectId, setDragProjectId, listProjectArr, setListProjectArr, mainProjectArr, setMainProjectArr, setProjectMembers, setDisplayedColumns, setCurrentProjectId, currentlyDraggingProject, setCurrentlyDraggingProject } = useContext(Context);
+    const { bottomOfMain, dragProjectId, setDragProjectId, listProjectArr, setListProjectArr, mainProjectArr, setMainProjectArr, setProjectMembers, setDisplayedColumns, setCurrentProjectId, currentlyDraggingProject, setCurrentlyDraggingProject } = useContext(Context);
 
     const handleProjectNavLinkClick = async () => {
 
@@ -165,75 +165,114 @@ const ProjectNavMain = ({ id, name, position, dropZone }) => {
     }
 
 
-    return (
-        <>
-
-            <div
-                ref={drop}
-                style={{
-                    height: '10px',
-                    backgroundColor: isOver && 'yellow'
-                }} />
-            <NavLink
-                className='navlink'
-                to={`/home/project/${id}`}
-                onClick={handleProjectNavLinkClick}
-                style={
-                    {
-                        textDecoration: 'none'
-                    }}>
-
-
-                <div
-                    // ref={drag}
-                    className='project-navlink'
-                    style={
-                        {
-                            textDecoration: 'none',
-                            opacity: (isDragging || (!isDragging && (dragProjectId === id))) ? 0 : 1
-                        }}>
-                    {name}
-                </div>
-            </NavLink>
-        </>
-    )
-
-
     // return (
-    //     // <div ref={drop}>
-    //     <Draggable
-    //         draggableId={`main-${id}`}
-    //         index={dropZone}
-    //     >
-    //         {provided => {
-    //             return (
-    //                 <div {...provided.draggableProps}
-    //                     {...provided.dragHandleProps}
-    //                     ref={provided.innerRef}>
-    //                     <NavLink
-    //                         className='navlink'
-    //                         to={`/home/project/${id}`}
-    //                         onClick={handleProjectNavLinkClick}
-    //                         style={
-    //                             {
-    //                                 textDecoration: 'none'
-    //                             }}>
+    //     <>
+
+    //         <div
+    //             ref={drop}
+    //             style={{
+    //                 height: '10px',
+    //                 backgroundColor: isOver && 'yellow'
+    //             }} />
+    //         <NavLink
+    //             className='navlink'
+    //             to={`/home/project/${id}`}
+    //             onClick={handleProjectNavLinkClick}
+    //             style={
+    //                 {
+    //                     textDecoration: 'none'
+    //                 }}>
 
 
-    //                         <div
-    //                             className='project-navlink'
-    //                             style={
-    //                                 {
-    //                                     textDecoration: 'none',
-    //                                     opacity: isDragging ? 0 : 1
-    //                                 }}>
-    //                             {name}
-    //                         </div>
-    //                     </NavLink>
-    //                 </div>)
-    //         }}
-    //     </Draggable>
+    //             <div
+    //                 // ref={drag}
+    //                 className='project-navlink'
+    //                 style={
+    //                     {
+    //                         textDecoration: 'none',
+    //                         opacity: (isDragging || (!isDragging && (dragProjectId === id))) ? 0 : 1
+    //                     }}>
+    //                 {name}
+    //             </div>
+    //         </NavLink>
+    //     </>
     // )
+
+    if (dropZone === mainProjectArr.length - 1) {
+        return (
+            // <div ref={drop}>
+            <Draggable
+                draggableId={`main-${id}`}
+                index={dropZone}
+            >
+                {provided => {
+                    return (
+                        <div {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                            ref={provided.innerRef}>
+                            <NavLink
+                                className='navlink'
+                                to={`/home/project/${id}`}
+                                onClick={handleProjectNavLinkClick}
+                                style={
+                                    {
+                                        textDecoration: 'none'
+                                    }}>
+
+
+                                <div
+                                    ref={bottomOfMain}
+                                    className='project-navlink'
+                                    style={
+                                        {
+                                            textDecoration: 'none',
+                                            opacity: isDragging ? 0 : 1
+                                        }}>
+                                    {name}
+                                </div>
+                            </NavLink>
+                        </div>)
+                }}
+            </Draggable>
+        )
+    } else {
+        return (
+            // <div ref={drop}>
+            <Draggable
+                draggableId={`main-${id}`}
+                index={dropZone}
+            >
+                {provided => {
+                    return (
+                        <div {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                            ref={provided.innerRef}>
+                            <NavLink
+                                className='navlink'
+                                to={`/home/project/${id}`}
+                                onClick={handleProjectNavLinkClick}
+                                style={
+                                    {
+                                        textDecoration: 'none'
+                                    }}>
+
+
+                                <div
+                                    className='project-navlink'
+                                    style={
+                                        {
+                                            textDecoration: 'none',
+                                            opacity: isDragging ? 0 : 1
+                                        }}>
+                                    {name}
+                                </div>
+                            </NavLink>
+                        </div>)
+                }}
+            </Draggable>
+        )
+    }
+
 }
 
 export default ProjectNavMain;

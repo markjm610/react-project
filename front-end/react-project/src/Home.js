@@ -18,6 +18,19 @@ import { Droppable, DragDropContext } from 'react-beautiful-dnd';
 import * as tweenFunctions from "tween-functions";
 
 
+function moveStepByStep(drag, values) {
+    requestAnimationFrame(() => {
+        const newPosition = values.shift();
+        drag.move(newPosition);
+        if (values.length) {
+            moveStepByStep(drag, values);
+        }
+        else {
+            drag.drop();
+        }
+    });
+}
+
 
 const Home = () => {
 
@@ -31,11 +44,14 @@ const Home = () => {
         invites,
         setInvites,
         setDragRef,
-        topOfList } = useContext(Context);
+        topOfList,
+        bottomOfMain
+    } = useContext(Context);
 
 
     const userId = localStorage.getItem('USER_ID');
 
+    const [sensorState, setSensorState] = useState(null)
 
     useEffect(() => {
 
@@ -254,259 +270,93 @@ const Home = () => {
             // setCurrentlyDraggingColumn(columnDropZoneId);
             // setDragTaskId(saveId);
         }
-        // else if (type === 'project') {
-        //     // if in main list, rearrange
-        //     if (draggableId.startsWith('m')) {
-        //         let copy = [...mainProjectArr];
+        else if (type === 'project') {
+            // if in main list, rearrange
+            if (draggableId.startsWith('m')) {
+                let copy = [...mainProjectArr];
 
-        //         const moved = copy.splice(source.index, 1);
+                const moved = copy.splice(source.index, 1);
 
-        //         copy.splice(destination.index, 0, moved[0])
+                copy.splice(destination.index, 0, moved[0])
 
-        //         // copy.forEach((project, i) => {
+                // copy.forEach((project, i) => {
 
-        //         //     project.UsersProject.position = i;
-        //         // })
-        //         setMainProjectArr(copy);
-        //     } else {
-        //         // if in extra list, insert and remove last element from main list, 
-        //         // then insert to beginning of extra list
-        //         // what if drop on end of main list? 
+                //     project.UsersProject.position = i;
+                // })
+                setMainProjectArr(copy);
+            } else {
+                // if in extra list, insert and remove last element from main list, 
+                // then insert to beginning of extra list
+                // what if drop on end of main list? 
 
-        //         let mainCopy = [...mainProjectArr];
-        //         let listCopy = [...listProjectArr]
-        //         const moved = listCopy.splice(source.index, 1);
+                let mainCopy = [...mainProjectArr];
+                let listCopy = [...listProjectArr]
+                const moved = listCopy.splice(source.index, 1);
 
-        //         mainCopy.splice(destination.index, 0, moved[0])
+                mainCopy.splice(destination.index, 0, moved[0])
 
-        //         const toOtherList = mainCopy.pop()
-        //         console.log(toOtherList)
-        //         listCopy.unshift(toOtherList)
+                // const toOtherList = mainCopy.pop()
+                // console.log(toOtherList)
+                // listCopy.unshift(toOtherList)
 
+                mainCopy.forEach((project, i) => {
 
+                    project.UsersProject.position = i;
+                })
 
-        //         mainCopy.forEach((project, i) => {
+                listCopy.forEach((project, i) => {
+                    project.UsersProject.position = i + 5
+                })
 
-        //             project.UsersProject.position = i;
-        //         })
-
-        //         listCopy.forEach((project, i) => {
-        //             project.UsersProject.position = i + 5
-        //         })
-
-        //         console.log('mainCopy', mainCopy)
-        //         console.log('listCopy', listCopy)
+                // console.log('mainCopy', mainCopy)
+                // console.log('listCopy', listCopy)
 
 
-        //         setMainProjectArr(mainCopy)
-        //         setListProjectArr(listCopy);
-        //     }
-
-
-        // setDragColumnId(dragColumnId);
+                setMainProjectArr(mainCopy)
+                setListProjectArr(listCopy);
+            }
 
 
 
-        // use copy maybe
-        // let sendArr = [...mainProjectArr];
+            // let sendArr = [...mainProjectArr];
 
-        // try {
-        //     await fetch(`${apiBaseUrl}/projects`, {
-        //         method: 'PUT',
-        //         body: JSON.stringify({ sendArr }),
-        //         headers: {
-        //             "Content-Type": 'application/json',
-        //         }
-        //     })
+            // try {
+            //     await fetch(`${apiBaseUrl}/projects`, {
+            //         method: 'PUT',
+            //         body: JSON.stringify({ sendArr }),
+            //         headers: {
+            //             "Content-Type": 'application/json',
+            //         }
+            //     })
 
-        // } catch (e) {
-        //     console.error(e)
-        // }
+            // } catch (e) {
+            //     console.error(e)
+            // }
+        }
     }
 
-    // let api;
-    // const sensor = value => {
-    //     api = value
-    // }
+    useEffect(() => {
+        // console.log(mainProjectArr)
+        if (mainProjectArr.length > 5) {
+            const preDrag = sensorState.tryGetLock(`main-${mainProjectArr[5].id}`);
 
-    // const startDrag = targetRef => {
-    //     const preDrag = api.tryGetLock("draggable-item");
-    //     if (!preDrag) {
-    //         return;
-    //     }
+            // if (!preDrag) {
+            //     return;
+            // }
 
-    //     const endX =
-    //         targetRef.current && targetRef.current.getBoundingClientRect().x;
+            const endX = topOfList.current.getBoundingClientRect().x - bottomOfMain.current.getBoundingClientRect().x
+            const endY = topOfList.current.getBoundingClientRect().y - bottomOfMain.current.getBoundingClientRect().y
 
-    //     const start = { x: 0, y: 0 };
-    //     const end = { x: endX, y: 0 };
-    //     const drag = preDrag.fluidLift(start);
+            // const endX = target.current && target.current.getBoundingClientRect().x
+            // const endY = target.current && target.current.getBoundingClientRect().y
 
-
-
-    // }
-
-    // function App() {
-
-
-    //     const startDrag = function start(targetRef) {
-    //         
-
-    //         const endX =
-    //             targetRef.current && targetRef.current.getBoundingClientRect().x;
-
-    //         const start = { x: 0, y: 0 };
-    //         const end = { x: endX, y: 0 };
-    //         const drag = preDrag.fluidLift(start);
-
-    //         const points = [];
-
-    //         for (let i = 0; i < 20; i++) {
-    //             points.push({
-    //                 x: tweenFunctions.easeOutCirc(i, start.x, end.x, 20),
-    //                 y: tweenFunctions.easeOutCirc(i, start.y, end.y, 20)
-    //             });
-    //         }
-    //         moveStepByStep(drag, points);
-    //     };
-
-    //     const [isDropped, setIsDropped] = useState(false);
-    //     const target = useRef(null);
-
-    //     return (
-    //         <div className="App">
-    //             <DragDropContext
-    //                 enableDefaultSensors={false}
-    //                 onDragStart={() => { }}
-    //                 onDragEnd={e => {
-    //                     console.log(e);
-    //                     if (e.destination.droppableId === "endZone") {
-    //                         setIsDropped(true);
-    //                     }
-    //                 }}
-    //                 sensors={[useMyCoolSensor]}
-    //             >
-    //                 <Droppable droppableId="startZone" direction="horizontal">
-    //                     {(provided, snapshot) => (
-    //                         <div
-    //                             className="Column"
-    //                             ref={provided.innerRef}
-    //                             style={getListStyle(snapshot.isDraggingOver)}
-    //                         >
-    //                             <Draggable draggableId="draggable-item" index={0}>
-    //                                 {(provided, snapshot) => (
-    //                                     <div
-    //                                         ref={provided.innerRef}
-    //                                         {...provided.draggableProps}
-    //                                         {...provided.dragHandleProps}
-    //                                         style={getItemStyle(
-    //                                             snapshot.isDragging,
-    //                                             provided.draggableProps.style
-    //                                         )}
-    //                                     >
-    //                                         {!isDropped && <Item />}
-    //                                     </div>
-    //                                 )}
-    //                             </Draggable>
-    //                             {provided.placeholder}
-    //                         </div>
-    //                     )}
-    //                 </Droppable>
-    //                 <Droppable droppableId="endZone" direction="horizontal">
-    //                     {(provided, snapshot) => (
-    //                         <div
-    //                             className="Column"
-    //                             ref={provided.innerRef}
-    //                             style={getListStyle(snapshot.isDraggingOver)}
-    //                         >
-    //                             <div ref={target}>
-    //                                 {isDropped && <Item />}
-    //                                 {provided.placeholder}
-    //                             </div>
-    //                         </div>
-    //                     )}
-    //                 </Droppable>
-    //             </DragDropContext>
-    //             <div>
-    //                 <button
-    //                     onClick={() => (isDropped ? setIsDropped(false) : startDrag(target))}
-    //                 >
-    //                     {isDropped ? "Reset" : "Move"}
-    //                 </button>
-    //             </div>
-    //         </div>
-    //     );
-    // }
-
-    // function moveStepByStep(drag, values) {
-    //     requestAnimationFrame(() => {
-    //         const newPosition = values.shift();
-    //         drag.move(newPosition);
-
-    //         if (values.length) {
-    //             moveStepByStep(drag, values);
-    //         } else {
-    //             drag.drop();
-    //         }
-    //     });
-    // }
-
-
-    // function useMyCoolSensor(api) {
-    //     const startDrag = function start() {
-    //         const preDrag = api.tryGetLock("task-45");
-    //         if (!preDrag) {
-    //             return;
-    //         }
-
-    //         const drag = preDrag.fluidLift({ x: 0, y: 0 });
-    //         const end = { x: 400, y: 500 };
-    //         drag.move(end);
-    //         drag.drop()
-    //     };
-    // }
-
-    // function mySimpleSensor(api) {
-    //     const preDrag = api.tryGetLock('task-45');
-    //     // Could not get lock
-    //     if (!preDrag) {
-    //         return;
-    //     }
-
-    //     const drag = preDrag.snapLift();
-
-    //     drag.moveDown();
-    //     // drag.moveDown();
-    //     // drag.moveDown();
-
-    //     drag.drop();
-    // }
-    // const target = useRef(null)
-
-    function useMyCoolSensor(api) {
-        const start = useCallback(function start(event) {
-            const preDrag = api.tryGetLock('task-47');
-
-            if (!preDrag) {
-                return;
-            }
-            const target = topOfList
-
-            const endX = target.current && target.current.getBoundingClientRect().x
-            const endY = target.current && target.current.getBoundingClientRect().y
-
-            console.log(target.current.getBoundingClientRect())
-            console.log(endX)
-            console.log(endY)
+            // console.log(target.current.getBoundingClientRect())
+            // console.log(endX)
+            // console.log(endY)
 
 
             const startSpot = { x: 0, y: 0 }
             const drag = preDrag.fluidLift(startSpot)
-
-
-            // const drag = preDrag.snapLift();
-
-            // console.log('drag', drag)
 
             const end = { x: endX, y: endY }
             // drag.move(end)
@@ -514,7 +364,6 @@ const Home = () => {
 
             const points = [];
 
-            // we want to generate 20 points between the start and the end
             const numberOfPoints = 50;
 
             for (let i = 0; i < numberOfPoints; i++) {
@@ -526,45 +375,99 @@ const Home = () => {
 
 
 
-
-            function moveStepByStep(drag, values) {
-                requestAnimationFrame(() => {
-                    const newPosition = values.shift();
-                    drag.move(newPosition);
-                    if (values.length) {
-                        moveStepByStep(drag, values);
-                    }
-                    else {
-                        drag.drop();
-                    }
-                });
-            }
-
             moveStepByStep(drag, points)
+        }
+
+
+    }, [mainProjectArr])
+
+
+    // function useMyCoolSensor(api) {
+    //     const start = useCallback(function start(event) {
+    //         const preDrag = api.tryGetLock('task-47');
+
+    //         if (!preDrag) {
+    //             return;
+    //         }
+    //         const target = topOfList
+
+    //         const endX = target.current && target.current.getBoundingClientRect().x
+    //         const endY = target.current && target.current.getBoundingClientRect().y
+
+    //         console.log(target.current.getBoundingClientRect())
+    //         console.log(endX)
+    //         console.log(endY)
+
+
+    //         const startSpot = { x: 0, y: 0 }
+    //         const drag = preDrag.fluidLift(startSpot)
+
+
+    //         // const drag = preDrag.snapLift();
+
+    //         // console.log('drag', drag)
+
+    //         const end = { x: endX, y: endY }
+    //         // drag.move(end)
+    //         // drag.drop()
+
+    //         const points = [];
+
+    //         // we want to generate 20 points between the start and the end
+    //         const numberOfPoints = 50;
+
+    //         for (let i = 0; i < numberOfPoints; i++) {
+    //             points.push({
+    //                 x: tweenFunctions.easeOutCirc(i, startSpot.x, end.x, numberOfPoints),
+    //                 y: tweenFunctions.easeOutCirc(i, startSpot.y, end.y, numberOfPoints)
+    //             });
+    //         }
 
 
 
-        }, []);
+
+    //         function moveStepByStep(drag, values) {
+    //             requestAnimationFrame(() => {
+    //                 const newPosition = values.shift();
+    //                 drag.move(newPosition);
+    //                 if (values.length) {
+    //                     moveStepByStep(drag, values);
+    //                 }
+    //                 else {
+    //                     drag.drop();
+    //                 }
+    //             });
+    //         }
+
+    //         moveStepByStep(drag, points)
+
+
+
+    //     }, []);
 
 
 
 
-        useEffect(() => {
-            window.addEventListener('click', start);
+    //     // useEffect(() => {
+    //     //     window.addEventListener('click', start);
 
-            return () => {
-                window.removeEventListener('click', start);
-            };
-        }, []);
+    //     //     return () => {
+    //     //         window.removeEventListener('click', start);
+    //     //     };
+    //     // }, []);
+    // }
+
+
+    function sensorStateSetter(api) {
+        setSensorState(api)
     }
 
 
 
 
 
-
     return (
-        <DragDropContext onDragEnd={onDragEnd} sensors={[useMyCoolSensor]}>
+        <DragDropContext onDragEnd={onDragEnd} sensors={[sensorStateSetter]}>
             <div id='home' onMouseUp={() => setDragRef(true)}>
                 <div className='sidebar-left'>
                     {/* <UserDisplay></UserDisplay> */}
