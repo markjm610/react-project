@@ -303,6 +303,7 @@ html, body {
 .project-nav-list-container {
     z-index: 50;
     margin-left: 150px;
+    /* top: -20px; */
     position: absolute;
     width: 200px;
     overflow-y: auto;
@@ -311,4 +312,13 @@ html, body {
 
 .more-projects:hover {
     cursor: pointer;
+    opacity: 1
+}
+
+.more-projects {
+    opacity: 0.6
+}
+
+.project-nav-list {
+    background-color: lightblue;
 }

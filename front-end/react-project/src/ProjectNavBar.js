@@ -37,7 +37,7 @@ const ProjectNavBar = () => {
             </div>
 
             <div className='project-nav-list-container'>
-                {showList && <div>
+                {showList && <div className='project-nav-list'>
                     {listProjectArr.map(({ id, name, position }, i) => {
                         return <ProjectNavList id={id} dropZone={i} key={id} position={position} name={name} />
                     })}
