@@ -16,19 +16,18 @@ const Invite = () => {
         // setShow(false)
         const findRes = await fetch(`${apiBaseUrl}/users`, {
             method: 'PUT',
-            body: JSON.stringify(value),
+            body: JSON.stringify({ name: value.name, projectId: currentProjectId }),
             headers: {
                 "Content-Type": 'application/json',
             }
         })
 
 
-        // // Probably should send back and display an error message if person is not found
-
-        // // if (findRes.ok) maybe
-
         const parsedFindRes = await findRes.json();
-        if (parsedFindRes.user) {
+        if (parsedFindRes.message === 'already in project') {
+
+            setInviteStatus('already in project')
+        } else if (parsedFindRes.user) {
             const inviteId = parsedFindRes.user.id;
             // const userId = currentUserId;
             const projectId = currentProjectId;
@@ -48,7 +47,7 @@ const Invite = () => {
 
             } else if (sendInviteRes.ok) {
                 setInviteStatus('sent')
-                setValue({ name: '' })
+                // setValue({ name: '' })
             }
         } else {
             setInviteStatus('user not found')
@@ -111,6 +110,10 @@ const Invite = () => {
                     {inviteStatus === 'already invited' &&
 
                         <div>It looks like you've already invited {value.name} to this project.</div>
+                    }
+                    {inviteStatus === 'already in project' &&
+
+                        <div>{value.name} is already a member of this project!</div>
                     }
                 </Layer>
             )}
