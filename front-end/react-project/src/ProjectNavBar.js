@@ -77,7 +77,7 @@ const ProjectNavBar = () => {
 
             </Droppable>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <More onClick={() => setShowList(!showList)} />
+                <More className='more-projects' onClick={() => setShowList(!showList)} />
             </div>
             <Droppable droppableId={'project-nav-list'} type='project'>
                 {provided => {
