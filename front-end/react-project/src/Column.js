@@ -27,7 +27,8 @@ const Column = ({ columnDropZoneId, tasksArray, name, columnId, currentlyDraggin
         sensorState,
         alphabetizing,
         setAlphabetizing,
-        setCurrentSortedTaskArray
+        setCurrentSortedTaskArray,
+        // taskRefs
     } = useContext(Context)
 
     // const topTask = useRef(null)
@@ -151,17 +152,67 @@ const Column = ({ columnDropZoneId, tasksArray, name, columnId, currentlyDraggin
                 moveStepByStep(drag, points)
                 break
             }
-
-
-
         }
-
-
-
-
     }
 
 
+    useEffect(() => {
+        if (alphabetizing) {
+            for (let i = 0; i < sortedTasks.length; i++) {
+                const sortedTask = sortedTasks[i]
+                if (sortedTask.heading === tasksArray[i].heading) {
+                    continue
+                } else {
+                    let taskToMove;
+                    let taskIndexToMove;
+                    tasksArray.forEach((task, i) => {
+                        if (task.heading === sortedTask.heading) {
+                            taskToMove = task
+                            taskIndexToMove = i
+                        }
+                    })
+
+                    const preDrag = sensorState.tryGetLock(`task-${taskToMove.id}`);
+
+                    if (!preDrag) {
+                        return;
+                    }
+
+
+                    const endX = -(taskRefs[taskIndexToMove].current.getBoundingClientRect().x - taskRefs[i].current.getBoundingClientRect().x)
+
+                    const endY = -(taskRefs[taskIndexToMove].current.getBoundingClientRect().y - taskRefs[i].current.getBoundingClientRect().y)
+
+                    // // const endX = target.current && target.current.getBoundingClientRect().x
+                    // // const endY = target.current && target.current.getBoundingClientRect().y
+
+
+                    const startSpot = { x: 0, y: 0 }
+                    const drag = preDrag.fluidLift(startSpot)
+
+                    const end = { x: endX, y: endY }
+
+                    const points = [];
+
+                    const numberOfPoints = 50;
+
+                    for (let i = 0; i < numberOfPoints; i++) {
+                        points.push({
+                            x: tweenFunctions.easeOutCirc(i, startSpot.x, end.x, numberOfPoints),
+                            y: tweenFunctions.easeOutCirc(i, startSpot.y, end.y, numberOfPoints)
+                        });
+                    }
+
+
+                    if (i === sortedTasks.length - 1) {
+                        setAlphabetizing(false)
+                    }
+                    moveStepByStep(drag, points)
+                    break
+                }
+            }
+        }
+    }, [tasksArray])
 
 
 

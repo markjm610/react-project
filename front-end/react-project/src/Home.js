@@ -120,7 +120,7 @@ const Home = () => {
             return
         }
 
-        if (type === 'task' && !alphabetizing) {
+        if (type === 'task') {
 
             let copy = [...displayedColumns];
 
@@ -233,10 +233,12 @@ const Home = () => {
                 console.error(e)
             }
 
-        } else if (type === 'task' && alphabetizing) {
-            console.log('alphabetizing')
-            // Can't do drags during loop
-            // "Iterate" by keeping track of how far down the list you are, and doing the next one once the previous drop has finished
+            // } else if (type === 'task' && alphabetizing) {
+            //     console.log('alphabetizing')
+
+            // Find a non-matching index, run the animation, break
+            // If all indexes match, set alphabetizing to false and stop
+
             // let copy = [...displayedColumns];
 
             // let currentColumn;
@@ -249,11 +251,11 @@ const Home = () => {
 
             // let sortedCopy = [...currentSortedTaskArray]
 
-            // sortedCopy.forEach((sortedTask, i) => {
+            // for (let i = 0; i < sortedCopy.length; i++) {
+            //     const sortedTask = sortedTaskCopy[i]
             //     if (sortedTask.heading === currentColumn[i].heading) {
-            //         return
+            //         continue
             //     } else {
-
             //         let taskToMove;
             //         let taskIndexToMove;
             //         currentColumn.forEach((task, i) => {
@@ -261,9 +263,44 @@ const Home = () => {
             //                 taskToMove = task
             //                 taskIndexToMove = i
             //             }
-            //         })
 
-            //         const preDrag = sensorState.tryGetLock(`task-${taskToMove.id}`);
+            //             const preDrag = sensorState.tryGetLock(`task-${taskToMove.id}`);
+
+
+            //             const endX = -(taskRefs[taskIndexToMove].current.getBoundingClientRect().x - taskRefs[i].current.getBoundingClientRect().x)
+
+            //             const endY = -(taskRefs[taskIndexToMove].current.getBoundingClientRect().y - taskRefs[i].current.getBoundingClientRect().y)
+
+            //             const startSpot = { x: 0, y: 0 }
+            //             const drag = preDrag.fluidLift(startSpot)
+
+            //             const end = { x: endX, y: endY }
+
+            //             const points = [];
+
+            //             const numberOfPoints = 50;
+
+            //             for (let i = 0; i < numberOfPoints; i++) {
+            //                 points.push({
+            //                     x: tweenFunctions.easeOutCirc(i, startSpot.x, end.x, numberOfPoints),
+            //                     y: tweenFunctions.easeOutCirc(i, startSpot.y, end.y, numberOfPoints)
+            //                 });
+            //             }
+
+
+
+            //             moveStepByStep(drag, points)
+
+            //         })
+            //     }
+            // sortedCopy.forEach((sortedTask, i) => {
+            //     if (sortedTask.heading === currentColumn[i].heading) {
+            //         return
+            //     } else {
+
+            //         
+
+            //         
 
             //     }
 
@@ -272,33 +309,33 @@ const Home = () => {
             //     // }
 
 
-            //     // const endX = -(taskRefs[taskIndexToMove].current.getBoundingClientRect().x - taskRefs[i].current.getBoundingClientRect().x)
+            // const endX = -(taskRefs[taskIndexToMove].current.getBoundingClientRect().x - taskRefs[i].current.getBoundingClientRect().x)
 
-            //     // const endY = -(taskRefs[taskIndexToMove].current.getBoundingClientRect().y - taskRefs[i].current.getBoundingClientRect().y)
+            // const endY = -(taskRefs[taskIndexToMove].current.getBoundingClientRect().y - taskRefs[i].current.getBoundingClientRect().y)
 
-            //     // // // const endX = target.current && target.current.getBoundingClientRect().x
-            //     // // // const endY = target.current && target.current.getBoundingClientRect().y
-
-
-            //     // const startSpot = { x: 0, y: 0 }
-            //     // const drag = preDrag.fluidLift(startSpot)
-
-            //     // const end = { x: endX, y: endY }
-
-            //     // const points = [];
-
-            //     // const numberOfPoints = 50;
-
-            //     // for (let i = 0; i < numberOfPoints; i++) {
-            //     //     points.push({
-            //     //         x: tweenFunctions.easeOutCirc(i, startSpot.x, end.x, numberOfPoints),
-            //     //         y: tweenFunctions.easeOutCirc(i, startSpot.y, end.y, numberOfPoints)
-            //     //     });
-            //     // }
+            // // // const endX = target.current && target.current.getBoundingClientRect().x
+            // // // const endY = target.current && target.current.getBoundingClientRect().y
 
 
+            // const startSpot = { x: 0, y: 0 }
+            // const drag = preDrag.fluidLift(startSpot)
 
-            //     // moveStepByStep(drag, points)
+            // const end = { x: endX, y: endY }
+
+            // const points = [];
+
+            // const numberOfPoints = 50;
+
+            // for (let i = 0; i < numberOfPoints; i++) {
+            //     points.push({
+            //         x: tweenFunctions.easeOutCirc(i, startSpot.x, end.x, numberOfPoints),
+            //         y: tweenFunctions.easeOutCirc(i, startSpot.y, end.y, numberOfPoints)
+            //     });
+            // }
+
+
+
+            // moveStepByStep(drag, points)
 
 
             // })
