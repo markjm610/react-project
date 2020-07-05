@@ -18,9 +18,9 @@ const ProjectNavMain = ({ id, name, position, dropZone }) => {
         const res = await fetch(`${apiBaseUrl}/projects/${id}`);
         const parsedRes = await res.json();
         const columns = parsedRes.projectInfo.Columns;
-        columns.forEach(column => {
-            column.Tasks.push({ id: null, heading: null, description: null, columnPosition: column.Tasks.length, columnId: column.id })
-        })
+        // columns.forEach(column => {
+        //     column.Tasks.push({ id: null, heading: null, description: null, columnPosition: column.Tasks.length, columnId: column.id })
+        // })
 
         setProjectMembers(parsedUsersRes.projects.Users || []);
         setDisplayedColumns(columns);
