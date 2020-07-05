@@ -41,6 +41,7 @@ const ContextWrapper = () => {
         7: useRef(null),
         8: useRef(null)
     }
+    const [showProjectList, setShowProjectList] = useState(false)
 
 
     return (
@@ -72,7 +73,8 @@ const ContextWrapper = () => {
                 alphabetizing, setAlphabetizing,
                 currentSortedTaskArray, setCurrentSortedTaskArray,
                 currentSortingTask, setCurrentSortingTask,
-                taskRefs
+                taskRefs,
+                showProjectList, setShowProjectList
             }
         } >
             <App />

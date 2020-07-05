@@ -32,10 +32,12 @@ const AddProject = () => {
             }
         })
 
-        const parsedRes = await res.json();
-        const newProject = parsedRes.newProject;
+        const parsedRes = await res.json()
+        const newProject = parsedRes.newProject
+        const newUsersProject = parsedRes.newUsersProject
+        newProject.UsersProject = newUsersProject
         projectsCopy.push(newProject)
-
+        console.log(newProject)
         setMainProjectArr(projectsCopy.slice(0, 5))
         setListProjectArr(projectsCopy.slice(5))
 

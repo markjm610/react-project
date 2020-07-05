@@ -39,8 +39,10 @@ router.post('/users/:userId/projects', asyncHandler(async (req, res, next) => {
     const userId = parseInt(req.params.userId, 10);
     const { name, position } = req.body;
     const newProject = await Project.create({ name, creatorId: userId })
-    await UsersProject.create({ userId, projectId: newProject.id, position })
-    res.json({ newProject })
+    const newUsersProject = await UsersProject.create({ userId, projectId: newProject.id, position })
+    // newProject.UsersProject = newUsersProject
+
+    res.json({ newProject, newUsersProject })
 }))
 
 router.get('/projects/:projectId', asyncHandler(async (req, res, next) => {
@@ -63,8 +65,7 @@ router.get('/projects/:projectId', asyncHandler(async (req, res, next) => {
 router.put('/projects', asyncHandler(async (req, res, next) => {
     try {
         const { sendArr } = req.body;
-        console.log('SENDARR')
-        console.log(sendArr)
+
         sendArr.forEach(async (project) => {
             await UsersProject.update(
                 { position: project.UsersProject.position },

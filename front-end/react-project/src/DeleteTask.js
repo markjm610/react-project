@@ -6,18 +6,13 @@ import { apiBaseUrl } from './config';
 const DeleteTask = ({ taskid, columnId }) => {
     const { displayedColumns, setDisplayedColumns } = useContext(Context);
 
-    // const [allowTaskDelete, setAllowTaskDelete] = useState();
 
-    // const handleMouseDown = () => {
-
-    //     setAllowTaskDelete(true);
-    //     // console.log(allowTaskDelete)
-    // }
 
 
     const deleteTaskClick = async () => {
-        // console.log(allowTaskDelete)
-
+        await fetch(`${apiBaseUrl}/tasks/${taskid}`, {
+            method: 'DELETE'
+        })
         const columnsCopy = [...displayedColumns];
 
         columnsCopy.forEach(column => {
@@ -32,14 +27,13 @@ const DeleteTask = ({ taskid, columnId }) => {
                 column.Tasks.forEach((task, i) => {
                     task.columnPosition = i;
                 })
+
             }
         })
 
         setDisplayedColumns(columnsCopy)
 
-        await fetch(`${apiBaseUrl}/tasks/${taskid}`, {
-            method: 'DELETE'
-        })
+
 
     }
 

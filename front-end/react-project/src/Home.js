@@ -10,7 +10,7 @@ import Context from './Context';
 import { apiBaseUrl } from './config';
 import AddColumn from './AddColumn';
 import AddProject from './AddProject';
-
+import { More } from 'grommet-icons';
 import { useDrop } from 'react-dnd';
 
 import { ItemTypes } from './ItemTypes';
@@ -52,7 +52,9 @@ const Home = () => {
         alphabetizing,
         setAlphabetizing,
         currentSortedTaskArray,
-        setCurrentSortedTaskArray
+        setCurrentSortedTaskArray,
+        showProjectList,
+        setShowProjectList
     } = useContext(Context);
 
 
@@ -546,7 +548,9 @@ const Home = () => {
                     <AddProject></AddProject>
                     <div className='project-stuff'>
                         <ProjectNavBar ></ProjectNavBar>
-
+                        <div style={{ display: 'flex', justifyContent: 'center' }}>
+                            <More className='more-projects' onClick={() => setShowProjectList(!showProjectList)} />
+                        </div>
                     </div>
                     {/* <button onClick={() => startDrag()}>See if this works</button> */}
                     <LogOut></LogOut>
