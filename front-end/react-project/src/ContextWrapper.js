@@ -27,6 +27,9 @@ const ContextWrapper = () => {
     const [sensorState, setSensorState] = useState(null)
     const topOfList = useRef(null)
     const bottomOfMain = useRef(null)
+    const [alphabetizing, setAlphabetizing] = useState(false)
+    const [currentSortedTaskArray, setCurrentSortedTaskArray] = useState([])
+    const [currentSortingTask, setCurrentSortingTask] = useState(null)
 
 
     return (
@@ -54,7 +57,10 @@ const ContextWrapper = () => {
                 linkDragging, setLinkDragging,
                 sensorState, setSensorState,
                 topOfList,
-                bottomOfMain
+                bottomOfMain,
+                alphabetizing, setAlphabetizing,
+                currentSortedTaskArray, setCurrentSortedTaskArray,
+                currentSortingTask, setCurrentSortingTask
             }
         } >
             <App />

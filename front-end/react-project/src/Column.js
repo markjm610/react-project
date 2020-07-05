@@ -24,7 +24,10 @@ const Column = ({ columnDropZoneId, tasksArray, name, columnId, currentlyDraggin
         setCurrentlyDraggingColumn,
         displayedColumns,
         setDisplayedColumns,
-        sensorState
+        sensorState,
+        alphabetizing,
+        setAlphabetizing,
+        setCurrentSortedTaskArray
     } = useContext(Context)
 
     // const topTask = useRef(null)
@@ -73,11 +76,36 @@ const Column = ({ columnDropZoneId, tasksArray, name, columnId, currentlyDraggin
         // Match each task with its final array position based on sortedTaskHeadings
         // Find ref of task currently at that position: taskRefs[finalposition]
         // Move task to that position
+        setCurrentSortedTaskArray(sortedTasks)
+        setAlphabetizing(true)
+
+        // let i = -1
+        // while (sortedTasks.length) {
+        //     i++
+        //     const taskToCompare = sortedTasks.shift()
+        //     if (taskToCompare.heading === tasksArray[i].heading) {
+        //         continue
+        //     } else {
+        //         let taskToMove;
+        //         let taskIndexToMove;
+        //         tasksArray.forEach((task, i) => {
+        //             if (task.heading === sortedTask.heading) {
+        //                 taskToMove = task
+        //                 taskIndexToMove = i
+        //             }
+        //         })
+        //     }
+
+        // }
 
 
-        sortedTasks.forEach((sortedTask, i) => {
-            if (i === 0) {
 
+        // sortedTasks.forEach((sortedTask, i) => 
+        for (let i = 0; i < sortedTasks.length; i++) {
+            const sortedTask = sortedTasks[i]
+            if (sortedTask.heading === tasksArray[i].heading) {
+                continue
+            } else {
                 let taskToMove;
                 let taskIndexToMove;
                 tasksArray.forEach((task, i) => {
@@ -88,17 +116,16 @@ const Column = ({ columnDropZoneId, tasksArray, name, columnId, currentlyDraggin
                 })
 
                 const preDrag = sensorState.tryGetLock(`task-${taskToMove.id}`);
-                console.log(preDrag)
+
                 if (!preDrag) {
                     return;
                 }
 
-                console.log(taskRefs[taskIndexToMove])
-                console.log(taskRefs[i])
+
                 const endX = -(taskRefs[taskIndexToMove].current.getBoundingClientRect().x - taskRefs[i].current.getBoundingClientRect().x)
-                console.log('endX', endX)
+
                 const endY = -(taskRefs[taskIndexToMove].current.getBoundingClientRect().y - taskRefs[i].current.getBoundingClientRect().y)
-                console.log('endY', endY)
+
                 // // const endX = target.current && target.current.getBoundingClientRect().x
                 // // const endY = target.current && target.current.getBoundingClientRect().y
 
@@ -122,9 +149,14 @@ const Column = ({ columnDropZoneId, tasksArray, name, columnId, currentlyDraggin
 
 
                 moveStepByStep(drag, points)
+                break
             }
 
-        })
+
+
+        }
+
+
 
 
     }
