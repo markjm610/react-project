@@ -34,12 +34,13 @@ const AddTask = ({ columnId, taskArrLength }) => {
 
         columnsCopy.forEach(column => {
             if (column.id === columnId) {
-                if (column.Tasks.length === 1) {
-                    column.Tasks.unshift(parsedRes.newTask)
-                } else {
-                    const secondToLastPosition = column.Tasks.length - 1;
-                    column.Tasks.splice(secondToLastPosition, 0, parsedRes.newTask)
-                }
+                // if (column.Tasks.length === 1) {
+                //     column.Tasks.unshift(parsedRes.newTask)
+                // } else {
+                //     const secondToLastPosition = column.Tasks.length - 1;
+                //     column.Tasks.splice(secondToLastPosition, 0, parsedRes.newTask)
+                // }
+                column.Tasks.push(parsedRes.newTask)
                 column.Tasks.forEach((task, i) => {
                     task.columnPosition = i;
                 })

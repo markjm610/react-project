@@ -334,7 +334,7 @@ const Column = ({ columnDropZoneId, tasksArray, name, columnId, currentlyDraggin
                                             // ref={drop} 
                                             className='column-drop-zone'>
                                             <div className='column'>
-                                                <div className='column__header' onClick={alphabetizeClick}>
+                                                <div className='column__header'>
                                                     <AddTask
                                                         columnId={columnId}
                                                         taskArrLength={tasksArray.length}></AddTask>

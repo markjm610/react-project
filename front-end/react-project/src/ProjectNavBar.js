@@ -9,9 +9,8 @@ import { BladesVertical, More } from 'grommet-icons';
 
 const ProjectNavBar = () => {
 
-    const { mainProjectArr, listProjectArr } = useContext(Context);
+    const { mainProjectArr, listProjectArr, showProjectList } = useContext(Context);
 
-    const [showList, setShowList] = useState(false)
 
 
     // return (
@@ -76,16 +75,13 @@ const ProjectNavBar = () => {
                 }}
 
             </Droppable>
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <More className='more-projects' onClick={() => setShowList(!showList)} />
-            </div>
-            <Droppable droppableId={'project-nav-list'} type='project'>
+            {/* <Droppable droppableId={'project-nav-list'} type='project'>
                 {provided => {
                     return (
                         <div ref={provided.innerRef}
                             {...provided.droppableProps}
                             className='project-nav-list-container'>
-                            {showList && <div>
+                            {showProjectList && <div>
                                 {listProjectArr.map(({ id, name, position }, i) => {
                                     return <ProjectNavList id={id} dropZone={i} key={id} position={position} name={name} />
                                 })}
@@ -94,8 +90,24 @@ const ProjectNavBar = () => {
                         </div>
                     )
                 }}
-            </Droppable>
-
+            </Droppable> */}
+            {showProjectList && <div className='project-nav-list-container'>
+                <Droppable droppableId={'project-nav-list'} type='project'>
+                    {provided => {
+                        return (
+                            <>
+                                <div ref={provided.innerRef}
+                                    {...provided.droppableProps}>
+                                    {listProjectArr.map(({ id, name, position }, i) => {
+                                        return <ProjectNavList id={id} dropZone={i} key={id} position={position} name={name} />
+                                    })}
+                                </div>
+                                {provided.placeholder}
+                            </>
+                        )
+                    }}
+                </Droppable>
+            </div>}
         </>
     )
 }

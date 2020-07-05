@@ -34,10 +34,15 @@ html, body {
     /* grid-row: 3 / 4; */
     display: flex;
     justify-content: center;
+    opacity: 0.6;
+}
+
+.add-project:hover {
+    cursor: pointer;
+    opacity: 1;
 }
 
 .add-project-icon {
-    opacity: 0.6;
     padding: 15px;
 }
 
@@ -65,6 +70,7 @@ html, body {
     border-top: solid 1px lightblue;
     border-left: solid 1px lightblue;
     border-bottom: solid 1px lightblue;
+    user-select: none;
 }
 
 .project-navlink:hover {
@@ -289,11 +295,14 @@ html, body {
 }
 
 .add-profile-picture-text {
+   
+    margin-top: 5px;
     padding: 10px;
 }
 
 .user-profile-picture:hover {
-    cursor: pointer;
+    cursor: pointer; 
+    opacity: 1;
 }
 
 .delete-task-icon {
@@ -305,9 +314,9 @@ html, body {
     margin-left: 150px;
     /* top: -20px; */
     position: absolute;
-    width: 200px;
-    overflow-y: auto;
-    height: 200px;
+    top: 50px;
+    width: 150px;
+    height: 100%;
 }
 
 .more-projects:hover {
