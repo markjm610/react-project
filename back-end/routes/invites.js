@@ -13,9 +13,17 @@ const router = express.Router();
 router.put('/users/invites', asyncHandler(async (req, res, next) => {
     const { inviteReceiver, inviteSender, projectId } = req.body;
 
-    const newInvite = await Invite.create({ inviteReceiver, inviteSender, projectId })
+    const alreadyInvited = await Invite.findOne({ where: { inviteReceiver, inviteSender, projectId } })
 
-    res.json({ newInvite })
+    if (alreadyInvited) {
+
+        res.json({ message: 'already invited' })
+    } else {
+        const newInvite = await Invite.create({ inviteReceiver, inviteSender, projectId })
+
+        res.json({ newInvite })
+    }
+
 }))
 
 router.get('/users/:userId/invites', asyncHandler(async (req, res, next) => {
