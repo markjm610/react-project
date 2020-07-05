@@ -1,4 +1,4 @@
-import React, { useState, useContext, useRef, useCallback } from 'react';
+import React, { useState, useContext, useRef, useCallback, useEffect } from 'react';
 // import { Add } from 'grommet-icons'
 import { useDrag, useDrop } from 'react-dnd';
 import { ItemTypes } from './ItemTypes';
@@ -10,7 +10,7 @@ import * as tweenFunctions from "tween-functions";
 import { moveStepByStep } from './utils'
 
 
-const Task = ({ topTask, taskArrLength, columnId, currentlyDragging, setCurrentlyDragging, taskid, taskdropzoneid, heading, description }) => {
+const Task = ({ taskRef, topTask, taskArrLength, columnId, currentlyDragging, setCurrentlyDragging, taskid, taskdropzoneid, heading, description }) => {
 
     const {
         dragTaskId,
@@ -23,7 +23,6 @@ const Task = ({ topTask, taskArrLength, columnId, currentlyDragging, setCurrentl
     } = useContext(Context);
 
     const currentTaskRef = useRef(null)
-
 
 
     const [{ isDragging }, drag] = useDrag({
@@ -199,20 +198,7 @@ const Task = ({ topTask, taskArrLength, columnId, currentlyDragging, setCurrentl
         }),
     })
 
-    // drop(ref)
-    // if (taskdropzoneid === taskArrLength - 1) {
-    //     return (
-    //         <>
-    //             <div className='task-drop-zone'
-    //                 // ref={drop}
-    //                 taskdropzoneid={taskdropzoneid}
-    //             >
 
-    //             </div>
-
-    //         </>
-    //     )
-    // } else {
 
     const toTopClick = () => {
         const preDrag = sensorState.tryGetLock(`task-${taskid}`);
@@ -253,89 +239,91 @@ const Task = ({ topTask, taskArrLength, columnId, currentlyDragging, setCurrentl
     }
 
 
-    if (taskdropzoneid === 0) {
-        return (
+    // if (taskdropzoneid === 0) {
+    //     return (
 
-            <Draggable draggableId={`task-${taskid}`} index={taskdropzoneid}>
-                {(provided) => {
+    //         <Draggable draggableId={`task-${taskid}`} index={taskdropzoneid}>
+    //             {(provided) => {
 
-                    return (
-                        <div
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                            ref={provided.innerRef}>
-                            <div className='task'
-                                ref={topTask}
-                                taskid={taskid}
+    //                 return (
+    //                     <div
+    //                         {...provided.draggableProps}
+    //                         {...provided.dragHandleProps}
+    //                         ref={provided.innerRef}>
+    //                         <div className='task'
+    //                             ref={topTask}
+    //                             taskid={taskid}
 
-                                style={{
-                                    // opacity: (isDragging || (!isDragging && (dragTaskId === taskid))) ? 0.4 : 1,
-                                }}>
-                                <div className='task-drop-zone'
-                                    // ref={drop}
-                                    taskdropzoneid={taskdropzoneid}>
-                                    <div
-                                        className='task__heading'
-                                    // style={{ backgroundColor: (isDragging || (!isDragging && (dragTaskId === taskid))) && 'yellow', color: (isDragging || (!isDragging && (dragTaskId === taskid))) && 'yellow' }}
-                                    >
-                                        <div className='task__heading-text'>{heading}</div>
-                                        <DeleteTask taskid={taskid} columnId={columnId}></DeleteTask>
-                                    </div></div>
+    //                             style={{
+    //                                 // opacity: (isDragging || (!isDragging && (dragTaskId === taskid))) ? 0.4 : 1,
+    //                             }}>
+    //                             <div className='task-drop-zone'
+    //                                 // ref={drop}
+    //                                 taskdropzoneid={taskdropzoneid}>
+    //                                 <div
+    //                                     className='task__heading'
+    //                                 // style={{ backgroundColor: (isDragging || (!isDragging && (dragTaskId === taskid))) && 'yellow', color: (isDragging || (!isDragging && (dragTaskId === taskid))) && 'yellow' }}
+    //                                 >
+    //                                     <div className='task__heading-text'>{heading}</div>
+    //                                     <DeleteTask taskid={taskid} columnId={columnId}></DeleteTask>
+    //                                 </div></div>
 
+    //                             <div
+    //                                 className='task__description'
+    //                             // style={{ backgroundColor: (isDragging || (!isDragging && (dragTaskId === taskid))) && 'yellow', color: (isDragging || (!isDragging && (dragTaskId === taskid))) && 'yellow' }}
+    //                             >{description}</div>
+    //                         </div>
+    //                     </div>)
+    //             }
+    //             }
+
+    //         </Draggable >
+
+    //     )
+    // } else {
+    return (
+
+        <Draggable draggableId={`task-${taskid}`} index={taskdropzoneid}>
+            {(provided) => {
+
+                return (
+                    <div
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        ref={provided.innerRef}>
+                        <div className='task'
+                            // ref={currentTaskRef}
+                            ref={taskRef}
+                            // ref={taskRefArr[taskdropzoneid]}
+                            taskid={taskid}
+                            onClick={toTopClick}
+                            style={{
+                                // opacity: (isDragging || (!isDragging && (dragTaskId === taskid))) ? 0.4 : 1,
+                            }}>
+                            <div className='task-drop-zone'
+                                // ref={drop}
+                                taskdropzoneid={taskdropzoneid}>
                                 <div
-                                    className='task__description'
+                                    className='task__heading'
                                 // style={{ backgroundColor: (isDragging || (!isDragging && (dragTaskId === taskid))) && 'yellow', color: (isDragging || (!isDragging && (dragTaskId === taskid))) && 'yellow' }}
-                                >{description}</div>
-                            </div>
-                        </div>)
-                }
-                }
+                                >
+                                    <div className='task__heading-text'>{heading}</div>
+                                    <DeleteTask taskid={taskid} columnId={columnId}></DeleteTask>
+                                </div></div>
 
-            </Draggable >
+                            <div
+                                className='task__description'
+                            // style={{ backgroundColor: (isDragging || (!isDragging && (dragTaskId === taskid))) && 'yellow', color: (isDragging || (!isDragging && (dragTaskId === taskid))) && 'yellow' }}
+                            >{description}</div>
+                        </div>
+                    </div>)
+            }
+            }
 
-        )
-    } else {
-        return (
+        </Draggable >
 
-            <Draggable draggableId={`task-${taskid}`} index={taskdropzoneid}>
-                {(provided) => {
-
-                    return (
-                        <div
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                            ref={provided.innerRef}>
-                            <div className='task'
-                                ref={currentTaskRef}
-                                taskid={taskid}
-                                onClick={toTopClick}
-                                style={{
-                                    // opacity: (isDragging || (!isDragging && (dragTaskId === taskid))) ? 0.4 : 1,
-                                }}>
-                                <div className='task-drop-zone'
-                                    // ref={drop}
-                                    taskdropzoneid={taskdropzoneid}>
-                                    <div
-                                        className='task__heading'
-                                    // style={{ backgroundColor: (isDragging || (!isDragging && (dragTaskId === taskid))) && 'yellow', color: (isDragging || (!isDragging && (dragTaskId === taskid))) && 'yellow' }}
-                                    >
-                                        <div className='task__heading-text'>{heading}</div>
-                                        <DeleteTask taskid={taskid} columnId={columnId}></DeleteTask>
-                                    </div></div>
-
-                                <div
-                                    className='task__description'
-                                // style={{ backgroundColor: (isDragging || (!isDragging && (dragTaskId === taskid))) && 'yellow', color: (isDragging || (!isDragging && (dragTaskId === taskid))) && 'yellow' }}
-                                >{description}</div>
-                            </div>
-                        </div>)
-                }
-                }
-
-            </Draggable >
-
-        )
-    }
+    )
+    // }
 
     // }
 
