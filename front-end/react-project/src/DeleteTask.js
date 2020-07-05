@@ -50,7 +50,7 @@ const DeleteTask = ({ taskid, columnId }) => {
     return (
         <div className='delete-task'>
             <FormClose className='delete-task-icon'
-                onMouseUp={deleteTaskClick}
+                onClick={deleteTaskClick}
             ></FormClose>
         </div>
     )

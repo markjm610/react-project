@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useRef } from 'react';
 import Task from './Task';
 import { useDrag, useDrop } from 'react-dnd';
 import { ItemTypes } from './ItemTypes';
@@ -24,6 +24,9 @@ const Column = ({ columnDropZoneId, tasksArray, name, columnId, currentlyDraggin
         displayedColumns,
         setDisplayedColumns
     } = useContext(Context)
+
+    const topTask = useRef(null)
+
 
     const [{ isDragging }, drag] = useDrag({
         item: { type: ItemTypes.COLUMN, columnId },
@@ -165,6 +168,7 @@ const Column = ({ columnDropZoneId, tasksArray, name, columnId, currentlyDraggin
                                                             setCurrentlyDragging={setCurrentlyDragging}
                                                             columnId={task.columnId}
                                                             taskArrLength={tasksArray.length}
+                                                            topTask={topTask}
                                                         />)
                                                     }
                                                     )}

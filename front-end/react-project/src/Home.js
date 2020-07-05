@@ -16,19 +16,19 @@ import { useDrop } from 'react-dnd';
 import { ItemTypes } from './ItemTypes';
 import { Droppable, DragDropContext } from 'react-beautiful-dnd';
 import * as tweenFunctions from "tween-functions";
+import { moveStepByStep } from './utils'
 
-
-function moveStepByStep(drag, values) {
-    requestAnimationFrame(() => {
-        const newPosition = values.shift();
-        drag.move(newPosition);
-        if (values.length) {
-            moveStepByStep(drag, values);
-        } else {
-            drag.drop();
-        }
-    });
-}
+// function moveStepByStep(drag, values) {
+//     requestAnimationFrame(() => {
+//         const newPosition = values.shift();
+//         drag.move(newPosition);
+//         if (values.length) {
+//             moveStepByStep(drag, values);
+//         } else {
+//             drag.drop();
+//         }
+//     });
+// }
 
 
 const Home = () => {
@@ -44,13 +44,13 @@ const Home = () => {
         setInvites,
         setDragRef,
         topOfList,
-        bottomOfMain
+        bottomOfMain,
+        sensorState,
+        setSensorState
     } = useContext(Context);
 
 
     const userId = localStorage.getItem('USER_ID');
-
-    const [sensorState, setSensorState] = useState(null)
 
     useEffect(() => {
 
@@ -105,7 +105,7 @@ const Home = () => {
 
     const onDragEnd = async (result) => {
         const { destination, source, draggableId, type } = result
-        console.log(result)
+        // console.log(result)
         if (!destination) {
             return
         }
@@ -222,7 +222,7 @@ const Home = () => {
                         "Content-Type": 'application/json',
                     }
                 })
-                console.log(await res.json())
+                // console.log(await res.json())
             } catch (e) {
                 console.error(e)
             }
@@ -350,7 +350,7 @@ const Home = () => {
                 setListProjectArr(listCopy);
             }
 
-            console.log(sendArr)
+            // console.log(sendArr)
 
             try {
                 await fetch(`${apiBaseUrl}/projects`, {
@@ -396,7 +396,7 @@ const Home = () => {
 
             const points = [];
 
-            const numberOfPoints = 50;
+            const numberOfPoints = 15;
 
             for (let i = 0; i < numberOfPoints; i++) {
                 points.push({
@@ -414,80 +414,6 @@ const Home = () => {
     }, [mainProjectArr])
 
 
-    // function useMyCoolSensor(api) {
-    //     const start = useCallback(function start(event) {
-    //         const preDrag = api.tryGetLock('task-47');
-
-    //         if (!preDrag) {
-    //             return;
-    //         }
-    //         const target = topOfList
-
-    //         const endX = target.current && target.current.getBoundingClientRect().x
-    //         const endY = target.current && target.current.getBoundingClientRect().y
-
-    //         console.log(target.current.getBoundingClientRect())
-    //         console.log(endX)
-    //         console.log(endY)
-
-
-    //         const startSpot = { x: 0, y: 0 }
-    //         const drag = preDrag.fluidLift(startSpot)
-
-
-    //         // const drag = preDrag.snapLift();
-
-    //         // console.log('drag', drag)
-
-    //         const end = { x: endX, y: endY }
-    //         // drag.move(end)
-    //         // drag.drop()
-
-    //         const points = [];
-
-    //         // we want to generate 20 points between the start and the end
-    //         const numberOfPoints = 50;
-
-    //         for (let i = 0; i < numberOfPoints; i++) {
-    //             points.push({
-    //                 x: tweenFunctions.easeOutCirc(i, startSpot.x, end.x, numberOfPoints),
-    //                 y: tweenFunctions.easeOutCirc(i, startSpot.y, end.y, numberOfPoints)
-    //             });
-    //         }
-
-
-
-
-    //         function moveStepByStep(drag, values) {
-    //             requestAnimationFrame(() => {
-    //                 const newPosition = values.shift();
-    //                 drag.move(newPosition);
-    //                 if (values.length) {
-    //                     moveStepByStep(drag, values);
-    //                 }
-    //                 else {
-    //                     drag.drop();
-    //                 }
-    //             });
-    //         }
-
-    //         moveStepByStep(drag, points)
-
-
-
-    //     }, []);
-
-
-
-
-    //     // useEffect(() => {
-    //     //     window.addEventListener('click', start);
-
-    //     //     return () => {
-    //     //         window.removeEventListener('click', start);
-    //     //     };
-    //     // }, []);
-    // }
 
 
     function sensorStateSetter(api) {
@@ -495,12 +421,14 @@ const Home = () => {
     }
 
 
+    const toTopClick = () => {
 
+    }
 
 
     return (
         <DragDropContext onDragEnd={onDragEnd} sensors={[sensorStateSetter]}>
-            <div id='home' onMouseUp={() => setDragRef(true)}>
+            <div id='home'>
                 <div className='sidebar-left'>
                     {/* <UserDisplay></UserDisplay> */}
                     <AddProject></AddProject>

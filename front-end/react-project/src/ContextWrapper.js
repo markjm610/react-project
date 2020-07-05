@@ -13,7 +13,6 @@ const ContextWrapper = () => {
     const [taskArrays, setTaskArrays] = useState({})
     const [invites, setInvites] = useState([])
     const [dragTaskId, setDragTaskId] = useState('')
-    const [dragRef, setDragRef] = useState(true)
     const [draggingColumnId, setDraggingColumnId] = useState('')
     const [currentlyDraggingColumn, setCurrentlyDraggingColumn] = useState(null)
     const [currentlyDraggingProject, setCurrentlyDraggingProject] = useState(null)
@@ -25,8 +24,10 @@ const ContextWrapper = () => {
     const [noForms, setNoForms] = useState(false)
     const [dragProjectId, setDragProjectId] = useState(null)
     const [linkDragging, setLinkDragging] = useState(false)
+    const [sensorState, setSensorState] = useState(null)
     const topOfList = useRef(null)
     const bottomOfMain = useRef(null)
+
 
     return (
         <Context.Provider value={
@@ -40,7 +41,6 @@ const ContextWrapper = () => {
                 taskArrays, setTaskArrays,
                 invites, setInvites,
                 dragTaskId, setDragTaskId,
-                dragRef, setDragRef,
                 draggingColumnId, setDraggingColumnId,
                 currentlyDraggingColumn, setCurrentlyDraggingColumn,
                 currentlyDraggingProject, setCurrentlyDraggingProject,
@@ -52,6 +52,7 @@ const ContextWrapper = () => {
                 noForms, setNoForms,
                 dragProjectId, setDragProjectId,
                 linkDragging, setLinkDragging,
+                sensorState, setSensorState,
                 topOfList,
                 bottomOfMain
             }
