@@ -31,13 +31,7 @@ const Column = ({ columnDropZoneId, tasksArray, name, columnId, currentlyDraggin
         // taskRefs
     } = useContext(Context)
 
-    // const topTask = useRef(null)
-
-    // const task0 = useRef(null)
-    // const task1 = useRef(null)
-    // const task2 = useRef(null)
-    // const task3 = useRef(null)
-
+    const topTask = useRef(null)
 
     const taskRefs = {
         0: useRef(null),
@@ -161,6 +155,9 @@ const Column = ({ columnDropZoneId, tasksArray, name, columnId, currentlyDraggin
             for (let i = 0; i < sortedTasks.length; i++) {
                 const sortedTask = sortedTasks[i]
                 if (sortedTask.heading === tasksArray[i].heading) {
+                    if (i === sortedTasks.length - 1) {
+                        setAlphabetizing(false)
+                    }
                     continue
                 } else {
                     let taskToMove;
@@ -360,7 +357,7 @@ const Column = ({ columnDropZoneId, tasksArray, name, columnId, currentlyDraggin
                                                             setCurrentlyDragging={setCurrentlyDragging}
                                                             columnId={task.columnId}
                                                             taskArrLength={tasksArray.length}
-                                                            // topTask={topTask}
+                                                            topTask={topTask}
                                                             // taskRefArr={taskRefArr}
                                                             // setTaskRefArr={setTaskRefArr}
                                                             taskRef={taskRefs[i]}
