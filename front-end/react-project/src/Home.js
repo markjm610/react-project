@@ -263,7 +263,10 @@ const Home = () => {
 
         }
         else if (type === 'project') {
-            // if in main list, rearrange
+
+
+            let sendArr = []
+
             if (draggableId.startsWith('m') && destination.droppableId === 'project-nav-main') {
 
                 let copy = [...mainProjectArr];
@@ -276,6 +279,11 @@ const Home = () => {
 
                     project.UsersProject.position = i;
                 })
+
+                sendArr.push(...copy)
+                sendArr.push(...listProjectArr)
+
+
                 setMainProjectArr(copy);
             } else if (draggableId.startsWith('l') && destination.droppableId === 'project-nav-list') {
                 let copy = [...listProjectArr];
@@ -285,8 +293,12 @@ const Home = () => {
                 copy.splice(destination.index, 0, moved[0])
 
                 copy.forEach((project, i) => {
-                    project.UsersProject.position = i;
+                    project.UsersProject.position = i + 5;
                 })
+
+                sendArr.push(...mainProjectArr)
+                sendArr.push(...copy)
+
                 setListProjectArr(copy);
             } else if (draggableId.startsWith('l') && destination.droppableId === 'project-nav-main') {
 
@@ -307,7 +319,8 @@ const Home = () => {
 
                 // console.log('mainCopy', mainCopy)
                 // console.log('listCopy', listCopy)
-
+                sendArr.push(...mainCopy)
+                sendArr.push(...listCopy)
 
                 setMainProjectArr(mainCopy)
                 setListProjectArr(listCopy);
@@ -331,32 +344,31 @@ const Home = () => {
                 // console.log('mainCopy', mainCopy)
                 // console.log('listCopy', listCopy)
 
-
+                sendArr.push(...mainCopy)
+                sendArr.push(...listCopy)
                 setMainProjectArr(mainCopy)
                 setListProjectArr(listCopy);
             }
 
+            console.log(sendArr)
 
+            try {
+                await fetch(`${apiBaseUrl}/projects`, {
+                    method: 'PUT',
+                    body: JSON.stringify({ sendArr }),
+                    headers: {
+                        "Content-Type": 'application/json',
+                    }
+                })
 
-            // let sendArr = [...mainProjectArr];
-
-            // try {
-            //     await fetch(`${apiBaseUrl}/projects`, {
-            //         method: 'PUT',
-            //         body: JSON.stringify({ sendArr }),
-            //         headers: {
-            //             "Content-Type": 'application/json',
-            //         }
-            //     })
-
-            // } catch (e) {
-            //     console.error(e)
-            // }
+            } catch (e) {
+                console.error(e)
+            }
         }
     }
 
     useEffect(() => {
-        console.log(mainProjectArr)
+
         if (mainProjectArr.length > 5) {
             const preDrag = sensorState.tryGetLock(`main-${mainProjectArr[5].id}`);
 

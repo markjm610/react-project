@@ -68,7 +68,7 @@ router.put('/users/token', validateEmailAndPassword, handleValidationErrors, asy
 
 router.put('/users', asyncHandler(async (req, res, next) => {
     const { name } = req.body;
-    // console.log(name);
+
     const user = await User.findOne({ where: { name: name } });
 
     res.json({ user })
