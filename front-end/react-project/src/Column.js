@@ -9,6 +9,7 @@ import { apiBaseUrl } from './config';
 import { Droppable, Draggable } from 'react-beautiful-dnd'
 import * as tweenFunctions from "tween-functions";
 import { moveStepByStep } from './utils'
+import { Trash } from 'grommet-icons';
 
 // import Context from './Context';
 // import { apiBaseUrl } from './config';
@@ -296,6 +297,19 @@ const Column = ({ columnDropZoneId, tasksArray, name, columnId, currentlyDraggin
         }
     }
 
+    const clearCompleted = async () => {
+        await fetch(`${apiBaseUrl}/columns/${columnId}/tasks`, {
+            method: 'DELETE'
+        })
+        let columnCopy = [...displayedColumns]
+
+        columnCopy.forEach(column => {
+            if (column.id === columnId) {
+                column.Tasks = []
+            }
+        })
+        setDisplayedColumns(columnCopy)
+    }
 
     return (
         <Draggable draggableId={`column-${columnId}`} index={columnDropZoneId}>
@@ -313,7 +327,7 @@ const Column = ({ columnDropZoneId, tasksArray, name, columnId, currentlyDraggin
                                             className='column-drop-zone'>
                                             <div className='column'>
                                                 <div
-                                                    onClick={alphabetizeClick}
+                                                    // onClick={alphabetizeClick}
                                                     className='column__header' {...dragProvided.dragHandleProps}>
                                                     {name !== 'Completed' ?
                                                         <>
@@ -323,7 +337,10 @@ const Column = ({ columnDropZoneId, tasksArray, name, columnId, currentlyDraggin
                                                             <div className='column__name'>{name}</div>
                                                             <DeleteColumn columnId={columnId} />
                                                         </> :
-                                                        <div className='completed-name'>{name}</div>}
+                                                        <>
+                                                            <div className='completed-name'>{name}</div>
+                                                            <div><Trash onClick={clearCompleted} /></div>
+                                                        </>}
                                                 </div>
                                                 <div className='tasks-container'>
                                                     {tasksArray.map((task, i) => {
