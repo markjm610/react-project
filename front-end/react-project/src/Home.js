@@ -12,7 +12,7 @@ import AddColumn from './AddColumn';
 import AddProject from './AddProject';
 import { More } from 'grommet-icons';
 import { useDrop } from 'react-dnd';
-
+import LeaveProject from './LeaveProject'
 import { ItemTypes } from './ItemTypes';
 import { Droppable, DragDropContext } from 'react-beautiful-dnd';
 import * as tweenFunctions from "tween-functions";
@@ -571,8 +571,9 @@ const Home = () => {
                 </Droppable>
 
                 <div className='sidebar-right'>
-                    <Invite></Invite>
-                    <ProjectMembers></ProjectMembers>
+                    <Invite />
+                    <ProjectMembers />
+                    <LeaveProject />
                 </div>
             </div>
         </DragDropContext>

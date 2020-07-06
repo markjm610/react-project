@@ -30,17 +30,6 @@ const ContextWrapper = () => {
     const [alphabetizing, setAlphabetizing] = useState(false)
     const [currentSortedTaskArray, setCurrentSortedTaskArray] = useState([])
     const [currentSortingTask, setCurrentSortingTask] = useState(null)
-    const taskRefs = {
-        0: useRef(null),
-        1: useRef(null),
-        2: useRef(null),
-        3: useRef(null),
-        4: useRef(null),
-        5: useRef(null),
-        6: useRef(null),
-        7: useRef(null),
-        8: useRef(null)
-    }
     const [showProjectList, setShowProjectList] = useState(false)
 
 
@@ -73,7 +62,6 @@ const ContextWrapper = () => {
                 alphabetizing, setAlphabetizing,
                 currentSortedTaskArray, setCurrentSortedTaskArray,
                 currentSortingTask, setCurrentSortingTask,
-                taskRefs,
                 showProjectList, setShowProjectList
             }
         } >
