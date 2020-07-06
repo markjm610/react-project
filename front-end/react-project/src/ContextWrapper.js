@@ -31,7 +31,7 @@ const ContextWrapper = () => {
     const [currentSortedTaskArray, setCurrentSortedTaskArray] = useState([])
     const [currentSortingTask, setCurrentSortingTask] = useState(null)
     const [showProjectList, setShowProjectList] = useState(false)
-
+    const [clearing, setClearing] = useState(false)
 
     return (
         <Context.Provider value={
@@ -62,7 +62,8 @@ const ContextWrapper = () => {
                 alphabetizing, setAlphabetizing,
                 currentSortedTaskArray, setCurrentSortedTaskArray,
                 currentSortingTask, setCurrentSortingTask,
-                showProjectList, setShowProjectList
+                showProjectList, setShowProjectList,
+                clearing, setClearing
             }
         } >
             <App />

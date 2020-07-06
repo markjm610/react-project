@@ -57,6 +57,7 @@ const ProjectNavBar = () => {
                         <div className='navbar__navlinks'
                             ref={provided.innerRef}
                             {...provided.droppableProps}>
+
                             {mainProjectArr.map(({ id, name, UsersProject: { position } }, i) => {
                                 return (
                                     <ProjectNavMain

@@ -35,8 +35,9 @@ const AddColumn = () => {
 
         const parsedRes = await res.json();
         const newColumn = parsedRes.newColumn;
+        newColumn.Tasks = []
         // newColumn.Tasks = [{ id: null, heading: null, description: null, columnPosition: 0, columnId: newColumn.id }]
-        columnsCopy.push(parsedRes.newColumn);
+        columnsCopy.push(newColumn);
 
         setDisplayedColumns(columnsCopy);
 
