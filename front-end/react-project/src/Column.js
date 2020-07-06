@@ -315,11 +315,15 @@ const Column = ({ columnDropZoneId, tasksArray, name, columnId, currentlyDraggin
                                                 <div
                                                     onClick={alphabetizeClick}
                                                     className='column__header' {...dragProvided.dragHandleProps}>
-                                                    <AddTask
-                                                        columnId={columnId}
-                                                        taskArrLength={tasksArray.length}></AddTask>
-                                                    <div className='column__name'>{name}</div>
-                                                    <DeleteColumn columnId={columnId}></DeleteColumn>
+                                                    {name !== 'Completed' ?
+                                                        <>
+                                                            <AddTask
+                                                                columnId={columnId}
+                                                                taskArrLength={tasksArray.length} />
+                                                            <div className='column__name'>{name}</div>
+                                                            <DeleteColumn columnId={columnId} />
+                                                        </> :
+                                                        <div className='completed-name'>{name}</div>}
                                                 </div>
                                                 <div className='tasks-container'>
                                                     {tasksArray.map((task, i) => {

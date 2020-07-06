@@ -40,8 +40,7 @@ router.post('/users/:userId/projects', asyncHandler(async (req, res, next) => {
     const { name, position } = req.body;
     const newProject = await Project.create({ name, creatorId: userId })
     const newUsersProject = await UsersProject.create({ userId, projectId: newProject.id, position })
-    // newProject.UsersProject = newUsersProject
-
+    await Column.create({ name: 'Completed', pagePosition: 0, projectId: newProject.id })
     res.json({ newProject, newUsersProject })
 }))
 
