@@ -334,3 +334,10 @@ html, body {
 .leave-project:hover {
     cursor: pointer;
 }
+
+.completed-name {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+}
