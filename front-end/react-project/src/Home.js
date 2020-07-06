@@ -42,15 +42,14 @@ const Home = () => {
         currentSortedTaskArray,
         setCurrentSortedTaskArray,
         showProjectList,
-        setShowProjectList
+        setShowProjectList,
+        clearing
     } = useContext(Context);
 
 
     const userId = localStorage.getItem('USER_ID');
 
     useEffect(() => {
-
-
         async function fetchInvites() {
             const inviteRes = await fetch(`${apiBaseUrl}/users/${userId}/invites`);
             const parsedInviteRes = await inviteRes.json()
@@ -102,6 +101,8 @@ const Home = () => {
     const onDragEnd = async (result) => {
         const { destination, source, draggableId, type } = result
         console.log(result)
+
+
         if (!destination) {
             return
         }
@@ -223,112 +224,6 @@ const Home = () => {
                 console.error(e)
             }
 
-            // } else if (type === 'task' && alphabetizing) {
-            //     console.log('alphabetizing')
-
-            // Find a non-matching index, run the animation, break
-            // If all indexes match, set alphabetizing to false and stop
-
-            // let copy = [...displayedColumns];
-
-            // let currentColumn;
-
-            // copy.forEach(column => {
-            //     if (`${column.id}` === destination.droppableId) {
-            //         currentColumn = column.Tasks.slice();
-            //     }
-            // })
-
-            // let sortedCopy = [...currentSortedTaskArray]
-
-            // for (let i = 0; i < sortedCopy.length; i++) {
-            //     const sortedTask = sortedTaskCopy[i]
-            //     if (sortedTask.heading === currentColumn[i].heading) {
-            //         continue
-            //     } else {
-            //         let taskToMove;
-            //         let taskIndexToMove;
-            //         currentColumn.forEach((task, i) => {
-            //             if (task.heading === sortedTask.heading) {
-            //                 taskToMove = task
-            //                 taskIndexToMove = i
-            //             }
-
-            //             const preDrag = sensorState.tryGetLock(`task-${taskToMove.id}`);
-
-
-            //             const endX = -(taskRefs[taskIndexToMove].current.getBoundingClientRect().x - taskRefs[i].current.getBoundingClientRect().x)
-
-            //             const endY = -(taskRefs[taskIndexToMove].current.getBoundingClientRect().y - taskRefs[i].current.getBoundingClientRect().y)
-
-            //             const startSpot = { x: 0, y: 0 }
-            //             const drag = preDrag.fluidLift(startSpot)
-
-            //             const end = { x: endX, y: endY }
-
-            //             const points = [];
-
-            //             const numberOfPoints = 50;
-
-            //             for (let i = 0; i < numberOfPoints; i++) {
-            //                 points.push({
-            //                     x: tweenFunctions.easeOutCirc(i, startSpot.x, end.x, numberOfPoints),
-            //                     y: tweenFunctions.easeOutCirc(i, startSpot.y, end.y, numberOfPoints)
-            //                 });
-            //             }
-
-
-
-            //             moveStepByStep(drag, points)
-
-            //         })
-            //     }
-            // sortedCopy.forEach((sortedTask, i) => {
-            //     if (sortedTask.heading === currentColumn[i].heading) {
-            //         return
-            //     } else {
-
-            //         
-
-            //         
-
-            //     }
-
-            //     // if (!preDrag) {
-            //     //     return;
-            //     // }
-
-
-            // const endX = -(taskRefs[taskIndexToMove].current.getBoundingClientRect().x - taskRefs[i].current.getBoundingClientRect().x)
-
-            // const endY = -(taskRefs[taskIndexToMove].current.getBoundingClientRect().y - taskRefs[i].current.getBoundingClientRect().y)
-
-            // // // const endX = target.current && target.current.getBoundingClientRect().x
-            // // // const endY = target.current && target.current.getBoundingClientRect().y
-
-
-            // const startSpot = { x: 0, y: 0 }
-            // const drag = preDrag.fluidLift(startSpot)
-
-            // const end = { x: endX, y: endY }
-
-            // const points = [];
-
-            // const numberOfPoints = 50;
-
-            // for (let i = 0; i < numberOfPoints; i++) {
-            //     points.push({
-            //         x: tweenFunctions.easeOutCirc(i, startSpot.x, end.x, numberOfPoints),
-            //         y: tweenFunctions.easeOutCirc(i, startSpot.y, end.y, numberOfPoints)
-            //     });
-            // }
-
-
-
-            // moveStepByStep(drag, points)
-
-
-            // })
         } else if (type === 'column') {
 
             // const drag = currentlyDraggingColumn;

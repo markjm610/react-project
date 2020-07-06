@@ -260,8 +260,7 @@ const ProjectNavMain = ({ id, name, position, dropZone }) => {
                                     className='project-navlink'
                                     style={
                                         {
-                                            textDecoration: 'none',
-                                            opacity: isDragging ? 0 : 1
+                                            textDecoration: 'none'
                                         }}>
                                     {name}
                                 </div>

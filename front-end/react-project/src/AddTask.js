@@ -8,12 +8,20 @@ const AddTask = ({ columnId, taskArrLength }) => {
     const { currentUserId, displayedColumns, setDisplayedColumns } = useContext(Context);
     const [show, setShow] = useState();
     const [value, setValue] = useState({ description: '' });
+    const [descriptionLength, setDescriptionLength] = useState(0)
 
     const addTaskClick = async () => {
         setShow(true)
     }
 
+
+
     const addTaskSubmit = async () => {
+
+        if (value.description.length > 100) {
+            return
+        }
+
         setShow(false)
 
         const columnPosition = taskArrLength;
@@ -67,19 +75,20 @@ const AddTask = ({ columnId, taskArrLength }) => {
                 >
                     <Form
                         value={value}
-                        onChange={nextValue => setValue(nextValue)}
+                        onChange={nextValue => {
+                            console.log(nextValue)
+                            setDescriptionLength(nextValue.description.length)
+                            setValue(nextValue)
+                        }}
                         onReset={() => setValue({})}
                         onSubmit={addTaskSubmit}
                     >
-                        {/* <FormField name="name" htmlfor="text-input-id" label="Name:">
-                            <TextInput id="text-input-id" name="name" />
-                        </FormField> */}
                         <FormField name="description" htmlfor="text-input-id" label="Description:">
                             <TextArea id="text-input-id" name="description" />
                         </FormField>
                         <Box direction="row" gap="medium">
                             <Button type="submit" color='lightblue' primary label="Submit" />
-
+                            <div style={{ color: descriptionLength > 100 && 'red' }}>{descriptionLength} / 100</div>
                         </Box>
                     </Form>
                 </Layer>
