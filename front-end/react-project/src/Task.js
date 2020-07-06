@@ -80,12 +80,9 @@ const Task = ({ taskRef, topTask, taskArrLength, columnId, currentlyDragging, se
 
         } else {
 
-
             const drag = currentlyDragging;
             const saveDragColumnId = dragColumnId;
             const saveId = dragTaskId;
-
-
 
             let startingColumn;
             let copy = [...displayedColumns];
@@ -214,10 +211,18 @@ const Task = ({ taskRef, topTask, taskArrLength, columnId, currentlyDragging, se
 
         const startSpot = { x: 0, y: 0 }
         const drag = preDrag.fluidLift(startSpot)
+        // const drag = preDrag.snapLift()
+        // const numberOfMoves = taskdropzoneid
+        // for (let i = 0; i < numberOfMoves; i++) {
+        //     drag.moveUp()
+
+        // }
+        // setTimeout(() => drag.drop(), 400)
 
         const end = { x: endX, y: endY }
         // drag.move(end)
-        // drag.drop()
+
+
 
         const points = [];
 
@@ -259,18 +264,19 @@ const Task = ({ taskRef, topTask, taskArrLength, columnId, currentlyDragging, se
                                     // ref={drop}
                                     ref={topTask}
                                     taskdropzoneid={taskdropzoneid}>
-                                    <div
+                                    {/* <div
                                         className='task__heading'
                                     // style={{ backgroundColor: (isDragging || (!isDragging && (dragTaskId === taskid))) && 'yellow', color: (isDragging || (!isDragging && (dragTaskId === taskid))) && 'yellow' }}
-                                    >
-                                        <div className='task__heading-text'>{heading}</div>
-                                        <DeleteTask taskid={taskid} columnId={columnId}></DeleteTask>
-                                    </div></div>
+                                    > */}
+                                    {/* <div className='task__heading-text'>{heading}</div> */}
+                                    {/* <DeleteTask taskid={taskid} columnId={columnId}></DeleteTask> */}
 
-                                <div
-                                    className='task__description'
-                                // style={{ backgroundColor: (isDragging || (!isDragging && (dragTaskId === taskid))) && 'yellow', color: (isDragging || (!isDragging && (dragTaskId === taskid))) && 'yellow' }}
-                                >{description}</div>
+
+                                    <div
+                                        className='task__description'
+                                    // style={{ backgroundColor: (isDragging || (!isDragging && (dragTaskId === taskid))) && 'yellow', color: (isDragging || (!isDragging && (dragTaskId === taskid))) && 'yellow' }}
+                                    >{description}</div>
+                                </div>
                             </div>
                         </div>)
                 }
@@ -300,20 +306,25 @@ const Task = ({ taskRef, topTask, taskArrLength, columnId, currentlyDragging, se
                                     // opacity: (isDragging || (!isDragging && (dragTaskId === taskid))) ? 0.4 : 1,
                                 }}>
                                 <div className='task-drop-zone'
-                                    // ref={drop}
+
                                     taskdropzoneid={taskdropzoneid}>
-                                    <div
+                                    {/* <div
                                         className='task__heading'
                                     // style={{ backgroundColor: (isDragging || (!isDragging && (dragTaskId === taskid))) && 'yellow', color: (isDragging || (!isDragging && (dragTaskId === taskid))) && 'yellow' }}
-                                    >
-                                        <div className='task__heading-text'>{heading}</div>
-                                        <DeleteTask taskid={taskid} columnId={columnId}></DeleteTask>
-                                    </div></div>
+                                    > */}
+                                    {/* <div className='task__heading-text'>{heading}</div> */}
 
-                                <div
-                                    className='task__description'
-                                // style={{ backgroundColor: (isDragging || (!isDragging && (dragTaskId === taskid))) && 'yellow', color: (isDragging || (!isDragging && (dragTaskId === taskid))) && 'yellow' }}
-                                >{description}</div>
+
+
+                                    <div className='task__description' >
+                                        {/* <div className='task-description-text'> */}
+                                        {description}
+                                        {/* </div> */}
+                                        {/* <div className='task-description-delete-icon'>
+                                            <DeleteTask taskid={taskid} columnId={columnId} />
+                                        </div> */}
+                                    </div>
+                                </div>
                             </div>
                         </div>)
                 }

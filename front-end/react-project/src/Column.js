@@ -42,7 +42,8 @@ const Column = ({ columnDropZoneId, tasksArray, name, columnId, currentlyDraggin
         5: useRef(null),
         6: useRef(null),
         7: useRef(null),
-        8: useRef(null)
+        8: useRef(null),
+        9: useRef(null)
     }
 
     // console.log(taskRefs)
@@ -58,9 +59,9 @@ const Column = ({ columnDropZoneId, tasksArray, name, columnId, currentlyDraggin
 
     const tasksArrayCopy = [...tasksArray]
     const sortedTasks = tasksArrayCopy.sort((a, b) => {
-        if (a.heading < b.heading) {
+        if (a.description < b.description) {
             return -1
-        } else if (a.heading > b.heading) {
+        } else if (a.description > b.description) {
             return 1
         } else {
             return 0
@@ -74,37 +75,16 @@ const Column = ({ columnDropZoneId, tasksArray, name, columnId, currentlyDraggin
         setCurrentSortedTaskArray(sortedTasks)
         setAlphabetizing(true)
 
-        // let i = -1
-        // while (sortedTasks.length) {
-        //     i++
-        //     const taskToCompare = sortedTasks.shift()
-        //     if (taskToCompare.heading === tasksArray[i].heading) {
-        //         continue
-        //     } else {
-        //         let taskToMove;
-        //         let taskIndexToMove;
-        //         tasksArray.forEach((task, i) => {
-        //             if (task.heading === sortedTask.heading) {
-        //                 taskToMove = task
-        //                 taskIndexToMove = i
-        //             }
-        //         })
-        //     }
 
-        // }
-
-
-
-        // sortedTasks.forEach((sortedTask, i) => 
         for (let i = 0; i < sortedTasks.length; i++) {
             const sortedTask = sortedTasks[i]
-            if (sortedTask.heading === tasksArray[i].heading) {
+            if (sortedTask.description === tasksArray[i].description) {
                 continue
             } else {
                 let taskToMove;
                 let taskIndexToMove;
                 tasksArray.forEach((task, i) => {
-                    if (task.heading === sortedTask.heading) {
+                    if (task.description === sortedTask.description) {
                         taskToMove = task
                         taskIndexToMove = i
                     }
@@ -154,7 +134,7 @@ const Column = ({ columnDropZoneId, tasksArray, name, columnId, currentlyDraggin
         if (alphabetizing) {
             for (let i = 0; i < sortedTasks.length; i++) {
                 const sortedTask = sortedTasks[i]
-                if (sortedTask.heading === tasksArray[i].heading) {
+                if (sortedTask.description === tasksArray[i].description) {
                     if (i === sortedTasks.length - 1) {
                         setAlphabetizing(false)
                     }
@@ -163,7 +143,7 @@ const Column = ({ columnDropZoneId, tasksArray, name, columnId, currentlyDraggin
                     let taskToMove;
                     let taskIndexToMove;
                     tasksArray.forEach((task, i) => {
-                        if (task.heading === sortedTask.heading) {
+                        if (task.description === sortedTask.description) {
                             taskToMove = task
                             taskIndexToMove = i
                         }
@@ -319,22 +299,22 @@ const Column = ({ columnDropZoneId, tasksArray, name, columnId, currentlyDraggin
 
     return (
         <Draggable draggableId={`column-${columnId}`} index={columnDropZoneId}>
-            {provided => {
+            {dragProvided => {
                 return (
                     <div
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                        ref={provided.innerRef}>
+                        {...dragProvided.draggableProps}
+                        ref={dragProvided.innerRef}>
                         <Droppable droppableId={`${columnId}`} type='task'>
                             {(provided) => {
                                 return (
                                     <div ref={provided.innerRef}
                                         {...provided.droppableProps}>
                                         <div
-                                            // ref={drop} 
                                             className='column-drop-zone'>
                                             <div className='column'>
-                                                <div className='column__header'>
+                                                <div
+                                                    onClick={alphabetizeClick}
+                                                    className='column__header' {...dragProvided.dragHandleProps}>
                                                     <AddTask
                                                         columnId={columnId}
                                                         taskArrLength={tasksArray.length}></AddTask>

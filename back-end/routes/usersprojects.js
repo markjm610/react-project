@@ -20,4 +20,13 @@ router.post('/usersprojects', asyncHandler(async (req, res, next) => {
     res.json({ message: 'confirmed' })
 }))
 
+router.delete('/usersprojects/:userId/:projectId', asyncHandler(async (req, res, next) => {
+    const userId = parseInt(req.params.userId, 10)
+    const projectId = parseInt(req.params.projectId, 10)
+
+    const association = await UsersProject.findOne({ where: { userId, projectId } })
+    await association.destroy()
+    res.json({ message: 'left project' })
+}))
+
 module.exports = router;

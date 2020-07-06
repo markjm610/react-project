@@ -136,10 +136,10 @@ html, body {
 }
 
 .column-drop-zone {
-    width: 450px;
+    width: 400px;
     height: 100%;
-    background-color: lightgray;
-    padding: 20px;
+    /* background-color: lightgray; */
+    margin: 20px;
 }
 
 .column {
@@ -147,22 +147,18 @@ html, body {
     grid-template-columns: 1fr;
     grid-template-rows: 35px 1fr;
     width: 400px;
-    background-color: lightgray;
+    /* background-color: lightgray; */
     margin: auto;
     /* border-radius: 25px; */
   
 }
 
-
 .column__header {
+    height: 35px;
     display: flex;
     grid-row: 1/ 2;
     background-color: lightsteelblue;
     justify-content: space-between;
-}
-
-.column__header:hover {
-    cursor: pointer;
 }
 
 .add-task {
@@ -206,46 +202,46 @@ html, body {
 
 .task-drop-zone {
     grid-row: 1 / 2;
-    height: 200px;
+    height: 100%;
     width: 100%;
     background-color: clear;
     z-index: 5;
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 35px 1fr;
+    grid-template-rows: 1fr;
 }
 
 .task {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 35px 1fr;
-    min-height: 200px;
-    width: 350px;
+    grid-template-rows: 1fr;
+    min-height: 100px;
+    width: 300px;
     margin: 15px;
     
 }
 
 
-.task__heading {
+/* .task__heading {
     grid-row: 1 / 2;
     background-color: lightblue;
     display: grid;
     grid-template-columns: 10% 1fr 10%;
-}
+} */
 
-.task__heading-text {
+/* .task__heading-text {
     grid-column: 2 / 3;
     display: flex;
     justify-content: center;
     align-items: center;
-}
+} */
 
 .delete-task {
     grid-column: 3 / 4;
     display: flex;
     align-items: center;
     justify-content: center;
-    opacity: 0;
+    /* opacity: 0; */
 }
 
 .delete-task:hover {
@@ -254,10 +250,14 @@ html, body {
 }
 
 .task__description {
-    grid-row: 2 / 3;
+    grid-row: 1 / 2;
     background-color: whitesmoke;
     padding: 5px;
+    display: flex;
+    justify-content: space-between;
 }
+
+/* .task-description- */
 
 .notification-icon-container {
     display: flex;
@@ -331,3 +331,4 @@ html, body {
 .project-nav-list {
     background-color: lightblue;
 }
+
