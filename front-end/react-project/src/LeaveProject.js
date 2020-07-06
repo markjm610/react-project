@@ -41,7 +41,7 @@ const LeaveProject = () => {
         <>
             {currentProjectId &&
                 <>
-                    <h2 onClick={() => setShow(true)}>Leave Project</h2>
+                    <div className='leave-project' onClick={() => setShow(true)}>Leave Project</div >
 
                     {show && (
                         <Layer

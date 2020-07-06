@@ -18,18 +18,6 @@ import { Droppable, DragDropContext } from 'react-beautiful-dnd';
 import * as tweenFunctions from "tween-functions";
 import { moveStepByStep } from './utils'
 
-// function moveStepByStep(drag, values) {
-//     requestAnimationFrame(() => {
-//         const newPosition = values.shift();
-//         drag.move(newPosition);
-//         if (values.length) {
-//             moveStepByStep(drag, values);
-//         } else {
-//             drag.drop();
-//         }
-//     });
-// }
-
 
 const Home = () => {
 
@@ -534,10 +522,6 @@ const Home = () => {
         setSensorState(api)
     }
 
-
-    const toTopClick = () => {
-
-    }
 
 
     return (

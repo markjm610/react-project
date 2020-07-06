@@ -215,10 +215,9 @@ html, body {
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr;
-    min-height: 100px;
+    min-height: 50px;
     width: 300px;
-    margin: 15px;
-    
+    margin: 5px;
 }
 
 
@@ -332,3 +331,6 @@ html, body {
     background-color: lightblue;
 }
 
+.leave-project:hover {
+    cursor: pointer;
+}

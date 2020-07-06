@@ -23,7 +23,6 @@ const ProjectNavList = ({ id, name, position, dropZone }) => {
         // columns.forEach(column => {
         //     column.Tasks.push({ id: null, heading: null, description: null, columnPosition: column.Tasks.length, columnId: column.id })
         // })
-
         setProjectMembers(parsedUsersRes.projects.Users || []);
         setDisplayedColumns(columns);
         setCurrentProjectId(id);
