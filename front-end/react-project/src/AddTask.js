@@ -7,7 +7,7 @@ import { apiBaseUrl } from './config';
 const AddTask = ({ columnId, taskArrLength }) => {
     const { currentUserId, displayedColumns, setDisplayedColumns } = useContext(Context);
     const [show, setShow] = useState();
-    const [value, setValue] = useState({ name: '', description: '' });
+    const [value, setValue] = useState({ description: '' });
 
     const addTaskClick = async () => {
         setShow(true)
@@ -16,12 +16,12 @@ const AddTask = ({ columnId, taskArrLength }) => {
     const addTaskSubmit = async () => {
         setShow(false)
 
-        const columnPosition = taskArrLength - 1;
+        const columnPosition = taskArrLength;
 
         const res = await fetch(`${apiBaseUrl}/columns/${columnId}/tasks`, {
             method: 'POST',
             body: JSON.stringify(
-                { columnPosition, heading: value.name, description: value.description, creatorId: currentUserId }
+                { columnPosition, heading: 'heading', description: value.description, creatorId: currentUserId }
             ),
             headers: {
                 "Content-Type": 'application/json',
@@ -48,7 +48,7 @@ const AddTask = ({ columnId, taskArrLength }) => {
         })
 
         setDisplayedColumns(columnsCopy)
-        setValue({ name: '', description: '' })
+        setValue({ description: '' })
     }
 
 
@@ -62,7 +62,7 @@ const AddTask = ({ columnId, taskArrLength }) => {
                     onEsc={() => setShow(false)}
                     onClickOutside={() => {
                         setShow(false)
-                        setValue({ name: '', description: '' })
+                        setValue({ description: '' })
                     }}
                 >
                     <Form
@@ -71,9 +71,9 @@ const AddTask = ({ columnId, taskArrLength }) => {
                         onReset={() => setValue({})}
                         onSubmit={addTaskSubmit}
                     >
-                        <FormField name="name" htmlfor="text-input-id" label="Name:">
+                        {/* <FormField name="name" htmlfor="text-input-id" label="Name:">
                             <TextInput id="text-input-id" name="name" />
-                        </FormField>
+                        </FormField> */}
                         <FormField name="description" htmlfor="text-input-id" label="Description:">
                             <TextArea id="text-input-id" name="description" />
                         </FormField>

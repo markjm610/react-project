@@ -15,7 +15,6 @@ const ProjectMembers = () => {
             })}
         </div>
     )
-
 }
 
 export default ProjectMembers;
