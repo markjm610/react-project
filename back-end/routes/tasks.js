@@ -53,4 +53,15 @@ router.put('/tasks', asyncHandler(async (req, res) => {
     }
 }))
 
+router.delete('/columns/:columnId/tasks', asyncHandler(async (req, res) => {
+
+    const columnId = parseInt(req.params.columnId, 10);
+
+    const tasks = await Task.destroy({ where: { columnId } });
+
+    res.json({ message: 'deleted' })
+
+}))
+
+
 module.exports = router;
