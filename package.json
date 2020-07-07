@@ -6,7 +6,8 @@
   "scripts": {
     "start": "cd back-end && npm start",
     "heroku-postbuild": "cd front-end/react-project && npm i && npm run build && cd ../../back-end && npm i",
-    "migrate": "cd back-end && npx sequelize-cli db:migrate"
+    "migrate": "cd back-end && npx sequelize-cli db:migrate",
+    "undo-migrate": "cd back-end && npx sequelize-cli db:migrate:undo:all"
   },
   "repository": {
     "type": "git",
