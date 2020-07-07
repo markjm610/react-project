@@ -5,7 +5,7 @@ import Context from './Context';
 import { apiBaseUrl } from './config';
 
 const AddTask = ({ columnId, taskArrLength }) => {
-    const { currentUserId, displayedColumns, setDisplayedColumns } = useContext(Context);
+    const { currentUserId, displayedColumns, setDisplayedColumns, setColumnFull } = useContext(Context);
     const [show, setShow] = useState();
     const [value, setValue] = useState({ description: '' });
     const [descriptionLength, setDescriptionLength] = useState(0)
@@ -21,7 +21,12 @@ const AddTask = ({ columnId, taskArrLength }) => {
         }
 
         setShow(false)
-
+        if (taskArrLength === 12) {
+            setColumnFull(true)
+            setValue({ description: '' })
+            setDescriptionLength(0)
+            return
+        }
         const columnPosition = taskArrLength;
 
         const res = await fetch(`${apiBaseUrl}/columns/${columnId}/tasks`, {

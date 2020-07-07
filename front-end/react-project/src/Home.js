@@ -50,7 +50,9 @@ const Home = () => {
         clearing,
         currentProjectId,
         setSelectedProject,
-        selectedProject
+        selectedProject,
+        setColumnFull,
+        columnFull
     } = useContext(Context);
 
 
@@ -92,24 +94,6 @@ const Home = () => {
 
 
 
-    const [{ isOver }, drop] = useDrop({
-        accept: ItemTypes.TASK,
-        // drop: () => {
-        //     handleDrop();
-        // },
-        // hover: (item) => {
-
-        //     if (currentlyDragging === taskdropzoneid && item.columnId === columnId) {
-        //         return
-        //     }
-        //     item.columnId = columnId;
-        //     changePositions()
-
-        // },
-        collect: monitor => ({
-            isOver: !!monitor.isOver(),
-        }),
-    })
 
     const onDragEnd = async (result) => {
         const { destination, source, draggableId, type } = result
@@ -174,6 +158,10 @@ const Home = () => {
                     }
                 })
 
+                if (newColumn.length === 12) {
+                    setColumnFull(true)
+                    return
+                }
 
                 const moved = startingColumn.splice(source.index, 1)
 
@@ -440,7 +428,7 @@ const Home = () => {
                     <AddProject></AddProject>
                     <div className='project-stuff'>
                         <ProjectNavBar ></ProjectNavBar>
-                        {mainProjectArr.length > 5 && <div style={{ display: 'flex', justifyContent: 'flex-end', marginRight: '5px' }}>
+                        {listProjectArr.length && <div style={{ display: 'flex', justifyContent: 'flex-end', marginRight: '5px' }}>
                             <More className='more-projects' onClick={() => setShowProjectList(!showProjectList)} />
                         </div>}
                     </div>
@@ -455,7 +443,7 @@ const Home = () => {
                                 ref={provided.innerRef}
                                 {...provided.droppableProps}
                             >
-                                <WorkingAreaRoutes isOver={isOver}></WorkingAreaRoutes>
+                                <WorkingAreaRoutes></WorkingAreaRoutes>
                                 {provided.placeholder}
                             </div>
                         )
@@ -467,11 +455,14 @@ const Home = () => {
                     <ProjectMembers />
                     <LeaveProject />
                 </div>
-                {/* {!currentProjectId && <Layer>
-                    {mainProjectArr.map(project => {
-                        return <div>{project.name}</div>
-                    })}
-                </Layer>} */}
+                {columnFull && <Layer
+                    onEsc={() => setColumnFull(false)}
+                    onClickOutside={() => {
+                        setColumnFull(false)
+                    }}
+                >
+                    Column has maximum number of tasks.
+                </Layer>}
             </div>
         </DragDropContext>
     )
