@@ -17,6 +17,10 @@ import { ItemTypes } from './ItemTypes';
 import { Droppable, DragDropContext } from 'react-beautiful-dnd';
 import * as tweenFunctions from "tween-functions";
 import { moveStepByStep } from './utils'
+import { Layer } from 'grommet';
+import ProjectNavMain from './ProjectNavMain'
+
+
 
 
 const Home = () => {
@@ -43,7 +47,9 @@ const Home = () => {
         setCurrentSortedTaskArray,
         showProjectList,
         setShowProjectList,
-        clearing
+        clearing,
+        currentProjectId,
+        setSelectedProject
     } = useContext(Context);
 
 
@@ -70,6 +76,12 @@ const Home = () => {
             const parsedProjectRes = await projectRes.json();
             const projects = parsedProjectRes.projects.Projects;
             const mainProjectArr = projects.slice(0, 5)
+            let projectObj = {}
+            projects.forEach(project => {
+                projectObj[project.id] = false
+            })
+
+            setSelectedProject(projectObj)
             const listProjectArr = projects.slice(5)
             setMainProjectArr(mainProjectArr)
             setListProjectArr(listProjectArr)
@@ -427,7 +439,7 @@ const Home = () => {
                     <AddProject></AddProject>
                     <div className='project-stuff'>
                         <ProjectNavBar ></ProjectNavBar>
-                        <div style={{ display: 'flex', justifyContent: 'center' }}>
+                        <div style={{ display: 'flex', justifyContent: 'flex-end', marginRight: '5px' }}>
                             <More className='more-projects' onClick={() => setShowProjectList(!showProjectList)} />
                         </div>
                     </div>
@@ -454,6 +466,11 @@ const Home = () => {
                     <ProjectMembers />
                     <LeaveProject />
                 </div>
+                {/* {!currentProjectId && <Layer>
+                    {mainProjectArr.map(project => {
+                        return <div>{project.name}</div>
+                    })}
+                </Layer>} */}
             </div>
         </DragDropContext>
     )

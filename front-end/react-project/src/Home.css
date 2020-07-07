@@ -73,6 +73,24 @@ html, body {
     display: flex;
     justify-content: flex-end;
 }
+.selected-project-navlink {
+    border-top-left-radius: 10px;
+    background-color: lightgray;
+    padding: 5px;
+    /* margin-top: 5px;
+    margin-bottom: 5px; */
+    margin-left: 5px;
+    color: black;
+    text-decoration: none;
+    border-top: solid 1px lightblue;
+    border-left: solid 1px lightblue;
+    border-bottom: solid 1px lightblue;
+    user-select: none;
+    display: flex;
+    justify-content: flex-end;
+    border: solid 1px black;
+    border-right: none;
+}
 
 .project-navlink:hover {
     border: solid 1px black;
@@ -138,7 +156,6 @@ html, body {
 
 .column-drop-zone {
     width: 400px;
-    height: 100%;
     /* background-color: lightgray; */
     margin: 20px;
 }
@@ -317,7 +334,6 @@ html, body {
     position: absolute;
     top: 50px;
     width: 150px;
-    height: 100%;
 }
 
 .more-projects:hover {
@@ -361,3 +377,13 @@ html, body {
     margin-left: 5px;
 }
    
+.alphabetize {
+    display: flex;
+    align-items: center;
+    opacity: 0.6;
+}
+
+.alphabetize:hover {
+    cursor: pointer;
+    opacity: 1;
+}
