@@ -33,6 +33,7 @@ const ContextWrapper = () => {
     const [showProjectList, setShowProjectList] = useState(false)
     const [clearing, setClearing] = useState(false)
     const [selectedProject, setSelectedProject] = useState({})
+    const [columnFull, setColumnFull] = useState(false)
 
     return (
         <Context.Provider value={
@@ -65,7 +66,8 @@ const ContextWrapper = () => {
                 currentSortingTask, setCurrentSortingTask,
                 showProjectList, setShowProjectList,
                 clearing, setClearing,
-                selectedProject, setSelectedProject
+                selectedProject, setSelectedProject,
+                columnFull, setColumnFull
             }
         } >
             <App />
