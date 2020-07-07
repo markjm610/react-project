@@ -10,9 +10,9 @@ const router = express.Router();
 // router.use(requireAuth);
 
 router.post('/usersprojects', asyncHandler(async (req, res, next) => {
-    const { userId, projectId, inviteId } = req.body;
+    const { userId, projectId, inviteId, position } = req.body;
 
-    await UsersProject.create({ userId: userId, projectId: projectId })
+    await UsersProject.create({ userId: userId, projectId: projectId, position: position })
 
     const invite = await Invite.findByPk(inviteId)
     await invite.destroy()

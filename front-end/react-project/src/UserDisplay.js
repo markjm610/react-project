@@ -5,7 +5,7 @@ import Context from './Context';
 import { apiBaseUrl } from './config';
 
 const UserDisplay = () => {
-    const { invites, setInvites, currentUserId } = useContext(Context);
+    const { invites, setInvites, currentUserId, mainProjectArr, listProjectArr } = useContext(Context);
     const [show, setShow] = useState();
     const clickNotification = () => {
         setShow(true)
@@ -26,9 +26,12 @@ const UserDisplay = () => {
 
         setInvites(invitesCopy)
 
+        const totalProjectArr = [...mainProjectArr, ...listProjectArr]
+
+
         await fetch(`${apiBaseUrl}/usersprojects`, {
             method: 'POST',
-            body: JSON.stringify({ inviteId: invite.id, userId: currentUserId, projectId: invite.Project.id }),
+            body: JSON.stringify({ inviteId: invite.id, userId: currentUserId, projectId: invite.Project.id, position: totalProjectArr.length }),
             headers: {
                 "Content-Type": 'application/json',
             }
@@ -43,10 +46,7 @@ const UserDisplay = () => {
 
     return (
         <div className='user-display'>
-            <div className='user-profile-picture'>
-                <UserAdd size='large' className='add-profile-picture-icon'></UserAdd>
-                <div className='add-profile-picture-text'>Add Profile Picture</div>
-            </div>
+
             {invites[0] && <div className='notification-icon-container'><Notification
                 color='white'
                 className='notification-icon' onClick={clickNotification}></Notification>
@@ -60,7 +60,7 @@ const UserDisplay = () => {
                     return (
                         <React.Fragment key={invite.id}>
                             <div className='invite-message'>
-                                {invite.inviteSender} invited you to {invite.Project.name}
+                                {invite.inviteSender} invited you to a project: {invite.Project.name}
                             </div>
                             <Button onClick={() => acceptInvite(invite)} color='lightblue' primary label="Join project" />
                         </React.Fragment>)

@@ -49,7 +49,8 @@ const Home = () => {
         setShowProjectList,
         clearing,
         currentProjectId,
-        setSelectedProject
+        setSelectedProject,
+        selectedProject
     } = useContext(Context);
 
 
@@ -435,7 +436,7 @@ const Home = () => {
         <DragDropContext onDragEnd={onDragEnd} sensors={[sensorStateSetter]}>
             <div id='home'>
                 <div className='sidebar-left'>
-                    {/* <UserDisplay></UserDisplay> */}
+                    <UserDisplay></UserDisplay>
                     <AddProject></AddProject>
                     <div className='project-stuff'>
                         <ProjectNavBar ></ProjectNavBar>

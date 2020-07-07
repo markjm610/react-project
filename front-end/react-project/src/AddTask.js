@@ -55,6 +55,7 @@ const AddTask = ({ columnId, taskArrLength }) => {
 
         setDisplayedColumns(columnsCopy)
         setValue({ description: '' })
+        setDescriptionLength(0)
     }
 
 
@@ -69,6 +70,7 @@ const AddTask = ({ columnId, taskArrLength }) => {
                     onClickOutside={() => {
                         setShow(false)
                         setValue({ description: '' })
+                        setDescriptionLength(0)
                     }}
                 >
                     <Form
