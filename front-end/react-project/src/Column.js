@@ -336,6 +336,7 @@ const Column = ({ columnDropZoneId, tasksArray, name, columnId, currentlyDraggin
                                                 columnId={columnId}
                                                 taskArrLength={tasksArray.length} />
                                             <div className='column__name'>{name}</div>
+                                            <div className='alphabetize' onClick={alphabetizeClick}>ABC</div>
                                             <DeleteColumn columnId={columnId} />
                                         </> :
                                         <>

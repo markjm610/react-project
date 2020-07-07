@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { AddCircle } from 'grommet-icons';
-import { Layer, Form, Box, FormField, TextInput, Button, TextArea } from 'grommet';
+import { Layer, Form, Box, FormField, Button, TextArea } from 'grommet';
 import Context from './Context';
 import { apiBaseUrl } from './config';
 
@@ -13,8 +13,6 @@ const AddTask = ({ columnId, taskArrLength }) => {
     const addTaskClick = async () => {
         setShow(true)
     }
-
-
 
     const addTaskSubmit = async () => {
 

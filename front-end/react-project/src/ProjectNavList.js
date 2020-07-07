@@ -10,7 +10,7 @@ import { Draggable } from 'react-beautiful-dnd';
 
 const ProjectNavList = ({ id, name, position, dropZone }) => {
 
-    const { topOfList, mainProjectArr, setLinkDragging, dragProjectId, setDragProjectId, listProjectArr, setListProjectArr, setProjectMembers, setDisplayedColumns, setCurrentProjectId, currentlyDraggingProject, setCurrentlyDraggingProject } = useContext(Context);
+    const { selectedProject, setSelectedProject, topOfList, listProjectArr, setListProjectArr, setProjectMembers, setDisplayedColumns, setCurrentProjectId, currentlyDraggingProject, setCurrentlyDraggingProject } = useContext(Context);
 
     const handleProjectNavLinkClick = async () => {
 
@@ -23,165 +23,22 @@ const ProjectNavList = ({ id, name, position, dropZone }) => {
         // columns.forEach(column => {
         //     column.Tasks.push({ id: null, heading: null, description: null, columnPosition: column.Tasks.length, columnId: column.id })
         // })
+        let selectedProjectCopy = { ...selectedProject }
+        for (let projectId in selectedProjectCopy) {
+
+            if (projectId === `${id}`) {
+                selectedProjectCopy[projectId] = true
+            } else {
+                selectedProjectCopy[projectId] = false
+            }
+        }
+
+        setSelectedProject(selectedProjectCopy)
         setProjectMembers(parsedUsersRes.projects.Users || []);
         setDisplayedColumns(columns);
         setCurrentProjectId(id);
 
     }
-
-
-
-    const [{ isDragging }, drag] = useDrag({
-        item: { type: ItemTypes.PROJECT, id },
-        begin: () => {
-            setCurrentlyDraggingProject(dropZone)
-            // setDragProjectId(id)
-            // setLinkDragging(true)
-        },
-        end: (item) => {
-            handleDrop()
-            setDragProjectId(null)
-            // setLinkDragging(false)
-        },
-        collect: monitor => ({
-            isDragging: monitor.isDragging()
-        })
-    })
-
-
-
-    // const changePositions = () => {
-
-
-    //     // if (columnDropZoneId === columnArrLength - 1) {
-    //     //     return;
-    //     // }
-    //     // const saveId = dragTaskId;
-    //     const drag = currentlyDraggingProject;
-
-    //     // let startingColumn;
-
-    //     let copy = [...listProjectArr];
-
-    //     const moved = copy.splice(drag, 1);
-
-    //     copy.splice(dropZone, 0, moved[0])
-
-    //     copy.forEach((project, i) => {
-    //         project.UsersProject.position = i;
-    //     })
-
-
-
-    //     // setDragColumnId(dragColumnId);
-
-    //     setListProjectArr(copy);
-
-    //     setCurrentlyDraggingProject(dropZone);
-    //     // setDragTaskId(saveId);
-
-    // }
-
-
-    // const [{ isOver }, drop] = useDrop({
-    //     accept: ItemTypes.PROJECT,
-    //     drop: () => {
-    //     },
-    //     hover: (item) => {
-    //         // console.log('hover')
-
-    //         // if (taskid !== null && dragTaskId !== taskid) {
-    //         //     setDragTaskId(taskid)
-    //         // }
-
-    //         if (currentlyDraggingProject === dropZone) {
-    //             return
-    //         }
-
-    //         // item.columnId = columnId;
-    //         changePositions()
-
-    //     },
-    //     collect: monitor => ({
-    //         isOver: !!monitor.isOver(),
-    //     }),
-    // })
-
-
-    const handleDrop = async (item) => {
-        // console.log('handle drop')
-        let sendArr = [...mainProjectArr];
-        let listCopy = [...listProjectArr]
-
-        sendArr.push(...listCopy)
-
-
-        try {
-            await fetch(`${apiBaseUrl}/projects`, {
-                method: 'PUT',
-                body: JSON.stringify({ sendArr }),
-                headers: {
-                    "Content-Type": 'application/json',
-                }
-            })
-
-        } catch (e) {
-            console.error(e)
-        }
-    }
-
-    // if (dropZone === 0) {
-    //     return (
-    //         <div ref={topOfList}>
-    //             <NavLink
-    //                 className='navlink'
-    //                 to={`/home/project/${id}`}
-    //                 onClick={handleProjectNavLinkClick}
-    //                 style={
-    //                     {
-    //                         textDecoration: 'none',
-    //                     }}>
-
-    //                 <div
-    //                     ref={drag}
-    //                     className='project-navlink'
-    //                     style={
-    //                         {
-    //                             textDecoration: 'none',
-    //                             opacity: (isDragging || (!isDragging && (dragProjectId === id))) ? 0 : 1
-    //                         }}>
-    //                     {name}
-    //                 </div>
-    //             </NavLink>
-    //         </div>
-    //     )
-    // } else {
-    //     return (
-    //         // <div ref={drop}>
-
-    //         <NavLink
-    //             className='navlink'
-    //             to={`/home/project/${id}`}
-    //             onClick={handleProjectNavLinkClick}
-    //             style={
-    //                 {
-    //                     textDecoration: 'none',
-    //                 }}>
-
-    //             <div
-    //                 ref={drag}
-    //                 className='project-navlink'
-    //                 style={
-    //                     {
-    //                         textDecoration: 'none',
-    //                         opacity: (isDragging || (!isDragging && (dragProjectId === id))) ? 0 : 1
-    //                     }}>
-    //                 {name}
-    //             </div>
-    //         </NavLink>
-    //         // </div>
-    //     )
-    // }
 
 
     if (dropZone === 0) {
@@ -207,7 +64,7 @@ const ProjectNavList = ({ id, name, position, dropZone }) => {
 
                                 <div
                                     ref={topOfList}
-                                    className='project-navlink'
+                                    className={selectedProject[id] ? 'selected-project-navlink' : 'project-navlink'}
                                     style={
                                         {
                                             textDecoration: 'none'
@@ -242,7 +99,7 @@ const ProjectNavList = ({ id, name, position, dropZone }) => {
                                     }}>
 
                                 <div
-                                    className='project-navlink'
+                                    className={selectedProject[id] ? 'selected-project-navlink' : 'project-navlink'}
                                     style={
                                         {
                                             textDecoration: 'none'
