@@ -41,20 +41,12 @@ const Column = ({ columnDropZoneId, tasksArray, name, columnId, currentlyDraggin
         6: useRef(null),
         7: useRef(null),
         8: useRef(null),
-        9: useRef(null)
+        9: useRef(null),
+        10: useRef(null),
+        11: useRef(null)
     }
 
-    const trashCan = useRef(null)
-    // console.log(taskRefs)
 
-    // const taskHeadings = tasksArray.map((task) => {
-    //     return task.heading
-    // })
-
-    // const sortedTaskHeadings = taskHeadings.sort()
-    // const sortedTaskHeadingsWithIds = sortedTaskHeadings.map(heading => {
-    //     return { heading: task, }
-    // })
 
     const tasksArrayCopy = [...tasksArray]
     const sortedTasks = tasksArrayCopy.sort((a, b) => {
@@ -78,6 +70,9 @@ const Column = ({ columnDropZoneId, tasksArray, name, columnId, currentlyDraggin
         for (let i = 0; i < sortedTasks.length; i++) {
             const sortedTask = sortedTasks[i]
             if (sortedTask.description === tasksArray[i].description) {
+                if (i === sortedTasks.length - 1) {
+                    setAlphabetizing(false)
+                }
                 continue
             } else {
                 let taskToMove;

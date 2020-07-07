@@ -5,7 +5,7 @@ import Context from './Context';
 import { apiBaseUrl } from './config';
 
 const AddProject = () => {
-    const { currentUserId, mainProjectArr, setMainProjectArr, listProjectArr, setListProjectArr } = useContext(Context)
+    const { selectedProject, setSelectedProject, currentUserId, mainProjectArr, setMainProjectArr, listProjectArr, setListProjectArr } = useContext(Context)
     const [show, setShow] = useState();
     const [value, setValue] = useState({ name: '' });
 
@@ -37,10 +37,9 @@ const AddProject = () => {
         const newUsersProject = parsedRes.newUsersProject
         newProject.UsersProject = newUsersProject
         projectsCopy.push(newProject)
-        console.log(newProject)
         setMainProjectArr(projectsCopy.slice(0, 5))
         setListProjectArr(projectsCopy.slice(5))
-
+        setSelectedProject({ ...selectedProject, [newProject.id]: false })
 
         value.name = ''
     }
