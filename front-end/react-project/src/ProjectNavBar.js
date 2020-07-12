@@ -40,6 +40,7 @@ const ProjectNavBar = () => {
                 }}
 
             </Droppable>
+            <div ref={topOfList} className='top-of-list' />
             {showProjectList && <div className='project-nav-list-container'>
                 <Droppable droppableId={'project-nav-list'} type='project'>
                     {provided => {
@@ -47,10 +48,10 @@ const ProjectNavBar = () => {
                             <>
                                 <div ref={provided.innerRef}
                                     {...provided.droppableProps}>
-                                    {listProjectArr.length ? listProjectArr.map(({ id, name, position }, i) => {
+                                    {listProjectArr.length !== 0 && listProjectArr.map(({ id, name, position }, i) => {
                                         return <ProjectNavList id={id} dropZone={i} key={id} position={position} name={name} />
-                                    }) :
-                                        <div ref={topOfList} style={{ height: '100px' }}></div>}
+                                    })}
+
                                 </div>
                                 {provided.placeholder}
                             </>
