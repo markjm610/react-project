@@ -317,13 +317,10 @@ const Column = ({ columnDropZoneId, tasksArray, name, columnId, currentlyDraggin
                         {...dragProvided.draggableProps}
                         ref={dragProvided.innerRef}>
 
-                        {/* <div ref={provided.innerRef}
-                            {...provided.droppableProps}> */}
                         <div
                             className='column-drop-zone'>
                             <div className='column'>
                                 <div
-                                    // onClick={alphabetizeClick}
                                     className='column__header' {...dragProvided.dragHandleProps}>
                                     {name !== 'Completed' ?
                                         <>
@@ -341,7 +338,7 @@ const Column = ({ columnDropZoneId, tasksArray, name, columnId, currentlyDraggin
                                         </>}
                                 </div>
                                 <Droppable droppableId={`${columnId}`} type='task'>
-                                    {(provided) => {
+                                    {(provided, snapshot) => {
                                         return (
 
                                             <div
@@ -364,8 +361,6 @@ const Column = ({ columnDropZoneId, tasksArray, name, columnId, currentlyDraggin
                                                         columnId={task.columnId}
                                                         taskArrLength={tasksArray.length}
                                                         topTask={topTask}
-                                                        // taskRefArr={taskRefArr}
-                                                        // setTaskRefArr={setTaskRefArr}
                                                         taskRef={taskRefs[i]}
                                                     />)
 

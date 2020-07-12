@@ -43,6 +43,8 @@ const ProjectNavList = ({ id, name, position, dropZone }) => {
 
     if (dropZone === 0) {
         return (
+
+
             <Draggable
                 draggableId={`list-${id}`}
                 index={dropZone}
@@ -76,6 +78,7 @@ const ProjectNavList = ({ id, name, position, dropZone }) => {
                         </div>)
                 }}
             </Draggable>
+
         )
     } else {
         return (
