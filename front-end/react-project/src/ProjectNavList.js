@@ -65,7 +65,6 @@ const ProjectNavList = ({ id, name, position, dropZone }) => {
                                     }}>
 
                                 <div
-                                    // ref={topOfList}
                                     className={selectedProject[id] ? 'list-selected-project-navlink' : 'list-project-navlink'}
                                     style={
                                         {
