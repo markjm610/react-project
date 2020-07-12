@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Add } from 'grommet-icons';
+import { Add, AddCircle } from 'grommet-icons';
 import { Layer, Form, Box, FormField, TextInput, Button } from 'grommet';
 import Context from './Context';
 import { apiBaseUrl } from './config';
@@ -45,7 +45,7 @@ const AddColumn = () => {
     }
 
     return (<>
-        {currentProjectId && <div className='add-column'><Add onClick={addColumnClick} className='add-column-icon'></Add></div>}
+        {currentProjectId && <div className='add-column'><AddCircle onClick={addColumnClick} className='add-column-icon'></AddCircle></div>}
         {
             show && (
                 <Layer
