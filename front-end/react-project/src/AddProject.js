@@ -49,8 +49,8 @@ const AddProject = () => {
 
 
     return (<>
-        <div className='add-project'>
-            <Add onClick={addProjectClick} className='add-project-icon'>
+        <div onClick={addProjectClick} className='add-project'>
+            <Add className='add-project-icon'>
             </Add>
             <div className='add-profile-picture-text'>Add Project</div>
         </div>

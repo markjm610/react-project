@@ -10,11 +10,13 @@ const LeaveProject = () => {
     const [show, setShow] = useState(false)
     const {
         currentProjectId,
+        setCurrentProjectId,
         currentUserId,
         mainProjectArr,
         listProjectArr,
         setMainProjectArr,
-        setListProjectArr
+        setListProjectArr,
+        setProjectMembers
     } = useContext(Context);
 
     const leaveProjectClick = async () => {
@@ -32,8 +34,8 @@ const LeaveProject = () => {
         })
         setMainProjectArr(projectRemoved.slice(0, 5))
         setListProjectArr(projectRemoved.slice(5))
-        // Remove project from page
-        // Show different project
+        setCurrentProjectId(null)
+        setProjectMembers([])
         setShow(false)
     }
 
