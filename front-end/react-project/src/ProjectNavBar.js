@@ -9,7 +9,7 @@ import { BladesVertical, More } from 'grommet-icons';
 
 const ProjectNavBar = () => {
 
-    const { mainProjectArr, listProjectArr, showProjectList, setSelectedProject } = useContext(Context);
+    const { mainProjectArr, listProjectArr, showProjectList, topOfList } = useContext(Context);
 
 
 
@@ -47,9 +47,11 @@ const ProjectNavBar = () => {
                             <>
                                 <div ref={provided.innerRef}
                                     {...provided.droppableProps}>
-                                    {listProjectArr.map(({ id, name, position }, i) => {
+                                    {/* <div ref={topOfList}></div> */}
+                                    {listProjectArr.length ? listProjectArr.map(({ id, name, position }, i) => {
                                         return <ProjectNavList id={id} dropZone={i} key={id} position={position} name={name} />
-                                    })}
+                                    }) :
+                                        <div ref={topOfList} style={{ height: '100px' }}></div>}
                                 </div>
                                 {provided.placeholder}
                             </>
