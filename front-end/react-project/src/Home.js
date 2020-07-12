@@ -427,12 +427,11 @@ const Home = () => {
                     <UserDisplay></UserDisplay>
                     <AddProject></AddProject>
                     <div className='project-stuff'>
-                        <ProjectNavBar ></ProjectNavBar>
-                        {listProjectArr.length && <div style={{ display: 'flex', justifyContent: 'flex-end', marginRight: '5px' }}>
+                        <ProjectNavBar></ProjectNavBar>
+                        {listProjectArr.length !== 0 && <div style={{ display: 'flex', justifyContent: 'flex-end', marginRight: '5px' }}>
                             <More className='more-projects' onClick={() => setShowProjectList(!showProjectList)} />
                         </div>}
                     </div>
-                    {/* <button onClick={() => startDrag()}>See if this works</button> */}
                     <LogOut></LogOut>
                 </div>
                 <Droppable droppableId={`working-area`} direction='horizontal' type='column'>

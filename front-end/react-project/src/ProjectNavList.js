@@ -49,7 +49,7 @@ const ProjectNavList = ({ id, name, position, dropZone }) => {
                 draggableId={`list-${id}`}
                 index={dropZone}
             >
-                {(provided, snapshot) => {
+                {(provided) => {
                     return (
                         <div {...provided.draggableProps}
                             {...provided.dragHandleProps}
