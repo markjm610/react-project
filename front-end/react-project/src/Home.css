@@ -56,8 +56,6 @@ html, body {
     padding-top: 300px;
 }
 
-
-
 .project-navlink {
     border-top-left-radius: 10px;
     background-color: white;
@@ -74,6 +72,7 @@ html, body {
     display: flex;
     justify-content: flex-end;
 }
+
 .selected-project-navlink {
     border-top-left-radius: 10px;
     background-color: lightgoldenrodyellow;
@@ -97,11 +96,50 @@ html, body {
 }
 
 
+.list-project-navlink {
+    border-top-left-radius: 10px;
+    background-color: white;
+    padding: 5px;
+    margin-left: 5px;
+    color: black;
+    text-decoration: none;
+    border-top: solid 1px lightblue;
+    border-left: solid 1px lightblue;
+    border-bottom: solid 1px lightblue;
+    user-select: none;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.list-selected-project-navlink {
+    border-top-left-radius: 10px;
+    background-color: lightgoldenrodyellow;
+    padding: 5px;
+    margin-left: 5px;
+    color: black;
+    text-decoration: none;
+    border-top: solid 1px lightblue;
+    border-left: solid 1px lightblue;
+    border-bottom: solid 1px lightblue;
+    user-select: none;
+    display: flex;
+    justify-content: flex-end;
+    border: solid 1px black;
+}
+
+.list-project-navlink:hover {
+    border: solid 1px black;
+}
+
+
+
+
 .log-out {
     grid-row: 4 / 5;
     display: flex;
     align-items: flex-end;
     height: 25px;
+    user-select: none;
 }
 
 .working-area {
@@ -334,10 +372,18 @@ html, body {
 .project-nav-list-container {
     z-index: 50;
     margin-left: 150px;
-    /* top: -20px; */
     position: absolute;
-    top: 50px;
     width: 150px;
+    height: 250px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.top-of-list {
+    height: 100px;
+    /* z-index: 100; */
+    position: absolute;
+    margin-left: 150px;
 }
 
 .more-projects:hover {
@@ -391,3 +437,4 @@ html, body {
     cursor: pointer;
     opacity: 1;
 }
+

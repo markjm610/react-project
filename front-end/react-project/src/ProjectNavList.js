@@ -65,8 +65,8 @@ const ProjectNavList = ({ id, name, position, dropZone }) => {
                                     }}>
 
                                 <div
-                                    ref={topOfList}
-                                    className={selectedProject[id] ? 'selected-project-navlink' : 'project-navlink'}
+                                    // ref={topOfList}
+                                    className={selectedProject[id] ? 'list-selected-project-navlink' : 'list-project-navlink'}
                                     style={
                                         {
                                             textDecoration: 'none'
@@ -102,7 +102,7 @@ const ProjectNavList = ({ id, name, position, dropZone }) => {
                                     }}>
 
                                 <div
-                                    className={selectedProject[id] ? 'selected-project-navlink' : 'project-navlink'}
+                                    className={selectedProject[id] ? 'list-selected-project-navlink' : 'list-project-navlink'}
                                     style={
                                         {
                                             textDecoration: 'none'
