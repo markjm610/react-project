@@ -47,7 +47,6 @@ const ProjectNavBar = () => {
                             <>
                                 <div ref={provided.innerRef}
                                     {...provided.droppableProps}>
-                                    {/* <div ref={topOfList}></div> */}
                                     {listProjectArr.length ? listProjectArr.map(({ id, name, position }, i) => {
                                         return <ProjectNavList id={id} dropZone={i} key={id} position={position} name={name} />
                                     }) :
