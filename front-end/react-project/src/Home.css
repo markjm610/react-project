@@ -26,11 +26,12 @@ html, body {
     grid-column-start: 1;
     background-color: lightblue; 
     display: grid;
-    grid-template-rows: 1fr 1fr 1fr
+    grid-template-rows: 50px 1fr 1fr;
+    height: 100vh;
 }
 
 .add-project {
-    /* grid-row: 3 / 4; */
+    grid-row: 1 / 2;
     display: flex;
     justify-content: center;
     opacity: 0.6;
@@ -50,12 +51,12 @@ html, body {
     opacity: 1;
 }
 
-.navbar__navlinks {
-    /* grid-row: 2 / 3; */
-    /* display: flex;
-    flex-direction: column; */
-    /* justify-content: flex-start; */
+.project-stuff {
+    grid-row: 2 / 3;
+    padding-top: 300px;
 }
+
+
 
 .project-navlink {
     border-top-left-radius: 10px;
@@ -75,7 +76,7 @@ html, body {
 }
 .selected-project-navlink {
     border-top-left-radius: 10px;
-    background-color: lightgray;
+    background-color: lightgoldenrodyellow;
     padding: 5px;
     /* margin-top: 5px;
     margin-bottom: 5px; */
@@ -89,7 +90,6 @@ html, body {
     display: flex;
     justify-content: flex-end;
     border: solid 1px black;
-    border-right: none;
 }
 
 .project-navlink:hover {
@@ -172,6 +172,9 @@ html, body {
 }
 
 .column__header {
+    /* border-top-left-radius: 10px;
+    border-top-right-radius: 10px; */
+    border-radius: 10px;
     height: 35px;
     display: flex;
     grid-row: 1/ 2;
@@ -274,6 +277,7 @@ html, body {
     display: flex;
     justify-content: space-between;
     overflow-wrap: break-word;
+    border-radius: 10px;
 }
 
 
