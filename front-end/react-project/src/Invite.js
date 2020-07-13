@@ -72,10 +72,15 @@ const Invite = () => {
                         setInviteStatus('')
                     }}
                 >
-                    {!inviteStatus &&
+                    {(!inviteStatus || inviteStatus === 'user not found') &&
                         <Form
                             value={value}
-                            onChange={nextValue => setValue(nextValue)}
+                            onChange={nextValue => {
+                                if (inviteStatus === 'user not found') {
+                                    setInviteStatus(null)
+                                }
+                                setValue(nextValue)
+                            }}
                             onReset={() => setValue({})}
                             onSubmit={submitInvite}
                         >
@@ -84,22 +89,7 @@ const Invite = () => {
                             </FormField>
                             <Box direction="row" gap="medium">
                                 <Button type="submit" color='lightblue' primary label="Submit" />
-                            </Box>
-                        </Form>}
-                    {inviteStatus === 'user not found' &&
-                        <Form
-                            value={value}
-                            onChange={nextValue => setValue(nextValue)}
-                            onReset={() => setValue({})}
-                            onSubmit={submitInvite}
-                        >
-
-                            <FormField name="name" htmlfor="text-input-id" label="Who would you like to invite?">
-                                <TextInput id="text-input-id" name="name" />
-                            </FormField>
-                            <Box direction="row" gap="medium">
-                                <Button type="submit" color='lightblue' primary label="Submit" />
-                                <div style={{ display: 'flex', justifyContent: 'center', marginRight: '10px' }}>User not found!</div>
+                                {inviteStatus === 'user not found' && <div style={{ display: 'flex', justifyContent: 'center', marginRight: '10px' }}>User not found!</div>}
                             </Box>
                         </Form>}
                     {inviteStatus === 'sent' &&
