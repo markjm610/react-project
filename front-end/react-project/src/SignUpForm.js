@@ -39,6 +39,9 @@ const SignUpForm = ({ index }) => {
 
 
     }
+
+    console.log(updateFormPosition[1] === 'logIn' && !noForms)
+
     return (
         <Draggable
             draggableId={'sign-up'}
@@ -72,26 +75,29 @@ const SignUpForm = ({ index }) => {
                                 </FormField>
                                 <Box justify='between' direction="row" gap="medium">
                                     <Button color='lightsteelblue' type="submit" primary label="Submit" />
-
-                                    {/* <NavLink to='/'><Button color='lightsteelblue' label="Log in" /></NavLink> */}
                                 </Box>
                             </Form>
                         </div> :
                             <>
-                                <>
-                                    {updateFormPosition[0] === 'signUp' && <div className='form-name'>
-                                        <div>
-                                            <h2 className='no-form-name'>Sign Up</h2>
-                                            <FormNextLink size='large' />
-                                        </div>
-                                    </div>}
-                                    {updateFormPosition[2] === 'signUp' && <div className='form-name'>
-                                        <div>
-                                            <h2 className='no-form-name'>Sign Up</h2>
-                                            <FormPreviousLink size='large' />
-                                        </div>
-                                    </div>}
-                                </>
+                                {noForms && <div className='form-name'>
+                                    <div>
+                                        <h2 className='no-form-name'>Sign Up</h2>
+                                    </div>
+                                </div>}
+
+                                {updateFormPosition[0] === 'signUp' && !noForms && <div className='form-name'>
+                                    <div>
+                                        <h2 className='no-form-name'>Sign Up</h2>
+                                        <FormNextLink size='large' />
+                                    </div>
+                                </div>}
+                                {updateFormPosition[2] === 'signUp' && !noForms && <div className='form-name'>
+                                    <div>
+                                        <h2 className='no-form-name'>Sign Up</h2>
+                                        <FormPreviousLink size='large' />
+                                    </div>
+                                </div>}
+
                             </>
                         }
 

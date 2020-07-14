@@ -60,23 +60,8 @@ const Demo = ({ index }) => {
                         {...provided.dragHandleProps}
                         ref={provided.innerRef}
                     >
-                        {updateFormPosition[1] !== 'demo' || noForms
+                        {updateFormPosition[1] === 'demo' && !noForms
                             ?
-                            <>
-                                {updateFormPosition[0] === 'demo' && <div className='form-name'>
-                                    <div>
-                                        <h2 className='no-form-name'>Demo</h2>
-                                        <FormNextLink size='large' />
-                                    </div>
-                                </div>}
-                                {updateFormPosition[2] === 'demo' && <div className='form-name'>
-                                    <div>
-                                        <h2 className='no-form-name'>Demo</h2>
-                                        <FormPreviousLink size='large' />
-                                    </div>
-                                </div>}
-                            </>
-                            :
                             <div className='log-in-form' style={{ margin: 'auto', width: '400px' }}>
                                 <h2>Demo</h2>
                                 <Form
@@ -101,6 +86,27 @@ const Demo = ({ index }) => {
                                     </Box>
                                 </Form>
                             </div>
+                            :
+                            <>
+                                {noForms && <div className='form-name'>
+                                    <div>
+                                        <h2 className='no-form-name'>Demo</h2>
+                                    </div>
+                                </div>}
+                                {updateFormPosition[0] === 'demo' && !noForms && <div className='form-name'>
+                                    <div>
+                                        <h2 className='no-form-name'>Demo</h2>
+                                        <FormNextLink size='large' />
+                                    </div>
+                                </div>}
+                                {updateFormPosition[2] === 'demo' && !noForms && <div className='form-name'>
+                                    <div>
+                                        <h2 className='no-form-name'>Demo</h2>
+                                        <FormPreviousLink size='large' />
+                                    </div>
+                                </div>}
+                            </>
+
                         }
                     </div>)
             }}
