@@ -45,7 +45,7 @@ const AddColumn = () => {
     }
 
     return (<>
-        {currentProjectId && <div className='add-column'><AddCircle onClick={addColumnClick} className='add-column-icon' /></div>}
+        {currentProjectId && <div className='add-column'><AddCircle color='black' onClick={addColumnClick} className='add-column-icon' /></div>}
         {
             show && (
                 <Layer

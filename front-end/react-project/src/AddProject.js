@@ -50,9 +50,9 @@ const AddProject = () => {
 
     return (<>
         <div onClick={addProjectClick} className='add-project'>
-            <Add className='add-project-icon'>
+            <Add color='black' className='add-project-icon'>
             </Add>
-            <div className='add-profile-picture-text'>Add Project</div>
+            {/* <div className='add-profile-picture-text'>Add Project</div> */}
         </div>
 
         {

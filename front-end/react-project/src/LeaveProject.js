@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { Layer, Form, Box, FormField, TextInput, Button } from 'grommet';
-import { ShareOption, Checkmark } from 'grommet-icons';
+import { ShareOption, Checkmark, Close, Eject } from 'grommet-icons';
 import { apiBaseUrl } from './config';
 import Context from './Context';
 
@@ -43,7 +43,7 @@ const LeaveProject = () => {
         <>
             {currentProjectId &&
                 <>
-                    <div className='leave-project' onClick={() => setShow(true)}>Leave Project</div >
+                    <div className='leave-project' onClick={() => setShow(true)}><Eject color='black' /></div >
 
                     {show && (
                         <Layer

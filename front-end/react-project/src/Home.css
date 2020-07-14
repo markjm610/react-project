@@ -58,7 +58,7 @@ html, body {
 
 .project-navlink {
     border-top-left-radius: 10px;
-    background-color: white;
+    background-color: whitesmoke;
     padding: 5px;
     /* margin-top: 5px;
     margin-bottom: 5px; */
@@ -98,7 +98,7 @@ html, body {
 
 .list-project-navlink {
     border-top-left-radius: 10px;
-    background-color: white;
+    background-color: whitesmoke;
     padding: 5px;
     margin-left: 5px;
     color: black;
@@ -214,7 +214,7 @@ html, body {
     height: 35px;
     display: flex;
     grid-row: 1/ 2;
-    background-color: lightsteelblue;
+    /* background-color: lightsteelblue; */
     justify-content: space-between;
     /* box-shadow: 1px 1px 1px gray; */
 }
@@ -424,11 +424,14 @@ html, body {
     display: flex;
     justify-content: center;
     height: 20px;
-    margin-top: 100px;
+    margin-top: 200px;
+    opacity: 0.6;
+
 }
 
 .leave-project:hover {
     cursor: pointer;
+    opacity: 1;
 }
 
 .completed-name {
@@ -452,6 +455,7 @@ html, body {
     display: flex;
     align-items: center;
     opacity: 0.6;
+    color: 'black';
 }
 
 .alphabetize:hover {

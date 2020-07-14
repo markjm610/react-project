@@ -23,7 +23,7 @@ import ProjectNavMain from './ProjectNavMain'
 
 
 
-const Home = () => {
+const Home = ({ history }) => {
 
     const {
         setDisplayedColumns,
@@ -43,7 +43,10 @@ const Home = () => {
         setShowProjectList,
         setSelectedProject,
         setColumnFull,
-        columnFull
+        columnFull,
+        selectedProject,
+        setProjectMembers,
+        setCurrentProjectId
     } = useContext(Context);
 
 
@@ -82,6 +85,38 @@ const Home = () => {
         }
         fetchProjects();
     }, [invites])
+
+    useEffect(() => {
+        async function displayFirstProject() {
+
+            if (mainProjectArr.length) {
+
+                const usersRes = await fetch(`${apiBaseUrl}/projects/${mainProjectArr[0].id}/users`);
+                const parsedUsersRes = await usersRes.json();
+
+                const res = await fetch(`${apiBaseUrl}/projects/${mainProjectArr[0].id}`);
+                const parsedRes = await res.json();
+                const columns = parsedRes.projectInfo.Columns;
+
+                let selectedProjectCopy = { ...selectedProject }
+                for (let projectId in selectedProjectCopy) {
+
+                    if (projectId === `${mainProjectArr[0].id}`) {
+                        selectedProjectCopy[projectId] = true
+                    } else {
+                        selectedProjectCopy[projectId] = false
+                    }
+                }
+
+                setSelectedProject(selectedProjectCopy)
+                setProjectMembers(parsedUsersRes.projects.Users || []);
+                setDisplayedColumns(columns);
+                setCurrentProjectId(mainProjectArr[0].id);
+                history.push(`/home/project/${mainProjectArr[0].id}`)
+            }
+        }
+        displayFirstProject()
+    }, [mainProjectArr])
 
 
 
@@ -419,7 +454,7 @@ const Home = () => {
                     <div className='project-stuff'>
                         <ProjectNavBar />
                         {listProjectArr.length !== 0 && <div style={{ display: 'flex', justifyContent: 'flex-end', marginRight: '5px' }}>
-                            <More className='more-projects' onClick={() => setShowProjectList(!showProjectList)} />
+                            <More color='black' className='more-projects' onClick={() => setShowProjectList(!showProjectList)} />
                         </div>}
                     </div>
                     <LogOut />

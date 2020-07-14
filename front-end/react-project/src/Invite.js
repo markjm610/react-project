@@ -60,7 +60,8 @@ const Invite = () => {
 
     return (
         <>
-            {currentProjectId && <div className='invite'>Invite Team Member<ShareOption
+            {currentProjectId && <div className='invite'><ShareOption
+                color='black'
                 className='invite-icon'
                 onClick={() => setShow(true)}></ShareOption></div>}
             {show && (

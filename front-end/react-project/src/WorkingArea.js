@@ -27,7 +27,6 @@ const WorkingArea = () => {
                     />)
                 })
             }
-            {/* <AddColumn /> */}
         </>
 
     )
