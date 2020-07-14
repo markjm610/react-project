@@ -39,6 +39,7 @@ const SignUpForm = ({ index }) => {
 
 
     }
+
     console.log(Button)
     return (
         <Draggable
@@ -95,7 +96,6 @@ const SignUpForm = ({ index }) => {
                                         <FormPreviousLink size='large' color='steelblue' />
                                     </div>
                                 </div>}
-
                             </>
                         }
 
