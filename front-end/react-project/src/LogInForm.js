@@ -93,9 +93,6 @@ const LogInForm = ({ index }) => {
                                 <Box justify='between' direction="row" gap="medium">
 
                                     <Button color='lightsteelblue' type="submit" primary label="Submit" />
-                                    {/* 
-                                    <Button color='lightsteelblue' label="Demo" />
-                                    <NavLink to='/signup'><Button color='lightsteelblue' label="Sign up" /></NavLink> */}
 
                                 </Box>
                             </Form>
@@ -109,13 +106,13 @@ const LogInForm = ({ index }) => {
                                 {updateFormPosition[0] === 'logIn' && !noForms && <div className='form-name'>
                                     <div>
                                         <h2 className='no-form-name'>Log In</h2>
-                                        <FormNextLink size='large' color='lightsteelblue' />
+                                        <FormNextLink size='large' color='steelblue' />
                                     </div>
                                 </div>}
                                 {updateFormPosition[2] === 'logIn' && !noForms && <div className='form-name'>
                                     <div>
                                         <h2 className='no-form-name'>Log In</h2>
-                                        <FormPreviousLink size='large' color='lightsteelblue' />
+                                        <FormPreviousLink size='large' color='steelblue' />
                                     </div>
                                 </div>}
                             </>

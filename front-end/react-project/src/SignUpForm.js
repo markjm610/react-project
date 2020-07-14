@@ -39,9 +39,7 @@ const SignUpForm = ({ index }) => {
 
 
     }
-
-    console.log(updateFormPosition[1] === 'logIn' && !noForms)
-
+    console.log(Button)
     return (
         <Draggable
             draggableId={'sign-up'}
@@ -88,13 +86,13 @@ const SignUpForm = ({ index }) => {
                                 {updateFormPosition[0] === 'signUp' && !noForms && <div className='form-name'>
                                     <div>
                                         <h2 className='no-form-name'>Sign Up</h2>
-                                        <FormNextLink size='large' color='lightsteelblue' />
+                                        <FormNextLink size='large' color='steelblue' />
                                     </div>
                                 </div>}
                                 {updateFormPosition[2] === 'signUp' && !noForms && <div className='form-name'>
                                     <div>
                                         <h2 className='no-form-name'>Sign Up</h2>
-                                        <FormPreviousLink size='large' color='lightsteelblue' />
+                                        <FormPreviousLink size='large' color='steelblue' />
                                     </div>
                                 </div>}
 
