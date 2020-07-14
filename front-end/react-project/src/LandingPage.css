@@ -1,8 +1,10 @@
 .landing-page {
-    height: 85vh;
+    height: 90vh;
     width: 100%;
-    padding-top: 15vh;
+    padding-top: 10vh;
     display: flex;
+    /* background-color: lightgoldenrodyellow; */
+    background-color: #ebebeb
 }
 
 .background-image {
@@ -11,7 +13,6 @@
 }
 
 .log-in-sign-up-box {
-    background-color: rgb(242, 247, 248);
     color: black
    
 }
@@ -33,10 +34,10 @@
 }
 
 .title {
-    
-    padding: 50px;
-    font-size: 36px;
-    font-weight: bold;
+    padding: 30px;
+    color: steelblue;
+    font-size: 100px;
+    font-weight: lighter;
 }
 
 .sign-up-log-in-demo {
@@ -57,4 +58,8 @@
 
 .no-form-name {
     margin-bottom: 0;
+}
+
+.title-container {
+    display: flex;
 }

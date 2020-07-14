@@ -13,7 +13,6 @@ const Invite = () => {
 
     const submitInvite = async () => {
 
-        // setShow(false)
         const findRes = await fetch(`${apiBaseUrl}/users`, {
             method: 'PUT',
             body: JSON.stringify({ name: value.name, projectId: currentProjectId }),
@@ -29,7 +28,6 @@ const Invite = () => {
             setInviteStatus('already in project')
         } else if (parsedFindRes.user) {
             const inviteId = parsedFindRes.user.id;
-            // const userId = currentUserId;
             const projectId = currentProjectId;
             const name = localStorage.getItem('USER_NAME');
 
@@ -47,15 +45,10 @@ const Invite = () => {
 
             } else if (sendInviteRes.ok) {
                 setInviteStatus('sent')
-                // setValue({ name: '' })
             }
         } else {
             setInviteStatus('user not found')
         }
-
-
-
-
     }
 
     return (
@@ -74,25 +67,27 @@ const Invite = () => {
                     }}
                 >
                     {(!inviteStatus || inviteStatus === 'user not found') &&
-                        <Form
-                            value={value}
-                            onChange={nextValue => {
-                                if (inviteStatus === 'user not found') {
-                                    setInviteStatus(null)
-                                }
-                                setValue(nextValue)
-                            }}
-                            onReset={() => setValue({})}
-                            onSubmit={submitInvite}
-                        >
-                            <FormField name="name" htmlfor="text-input-id" label="Who would you like to invite?">
-                                <TextInput id="text-input-id" name="name" />
-                            </FormField>
-                            <Box direction="row" gap="medium">
-                                <Button type="submit" color='lightsteelblue' primary label="Submit" />
-                                {inviteStatus === 'user not found' && <div style={{ display: 'flex', justifyContent: 'center', marginRight: '10px' }}>User not found</div>}
-                            </Box>
-                        </Form>}
+                        <div className='popup-container'>
+                            <Form
+                                value={value}
+                                onChange={nextValue => {
+                                    if (inviteStatus === 'user not found') {
+                                        setInviteStatus(null)
+                                    }
+                                    setValue(nextValue)
+                                }}
+                                onReset={() => setValue({})}
+                                onSubmit={submitInvite}
+                            >
+                                <FormField name="name" htmlfor="text-input-id" label="Who would you like to invite?">
+                                    <TextInput id="text-input-id" name="name" />
+                                </FormField>
+                                <Box direction="row" gap="medium">
+                                    <Button type="submit" color='lightsteelblue' primary label="Submit" />
+                                    {inviteStatus === 'user not found' && <div style={{ display: 'flex', justifyContent: 'center', marginRight: '10px' }}>User not found</div>}
+                                </Box>
+                            </Form>
+                        </div>}
                     {inviteStatus === 'sent' &&
                         <>
                             <div>Invite sent!</div>

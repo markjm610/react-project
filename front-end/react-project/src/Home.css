@@ -131,19 +131,21 @@ html, body {
     border: solid 1px black;
 }
 
-
 .log-out {
     grid-row: 4 / 5;
     display: flex;
     align-items: flex-end;
     height: 25px;
+    width: 100%;
     user-select: none;
+    text-align: center;
+    margin: auto;
 }
 
 .working-area {
     display: flex;
     grid-column-start: 2;
-    background-color: #dddddd;
+    background-color: #ebebeb;
     overflow-y: auto;
     width: 100%;
     height: 100%;
@@ -191,8 +193,7 @@ html, body {
 }
 
 .column-drop-zone {
-    width: 400px;
-    /* background-color: lightgray; */
+    width: 300px;
     margin: 20px;
 }
 
@@ -200,23 +201,36 @@ html, body {
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 35px 1fr;
-    width: 400px;
-    /* background-color: lightgray; */
+    width: 320px;
     margin: auto;
-    /* border-radius: 25px; */
-  
+    border-radius: 10px;
+    background-color: #ebebeb;
 }
+
+
+
+.column-dragging {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 35px 1fr;
+    width: 320px;
+    margin: auto;
+    border-radius: 10px;
+    box-shadow: 1px 1px 5px gray;
+    background-color: #ebebeb;
+}
+
 
 .column__header {
     /* border-top-left-radius: 10px;
     border-top-right-radius: 10px; */
+    width: 100%;
     border-radius: 10px;
     height: 35px;
     display: flex;
     grid-row: 1/ 2;
-    /* background-color: lightsteelblue; */
+    /* background-color: lightgray; */
     justify-content: space-between;
-    /* box-shadow: 1px 1px 1px gray; */
 }
 
 .add-task {
@@ -254,8 +268,8 @@ html, body {
 .tasks-container {
     display: flex;
     flex-direction: column;
-    /* align-items: center; */
-    min-height: 100px;
+    min-height: 60px;
+    margin-left: 5px;
 }
 
 
@@ -275,24 +289,11 @@ html, body {
     grid-template-columns: 1fr;
     grid-template-rows: 1fr;
     min-height: 50px;
-    width: 400px;
+    width: 300px;
     margin: 5px;
 }
 
 
-/* .task__heading {
-    grid-row: 1 / 2;
-    background-color: lightsteelblue;
-    display: grid;
-    grid-template-columns: 10% 1fr 10%;
-} */
-
-/* .task__heading-text {
-    grid-column: 2 / 3;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-} */
 
 .delete-task {
     grid-column: 3 / 4;
@@ -316,12 +317,6 @@ html, body {
     overflow-wrap: break-word;
     border-radius: 10px;
     box-shadow: 1px 1px 5px lightgray;
-}
-
-.task__description:hover {
-    /* box-shadow: 1px 1px 3px gray; */
-    /* border: 1px solid black; */
-    /* background-color: lightyellow */
 }
 
 
@@ -352,7 +347,6 @@ html, body {
 }
 
 .add-column {
-    /* padding: 25px; */
     position: absolute;
     top: 92vh;
     right: 175px;
@@ -402,7 +396,6 @@ html, body {
 
 .top-of-list {
     height: 100px;
-    /* z-index: 100; */
     position: absolute;
     margin-left: 150px;
 }
@@ -426,7 +419,6 @@ html, body {
     height: 20px;
     margin-top: 200px;
     opacity: 0.6;
-
 }
 
 .leave-project:hover {
@@ -463,3 +455,14 @@ html, body {
     opacity: 1;
 }
 
+.popup-container {
+    background-color: whitesmoke;
+    padding: 10px;
+    border-radius: 15px;
+}
+
+.popup-button-container {
+    padding-top: 10px;
+    display: flex;
+    justify-content: center;
+}

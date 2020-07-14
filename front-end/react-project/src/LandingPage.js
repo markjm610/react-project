@@ -5,7 +5,8 @@ import LogInForm from './LogInForm'
 import Demo from './Demo';
 import SignUpForm from './SignUpForm';
 import Context from './Context'
-
+import TitleLetter from './TitleLetter'
+import Title from './Title';
 
 
 const LandingPage = () => {
@@ -25,20 +26,7 @@ const LandingPage = () => {
 
 
     const onDragEnd = result => {
-        // keep track of positions in array of 3
-        // swap on update
 
-        // let copy = { ...formPositions };
-
-        // for (let form in copy) {
-        //     if (copy[form] === source.index) {
-        //         copy[form] = destination.index
-        //     } else if (copy[form] === destination.index) {
-        //         copy[form] = source.index
-        //     }
-        // }
-        // console.log(copy)
-        // setFormPositions(copy)
 
         setNoForms(false)
 
@@ -102,14 +90,14 @@ const LandingPage = () => {
         setStartPositions(updateCopy)
     }
 
-
     return (
-        <DragDropContext onDragStart={onDragStart} onDragEnd={onDragEnd} onDragUpdate={onDragUpdate}>
-            <div className='landing-page'>
-                <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                    <h1>Taskflow</h1>
+
+        <div className='landing-page'>
+            <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <Title />
+                <DragDropContext onDragStart={onDragStart} onDragEnd={onDragEnd} onDragUpdate={onDragUpdate}>
                     <div style={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
-                        <Droppable droppableId={'landing-page'} direction='horizontal'>
+                        <Droppable droppableId={'landing-page'} direction='horizontal' type='forms'>
                             {provided => {
                                 return (
                                     <>
@@ -136,9 +124,10 @@ const LandingPage = () => {
 
                         </Droppable>
                     </div>
-                </div>
+                </DragDropContext>
             </div>
-        </DragDropContext>
+        </div>
+
     )
 }
 

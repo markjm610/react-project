@@ -11,9 +11,6 @@ import * as tweenFunctions from "tween-functions";
 import { moveStepByStep } from './utils'
 import { Trash } from 'grommet-icons';
 
-// import Context from './Context';
-// import { apiBaseUrl } from './config';
-
 const Column = ({ columnDropZoneId, tasksArray, name, columnId, currentlyDragging, setCurrentlyDragging }) => {
 
     const {
@@ -272,18 +269,19 @@ const Column = ({ columnDropZoneId, tasksArray, name, columnId, currentlyDraggin
 
     return (
         <Draggable draggableId={`column-${columnId}`} index={columnDropZoneId}>
-            {dragProvided => {
+            {(dragProvided, { isDragging }) => {
                 return (
                     <div
                         {...dragProvided.draggableProps}
-                        ref={dragProvided.innerRef}>
-
+                        ref={dragProvided.innerRef}
+                    >
                         <div
                             className='column-drop-zone'>
-                            <div className='column'>
+                            <div className={isDragging ? 'column-dragging' : 'column'}>
                                 <div
                                     className='column__header' {...dragProvided.dragHandleProps}>
-                                    {name !== 'Completed' ?
+                                    {name !== 'Completed'
+                                        ?
                                         <>
                                             <AddTask
                                                 columnId={columnId}
@@ -291,7 +289,8 @@ const Column = ({ columnDropZoneId, tasksArray, name, columnId, currentlyDraggin
                                             <div className='column__name'>{name}</div>
                                             <div className='alphabetize' onClick={alphabetizeClick}>ABC</div>
                                             <DeleteColumn columnId={columnId} />
-                                        </> :
+                                        </>
+                                        :
                                         <>
                                             <div><Trash color='black' className='trash-can' onClick={clearCompleted} /></div>
                                             <div className='completed-name'>{name}</div>
@@ -307,10 +306,6 @@ const Column = ({ columnDropZoneId, tasksArray, name, columnId, currentlyDraggin
                                                 {...provided.droppableProps}
                                                 className='tasks-container'>
                                                 {tasksArray.map((task, i) => {
-                                                    // if (i === tasksArray.length - 1) {
-                                                    //     return
-                                                    // }
-
                                                     return (<Task
                                                         key={task.id}
                                                         taskid={task.id}
@@ -326,129 +321,19 @@ const Column = ({ columnDropZoneId, tasksArray, name, columnId, currentlyDraggin
                                                     />)
 
                                                 })}
-
+                                                {provided.placeholder}
                                             </div>)
                                     }}
                                 </Droppable>
                             </div>
                         </div>
                     </div>
-
-
-
-                    // </div>
                 )
             }}
 
         </Draggable >
     )
 
-    // return (
-    //     <Draggable draggableId={`column-${columnId}`} index={columnDropZoneId}>
-    //         {dragProvided => {
-    //             return (
-    //                 <div
-    //                     {...dragProvided.draggableProps}
-    //                     ref={dragProvided.innerRef}>
-    //                     <Droppable droppableId={`${columnId}`} type='task'>
-    //                         {(provided) => {
-    //                             return (
-    //                                 <div ref={provided.innerRef}
-    //                                     {...provided.droppableProps}>
-    //                                     <div
-    //                                         className='column-drop-zone'>
-    //                                         <div className='column'>
-    //                                             <div
-    //                                                 // onClick={alphabetizeClick}
-    //                                                 className='column__header' {...dragProvided.dragHandleProps}>
-    //                                                 {name !== 'Completed' ?
-    //                                                     <>
-    //                                                         <AddTask
-    //                                                             columnId={columnId}
-    //                                                             taskArrLength={tasksArray.length} />
-    //                                                         <div className='column__name'>{name}</div>
-    //                                                         <DeleteColumn columnId={columnId} />
-    //                                                     </> :
-    //                                                     <>
-    //                                                         <div><Trash className='trash-can' onClick={clearCompleted} /></div>
-    //                                                         <div className='completed-name'>{name}</div>
-
-    //                                                     </>}
-    //                                             </div>
-    //                                             <div className='tasks-container'>
-    //                                                 {tasksArray.map((task, i) => {
-    //                                                     // if (i === tasksArray.length - 1) {
-    //                                                     //     return
-    //                                                     // }
-
-    //                                                     return (<Task
-    //                                                         key={task.id}
-    //                                                         taskid={task.id}
-    //                                                         taskdropzoneid={i}
-    //                                                         heading={task.heading}
-    //                                                         description={task.description}
-    //                                                         currentlyDragging={currentlyDragging}
-    //                                                         setCurrentlyDragging={setCurrentlyDragging}
-    //                                                         columnId={task.columnId}
-    //                                                         taskArrLength={tasksArray.length}
-    //                                                         topTask={topTask}
-    //                                                         // taskRefArr={taskRefArr}
-    //                                                         // setTaskRefArr={setTaskRefArr}
-    //                                                         taskRef={taskRefs[i]}
-    //                                                     />)
-
-    //                                                 })}
-
-    //                                             </div>
-
-    //                                         </div>
-    //                                     </div>
-    //                                     {provided.placeholder}
-    //                                 </div>)
-    //                         }}
-    //                     </Droppable>
-
-
-    //                 </div>
-    //             )
-    //         }}
-
-    //     </Draggable >
-    // )
 }
 
 export default Column;
-
-
-
-// {/* {dragRef && <div className='column' style={
-//                     {
-//                         opacity: isDragging ? 0 : 1
-//                     }}>
-//                     <div className='column__header'>
-//                         <AddTask
-//                             columnId={columnId}
-//                             taskArrLength={tasksArray.length}></AddTask>
-//                         <div className='column__name'>{name}</div>
-//                         <DeleteColumn columnId={columnId}></DeleteColumn>
-//                     </div>
-//                     <div
-//                         onMouseDown={() => setDragRef(false)}
-//                         className='tasks-container'>
-//                         {tasksArray.map((task, i) => <Task
-//                             key={task.id}
-//                             taskid={task.id}
-//                             taskdropzoneid={i}
-//                             heading={task.heading}
-//                             description={task.description}
-//                             currentlyDragging={currentlyDragging}
-//                             setCurrentlyDragging={setCurrentlyDragging}
-//                             columnId={task.columnId}
-//                             taskArrLength={tasksArray.length}
-//                         // dragColumnId={dragColumnId}
-//                         // setDragColumnId={setDragColumnId}
-//                         ></Task>)}
-
-//                     </div>
-
-//                 </div>} */}

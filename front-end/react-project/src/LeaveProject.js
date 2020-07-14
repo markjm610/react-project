@@ -43,8 +43,9 @@ const LeaveProject = () => {
         <>
             {currentProjectId &&
                 <>
-                    <div className='leave-project' onClick={() => setShow(true)}><Eject color='black' /></div >
-
+                    <div className='leave-project'>
+                        <Eject color='black' onClick={() => setShow(true)} />
+                    </div>
                     {show && (
                         <Layer
                             onEsc={() => setShow(false)}
@@ -52,11 +53,12 @@ const LeaveProject = () => {
                                 setShow(false)
                             }}
                         >
-                            <div>Are you sure you want to leave this project?</div>
-                            <Box direction="row" gap="medium">
-                                <Button onClick={leaveProjectClick} color='lightsteelblue' label='Yes' />
-                            </Box>
-
+                            <div className='popup-container'>
+                                <div>Are you sure you want to leave this project?</div>
+                                <div className='popup-button-container'>
+                                    <Button onClick={leaveProjectClick} primary color='lightsteelblue' label='Yes' />
+                                </div>
+                            </div>
                         </Layer>)}
                 </>
             }
