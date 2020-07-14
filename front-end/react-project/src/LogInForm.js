@@ -101,13 +101,18 @@ const LogInForm = ({ index }) => {
                             </Form>
                         </div> :
                             <>
-                                {updateFormPosition[0] === 'logIn' && <div className='form-name'>
+                                {noForms && <div className='form-name'>
+                                    <div>
+                                        <h2 className='no-form-name'>Log In</h2>
+                                    </div>
+                                </div>}
+                                {updateFormPosition[0] === 'logIn' && !noForms && <div className='form-name'>
                                     <div>
                                         <h2 className='no-form-name'>Log In</h2>
                                         <FormNextLink size='large' />
                                     </div>
                                 </div>}
-                                {updateFormPosition[2] === 'logIn' && <div className='form-name'>
+                                {updateFormPosition[2] === 'logIn' && !noForms && <div className='form-name'>
                                     <div>
                                         <h2 className='no-form-name'>Log In</h2>
                                         <FormPreviousLink size='large' />
