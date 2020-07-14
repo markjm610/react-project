@@ -6,7 +6,7 @@ import Context from './Context';
 
 
 
-const WorkingAreaRoutes = ({ isOver }) => {
+const WorkingAreaRoutes = () => {
 
     const { mainProjectArr, listProjectArr } = useContext(Context);
 
@@ -19,7 +19,7 @@ const WorkingAreaRoutes = ({ isOver }) => {
                     <Route key={id}
                         exact
                         path={`/home/project/${id}`}
-                        render={() => <WorkingArea key={id} projectId={id} isOver={isOver} />}>
+                        render={() => <WorkingArea key={id} projectId={id} />}>
                     </Route>)
             })}
             {listProjectArr.map(({ id }, i) => {
@@ -27,7 +27,7 @@ const WorkingAreaRoutes = ({ isOver }) => {
                     <Route key={id}
                         exact
                         path={`/home/project/${id}`}
-                        render={() => <WorkingArea key={id} projectId={id} isOver={isOver} />}>
+                        render={() => <WorkingArea key={id} projectId={id} />}>
                     </Route>)
             })}
         </>

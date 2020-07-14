@@ -293,7 +293,7 @@ const Column = ({ columnDropZoneId, tasksArray, name, columnId, currentlyDraggin
                                             <DeleteColumn columnId={columnId} />
                                         </> :
                                         <>
-                                            <div><Trash className='trash-can' onClick={clearCompleted} /></div>
+                                            <div><Trash color='black' className='trash-can' onClick={clearCompleted} /></div>
                                             <div className='completed-name'>{name}</div>
 
                                         </>}

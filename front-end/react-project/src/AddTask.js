@@ -64,7 +64,7 @@ const AddTask = ({ columnId, taskArrLength }) => {
 
     return (<>
         <div className='add-task'>
-            <AddCircle onClick={addTaskClick}></AddCircle>
+            <AddCircle color='black' onClick={addTaskClick}></AddCircle>
         </div>
         {
             show && (
@@ -85,7 +85,7 @@ const AddTask = ({ columnId, taskArrLength }) => {
                         onReset={() => setValue({})}
                         onSubmit={addTaskSubmit}
                     >
-                        <FormField name="description" htmlfor="text-input-id" label="Description:">
+                        <FormField name="description" htmlfor="text-input-id" label="Task Description:">
                             <TextArea id="text-input-id" name="description" />
                         </FormField>
                         <Box direction="row" gap="medium">

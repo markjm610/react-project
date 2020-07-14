@@ -42,7 +42,7 @@ const DeleteColumn = ({ columnId }) => {
     return (
         <>
             <div className='delete-column'>
-                <FormClose onClick={deleteColumnClick}></FormClose>
+                <FormClose color='black' onClick={deleteColumnClick}></FormClose>
             </div>
             {
                 !columnEmpty && <Layer
