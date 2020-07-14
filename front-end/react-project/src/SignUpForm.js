@@ -88,13 +88,13 @@ const SignUpForm = ({ index }) => {
                                 {updateFormPosition[0] === 'signUp' && !noForms && <div className='form-name'>
                                     <div>
                                         <h2 className='no-form-name'>Sign Up</h2>
-                                        <FormNextLink size='large' />
+                                        <FormNextLink size='large' color='lightsteelblue' />
                                     </div>
                                 </div>}
                                 {updateFormPosition[2] === 'signUp' && !noForms && <div className='form-name'>
                                     <div>
                                         <h2 className='no-form-name'>Sign Up</h2>
-                                        <FormPreviousLink size='large' />
+                                        <FormPreviousLink size='large' color='lightsteelblue' />
                                     </div>
                                 </div>}
 

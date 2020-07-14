@@ -96,13 +96,13 @@ const Demo = ({ index }) => {
                                 {updateFormPosition[0] === 'demo' && !noForms && <div className='form-name'>
                                     <div>
                                         <h2 className='no-form-name'>Demo</h2>
-                                        <FormNextLink size='large' />
+                                        <FormNextLink size='large' color='lightsteelblue' />
                                     </div>
                                 </div>}
                                 {updateFormPosition[2] === 'demo' && !noForms && <div className='form-name'>
                                     <div>
                                         <h2 className='no-form-name'>Demo</h2>
-                                        <FormPreviousLink size='large' />
+                                        <FormPreviousLink size='large' color='lightsteelblue' />
                                     </div>
                                 </div>}
                             </>
