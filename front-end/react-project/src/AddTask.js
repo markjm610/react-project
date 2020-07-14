@@ -11,7 +11,15 @@ const AddTask = ({ columnId, taskArrLength }) => {
     const [descriptionLength, setDescriptionLength] = useState(0)
 
     const addTaskClick = async () => {
-        setShow(true)
+
+        if (taskArrLength === 11) {
+            setColumnFull(true)
+            setValue({ description: '' })
+            setDescriptionLength(0)
+        } else {
+            setShow(true)
+        }
+
     }
 
     const addTaskSubmit = async () => {
@@ -21,12 +29,7 @@ const AddTask = ({ columnId, taskArrLength }) => {
         }
 
         setShow(false)
-        if (taskArrLength === 12) {
-            setColumnFull(true)
-            setValue({ description: '' })
-            setDescriptionLength(0)
-            return
-        }
+
         const columnPosition = taskArrLength;
 
         const res = await fetch(`${apiBaseUrl}/columns/${columnId}/tasks`, {
@@ -45,12 +48,7 @@ const AddTask = ({ columnId, taskArrLength }) => {
 
         columnsCopy.forEach(column => {
             if (column.id === columnId) {
-                // if (column.Tasks.length === 1) {
-                //     column.Tasks.unshift(parsedRes.newTask)
-                // } else {
-                //     const secondToLastPosition = column.Tasks.length - 1;
-                //     column.Tasks.splice(secondToLastPosition, 0, parsedRes.newTask)
-                // }
+
                 column.Tasks.push(parsedRes.newTask)
                 column.Tasks.forEach((task, i) => {
                     task.columnPosition = i;
@@ -81,7 +79,6 @@ const AddTask = ({ columnId, taskArrLength }) => {
                     <Form
                         value={value}
                         onChange={nextValue => {
-                            console.log(nextValue)
                             setDescriptionLength(nextValue.description.length)
                             setValue(nextValue)
                         }}
@@ -92,7 +89,7 @@ const AddTask = ({ columnId, taskArrLength }) => {
                             <TextArea id="text-input-id" name="description" />
                         </FormField>
                         <Box direction="row" gap="medium">
-                            <Button type="submit" color='lightblue' primary label="Submit" />
+                            <Button type="submit" color='lightsteelblue' primary label="Submit" />
                             <div style={{ color: descriptionLength > 100 && 'red' }}>{descriptionLength} / 100</div>
                         </Box>
                     </Form>

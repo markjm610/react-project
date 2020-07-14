@@ -7,7 +7,7 @@ import { apiBaseUrl } from './config';
 
 const WorkingArea = () => {
 
-    const { setDisplayedColumns, displayedColumns } = useContext(Context);
+    const { displayedColumns } = useContext(Context);
     const [currentlyDragging, setCurrentlyDragging] = useState(null)
 
 
@@ -27,7 +27,7 @@ const WorkingArea = () => {
                     />)
                 })
             }
-            < AddColumn ></AddColumn >
+            {/* <AddColumn /> */}
         </>
 
     )

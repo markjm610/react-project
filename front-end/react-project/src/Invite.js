@@ -88,8 +88,8 @@ const Invite = () => {
                                 <TextInput id="text-input-id" name="name" />
                             </FormField>
                             <Box direction="row" gap="medium">
-                                <Button type="submit" color='lightblue' primary label="Submit" />
-                                {inviteStatus === 'user not found' && <div style={{ display: 'flex', justifyContent: 'center', marginRight: '10px' }}>User not found!</div>}
+                                <Button type="submit" color='lightsteelblue' primary label="Submit" />
+                                {inviteStatus === 'user not found' && <div style={{ display: 'flex', justifyContent: 'center', marginRight: '10px' }}>User not found</div>}
                             </Box>
                         </Form>}
                     {inviteStatus === 'sent' &&
@@ -103,7 +103,7 @@ const Invite = () => {
                     }
                     {inviteStatus === 'already in project' &&
 
-                        <div>{value.name} is already a member of this project!</div>
+                        <div>{value.name} is already a member of this project.</div>
                     }
                 </Layer>
             )}

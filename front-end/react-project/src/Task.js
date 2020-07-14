@@ -245,7 +245,7 @@ const Task = ({ taskRef, topTask, taskArrLength, columnId, currentlyDragging, se
         return (
 
             <Draggable draggableId={`task-${taskid}`} index={taskdropzoneid}>
-                {(provided) => {
+                {(provided, snapshot) => {
 
                     return (
                         <div
@@ -253,27 +253,13 @@ const Task = ({ taskRef, topTask, taskArrLength, columnId, currentlyDragging, se
                             {...provided.dragHandleProps}
                             ref={provided.innerRef}>
                             <div className='task'
-
                                 taskid={taskid}
-                                ref={taskRef}
-
-                                style={{
-                                    // opacity: (isDragging || (!isDragging && (dragTaskId === taskid))) ? 0.4 : 1,
-                                }}>
+                                ref={taskRef}>
                                 <div className='task-drop-zone'
-                                    // ref={drop}
                                     ref={topTask}
                                     taskdropzoneid={taskdropzoneid}>
-                                    {/* <div
-                                        className='task__heading'
-                                    // style={{ backgroundColor: (isDragging || (!isDragging && (dragTaskId === taskid))) && 'yellow', color: (isDragging || (!isDragging && (dragTaskId === taskid))) && 'yellow' }}
-                                    > */}
-                                    {/* <div className='task__heading-text'>{heading}</div> */}
-                                    {/* <DeleteTask taskid={taskid} columnId={columnId}></DeleteTask> */}
-
-
                                     <div
-                                        className='task__description'
+                                        className={snapshot.isDragging ? 'task__description-dragging' : 'task__description'}
                                     // style={{ backgroundColor: (isDragging || (!isDragging && (dragTaskId === taskid))) && 'yellow', color: (isDragging || (!isDragging && (dragTaskId === taskid))) && 'yellow' }}
                                     >{description}</div>
                                 </div>
@@ -289,7 +275,7 @@ const Task = ({ taskRef, topTask, taskArrLength, columnId, currentlyDragging, se
         return (
 
             <Draggable draggableId={`task-${taskid}`} index={taskdropzoneid}>
-                {(provided) => {
+                {(provided, snapshot) => {
 
                     return (
                         <div
@@ -306,23 +292,10 @@ const Task = ({ taskRef, topTask, taskArrLength, columnId, currentlyDragging, se
                                     // opacity: (isDragging || (!isDragging && (dragTaskId === taskid))) ? 0.4 : 1,
                                 }}>
                                 <div className='task-drop-zone'
-
                                     taskdropzoneid={taskdropzoneid}>
-                                    {/* <div
-                                        className='task__heading'
-                                    // style={{ backgroundColor: (isDragging || (!isDragging && (dragTaskId === taskid))) && 'yellow', color: (isDragging || (!isDragging && (dragTaskId === taskid))) && 'yellow' }}
-                                    > */}
-                                    {/* <div className='task__heading-text'>{heading}</div> */}
-
-
-
-                                    <div className='task__description' >
-                                        {/* <div className='task-description-text'> */}
+                                    <div className={snapshot.isDragging ? 'task__description-dragging' : 'task__description'} >
                                         {description}
-                                        {/* </div> */}
-                                        {/* <div className='task-description-delete-icon'>
-                                            <DeleteTask taskid={taskid} columnId={columnId} />
-                                        </div> */}
+
                                     </div>
                                 </div>
                             </div>

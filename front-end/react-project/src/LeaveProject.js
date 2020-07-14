@@ -53,7 +53,10 @@ const LeaveProject = () => {
                             }}
                         >
                             <div>Are you sure you want to leave this project?</div>
-                            <Button onClick={leaveProjectClick}>Yes</Button>
+                            <Box direction="row" gap="medium">
+                                <Button onClick={leaveProjectClick} color='lightsteelblue' label='Yes' />
+                            </Box>
+
                         </Layer>)}
                 </>
             }

@@ -39,18 +39,9 @@ const Home = () => {
         bottomOfMain,
         sensorState,
         setSensorState,
-        currentSortingTask,
-        setCurrentSortingTask,
-        alphabetizing,
-        setAlphabetizing,
-        currentSortedTaskArray,
-        setCurrentSortedTaskArray,
         showProjectList,
         setShowProjectList,
-        clearing,
-        currentProjectId,
         setSelectedProject,
-        selectedProject,
         setColumnFull,
         columnFull
     } = useContext(Context);
@@ -97,7 +88,6 @@ const Home = () => {
 
     const onDragEnd = async (result) => {
         const { destination, source, draggableId, type } = result
-        console.log(result)
 
 
         if (!destination) {
@@ -158,7 +148,7 @@ const Home = () => {
                     }
                 })
 
-                if (newColumn.length === 12) {
+                if (newColumn.length === 11) {
                     setColumnFull(true)
                     return
                 }
@@ -424,15 +414,15 @@ const Home = () => {
         <DragDropContext onDragEnd={onDragEnd} sensors={[sensorStateSetter]}>
             <div id='home'>
                 <div className='sidebar-left'>
-                    <UserDisplay></UserDisplay>
-                    <AddProject></AddProject>
+                    <UserDisplay />
+                    <AddProject />
                     <div className='project-stuff'>
-                        <ProjectNavBar></ProjectNavBar>
+                        <ProjectNavBar />
                         {listProjectArr.length !== 0 && <div style={{ display: 'flex', justifyContent: 'flex-end', marginRight: '5px' }}>
                             <More className='more-projects' onClick={() => setShowProjectList(!showProjectList)} />
                         </div>}
                     </div>
-                    <LogOut></LogOut>
+                    <LogOut />
                 </div>
                 <Droppable droppableId={`working-area`} direction='horizontal' type='column'>
                     {provided => {
@@ -442,7 +432,8 @@ const Home = () => {
                                 ref={provided.innerRef}
                                 {...provided.droppableProps}
                             >
-                                <WorkingAreaRoutes></WorkingAreaRoutes>
+                                <WorkingAreaRoutes />
+
                                 {provided.placeholder}
                             </div>
                         )
@@ -450,6 +441,7 @@ const Home = () => {
                 </Droppable>
 
                 <div className='sidebar-right'>
+                    <AddColumn />
                     <Invite />
                     <ProjectMembers />
                     <LeaveProject />

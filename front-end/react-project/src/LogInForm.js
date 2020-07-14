@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import Context from './Context';
 import { apiBaseUrl } from './config';
 import { Draggable, Droppable, DragDropContext } from 'react-beautiful-dnd'
-
+import { FormNextLink, FormPreviousLink } from 'grommet-icons'
 
 const LogInForm = ({ index }) => {
     const [value, setValue] = useState({ email: '', password: '' });
@@ -92,14 +92,30 @@ const LogInForm = ({ index }) => {
 
                                 <Box justify='between' direction="row" gap="medium">
 
-                                    <Button color='lightblue' type="submit" primary label="Submit" />
+                                    <Button color='lightsteelblue' type="submit" primary label="Submit" />
                                     {/* 
-                                    <Button color='lightblue' label="Demo" />
-                                    <NavLink to='/signup'><Button color='lightblue' label="Sign up" /></NavLink> */}
+                                    <Button color='lightsteelblue' label="Demo" />
+                                    <NavLink to='/signup'><Button color='lightsteelblue' label="Sign up" /></NavLink> */}
 
                                 </Box>
                             </Form>
-                        </div> : <h2 className='form-name'>Log In</h2>}
+                        </div> :
+                            <>
+                                {updateFormPosition[0] === 'logIn' && <div className='form-name'>
+                                    <div>
+                                        <h2 className='no-form-name'>Log In</h2>
+                                        <FormNextLink size='large' />
+                                    </div>
+                                </div>}
+                                {updateFormPosition[2] === 'logIn' && <div className='form-name'>
+                                    <div>
+                                        <h2 className='no-form-name'>Log In</h2>
+                                        <FormPreviousLink size='large' />
+                                    </div>
+                                </div>}
+                            </>
+
+                        }
 
                     </div>)
             }}

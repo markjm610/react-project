@@ -72,7 +72,6 @@ const LandingPage = () => {
         // shows form and others don't
 
 
-        console.log(result)
         if (!destination) {
 
             setNoForms(true)
@@ -88,16 +87,10 @@ const LandingPage = () => {
 
         const moved = copy.splice(currentSourceIndex, 1);
         copy.splice(destination.index, 0, moved[0])
-        console.log(copy)
+
         setUpdateFormPosition(copy)
 
 
-        // let otherCopy = [...formPositions];
-
-        // const otherMoved = otherCopy.splice(currentSourceIndex, 1);
-        // otherCopy.splice(destination.index, 0, otherMoved[0])
-
-        // setFormPositions(otherCopy)
 
         setCurrentSourceIndex(destination.index)
     }
