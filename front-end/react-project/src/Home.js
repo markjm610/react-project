@@ -34,7 +34,6 @@ const Home = ({ history }) => {
         setListProjectArr,
         invites,
         setInvites,
-        setDragRef,
         topOfList,
         bottomOfMain,
         sensorState,
@@ -46,7 +45,8 @@ const Home = ({ history }) => {
         columnFull,
         selectedProject,
         setProjectMembers,
-        setCurrentProjectId
+        setCurrentProjectId,
+        currentProjectId
     } = useContext(Context);
 
 
@@ -88,31 +88,32 @@ const Home = ({ history }) => {
 
     useEffect(() => {
         async function displayFirstProject() {
+            if (!currentProjectId) {
 
-            if (mainProjectArr.length) {
+                if (mainProjectArr.length) {
 
-                const usersRes = await fetch(`${apiBaseUrl}/projects/${mainProjectArr[0].id}/users`);
-                const parsedUsersRes = await usersRes.json();
+                    const usersRes = await fetch(`${apiBaseUrl}/projects/${mainProjectArr[0].id}/users`);
+                    const parsedUsersRes = await usersRes.json();
 
-                const res = await fetch(`${apiBaseUrl}/projects/${mainProjectArr[0].id}`);
-                const parsedRes = await res.json();
-                const columns = parsedRes.projectInfo.Columns;
+                    const res = await fetch(`${apiBaseUrl}/projects/${mainProjectArr[0].id}`);
+                    const parsedRes = await res.json();
+                    const columns = parsedRes.projectInfo.Columns;
 
-                let selectedProjectCopy = { ...selectedProject }
-                for (let projectId in selectedProjectCopy) {
-
-                    if (projectId === `${mainProjectArr[0].id}`) {
-                        selectedProjectCopy[projectId] = true
-                    } else {
-                        selectedProjectCopy[projectId] = false
+                    let selectedProjectCopy = { ...selectedProject }
+                    for (let projectId in selectedProjectCopy) {
+                        if (projectId === `${mainProjectArr[0].id}`) {
+                            selectedProjectCopy[projectId] = true
+                        } else {
+                            selectedProjectCopy[projectId] = false
+                        }
                     }
-                }
 
-                setSelectedProject(selectedProjectCopy)
-                setProjectMembers(parsedUsersRes.projects.Users || []);
-                setDisplayedColumns(columns);
-                setCurrentProjectId(mainProjectArr[0].id);
-                history.push(`/home/project/${mainProjectArr[0].id}`)
+                    setSelectedProject(selectedProjectCopy)
+                    setProjectMembers(parsedUsersRes.projects.Users || []);
+                    setDisplayedColumns(columns);
+                    setCurrentProjectId(mainProjectArr[0].id);
+                    history.push(`/home/project/${mainProjectArr[0].id}`)
+                }
             }
         }
         displayFirstProject()
@@ -487,7 +488,9 @@ const Home = ({ history }) => {
                         setColumnFull(false)
                     }}
                 >
-                    Column has maximum number of tasks.
+                    <div className='popup-container'>
+                        Column has maximum number of tasks.
+                    </div>
                 </Layer>}
             </div>
         </DragDropContext>

@@ -64,19 +64,21 @@ const AddProject = () => {
                         setValue({ name: '' })
                     }}
                 >
-                    <Form
-                        value={value}
-                        onChange={nextValue => setValue(nextValue)}
-                        onReset={() => setValue({})}
-                        onSubmit={addProjectSubmit}
-                    >
-                        <FormField name="name" htmlfor="text-input-id" label="Add Project:">
-                            <TextInput id="text-input-id" name="name" />
-                        </FormField>
-                        <Box direction="row" gap="medium">
-                            <Button type="submit" color='lightsteelblue' primary label="Submit" />
-                        </Box>
-                    </Form>
+                    <div className='popup-container'>
+                        <Form
+                            value={value}
+                            onChange={nextValue => setValue(nextValue)}
+                            onReset={() => setValue({})}
+                            onSubmit={addProjectSubmit}
+                        >
+                            <FormField name="name" htmlfor="text-input-id" label="Add Project:">
+                                <TextInput id="text-input-id" name="name" />
+                            </FormField>
+                            <Box direction="row" gap="medium">
+                                <Button type="submit" color='lightsteelblue' primary label="Submit" />
+                            </Box>
+                        </Form>
+                    </div>
                 </Layer>
             )
         }</>)

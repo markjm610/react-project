@@ -51,7 +51,7 @@ const DeleteColumn = ({ columnId }) => {
                         setColumnEmpty(true)
                     }}
                 >
-                    <div>Column has to be empty before deleting.</div>
+                    <div className='popup-container'>Column has to be empty before deleting.</div>
                 </Layer>}
         </>
     );

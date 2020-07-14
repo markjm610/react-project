@@ -350,6 +350,8 @@ html, body {
     position: absolute;
     top: 92vh;
     right: 175px;
+    display: flex;
+    flex-direction: column;
 }
 
 .add-column-icon {

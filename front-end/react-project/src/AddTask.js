@@ -76,23 +76,25 @@ const AddTask = ({ columnId, taskArrLength }) => {
                         setDescriptionLength(0)
                     }}
                 >
-                    <Form
-                        value={value}
-                        onChange={nextValue => {
-                            setDescriptionLength(nextValue.description.length)
-                            setValue(nextValue)
-                        }}
-                        onReset={() => setValue({})}
-                        onSubmit={addTaskSubmit}
-                    >
-                        <FormField name="description" htmlfor="text-input-id" label="Task Description:">
-                            <TextArea id="text-input-id" name="description" />
-                        </FormField>
-                        <Box direction="row" gap="medium">
-                            <Button type="submit" color='lightsteelblue' primary label="Submit" />
-                            <div style={{ color: descriptionLength > 100 && 'red' }}>{descriptionLength} / 100</div>
-                        </Box>
-                    </Form>
+                    <div className='popup-container'>
+                        <Form
+                            value={value}
+                            onChange={nextValue => {
+                                setDescriptionLength(nextValue.description.length)
+                                setValue(nextValue)
+                            }}
+                            onReset={() => setValue({})}
+                            onSubmit={addTaskSubmit}
+                        >
+                            <FormField name="description" htmlfor="text-input-id" label="Task Description:">
+                                <TextArea id="text-input-id" name="description" />
+                            </FormField>
+                            <Box direction="row" gap="medium">
+                                <Button type="submit" color='lightsteelblue' primary label="Submit" />
+                                <div style={{ color: descriptionLength > 100 && 'red' }}>{descriptionLength} / 100</div>
+                            </Box>
+                        </Form>
+                    </div>
                 </Layer>
             )
         }

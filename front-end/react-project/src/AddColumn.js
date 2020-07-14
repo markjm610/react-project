@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Add, AddCircle } from 'grommet-icons';
+import { Add, AddCircle, ChapterAdd, Checkbox } from 'grommet-icons';
 import { Layer, Form, Box, FormField, TextInput, Button } from 'grommet';
 import Context from './Context';
 import { apiBaseUrl } from './config';
@@ -45,7 +45,12 @@ const AddColumn = () => {
     }
 
     return (<>
-        {currentProjectId && <div className='add-column'><AddCircle color='black' onClick={addColumnClick} className='add-column-icon' /></div>}
+        {currentProjectId &&
+            <div className='add-column'>
+                <Add color='black' onClick={addColumnClick} className='add-column-icon' />
+
+            </div>
+        }
         {
             show && (
                 <Layer
@@ -55,20 +60,22 @@ const AddColumn = () => {
                         setValue({ name: '' })
                     }}
                 >
-                    <Form
-                        value={value}
-                        onChange={nextValue => setValue(nextValue)}
-                        onReset={() => setValue({})}
-                        onSubmit={addColumnSubmit}
-                    >
+                    <div className='popup-container'>
+                        <Form
+                            value={value}
+                            onChange={nextValue => setValue(nextValue)}
+                            onReset={() => setValue({})}
+                            onSubmit={addColumnSubmit}
+                        >
 
-                        <FormField name="name" htmlfor="text-input-id" label="Add Column:">
-                            <TextInput id="text-input-id" name="name" />
-                        </FormField>
-                        <Box direction="row" gap="medium">
-                            <Button type="submit" color='lightsteelblue' primary label="Submit" />
-                        </Box>
-                    </Form>
+                            <FormField name="name" htmlfor="text-input-id" label="Add Column:">
+                                <TextInput id="text-input-id" name="name" />
+                            </FormField>
+                            <Box direction="row" gap="medium">
+                                <Button type="submit" color='lightsteelblue' primary label="Submit" />
+                            </Box>
+                        </Form>
+                    </div>
                 </Layer>
             )
         }
