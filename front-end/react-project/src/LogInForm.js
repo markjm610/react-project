@@ -109,13 +109,13 @@ const LogInForm = ({ index }) => {
                                 {updateFormPosition[0] === 'logIn' && !noForms && <div className='form-name'>
                                     <div>
                                         <h2 className='no-form-name'>Log In</h2>
-                                        <FormNextLink size='large' />
+                                        <FormNextLink size='large' color='lightsteelblue' />
                                     </div>
                                 </div>}
                                 {updateFormPosition[2] === 'logIn' && !noForms && <div className='form-name'>
                                     <div>
                                         <h2 className='no-form-name'>Log In</h2>
-                                        <FormPreviousLink size='large' />
+                                        <FormPreviousLink size='large' color='lightsteelblue' />
                                     </div>
                                 </div>}
                             </>
