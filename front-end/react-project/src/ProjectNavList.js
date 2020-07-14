@@ -47,7 +47,7 @@ const ProjectNavList = ({ id, name, position, dropZone }) => {
                 draggableId={`list-${id}`}
                 index={dropZone}
             >
-                {(provided) => {
+                {(provided, { isDragging }) => {
                     return (
                         <div {...provided.draggableProps}
                             {...provided.dragHandleProps}
@@ -64,10 +64,7 @@ const ProjectNavList = ({ id, name, position, dropZone }) => {
 
                                 <div
                                     className={selectedProject[id] ? 'list-selected-project-navlink' : 'list-project-navlink'}
-                                    style={
-                                        {
-                                            textDecoration: 'none'
-                                        }}>
+                                >
                                     {name}
                                 </div>
 

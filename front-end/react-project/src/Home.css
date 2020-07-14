@@ -24,7 +24,7 @@ html, body {
 
 .sidebar-left {
     grid-column-start: 1;
-    background-color: lightblue; 
+    background-color: lightsteelblue; 
     display: grid;
     grid-template-rows: 50px 1fr 1fr;
     height: 100vh;
@@ -65,9 +65,9 @@ html, body {
     margin-left: 5px;
     color: black;
     text-decoration: none;
-    border-top: solid 1px lightblue;
-    border-left: solid 1px lightblue;
-    border-bottom: solid 1px lightblue;
+    border-top: solid 1px lightsteelblue;
+    border-left: solid 1px lightsteelblue;
+    border-bottom: solid 1px lightsteelblue;
     user-select: none;
     display: flex;
     justify-content: flex-end;
@@ -82,9 +82,9 @@ html, body {
     margin-left: 5px;
     color: black;
     text-decoration: none;
-    border-top: solid 1px lightblue;
-    border-left: solid 1px lightblue;
-    border-bottom: solid 1px lightblue;
+    border-top: solid 1px lightsteelblue;
+    border-left: solid 1px lightsteelblue;
+    border-bottom: solid 1px lightsteelblue;
     user-select: none;
     display: flex;
     justify-content: flex-end;
@@ -103,9 +103,9 @@ html, body {
     margin-left: 5px;
     color: black;
     text-decoration: none;
-    border-top: solid 1px lightblue;
-    border-left: solid 1px lightblue;
-    border-bottom: solid 1px lightblue;
+    border-top: solid 1px lightsteelblue;
+    border-left: solid 1px lightsteelblue;
+    border-bottom: solid 1px lightsteelblue;
     user-select: none;
     display: flex;
     justify-content: flex-end;
@@ -118,9 +118,9 @@ html, body {
     margin-left: 5px;
     color: black;
     text-decoration: none;
-    border-top: solid 1px lightblue;
-    border-left: solid 1px lightblue;
-    border-bottom: solid 1px lightblue;
+    border-top: solid 1px lightsteelblue;
+    border-left: solid 1px lightsteelblue;
+    border-bottom: solid 1px lightsteelblue;
     user-select: none;
     display: flex;
     justify-content: flex-end;
@@ -130,8 +130,6 @@ html, body {
 .list-project-navlink:hover {
     border: solid 1px black;
 }
-
-
 
 
 .log-out {
@@ -145,7 +143,7 @@ html, body {
 .working-area {
     display: flex;
     grid-column-start: 2;
-    background-color: lightgray;
+    background-color: #dddddd;
     overflow-y: auto;
     width: 100%;
     height: 100%;
@@ -153,7 +151,7 @@ html, body {
 
 .sidebar-right {
     grid-column-start: 3;
-    background-color: lightblue;
+    background-color: lightsteelblue;
     display: grid;
     grid-template-rows: 1fr 1fr 1fr;
 }
@@ -218,6 +216,7 @@ html, body {
     grid-row: 1/ 2;
     background-color: lightsteelblue;
     justify-content: space-between;
+    /* box-shadow: 1px 1px 1px gray; */
 }
 
 .add-task {
@@ -283,7 +282,7 @@ html, body {
 
 /* .task__heading {
     grid-row: 1 / 2;
-    background-color: lightblue;
+    background-color: lightsteelblue;
     display: grid;
     grid-template-columns: 10% 1fr 10%;
 } */
@@ -316,6 +315,25 @@ html, body {
     justify-content: space-between;
     overflow-wrap: break-word;
     border-radius: 10px;
+    box-shadow: 1px 1px 5px lightgray;
+}
+
+.task__description:hover {
+    /* box-shadow: 1px 1px 3px gray; */
+    /* border: 1px solid black; */
+    /* background-color: lightyellow */
+}
+
+
+.task__description-dragging {
+    grid-row: 1 / 2;
+    background-color: whitesmoke;
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+    overflow-wrap: break-word;
+    border-radius: 10px;
+    box-shadow: 1px 1px 5px gray
 }
 
 
@@ -334,7 +352,10 @@ html, body {
 }
 
 .add-column {
-    padding: 25px;
+    /* padding: 25px; */
+    position: absolute;
+    top: 92vh;
+    right: 175px;
 }
 
 .add-column-icon {
@@ -396,7 +417,7 @@ html, body {
 }
 
 .project-nav-list {
-    background-color: lightblue;
+    background-color: lightsteelblue;
 }
 
 .leave-project {

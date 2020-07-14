@@ -62,7 +62,7 @@ const UserDisplay = () => {
                             <div className='invite-message'>
                                 {invite.inviteSender} invited you to a project: {invite.Project.name}
                             </div>
-                            <Button onClick={() => acceptInvite(invite)} color='lightblue' primary label="Join project" />
+                            <Button onClick={() => acceptInvite(invite)} color='lightsteelblue' primary label="Join project" />
                         </React.Fragment>)
                 })}
                 </Layer>

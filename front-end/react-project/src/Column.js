@@ -43,7 +43,6 @@ const Column = ({ columnDropZoneId, tasksArray, name, columnId, currentlyDraggin
         8: useRef(null),
         9: useRef(null),
         10: useRef(null),
-        11: useRef(null)
     }
 
 
@@ -63,6 +62,10 @@ const Column = ({ columnDropZoneId, tasksArray, name, columnId, currentlyDraggin
         // Match each task with its final array position based on sortedTaskHeadings
         // Find ref of task currently at that position: taskRefs[finalposition]
         // Move task to that position
+
+        if (tasksArray.length === 0) {
+            return;
+        }
         setCurrentSortedTaskArray(sortedTasks)
         setAlphabetizing(true)
 
@@ -190,23 +193,6 @@ const Column = ({ columnDropZoneId, tasksArray, name, columnId, currentlyDraggin
 
 
 
-    const [{ isDragging }, drag] = useDrag({
-        item: { type: ItemTypes.COLUMN, columnId },
-        begin: () => {
-            console.log('drag column begin')
-            setCurrentlyDraggingColumn(columnDropZoneId)
-        },
-        end: (item) => {
-            // console.log(item)
-            // setDragTaskId('')
-            handleDrop(item);
-        },
-        collect: monitor => ({
-            isDragging: monitor.isDragging()
-        })
-    })
-
-
 
     const changePositions = () => {
 
@@ -242,31 +228,6 @@ const Column = ({ columnDropZoneId, tasksArray, name, columnId, currentlyDraggin
 
     }
 
-
-    const [{ isOver }, drop] = useDrop({
-        accept: ItemTypes.COLUMN,
-        drop: () => {
-            // handleDrop();
-        },
-        hover: (item) => {
-            // console.log('hover')
-
-            // if (taskid !== null && dragTaskId !== taskid) {
-            //     setDragTaskId(taskid)
-            // }
-
-            if (currentlyDraggingColumn === columnDropZoneId) {
-                return
-            }
-
-            // item.columnId = columnId;
-            changePositions()
-
-        },
-        collect: monitor => ({
-            isOver: !!monitor.isOver(),
-        }),
-    })
 
 
     const handleDrop = async (item) => {
