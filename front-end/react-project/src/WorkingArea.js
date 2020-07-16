@@ -7,14 +7,25 @@ import { apiBaseUrl } from './config';
 
 const WorkingArea = () => {
 
-    const { displayedColumns } = useContext(Context);
-    const [currentlyDragging, setCurrentlyDragging] = useState(null)
+    const { displayedColumns, updateColumns, draggingTaskId } = useContext(Context);
+    // const [updatedColumns, setUpdatedColumns] = useState([])
+    // useEffect(() => {
+    //     // updateColumns changes
+    //     // console.log(updateColumns)
+
+    //     // // updateColumns[0].Tasks does not
+    //     // console.log(updateColumns[0].Tasks)
+    // }, [updateColumns])
+
 
 
     return (
         <>
             {
+
                 displayedColumns.map(({ id, name, pagePosition, Tasks }, i) => {
+                    // console.log(updateColumns)
+
                     return (<Column
                         key={id}
                         columnDropZoneId={i}
@@ -22,11 +33,34 @@ const WorkingArea = () => {
                         name={name}
                         pagePosition={pagePosition}
                         tasksArray={Tasks}
-                        currentlyDragging={currentlyDragging}
-                        setCurrentlyDragging={setCurrentlyDragging}
+                        updateTasksArray={updateColumns.length ? [...updateColumns[i].Tasks] : []}
                     />)
                 })
             }
+            {/* {updateColumns.map(column => {
+                return (
+                    <div className='highlight-container'
+                    // style={
+                    //     {
+                    //         top: `-${column.Tasks.length * 60 + 5}px`
+                    //     }}
+                    >
+                        {column.Tasks.map((task, i) => {
+                            // console.log(updateTasksArray)
+                            // console.log(i)
+                            // console.log('task.id', task.id)
+                            // console.log('draggingTaskId', draggingTaskId)
+                            return (
+                                <div key={`highlight-${task.id}`} className='highlight' style={{
+                                    backgroundColor:
+                                        task.id === draggingTaskId && 'lightgoldenrodyellow'
+                                }} />
+                            )
+                        })}
+                    </div>
+                )
+            })} */}
+
         </>
 
     )

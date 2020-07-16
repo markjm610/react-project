@@ -11,7 +11,7 @@ import * as tweenFunctions from "tween-functions";
 import { moveStepByStep } from './utils'
 import { Trash } from 'grommet-icons';
 
-const Column = ({ columnDropZoneId, tasksArray, name, columnId, currentlyDragging, setCurrentlyDragging }) => {
+const Column = ({ updateTasksArray, columnDropZoneId, tasksArray, name, columnId, currentlyDragging, setCurrentlyDragging }) => {
 
     const {
         currentlyDraggingColumn,
@@ -22,8 +22,8 @@ const Column = ({ columnDropZoneId, tasksArray, name, columnId, currentlyDraggin
         alphabetizing,
         setAlphabetizing,
         setCurrentSortedTaskArray,
-        clearing,
-        setClearing
+        draggingTaskId,
+        updateColumns
     } = useContext(Context)
 
     const topTask = useRef(null)
@@ -297,6 +297,7 @@ const Column = ({ columnDropZoneId, tasksArray, name, columnId, currentlyDraggin
 
                                         </>}
                                 </div>
+
                                 <Droppable droppableId={`${columnId}`} type='task'>
                                     {(provided, snapshot) => {
                                         return (
@@ -325,6 +326,17 @@ const Column = ({ columnDropZoneId, tasksArray, name, columnId, currentlyDraggin
                                             </div>)
                                     }}
                                 </Droppable>
+                                <div className='highlight-container' style={{ top: `-${updateColumns[columnDropZoneId].Tasks.length * 60 + 5}px` }}>
+                                    {updateColumns[columnDropZoneId].Tasks.map((task, i) => {
+                                        console.log(updateColumns[columnDropZoneId].Tasks)
+                                        // console.log(i)
+                                        console.log('task', task)
+                                        console.log('draggingTaskId', draggingTaskId)
+                                        return (
+                                            <div key={`highlight-${task}`} className='highlight' style={{ backgroundColor: task === draggingTaskId && 'lightgoldenrodyellow' }} />
+                                        )
+                                    })}
+                                </div>
                             </div>
                         </div>
                     </div>

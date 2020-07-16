@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^7.2.1",
     "grommet": "^2.13.0",
     "grommet-icons": "^4.4.0",
+    "lodash": "^4.17.19",
     "polished": "^3.6.3",
     "react": "^16.13.1",
     "react-beautiful-dnd": "^13.0.0",

@@ -19,7 +19,7 @@ import * as tweenFunctions from "tween-functions";
 import { moveStepByStep } from './utils'
 import { Layer } from 'grommet';
 import ProjectNavMain from './ProjectNavMain'
-
+import _ from 'lodash';
 
 
 
@@ -46,7 +46,10 @@ const Home = ({ history }) => {
         selectedProject,
         setProjectMembers,
         setCurrentProjectId,
-        currentProjectId
+        currentProjectId,
+        updateColumns,
+        setUpdateColumns,
+        setDraggingTaskId
     } = useContext(Context);
 
 
@@ -108,9 +111,21 @@ const Home = ({ history }) => {
                         }
                     }
 
+                    let columnsCopy = []
+
+                    columns.forEach((column, i) => {
+                        columnsCopy.push({ Tasks: [] })
+                        column.Tasks.forEach(task => {
+                            columnsCopy[i].Tasks.push(task.id)
+                        })
+                    })
+
+                    console.log(columnsCopy)
+
                     setSelectedProject(selectedProjectCopy)
                     setProjectMembers(parsedUsersRes.projects.Users || []);
                     setDisplayedColumns(columns);
+                    setUpdateColumns(columnsCopy)
                     setCurrentProjectId(mainProjectArr[0].id);
                     history.push(`/home/project/${mainProjectArr[0].id}`)
                 }
@@ -439,15 +454,59 @@ const Home = ({ history }) => {
 
 
 
-
     function sensorStateSetter(api) {
         setSensorState(api)
     }
 
+    const onDragUpdate = (result) => {
+        const { destination, source, draggableId, type } = result
+
+        if (!destination) {
+            return
+        }
+        if (type === 'task') {
+
+            if (destination.droppableId === source.droppableId) {
+                let copy = [...updateColumns];
+
+                let startingColumn = copy[0].Tasks.slice()
+                // copy.forEach(column => {
+                //     if (`${column.id}` === destination.droppableId) {
+                //         startingColumn = column.Tasks.slice();
+                //     }
+                // })
+
+                const moved = startingColumn.splice(source.index, 1);
+                startingColumn.splice(destination.index, 0, moved[0])
+                // copy.forEach(column => {
+                //     if (`${column.id}` === destination.droppableId) {
+
+                //         column.Tasks = startingColumn
+                //     }
+                // })
+                copy[0].Tasks = startingColumn
+                setUpdateColumns(copy);
+                // console.log(updateColumns)
+                setDraggingTaskId(moved[0])
+
+            }
+        }
+    }
+
+    const onDragStart = (initial) => {
+        const { source, draggableId, type } = initial
+        if (type === 'task') {
+            console.log(draggableId)
+            console.log(parseInt(draggableId.slice(5)))
+            setDraggingTaskId(parseInt(draggableId.slice(5)))
+        }
+
+
+    }
 
 
     return (
-        <DragDropContext onDragEnd={onDragEnd} sensors={[sensorStateSetter]}>
+        <DragDropContext onDragStart={onDragStart} onDragEnd={onDragEnd} onDragUpdate={onDragUpdate} sensors={[sensorStateSetter]}>
             <div id='home'>
                 <div className='sidebar-left'>
                     <UserDisplay />

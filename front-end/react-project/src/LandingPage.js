@@ -56,9 +56,6 @@ const LandingPage = () => {
 
         const { destination, source, draggableId } = result
 
-        // Even if there's no destination, need to update positions so what's currently over the middle
-        // shows form and others don't
-
 
         if (!destination) {
 
