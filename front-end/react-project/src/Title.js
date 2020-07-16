@@ -69,9 +69,9 @@ const Title = () => {
 
                     const preDrag = titleSensor.tryGetLock(`${letterToMove}`);
 
-                    // if (!preDrag) {
-                    //     return;
-                    // }
+                    if (!preDrag) {
+                        return;
+                    }
 
 
                     const endX = -(letterRefs[letterIndexToMove].current.getBoundingClientRect().x - letterRefs[i].current.getBoundingClientRect().x)
@@ -98,7 +98,10 @@ const Title = () => {
                         });
                     }
 
+
                     moveStepByStep(drag, points)
+
+
 
                     // break after each move so it only does one at a time
                     break

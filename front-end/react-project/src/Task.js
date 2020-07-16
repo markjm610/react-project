@@ -235,8 +235,6 @@ const Task = ({ taskRef, topTask, taskArrLength, columnId, currentlyDragging, se
             });
         }
 
-
-
         moveStepByStep(drag, points)
     }
 
@@ -260,7 +258,6 @@ const Task = ({ taskRef, topTask, taskArrLength, columnId, currentlyDragging, se
                                     taskdropzoneid={taskdropzoneid}>
                                     <div
                                         className={snapshot.isDragging ? 'task__description-dragging' : 'task__description'}
-                                    // style={{ backgroundColor: (isDragging || (!isDragging && (dragTaskId === taskid))) && 'yellow', color: (isDragging || (!isDragging && (dragTaskId === taskid))) && 'yellow' }}
                                     >{description}</div>
                                 </div>
                             </div>
@@ -273,7 +270,6 @@ const Task = ({ taskRef, topTask, taskArrLength, columnId, currentlyDragging, se
         )
     } else {
         return (
-
             <Draggable draggableId={`task-${taskid}`} index={taskdropzoneid}>
                 {(provided, snapshot) => {
 
@@ -283,14 +279,10 @@ const Task = ({ taskRef, topTask, taskArrLength, columnId, currentlyDragging, se
                             {...provided.dragHandleProps}
                             ref={provided.innerRef}>
                             <div className='task'
-                                // ref={currentTaskRef}
                                 ref={taskRef}
-                                // ref={taskRefArr[taskdropzoneid]}
                                 taskid={taskid}
                                 onClick={toTopClick}
-                                style={{
-                                    // opacity: (isDragging || (!isDragging && (dragTaskId === taskid))) ? 0.4 : 1,
-                                }}>
+                            >
                                 <div className='task-drop-zone'
                                     taskdropzoneid={taskdropzoneid}>
                                     <div className={snapshot.isDragging ? 'task__description-dragging' : 'task__description'} >
@@ -304,9 +296,8 @@ const Task = ({ taskRef, topTask, taskArrLength, columnId, currentlyDragging, se
                 }
 
             </Draggable >
-
         )
-        // }
+
 
     }
 
@@ -314,3 +305,6 @@ const Task = ({ taskRef, topTask, taskArrLength, columnId, currentlyDragging, se
 
 
 export default Task;
+
+
+// style={{ backgroundColor: (isDragging || (!isDragging && (dragTaskId === taskid))) && 'yellow', color: (isDragging || (!isDragging && (dragTaskId === taskid))) && 'yellow' }}

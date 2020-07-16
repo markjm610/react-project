@@ -13,6 +13,11 @@ const Invite = () => {
 
     const submitInvite = async () => {
 
+        if (value.name === '') {
+            return
+        }
+
+
         const findRes = await fetch(`${apiBaseUrl}/users`, {
             method: 'PUT',
             body: JSON.stringify({ name: value.name, projectId: currentProjectId }),
