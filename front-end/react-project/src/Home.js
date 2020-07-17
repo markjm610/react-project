@@ -114,13 +114,11 @@ const Home = ({ history }) => {
                     let columnsCopy = []
 
                     columns.forEach((column, i) => {
-                        columnsCopy.push({ Tasks: [] })
+                        columnsCopy.push({ Tasks: [], id: column.id })
                         column.Tasks.forEach(task => {
                             columnsCopy[i].Tasks.push(task.id)
                         })
                     })
-
-                    console.log(columnsCopy)
 
                     setSelectedProject(selectedProjectCopy)
                     setProjectMembers(parsedUsersRes.projects.Users || []);
@@ -356,8 +354,7 @@ const Home = ({ history }) => {
                     project.UsersProject.position = i + 5
                 })
 
-                // console.log('mainCopy', mainCopy)
-                // console.log('listCopy', listCopy)
+
                 sendArr.push(...mainCopy)
                 sendArr.push(...listCopy)
 
@@ -380,16 +377,13 @@ const Home = ({ history }) => {
                     project.UsersProject.position = i + 5
                 })
 
-                // console.log('mainCopy', mainCopy)
-                // console.log('listCopy', listCopy)
-
                 sendArr.push(...mainCopy)
                 sendArr.push(...listCopy)
                 setMainProjectArr(mainCopy)
                 setListProjectArr(listCopy);
             }
 
-            // console.log(sendArr)
+
 
             try {
                 await fetch(`${apiBaseUrl}/projects`, {
@@ -418,12 +412,6 @@ const Home = ({ history }) => {
             const endX = topOfList.current.getBoundingClientRect().x - bottomOfMain.current.getBoundingClientRect().x
             const endY = topOfList.current.getBoundingClientRect().y - bottomOfMain.current.getBoundingClientRect().y
 
-            // const endX = target.current && target.current.getBoundingClientRect().x
-            // const endY = target.current && target.current.getBoundingClientRect().y
-
-            // console.log(target.current.getBoundingClientRect())
-            // console.log(endX)
-            // console.log(endY)
 
 
             const startSpot = { x: 0, y: 0 }
@@ -459,47 +447,74 @@ const Home = ({ history }) => {
     }
 
     const onDragUpdate = (result) => {
-        const { destination, source, draggableId, type } = result
+        // const { destination, source, draggableId, type } = result
 
-        if (!destination) {
-            return
-        }
-        if (type === 'task') {
+        // if (!destination) {
+        //     return
+        // }
+        // if (type === 'task') {
 
-            if (destination.droppableId === source.droppableId) {
-                let copy = [...updateColumns];
+        //     if (destination.droppableId === source.droppableId) {
+        //         let copy = [...updateColumns];
 
-                let startingColumn = copy[0].Tasks.slice()
-                // copy.forEach(column => {
-                //     if (`${column.id}` === destination.droppableId) {
-                //         startingColumn = column.Tasks.slice();
-                //     }
-                // })
+        //         let startingColumn;
+        //         copy.forEach(column => {
+        //             if (`${column.id}` === destination.droppableId) {
+        //                 startingColumn = column.Tasks.slice();
+        //             }
+        //         })
 
-                const moved = startingColumn.splice(source.index, 1);
-                startingColumn.splice(destination.index, 0, moved[0])
-                // copy.forEach(column => {
-                //     if (`${column.id}` === destination.droppableId) {
+        //         const moved = startingColumn.splice(source.index, 1);
+        //         startingColumn.splice(destination.index, 0, moved[0])
+        //         copy.forEach(column => {
+        //             if (`${column.id}` === destination.droppableId) {
 
-                //         column.Tasks = startingColumn
-                //     }
-                // })
-                copy[0].Tasks = startingColumn
-                setUpdateColumns(copy);
-                // console.log(updateColumns)
-                setDraggingTaskId(moved[0])
+        //                 column.Tasks = startingColumn
+        //             }
+        //         })
 
-            }
-        }
+        //         setUpdateColumns(copy);
+        //         // console.log(updateColumns)
+        //         setDraggingTaskId(moved[0])
+
+        //     } else if (destination.droppableId !== source.droppableId) {
+        // let copy = [...updateColumns]
+
+        // let startingColumn;
+
+        // copy.forEach(column => {
+        //     if (`${column.id}` === source.droppableId) {
+        //         startingColumn = column.Tasks.slice();
+        //     }
+        // })
+
+        // let newColumn;
+
+        // copy.forEach(column => {
+        //     if (`${column.id}` === destination.droppableId) {
+        //         newColumn = column.Tasks.slice();
+        //     }
+        // })
+
+        // const moved = startingColumn.splice(source.index, 1)
+
+
+        // newColumn.splice(destination.index, 0, moved[0])
+
+
+
+        // setUpdateColumns(copy);
+        // setDraggingTaskId(moved[0])
+        // }
+        // }
     }
 
     const onDragStart = (initial) => {
-        const { source, draggableId, type } = initial
-        if (type === 'task') {
-            console.log(draggableId)
-            console.log(parseInt(draggableId.slice(5)))
-            setDraggingTaskId(parseInt(draggableId.slice(5)))
-        }
+        // const { source, draggableId, type } = initial
+        // if (type === 'task') {
+
+        //     setDraggingTaskId(parseInt(draggableId.slice(5)))
+        // }
 
 
     }

@@ -7,24 +7,28 @@ import { apiBaseUrl } from './config';
 const AddTask = ({ columnId, taskArrLength }) => {
     const { currentUserId, displayedColumns, setDisplayedColumns, setColumnFull } = useContext(Context);
     const [show, setShow] = useState();
-    const [value, setValue] = useState({ description: '' });
+    const [value, setValue] = useState('');
     const [descriptionLength, setDescriptionLength] = useState(0)
+    const [clickedButton, setClickedButton] = useState(false)
 
     const addTaskClick = async () => {
 
         if (taskArrLength === 11) {
             setColumnFull(true)
-            setValue({ description: '' })
+            setValue('')
             setDescriptionLength(0)
         } else {
+            if (clickedButton) {
+                setClickedButton(false)
+            }
             setShow(true)
         }
 
     }
 
     const addTaskSubmit = async () => {
-
-        if (value.description.length > 100) {
+        setClickedButton(true)
+        if (value.length > 100 || !value) {
             return
         }
 
@@ -35,7 +39,7 @@ const AddTask = ({ columnId, taskArrLength }) => {
         const res = await fetch(`${apiBaseUrl}/columns/${columnId}/tasks`, {
             method: 'POST',
             body: JSON.stringify(
-                { columnPosition, heading: 'heading', description: value.description, creatorId: currentUserId }
+                { columnPosition, heading: 'heading', description: value, creatorId: currentUserId }
             ),
             headers: {
                 "Content-Type": 'application/json',
@@ -57,10 +61,9 @@ const AddTask = ({ columnId, taskArrLength }) => {
         })
 
         setDisplayedColumns(columnsCopy)
-        setValue({ description: '' })
+        setValue('')
         setDescriptionLength(0)
     }
-
 
     return (<>
         <div className='add-task'>
@@ -72,12 +75,24 @@ const AddTask = ({ columnId, taskArrLength }) => {
                     onEsc={() => setShow(false)}
                     onClickOutside={() => {
                         setShow(false)
-                        setValue({ description: '' })
+                        setValue('')
                         setDescriptionLength(0)
                     }}
                 >
                     <div className='popup-container'>
-                        <Form
+                        <div className='popup-text'>Describe the task:</div>
+                        <textarea className='popup-input' value={value} onChange={e => {
+                            if (clickedButton) {
+                                setClickedButton(false)
+                            }
+                            setDescriptionLength(e.target.value.length)
+                            setValue(e.target.value)
+                        }} />
+                        <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+                            <div className={clickedButton ? 'popup-button-clicked' : 'popup-button'} onClick={addTaskSubmit}>Add</div>
+                            <div style={{ color: descriptionLength > 100 && 'red' }}>{descriptionLength} / 100</div>
+                        </div>
+                        {/* <Form
                             value={value}
                             onChange={nextValue => {
                                 setDescriptionLength(nextValue.description.length)
@@ -93,7 +108,7 @@ const AddTask = ({ columnId, taskArrLength }) => {
                                 <Button type="submit" color='lightsteelblue' primary label="Submit" />
                                 <div style={{ color: descriptionLength > 100 && 'red' }}>{descriptionLength} / 100</div>
                             </Box>
-                        </Form>
+                        </Form> */}
                     </div>
                 </Layer>
             )

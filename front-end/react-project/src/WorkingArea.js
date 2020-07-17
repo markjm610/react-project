@@ -33,7 +33,6 @@ const WorkingArea = () => {
                         name={name}
                         pagePosition={pagePosition}
                         tasksArray={Tasks}
-                        updateTasksArray={updateColumns.length ? [...updateColumns[i].Tasks] : []}
                     />)
                 })
             }

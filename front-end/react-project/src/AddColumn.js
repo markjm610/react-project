@@ -8,25 +8,34 @@ const AddColumn = () => {
 
     const { currentProjectId, displayedColumns, setDisplayedColumns } = useContext(Context)
     const [show, setShow] = useState();
-    const [value, setValue] = useState({ name: '' });
-
+    const [value, setValue] = useState('');
+    const [clickedButton, setClickedButton] = useState(false)
 
     const addColumnClick = () => {
+        if (clickedButton) {
+            setClickedButton(false)
+        }
+
         setShow(true)
     }
 
     const addColumnSubmit = async () => {
+        setClickedButton(true)
+
+        if (!value) {
+            return
+        }
+
         setShow(false);
 
         const columnsCopy = [...displayedColumns];
 
         const pagePositionOfNewColumn = columnsCopy.length;
 
-
         const res = await fetch(`${apiBaseUrl}/projects/${currentProjectId}/columns`, {
             method: 'POST',
             body: JSON.stringify(
-                { name: value.name, pagePosition: pagePositionOfNewColumn }
+                { name: value, pagePosition: pagePositionOfNewColumn }
             ),
             headers: {
                 "Content-Type": 'application/json',
@@ -36,12 +45,11 @@ const AddColumn = () => {
         const parsedRes = await res.json();
         const newColumn = parsedRes.newColumn;
         newColumn.Tasks = []
-        // newColumn.Tasks = [{ id: null, heading: null, description: null, columnPosition: 0, columnId: newColumn.id }]
         columnsCopy.push(newColumn);
 
         setDisplayedColumns(columnsCopy);
 
-        value.name = ''
+        setValue('')
     }
 
     return (<>
@@ -56,25 +64,23 @@ const AddColumn = () => {
                 <Layer
                     onEsc={() => setShow(false)}
                     onClickOutside={() => {
+                        setClickedButton(false)
                         setShow(false)
-                        setValue({ name: '' })
+                        setValue('')
                     }}
                 >
                     <div className='popup-container'>
-                        <Form
-                            value={value}
-                            onChange={nextValue => setValue(nextValue)}
-                            onReset={() => setValue({})}
-                            onSubmit={addColumnSubmit}
-                        >
+                        <div className='popup-text'>Name your column:</div>
 
-                            <FormField name="name" htmlfor="text-input-id" label="Add Column:">
-                                <TextInput id="text-input-id" name="name" />
-                            </FormField>
-                            <Box direction="row" gap="medium">
-                                <Button type="submit" color='lightsteelblue' primary label="Submit" />
-                            </Box>
-                        </Form>
+                        <input className='popup-input' value={value} onChange={e => {
+                            if (clickedButton) {
+                                setClickedButton(false)
+                            }
+                            setValue(e.target.value)
+                        }} />
+                        <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+                            <div className={clickedButton ? 'popup-button-clicked' : 'popup-button'} onClick={addColumnSubmit}>Add</div>
+                        </div>
                     </div>
                 </Layer>
             )

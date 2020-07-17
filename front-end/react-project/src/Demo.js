@@ -9,17 +9,18 @@ import { Draggable, Droppable, DragDropContext } from 'react-beautiful-dnd'
 
 
 const Demo = ({ index }) => {
-    const [value, setValue] = useState({ email: 'demo@user.com', password: 'password' });
+    const [emailValue, setEmailValue] = useState('demo@user.com');
+    const [passwordValue, setPasswordValue] = useState('password')
     const { noForms, setAuthToken, setCurrentUserId, formPositions, updateFormPosition } = useContext(Context);
-
+    const [clickedButton, setClickedButton] = useState(false)
 
 
     const handleSubmit = async () => {
-
+        setClickedButton(true)
         try {
             const res = await fetch(`${apiBaseUrl}/users/token`, {
                 method: 'PUT',
-                body: JSON.stringify(value),
+                body: JSON.stringify({ email: emailValue, password: passwordValue }),
                 headers: {
                     "Content-Type": 'application/json',
                 }
@@ -64,27 +65,25 @@ const Demo = ({ index }) => {
                             ?
                             <div className='log-in-form' style={{ margin: 'auto', width: '400px' }}>
                                 <h2>Demo</h2>
-                                <Form
-                                    value={value}
-                                    // onReset={() => setValue({})}
-                                    onSubmit={handleSubmit}
-                                >
+                                <div className='form-container'>
+                                    <form onSubmit={handleSubmit}>
 
-                                    <FormField name="email" htmlfor="text-input-id" label="Email:">
-                                        <TextInput id="text-input-id" name="email" />
-                                    </FormField>
-                                    <FormField name="password" htmlfor="text-input-id" label="Password:">
-                                        <TextInput type='password' id="text-input-id" name="password" />
-
-                                    </FormField>
-
-
-                                    <Box justify='between' direction="row" gap="medium">
-
-                                        <Button color='lightsteelblue' type="submit" primary label="Submit" />
-
-                                    </Box>
-                                </Form>
+                                        <label className='label'>Email:</label>
+                                        <input
+                                            disabled
+                                            className='landing-page-input'
+                                            value={emailValue}
+                                        />
+                                        <label className='label'>Password:</label>
+                                        <input
+                                            disabled
+                                            type='password'
+                                            className='landing-page-input'
+                                            value={passwordValue}
+                                        />
+                                        <div onClick={handleSubmit} className={clickedButton ? 'form-button-clicked' : 'form-button'}>Submit</div>
+                                    </form>
+                                </div>
                             </div>
                             :
                             <>

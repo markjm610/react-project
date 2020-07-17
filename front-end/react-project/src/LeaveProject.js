@@ -6,7 +6,7 @@ import Context from './Context';
 
 
 const LeaveProject = () => {
-
+    const [clickedButton, setClickedButton] = useState(false)
     const [show, setShow] = useState(false)
     const {
         currentProjectId,
@@ -20,6 +20,7 @@ const LeaveProject = () => {
     } = useContext(Context);
 
     const leaveProjectClick = async () => {
+        setClickedButton(true)
         await fetch(`${apiBaseUrl}/usersprojects/${currentUserId}/${currentProjectId}`, {
             method: 'DELETE'
         })
@@ -44,19 +45,25 @@ const LeaveProject = () => {
             {currentProjectId &&
                 <>
                     <div className='leave-project'>
-                        <Eject color='black' onClick={() => setShow(true)} />
+                        <Eject color='black' onClick={() => {
+                            if (clickedButton) {
+                                setClickedButton(false)
+                            }
+                            setShow(true)
+                        }} />
                     </div>
                     {show && (
                         <Layer
                             onEsc={() => setShow(false)}
                             onClickOutside={() => {
                                 setShow(false)
+                                setClickedButton(false)
                             }}
                         >
                             <div className='popup-container'>
                                 <div>Are you sure you want to leave this project?</div>
                                 <div className='popup-button-container'>
-                                    <Button onClick={leaveProjectClick} primary color='lightsteelblue' label='Yes' />
+                                    <div onClick={leaveProjectClick} className={clickedButton ? 'popup-button-clicked' : 'popup-button'}>Yes</div>
                                 </div>
                             </div>
                         </Layer>)}

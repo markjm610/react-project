@@ -326,17 +326,14 @@ const Column = ({ updateTasksArray, columnDropZoneId, tasksArray, name, columnId
                                             </div>)
                                     }}
                                 </Droppable>
-                                <div className='highlight-container' style={{ top: `-${updateColumns[columnDropZoneId].Tasks.length * 60 + 5}px` }}>
+                                {/* <div className='highlight-container' style={{ top: `-${updateColumns[columnDropZoneId].Tasks.length * 60 + 5}px` }}>
                                     {updateColumns[columnDropZoneId].Tasks.map((task, i) => {
-                                        console.log(updateColumns[columnDropZoneId].Tasks)
-                                        // console.log(i)
-                                        console.log('task', task)
-                                        console.log('draggingTaskId', draggingTaskId)
+
                                         return (
                                             <div key={`highlight-${task}`} className='highlight' style={{ backgroundColor: task === draggingTaskId && 'lightgoldenrodyellow' }} />
                                         )
                                     })}
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                     </div>

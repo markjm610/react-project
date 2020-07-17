@@ -1,17 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const LogOut = () => {
+    const [clickedButton, setClickedButton] = useState(false)
 
     const logOutUser = () => {
+        setClickedButton(true)
         localStorage.removeItem('TOKEN');
         localStorage.removeItem('USER_ID');
         window.location.href = '/';
     }
 
     return (
-        <button onClick={logOutUser} className='log-out'>
+        <div onClick={logOutUser} className={clickedButton ? 'clicked-log-out' : 'log-out'}>
             Log Out
-        </button>
+        </div>
     )
 }
 

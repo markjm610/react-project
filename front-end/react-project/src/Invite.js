@@ -7,20 +7,22 @@ import Context from './Context';
 const Invite = () => {
     const { currentProjectId } = useContext(Context);
     const [show, setShow] = useState();
-    const [value, setValue] = useState({ name: '' });
+    const [value, setValue] = useState('');
     const [showConfirm, setShowConfirm] = useState()
     const [inviteStatus, setInviteStatus] = useState('')
+    const [clickedButton, setClickedButton] = useState(false)
 
     const submitInvite = async () => {
+        setClickedButton(true)
 
-        if (value.name === '') {
+        if (value === '') {
             return
         }
 
 
         const findRes = await fetch(`${apiBaseUrl}/users`, {
             method: 'PUT',
-            body: JSON.stringify({ name: value.name, projectId: currentProjectId }),
+            body: JSON.stringify({ name: value, projectId: currentProjectId }),
             headers: {
                 "Content-Type": 'application/json',
             }
@@ -67,47 +69,49 @@ const Invite = () => {
                     onEsc={() => setShow(false)}
                     onClickOutside={() => {
                         setShow(false)
-                        setValue({ name: '' })
+                        setClickedButton(false)
+                        setValue('')
                         setInviteStatus('')
                     }}
                 >
-                    {(!inviteStatus || inviteStatus === 'user not found') &&
-                        <div className='popup-container'>
-                            <Form
-                                value={value}
-                                onChange={nextValue => {
+                    <div className='popup-container'>
+                        {(!inviteStatus || inviteStatus === 'user not found') &&
+                            <>
+                                <div className='popup-text'>Who would you like to invite?</div>
+
+                                <input className='popup-input' value={value} onChange={e => {
                                     if (inviteStatus === 'user not found') {
                                         setInviteStatus(null)
                                     }
-                                    setValue(nextValue)
-                                }}
-                                onReset={() => setValue({})}
-                                onSubmit={submitInvite}
-                            >
-                                <FormField name="name" htmlfor="text-input-id" label="Who would you like to invite?">
-                                    <TextInput id="text-input-id" name="name" />
-                                </FormField>
-                                <Box direction="row" gap="medium">
-                                    <Button type="submit" color='lightsteelblue' primary label="Submit" />
-                                    {inviteStatus === 'user not found' && <div style={{ display: 'flex', justifyContent: 'center', marginRight: '10px' }}>User not found</div>}
-                                </Box>
-                            </Form>
-                        </div>}
-                    {inviteStatus === 'sent' &&
-                        <>
-                            <div>Invite sent!</div>
-                            <div style={{ display: 'flex', justifyContent: 'center' }}><Checkmark /></div>
-                        </>}
-                    {inviteStatus === 'already invited' &&
+                                    if (clickedButton) {
+                                        setClickedButton(false)
+                                    }
+                                    setValue(e.target.value)
+                                }} />
+                                <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+                                    <div className={clickedButton ? 'popup-button-clicked' : 'popup-button'} onClick={submitInvite}>Invite</div>
+                                    {inviteStatus === 'user not found' && <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '150px', height: '100%', marginTop: '10px' }}>User not found</div>}
+                                </div>
 
-                        <div>It looks like you've already invited {value.name} to this project.</div>
-                    }
-                    {inviteStatus === 'already in project' &&
+                            </>
+                        }
+                        {inviteStatus === 'sent' &&
+                            <>
+                                <div>Invite sent!</div>
+                                <div style={{ display: 'flex', justifyContent: 'center' }}><Checkmark /></div>
+                            </>}
+                        {inviteStatus === 'already invited' &&
 
-                        <div>{value.name} is already a member of this project.</div>
-                    }
+                            <div>It looks like you've already invited {value} to this project.</div>
+                        }
+                        {inviteStatus === 'already in project' &&
+
+                            <div>{value} is already a member of this project.</div>
+                        }
+                    </div>
                 </Layer>
-            )}
+            )
+            }
         </>)
 
 
