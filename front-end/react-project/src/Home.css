@@ -28,6 +28,7 @@ html, body {
     display: grid;
     grid-template-rows: 50px 1fr 1fr;
     height: 100vh;
+    border-right: 1px solid rgb(83, 83, 83);
 }
 
 .add-project {
@@ -88,11 +89,15 @@ html, body {
     user-select: none;
     display: flex;
     justify-content: flex-end;
-    border: solid 1px black;
+    border-left: solid 1px rgb(83, 83, 83);
+    border-top: solid 1px rgb(83, 83, 83);
+    border-bottom: solid 1px rgb(83, 83, 83);
 }
 
 .project-navlink:hover {
-    border: solid 1px black;
+    border-left: solid 1px rgb(83, 83, 83);
+    border-top: solid 1px rgb(83, 83, 83);
+    border-bottom: solid 1px rgb(83, 83, 83);
 }
 
 
@@ -124,11 +129,11 @@ html, body {
     user-select: none;
     display: flex;
     justify-content: flex-end;
-    border: solid 1px black;
+    border: solid 1px rgb(83, 83, 83);
 }
 
 .list-project-navlink:hover {
-    border: solid 1px black;
+    border: solid 1px rgb(83, 83, 83);
 }
 
 .log-out {
@@ -140,6 +145,32 @@ html, body {
     user-select: none;
     text-align: center;
     margin: auto;
+    background-color: whitesmoke;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.log-out:hover {
+    cursor: pointer;
+}
+
+.clicked-log-out {
+    grid-row: 4 / 5;
+    display: flex;
+    align-items: flex-end;
+    height: 23px;
+    width: 148px;
+    user-select: none;
+    text-align: center;
+    margin: auto;
+    background-color: whitesmoke;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-left: 1px solid black;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
 }
 
 .working-area {
@@ -156,6 +187,7 @@ html, body {
     background-color: lightsteelblue;
     display: grid;
     grid-template-rows: 1fr 1fr 1fr;
+    border-left: 1px solid rgb(83, 83, 83);
 }
 
 .invite {
@@ -208,7 +240,8 @@ html, body {
     background-color: #ebebeb;
     /* background-color: red; */
     min-height: 100px;
-    max-height: 700px;
+    /* max-height: 700px; */
+    height: 100%;
 }
 
 
@@ -275,9 +308,10 @@ html, body {
     flex-direction: column;
     /* min-height: 60px; */
     margin-left: 5px;
-    z-index: 5;
+    /* z-index: 5; */
     /* background-color: red; */
-    height: 100%;
+    /* max-height: 9900px; */
+    min-height: 100px;
 }
 
 
@@ -285,7 +319,7 @@ html, body {
     grid-row: 1 / 2;
     height: 100%;
     width: 100%;
-    z-index: 5;
+    /* z-index: 5; */
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr;
@@ -394,7 +428,7 @@ html, body {
 }
 
 .project-nav-list-container {
-    z-index: 50;
+    z-index: 1;
     margin-left: 150px;
     position: absolute;
     width: 150px;
@@ -464,11 +498,6 @@ html, body {
     opacity: 1;
 }
 
-.popup-container {
-    background-color: whitesmoke;
-    padding: 10px;
-    border-radius: 15px;
-}
 
 .popup-button-container {
     padding-top: 10px;
@@ -481,6 +510,7 @@ html, body {
     width: 320px; 
     /* border: 1px solid black; */
     height: 500px;
+    
 }
 
 .highlight {
@@ -489,4 +519,71 @@ html, body {
     width: 300px;
     margin-left: 10px;
     border-radius: 10px;
+  
+}
+
+.popup-container {
+    background-color: whitesmoke;
+    padding: 20px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+}
+
+.popup-input {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 2px solid rgb(187, 187, 187);
+    width: 400px;
+    background-color: whitesmoke;
+    height: 40px;
+    font-size: 16px;
+    color: rgb(83, 83, 83);
+    font-weight: bold;
+    font-family: 'Noto Sans JP', sans-serif;
+}
+
+.popup-input:focus {
+    outline: none;
+    border-bottom: 2px solid rgb(83, 83, 83);
+
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.popup-button {
+    background-color: lightsteelblue;
+    height: 40px;
+    width: 100px;
+    border-radius: 20px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-button:hover {
+    cursor: pointer;
+}
+
+.popup-button-clicked {
+    border: 1px solid rgb(83, 83, 83);
+    background-color: lightsteelblue;
+    height: 38px;
+    width: 98px;
+    border-radius: 20px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-self: flex-start;
+}
+
+.popup-button-clicked:hover {
+    cursor: pointer;
+}
+
+.popup-text {
+    margin-bottom: 5px;
 }

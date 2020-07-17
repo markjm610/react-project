@@ -7,13 +7,21 @@ import { apiBaseUrl } from './config';
 const AddProject = () => {
     const { selectedProject, setSelectedProject, currentUserId, mainProjectArr, setMainProjectArr, listProjectArr, setListProjectArr } = useContext(Context)
     const [show, setShow] = useState();
-    const [value, setValue] = useState({ name: '' });
+    const [value, setValue] = useState('');
+    const [clickedButton, setClickedButton] = useState(false)
 
     const addProjectClick = () => {
+        if (clickedButton) {
+            setClickedButton(false)
+        }
         setShow(true)
     }
 
     const addProjectSubmit = async () => {
+        setClickedButton(true)
+        if (!value) {
+            return;
+        }
         setShow(false);
 
 
@@ -25,7 +33,7 @@ const AddProject = () => {
         const res = await fetch(`${apiBaseUrl}/users/${currentUserId}/projects`, {
             method: 'POST',
             body: JSON.stringify(
-                { name: value.name, position: projectsCopy.length }
+                { name: value, position: projectsCopy.length }
             ),
             headers: {
                 "Content-Type": 'application/json',
@@ -41,7 +49,7 @@ const AddProject = () => {
         setListProjectArr(projectsCopy.slice(5))
         setSelectedProject({ ...selectedProject, [newProject.id]: false })
 
-        value.name = ''
+        setValue('')
     }
 
 
@@ -60,12 +68,25 @@ const AddProject = () => {
                 <Layer
                     onEsc={() => setShow(false)}
                     onClickOutside={() => {
+                        setClickedButton(false)
                         setShow(false)
-                        setValue({ name: '' })
+                        setValue('')
                     }}
                 >
                     <div className='popup-container'>
-                        <Form
+
+                        <div className='popup-text'>Name your project:</div>
+
+                        <input className='popup-input' value={value} onChange={e => {
+                            if (clickedButton) {
+                                setClickedButton(false)
+                            }
+                            setValue(e.target.value)
+                        }} />
+                        <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+                            <div className={clickedButton ? 'popup-button-clicked' : 'popup-button'} onClick={addProjectSubmit}>Add</div>
+                        </div>
+                        {/* <Form
                             value={value}
                             onChange={nextValue => setValue(nextValue)}
                             onReset={() => setValue({})}
@@ -77,7 +98,7 @@ const AddProject = () => {
                             <Box direction="row" gap="medium">
                                 <Button type="submit" color='lightsteelblue' primary label="Submit" />
                             </Box>
-                        </Form>
+                        </Form> */}
                     </div>
                 </Layer>
             )

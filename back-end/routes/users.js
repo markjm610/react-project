@@ -70,12 +70,19 @@ router.put('/users', asyncHandler(async (req, res, next) => {
     const { name, projectId } = req.body;
 
     const user = await User.findOne({ where: { name: name } });
-    const alreadyInProject = await UsersProject.findOne({ where: { userId: user.id, projectId } })
-    if (alreadyInProject) {
-        res.json({ message: 'already in project' })
+
+    if (user) {
+        const alreadyInProject = await UsersProject.findOne({ where: { userId: user.id, projectId } })
+        if (alreadyInProject) {
+            res.json({ message: 'already in project' })
+        } else {
+            res.json({ user })
+        }
     } else {
-        res.json({ user })
+        res.json('user not found')
     }
+
+
 
 }));
 

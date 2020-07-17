@@ -7,15 +7,21 @@ import { Draggable, Droppable } from 'react-beautiful-dnd'
 import { FormNextLink, FormPreviousLink } from 'grommet-icons'
 
 const SignUpForm = ({ index }) => {
-    const [value, setValue] = useState({ email: '', name: '', password: '' });
+    const [emailValue, setEmailValue] = useState('');
+    const [nameValue, setNameValue] = useState('');
+    const [passwordValue, setPasswordValue] = useState('');
     const { noForms, setAuthToken, setCurrentUserId, updateFormPosition } = useContext(Context);
-    const handleSubmit = async () => {
 
+    const [clickedButton, setClickedButton] = useState(false)
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        setClickedButton(true)
         try {
 
             const res = await fetch(`${apiBaseUrl}/users`, {
                 method: 'POST',
-                body: JSON.stringify(value),
+                body: JSON.stringify({ email: emailValue, name: nameValue, password: passwordValue }),
                 headers: {
                     "Content-Type": 'application/json',
                 }
@@ -40,7 +46,6 @@ const SignUpForm = ({ index }) => {
 
     }
 
-    console.log(Button)
     return (
         <Draggable
             draggableId={'sign-up'}
@@ -56,26 +61,62 @@ const SignUpForm = ({ index }) => {
                     >
                         {updateFormPosition[1] === 'signUp' && !noForms ? <div className='sign-up-form' style={{ margin: 'auto', width: '400px' }}>
                             <h2>Sign Up</h2>
-                            <Form
-                                value={value}
-                                onChange={nextValue => setValue(nextValue)}
-                                onReset={() => setValue({})}
-                                // onSubmit={({ value }) => { }}
-                                onSubmit={handleSubmit}
-                            >
-                                <FormField name="email" htmlfor="text-input-id" label="Email:">
-                                    <TextInput id="text-input-id" name="email" />
-                                </FormField>
-                                <FormField name="name" htmlfor="text-input-id" label="Name:">
-                                    <TextInput id="text-input-id" name="name" />
-                                </FormField>
-                                <FormField name="password" htmlfor="text-input-id" label="Password:">
-                                    <TextInput type='password' id="text-input-id" name="password" />
-                                </FormField>
-                                <Box justify='between' direction="row" gap="medium">
-                                    <Button color='lightsteelblue' type="submit" primary label="Submit" />
-                                </Box>
-                            </Form>
+                            <div className='form-container'>
+                                <form onSubmit={handleSubmit}>
+
+                                    <label className='label'>Email:</label>
+                                    <input
+                                        className='landing-page-input'
+                                        value={emailValue}
+                                        onChange={e => {
+                                            if (clickedButton) {
+                                                setClickedButton(false)
+                                            }
+                                            setEmailValue(e.target.value)
+                                        }}
+                                        onFocus={() => {
+                                            if (clickedButton) {
+                                                setClickedButton(false)
+                                            }
+                                        }}
+                                    />
+                                    <label className='label'>Name:</label>
+                                    <input
+                                        className='landing-page-input'
+                                        value={nameValue}
+                                        onChange={e => {
+                                            if (clickedButton) {
+                                                setClickedButton(false)
+                                            }
+                                            setNameValue(e.target.value)
+                                        }}
+                                        onFocus={() => {
+                                            if (clickedButton) {
+                                                setClickedButton(false)
+                                            }
+                                        }}
+                                    />
+                                    <label className='label'>Password:</label>
+                                    <input
+                                        type='password'
+                                        className='landing-page-input'
+                                        value={passwordValue}
+                                        onChange={e => {
+                                            if (clickedButton) {
+                                                setClickedButton(false)
+                                            }
+                                            setPasswordValue(e.target.value)
+                                        }}
+                                        onFocus={() => {
+                                            if (clickedButton) {
+                                                setClickedButton(false)
+                                            }
+                                        }}
+                                    />
+                                    <div onClick={handleSubmit} className={clickedButton ? 'form-button-clicked' : 'form-button'}>Submit</div>
+                                </form>
+                            </div>
+
                         </div> :
                             <>
                                 {noForms && <div className='form-name'>
