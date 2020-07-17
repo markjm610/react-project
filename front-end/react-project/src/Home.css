@@ -76,6 +76,7 @@ html, body {
 
 .selected-project-navlink {
     border-top-left-radius: 10px;
+    /* background-color: rgb(255, 250, 199); */
     background-color: lightgoldenrodyellow;
     padding: 5px;
     /* margin-top: 5px;
@@ -103,14 +104,16 @@ html, body {
 
 .list-project-navlink {
     border-top-left-radius: 10px;
+     /* border-top-right-radius: 10px; */
     background-color: whitesmoke;
     padding: 5px;
-    margin-left: 5px;
+    margin-left: 0px;
     color: black;
     text-decoration: none;
     border-top: solid 1px lightsteelblue;
     border-left: solid 1px lightsteelblue;
     border-bottom: solid 1px lightsteelblue;
+    border-right: solid 1px lightsteelblue;
     user-select: none;
     display: flex;
     justify-content: flex-end;
@@ -118,14 +121,16 @@ html, body {
 
 .list-selected-project-navlink {
     border-top-left-radius: 10px;
+    /* border-top-right-radius: 10px; */
     background-color: lightgoldenrodyellow;
     padding: 5px;
-    margin-left: 5px;
+    margin-left: 0px;
     color: black;
     text-decoration: none;
     border-top: solid 1px lightsteelblue;
     border-left: solid 1px lightsteelblue;
     border-bottom: solid 1px lightsteelblue;
+      border-right: solid 1px lightsteelblue;
     user-select: none;
     display: flex;
     justify-content: flex-end;
@@ -242,6 +247,7 @@ html, body {
     min-height: 100px;
     /* max-height: 700px; */
     height: 100%;
+    /* border: 1px solid rgb(83, 83, 83); */
 }
 
 
@@ -254,6 +260,7 @@ html, body {
     margin: auto;
     border-radius: 10px;
     box-shadow: 1px 1px 5px gray;
+    /* border: 1px solid rgb(83, 83, 83); */
     background-color: #ebebeb;
     max-height: 700px;
 }
@@ -308,7 +315,7 @@ html, body {
     flex-direction: column;
     /* min-height: 60px; */
     margin-left: 5px;
-    /* z-index: 5; */
+   
     /* background-color: red; */
     /* max-height: 9900px; */
     min-height: 100px;
@@ -370,6 +377,7 @@ html, body {
     overflow-wrap: break-word;
     border-radius: 10px;
     box-shadow: 1px 1px 5px gray
+
 }
 
 
@@ -510,16 +518,16 @@ html, body {
     width: 320px; 
     /* border: 1px solid black; */
     height: 500px;
-    
 }
 
 .highlight {
-    margin-top: 10px;
+    /* margin-top: 10px;
     height: 50px;
     width: 300px;
     margin-left: 10px;
-    border-radius: 10px;
-  
+    border-radius: 10px; */
+    height: 60px;
+    width: 320px;
 }
 
 .popup-container {

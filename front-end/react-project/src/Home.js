@@ -478,34 +478,34 @@ const Home = ({ history }) => {
         //         setDraggingTaskId(moved[0])
 
         //     } else if (destination.droppableId !== source.droppableId) {
-        // let copy = [...updateColumns]
+        //         let copy = [...updateColumns]
 
-        // let startingColumn;
+        //         let startingColumn;
 
-        // copy.forEach(column => {
-        //     if (`${column.id}` === source.droppableId) {
-        //         startingColumn = column.Tasks.slice();
+        //         copy.forEach(column => {
+        //             if (`${column.id}` === source.droppableId) {
+        //                 startingColumn = column.Tasks.slice();
+        //             }
+        //         })
+
+        //         let newColumn;
+
+        //         copy.forEach(column => {
+        //             if (`${column.id}` === destination.droppableId) {
+        //                 newColumn = column.Tasks.slice();
+        //             }
+        //         })
+
+        //         const moved = startingColumn.splice(source.index, 1)
+
+
+        //         newColumn.splice(destination.index, 0, moved[0])
+
+
+
+        //         setUpdateColumns(copy);
+        //         setDraggingTaskId(moved[0])
         //     }
-        // })
-
-        // let newColumn;
-
-        // copy.forEach(column => {
-        //     if (`${column.id}` === destination.droppableId) {
-        //         newColumn = column.Tasks.slice();
-        //     }
-        // })
-
-        // const moved = startingColumn.splice(source.index, 1)
-
-
-        // newColumn.splice(destination.index, 0, moved[0])
-
-
-
-        // setUpdateColumns(copy);
-        // setDraggingTaskId(moved[0])
-        // }
         // }
     }
 
