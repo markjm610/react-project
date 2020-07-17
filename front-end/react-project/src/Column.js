@@ -303,6 +303,7 @@ const Column = ({ updateTasksArray, columnDropZoneId, tasksArray, name, columnId
                                         return (
 
                                             <div
+
                                                 ref={provided.innerRef}
                                                 {...provided.droppableProps}
                                                 className='tasks-container'>
@@ -330,7 +331,11 @@ const Column = ({ updateTasksArray, columnDropZoneId, tasksArray, name, columnId
                                     {updateColumns[columnDropZoneId].Tasks.map((task, i) => {
 
                                         return (
-                                            <div key={`highlight-${task}`} className='highlight' style={{ backgroundColor: task === draggingTaskId && 'lightgoldenrodyellow' }} />
+                                            <div key={`highlight-${task}`} className='highlight' style={{
+                                                backgroundColor:
+                                                    task === draggingTaskId &&
+                                                    'lightgoldenrodyellow'
+                                            }} />
                                         )
                                     })}
                                 </div> */}
