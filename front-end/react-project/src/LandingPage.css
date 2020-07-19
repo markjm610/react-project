@@ -113,8 +113,7 @@
 }
 
 .form-button-clicked {
-    /* border: 2px solid rgb(83, 83, 83); */
-    border: 2px solid black;
+    border: 2px solid steelblue;
     background-color: lightsteelblue;
     height: 36px;
     width: 96px;

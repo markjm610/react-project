@@ -37,7 +37,7 @@ const ContextWrapper = () => {
     const [letterPositions, setLetterPositions] = useState(['L', 'W', 'S', 'A', 'T', 'K', 'O', 'F'])
     const [updateColumns, setUpdateColumns] = useState([])
     const [draggingTaskId, setDraggingTaskId] = useState(null)
-
+    const [newUser, setNewUser] = useState(false)
 
     return (
         <Context.Provider value={
@@ -74,7 +74,8 @@ const ContextWrapper = () => {
                 columnFull, setColumnFull,
                 letterPositions, setLetterPositions,
                 updateColumns, setUpdateColumns,
-                draggingTaskId, setDraggingTaskId
+                draggingTaskId, setDraggingTaskId,
+                newUser, setNewUser
             }
         } >
             <App />

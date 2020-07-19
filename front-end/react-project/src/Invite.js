@@ -79,18 +79,27 @@ const Invite = () => {
                             <>
                                 <div className='popup-text'>Who would you like to invite?</div>
 
-                                <input className='popup-input' value={value} onChange={e => {
-                                    if (inviteStatus === 'user not found') {
-                                        setInviteStatus(null)
-                                    }
-                                    if (clickedButton) {
-                                        setClickedButton(false)
-                                    }
-                                    setValue(e.target.value)
-                                }} />
+                                <input
+                                    className='popup-input'
+                                    value={value}
+                                    onChange={e => {
+                                        if (inviteStatus === 'user not found') {
+                                            setInviteStatus(null)
+                                        }
+                                        if (clickedButton) {
+                                            setClickedButton(false)
+                                        }
+                                        setValue(e.target.value)
+                                    }}
+                                    onFocus={() => {
+                                        if (clickedButton) {
+                                            setClickedButton(false)
+                                        }
+                                    }}
+                                />
                                 <div style={{ display: 'flex', justifyContent: 'space-around' }}>
                                     <div className={clickedButton ? 'popup-button-clicked' : 'popup-button'} onClick={submitInvite}>Invite</div>
-                                    {inviteStatus === 'user not found' && <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '150px', height: '100%', marginTop: '10px' }}>User not found</div>}
+                                    {inviteStatus === 'user not found' && <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '150px', marginTop: '10px' }}>User not found</div>}
                                 </div>
 
                             </>

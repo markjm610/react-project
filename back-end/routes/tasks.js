@@ -30,7 +30,7 @@ router.post('/columns/:columnId/tasks', asyncHandler(async (req, res) => {
 router.delete('/tasks/:taskId', asyncHandler(async (req, res) => {
 
     const taskId = parseInt(req.params.taskId, 10);
-    console.log(taskId)
+
     const task = await Task.findByPk(taskId);
 
     await task.destroy();

@@ -10,7 +10,14 @@ const SignUpForm = ({ index }) => {
     const [emailValue, setEmailValue] = useState('');
     const [nameValue, setNameValue] = useState('');
     const [passwordValue, setPasswordValue] = useState('');
-    const { noForms, setAuthToken, setCurrentUserId, updateFormPosition } = useContext(Context);
+    const {
+        noForms,
+        setAuthToken,
+        setCurrentUserId,
+        updateFormPosition,
+        setMainProjectArr,
+        setSelectedProject
+    } = useContext(Context);
 
     const [clickedButton, setClickedButton] = useState(false)
 
@@ -30,15 +37,20 @@ const SignUpForm = ({ index }) => {
             if (!res.ok) {
                 throw res;
             }
-            const { token, user: { id, name } } = await res.json();
+            const { token, user: { id, name }, newProject, newUsersProject } = await res.json();
+
+
 
             localStorage.setItem('TOKEN', token);
             localStorage.setItem('USER_ID', id);
             localStorage.setItem('USER_NAME', name);
 
+
             setAuthToken(token);
             setCurrentUserId(id);
-
+            newProject.UsersProject = newUsersProject
+            setMainProjectArr([newProject])
+            setSelectedProject({ [newProject.id]: true })
         } catch (e) {
             console.error(e)
         }

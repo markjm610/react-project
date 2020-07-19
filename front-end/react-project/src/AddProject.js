@@ -77,28 +77,24 @@ const AddProject = () => {
 
                         <div className='popup-text'>Name your project:</div>
 
-                        <input className='popup-input' value={value} onChange={e => {
-                            if (clickedButton) {
-                                setClickedButton(false)
-                            }
-                            setValue(e.target.value)
-                        }} />
+                        <input
+                            className='popup-input'
+                            value={value}
+                            onChange={e => {
+                                if (clickedButton) {
+                                    setClickedButton(false)
+                                }
+                                setValue(e.target.value)
+                            }}
+                            onFocus={() => {
+                                if (clickedButton) {
+                                    setClickedButton(false)
+                                }
+                            }}
+                        />
                         <div style={{ display: 'flex', justifyContent: 'space-around' }}>
                             <div className={clickedButton ? 'popup-button-clicked' : 'popup-button'} onClick={addProjectSubmit}>Add</div>
                         </div>
-                        {/* <Form
-                            value={value}
-                            onChange={nextValue => setValue(nextValue)}
-                            onReset={() => setValue({})}
-                            onSubmit={addProjectSubmit}
-                        >
-                            <FormField name="name" htmlfor="text-input-id" label="Add Project:">
-                                <TextInput id="text-input-id" name="name" />
-                            </FormField>
-                            <Box direction="row" gap="medium">
-                                <Button type="submit" color='lightsteelblue' primary label="Submit" />
-                            </Box>
-                        </Form> */}
                     </div>
                 </Layer>
             )
