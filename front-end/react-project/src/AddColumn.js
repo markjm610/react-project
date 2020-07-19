@@ -72,12 +72,21 @@ const AddColumn = () => {
                     <div className='popup-container'>
                         <div className='popup-text'>Name your column:</div>
 
-                        <input className='popup-input' value={value} onChange={e => {
-                            if (clickedButton) {
-                                setClickedButton(false)
-                            }
-                            setValue(e.target.value)
-                        }} />
+                        <input
+                            className='popup-input'
+                            value={value}
+                            onChange={e => {
+                                if (clickedButton) {
+                                    setClickedButton(false)
+                                }
+                                setValue(e.target.value)
+                            }}
+                            onFocus={() => {
+                                if (clickedButton) {
+                                    setClickedButton(false)
+                                }
+                            }}
+                        />
                         <div style={{ display: 'flex', justifyContent: 'space-around' }}>
                             <div className={clickedButton ? 'popup-button-clicked' : 'popup-button'} onClick={addColumnSubmit}>Add</div>
                         </div>

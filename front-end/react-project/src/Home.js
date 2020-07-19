@@ -16,7 +16,7 @@ import LeaveProject from './LeaveProject'
 import { ItemTypes } from './ItemTypes';
 import { Droppable, DragDropContext } from 'react-beautiful-dnd';
 import * as tweenFunctions from "tween-functions";
-import { moveStepByStep } from './utils'
+import { moveStepByStep, noScroll } from './utils'
 import { Layer } from 'grommet';
 import ProjectNavMain from './ProjectNavMain'
 import _ from 'lodash';
@@ -174,6 +174,8 @@ const Home = ({ history }) => {
                 setDisplayedColumns(copy);
                 // setCurrentlyDragging(taskdropzoneid);
                 // setDragTaskId(saveId);
+                const workingArea = document.querySelector('.working-area')
+                workingArea.removeEventListener('scroll', noScroll);
             } else {
 
                 // const saveDragColumnId = dragColumnId;
@@ -515,7 +517,6 @@ const Home = ({ history }) => {
 
         //     setDraggingTaskId(parseInt(draggableId.slice(5)))
         // }
-
 
     }
 

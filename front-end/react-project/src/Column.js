@@ -8,7 +8,7 @@ import Context from './Context';
 import { apiBaseUrl } from './config';
 import { Droppable, Draggable } from 'react-beautiful-dnd'
 import * as tweenFunctions from "tween-functions";
-import { moveStepByStep } from './utils'
+import { moveStepByStep, noScroll } from './utils'
 import { Trash } from 'grommet-icons';
 
 const Column = ({ updateTasksArray, columnDropZoneId, tasksArray, name, columnId, currentlyDragging, setCurrentlyDragging }) => {
@@ -42,6 +42,11 @@ const Column = ({ updateTasksArray, columnDropZoneId, tasksArray, name, columnId
         10: useRef(null),
     }
 
+    const refTest = document.querySelectorAll('.task')
+    // if (refTest.length) {
+    //     console.log(refTest)
+    // }
+    const columnHeader = useRef(null)
 
 
     const tasksArrayCopy = [...tasksArray]
@@ -90,6 +95,39 @@ const Column = ({ updateTasksArray, columnDropZoneId, tasksArray, name, columnId
                     return;
                 }
 
+
+
+                const workingArea = document.querySelector('.working-area')
+                // const beforeScrollTop = workingArea.scrollTop
+                const leftSidebar = document.querySelector('.sidebar-left')
+                const rightSidebar = document.querySelector('.sidebar-right')
+                const leftSidebarEdge = leftSidebar.getBoundingClientRect().right
+                const rightSidebarEdge = rightSidebar.getBoundingClientRect().left
+                const percentage = 9 / (rightSidebarEdge - leftSidebarEdge)
+                const widthOfWorkingArea = rightSidebarEdge - leftSidebarEdge
+                const adjustment = percentage * widthOfWorkingArea
+
+                const midpoint = (rightSidebarEdge - leftSidebarEdge) / 2
+                const oneQuarter = midpoint / 2
+                const threeQuarters = midpoint / 2 + midpoint
+                const currentScrollLeft = workingArea.scrollLeft
+
+                const taskRefLeft = taskRefs[taskIndexToMove].current.getBoundingClientRect().left
+
+                if (taskRefLeft > adjustment + threeQuarters) {
+                    const amountToMove = taskRefLeft - (adjustment + threeQuarters)
+                    workingArea.scrollLeft = currentScrollLeft + amountToMove + 20
+                } else if (taskRefLeft < oneQuarter) {
+                    const amountToMove = oneQuarter - taskRefLeft
+                    workingArea.scrollLeft = currentScrollLeft - amountToMove
+                }
+
+
+                const bottomOfTaskToMove = taskRefs[taskIndexToMove].current.getBoundingClientRect().bottom
+
+                console.log()
+
+                workingArea.addEventListener('scroll', noScroll);
 
                 const endX = -(taskRefs[taskIndexToMove].current.getBoundingClientRect().x - taskRefs[i].current.getBoundingClientRect().x)
 
@@ -279,6 +317,7 @@ const Column = ({ updateTasksArray, columnDropZoneId, tasksArray, name, columnId
                             className='column-drop-zone'>
                             <div className={isDragging ? 'column-dragging' : 'column'}>
                                 <div
+                                    ref={columnHeader}
                                     className='column__header' {...dragProvided.dragHandleProps}>
                                     {name !== 'Completed'
                                         ?
@@ -320,6 +359,7 @@ const Column = ({ updateTasksArray, columnDropZoneId, tasksArray, name, columnId
                                                         taskArrLength={tasksArray.length}
                                                         topTask={topTask}
                                                         taskRef={taskRefs[i]}
+                                                        columnHeader={columnHeader}
                                                     />)
 
                                                 })}
