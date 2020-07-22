@@ -3,6 +3,7 @@ import { Layer, Form, Box, FormField, TextInput, Button } from 'grommet';
 import { ShareOption, Checkmark } from 'grommet-icons';
 import { apiBaseUrl } from './config';
 import Context from './Context';
+import Tooltip from '@material-ui/core/Tooltip';
 
 const Invite = () => {
     const { currentProjectId } = useContext(Context);
@@ -12,7 +13,8 @@ const Invite = () => {
     const [inviteStatus, setInviteStatus] = useState('')
     const [clickedButton, setClickedButton] = useState(false)
 
-    const submitInvite = async () => {
+    const submitInvite = async (e) => {
+        e.preventDefault()
         setClickedButton(true)
 
         if (value === '') {
@@ -60,10 +62,19 @@ const Invite = () => {
 
     return (
         <>
-            {currentProjectId && <div className='invite'><ShareOption
-                color='black'
-                className='invite-icon'
-                onClick={() => setShow(true)}></ShareOption></div>}
+            {currentProjectId &&
+
+                <div className='invite'>
+                    <Tooltip title='Invite' arrow>
+                        <div>
+                            <ShareOption
+                                color='black'
+                                className='invite-icon'
+                                onClick={() => setShow(true)} />
+                        </div>
+                    </Tooltip>
+                </div>
+            }
             {show && (
                 <Layer
                     onEsc={() => setShow(false)}
@@ -78,30 +89,30 @@ const Invite = () => {
                         {(!inviteStatus || inviteStatus === 'user not found') &&
                             <>
                                 <div className='popup-text'>Who would you like to invite?</div>
-
-                                <input
-                                    className='popup-input'
-                                    value={value}
-                                    onChange={e => {
-                                        if (inviteStatus === 'user not found') {
-                                            setInviteStatus(null)
-                                        }
-                                        if (clickedButton) {
-                                            setClickedButton(false)
-                                        }
-                                        setValue(e.target.value)
-                                    }}
-                                    onFocus={() => {
-                                        if (clickedButton) {
-                                            setClickedButton(false)
-                                        }
-                                    }}
-                                />
-                                <div style={{ display: 'flex', justifyContent: 'space-around' }}>
-                                    <div className={clickedButton ? 'popup-button-clicked' : 'popup-button'} onClick={submitInvite}>Invite</div>
-                                    {inviteStatus === 'user not found' && <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '150px', marginTop: '10px' }}>User not found</div>}
-                                </div>
-
+                                <form onSubmit={submitInvite}>
+                                    <input
+                                        className='popup-input'
+                                        value={value}
+                                        onChange={e => {
+                                            if (inviteStatus === 'user not found') {
+                                                setInviteStatus(null)
+                                            }
+                                            if (clickedButton) {
+                                                setClickedButton(false)
+                                            }
+                                            setValue(e.target.value)
+                                        }}
+                                        onFocus={() => {
+                                            if (clickedButton) {
+                                                setClickedButton(false)
+                                            }
+                                        }}
+                                    />
+                                    <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+                                        <div className={clickedButton ? 'popup-button-clicked' : 'popup-button'} onClick={submitInvite}>Invite</div>
+                                        {inviteStatus === 'user not found' && <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '150px', marginTop: '10px' }}>User not found</div>}
+                                    </div>
+                                </form>
                             </>
                         }
                         {inviteStatus === 'sent' &&

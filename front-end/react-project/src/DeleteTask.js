@@ -16,8 +16,7 @@ const DeleteTask = ({ taskid, columnId }) => {
         const columnsCopy = [...displayedColumns];
 
         columnsCopy.forEach(column => {
-            // if this is a filter maybe it'll work better since it's not splicing while iterating but
-            // it probably doesn't matter or it wouldn't have worked before
+
             if (column.id === columnId) {
                 column.Tasks.forEach((task, i) => {
                     if (task.id === taskid) {

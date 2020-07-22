@@ -3,6 +3,7 @@ import { Layer, Form, Box, FormField, TextInput, Button } from 'grommet';
 import { ShareOption, Checkmark, Close, Eject } from 'grommet-icons';
 import { apiBaseUrl } from './config';
 import Context from './Context';
+import Tooltip from '@material-ui/core/Tooltip';
 
 
 const LeaveProject = () => {
@@ -44,14 +45,18 @@ const LeaveProject = () => {
         <>
             {currentProjectId &&
                 <>
-                    <div className='leave-project'>
-                        <Eject color='black' onClick={() => {
-                            if (clickedButton) {
-                                setClickedButton(false)
-                            }
-                            setShow(true)
-                        }} />
-                    </div>
+                    <Tooltip title='Leave Project' arrow>
+                        <div className='leave-project'>
+                            <Eject
+                                color='black'
+                                onClick={() => {
+                                    if (clickedButton) {
+                                        setClickedButton(false)
+                                    }
+                                    setShow(true)
+                                }} />
+                        </div>
+                    </Tooltip>
                     {show && (
                         <Layer
                             onEsc={() => setShow(false)}

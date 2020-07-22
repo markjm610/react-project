@@ -5,7 +5,7 @@ import Context from './Context';
 import { apiBaseUrl } from './config';
 
 const AddTask = ({ columnId, taskArrLength }) => {
-    const { currentUserId, displayedColumns, setDisplayedColumns, setColumnFull } = useContext(Context);
+    const { currentUserId, displayedColumns, setDisplayedColumns } = useContext(Context);
     const [show, setShow] = useState();
     const [value, setValue] = useState('');
     const [descriptionLength, setDescriptionLength] = useState(0)
@@ -13,20 +13,21 @@ const AddTask = ({ columnId, taskArrLength }) => {
 
     const addTaskClick = async () => {
 
-        if (taskArrLength === 11) {
-            setColumnFull(true)
-            setValue('')
-            setDescriptionLength(0)
-        } else {
-            if (clickedButton) {
-                setClickedButton(false)
-            }
-            setShow(true)
+        // if (taskArrLength === 11) {
+        //     setColumnFull(true)
+        //     setValue('')
+        //     setDescriptionLength(0)
+        // } else {
+        if (clickedButton) {
+            setClickedButton(false)
         }
+        setShow(true)
+        // }
 
     }
 
-    const addTaskSubmit = async () => {
+    const addTaskSubmit = async (e) => {
+        e.preventDefault()
         setClickedButton(true)
         if (value.length > 100 || !value) {
             return
@@ -63,49 +64,54 @@ const AddTask = ({ columnId, taskArrLength }) => {
         setDisplayedColumns(columnsCopy)
         setValue('')
         setDescriptionLength(0)
+        const workingArea = document.querySelector('.working-area')
+        workingArea.scrollTop = workingArea.scrollHeight
     }
 
-    return (<>
-        <div className='add-task'>
-            <AddCircle color='black' onClick={addTaskClick}></AddCircle>
-        </div>
-        {
-            show && (
-                <Layer
-                    onEsc={() => setShow(false)}
-                    onClickOutside={() => {
-                        setShow(false)
-                        setValue('')
-                        setDescriptionLength(0)
-                    }}
-                >
-                    <div className='popup-container'>
-                        <div className='popup-text'>Describe the task:</div>
-                        <textarea
-                            className='popup-textarea'
-                            value={value}
-                            onChange={e => {
-                                if (clickedButton) {
-                                    setClickedButton(false)
-                                }
-                                setDescriptionLength(e.target.value.length)
-                                setValue(e.target.value)
-                            }}
-                            onFocus={() => {
-                                if (clickedButton) {
-                                    setClickedButton(false)
-                                }
-                            }}
-                        />
-                        <div style={{ display: 'flex', justifyContent: 'space-around' }}>
-                            <div className={clickedButton ? 'popup-button-clicked' : 'popup-button'} onClick={addTaskSubmit}>Add</div>
-                            <div style={{ color: descriptionLength > 100 && 'red', marginTop: '15px' }}>{descriptionLength} / 100</div>
+    return (
+        <>
+            <div className='add-task'>
+                <AddCircle color='black' onClick={addTaskClick}></AddCircle>
+            </div>
+            {
+                show && (
+                    <Layer
+                        onEsc={() => setShow(false)}
+                        onClickOutside={() => {
+                            setShow(false)
+                            setValue('')
+                            setDescriptionLength(0)
+                        }}
+                    >
+                        <div className='popup-container'>
+                            <div className='popup-text'>Describe the task:</div>
+                            <form onSubmit={addTaskSubmit}>
+                                <textarea
+                                    className='popup-textarea'
+                                    value={value}
+                                    onChange={e => {
+                                        if (clickedButton) {
+                                            setClickedButton(false)
+                                        }
+                                        setDescriptionLength(e.target.value.length)
+                                        setValue(e.target.value)
+                                    }}
+                                    onFocus={() => {
+                                        if (clickedButton) {
+                                            setClickedButton(false)
+                                        }
+                                    }}
+                                />
+                                <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+                                    <div className={clickedButton ? 'popup-button-clicked' : 'popup-button'} onClick={addTaskSubmit}>Add</div>
+                                    <div style={{ color: descriptionLength > 100 && 'red', marginTop: '15px' }}>{descriptionLength} / 100</div>
+                                </div>
+                            </form>
                         </div>
-                    </div>
-                </Layer>
-            )
-        }
-    </>
+                    </Layer>
+                )
+            }
+        </>
     );
 
 }

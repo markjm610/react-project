@@ -11,8 +11,10 @@ const LogOut = () => {
     }
 
     return (
-        <div onClick={logOutUser} className={clickedButton ? 'clicked-log-out' : 'log-out'}>
-            Log Out
+        <div className='log-out-container'>
+            <div onClick={logOutUser} className={clickedButton ? 'clicked-log-out' : 'log-out'}>
+                Log Out
+        </div>
         </div>
     )
 }

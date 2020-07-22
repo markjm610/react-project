@@ -16,7 +16,7 @@ import LeaveProject from './LeaveProject'
 import { ItemTypes } from './ItemTypes';
 import { Droppable, DragDropContext } from 'react-beautiful-dnd';
 import * as tweenFunctions from "tween-functions";
-import { moveStepByStep, noScroll } from './utils'
+import { moveStepByStep, noScroll, noScrollMoveToTop } from './utils'
 import { Layer } from 'grommet';
 import ProjectNavMain from './ProjectNavMain'
 import _ from 'lodash';
@@ -49,7 +49,8 @@ const Home = ({ history }) => {
         currentProjectId,
         updateColumns,
         setUpdateColumns,
-        setDraggingTaskId
+        setDraggingTaskId,
+        taskRefs
     } = useContext(Context);
 
 
@@ -176,6 +177,7 @@ const Home = ({ history }) => {
                 // setDragTaskId(saveId);
                 const workingArea = document.querySelector('.working-area')
                 workingArea.removeEventListener('scroll', noScroll);
+                workingArea.removeEventListener('scroll', noScrollMoveToTop);
             } else {
 
                 // const saveDragColumnId = dragColumnId;
@@ -199,10 +201,10 @@ const Home = ({ history }) => {
                     }
                 })
 
-                if (newColumn.length === 11) {
-                    setColumnFull(true)
-                    return
-                }
+                // if (newColumn.length === 11) {
+                //     setColumnFull(true)
+                //     return
+                // }
 
                 const moved = startingColumn.splice(source.index, 1)
 
@@ -518,6 +520,7 @@ const Home = ({ history }) => {
         //     setDraggingTaskId(parseInt(draggableId.slice(5)))
         // }
 
+
     }
 
 
@@ -526,8 +529,9 @@ const Home = ({ history }) => {
             <div id='home'>
                 <div className='sidebar-left'>
                     <UserDisplay />
-                    <AddProject />
+
                     <div className='project-stuff'>
+                        <AddProject />
                         <ProjectNavBar />
                         {listProjectArr.length !== 0 && <div style={{ display: 'flex', justifyContent: 'flex-end', marginRight: '5px' }}>
                             <More color='black' className='more-projects' onClick={() => setShowProjectList(!showProjectList)} />
@@ -557,7 +561,7 @@ const Home = ({ history }) => {
                     <ProjectMembers />
                     <LeaveProject />
                 </div>
-                {columnFull && <Layer
+                {/* {columnFull && <Layer
                     onEsc={() => setColumnFull(false)}
                     onClickOutside={() => {
                         setColumnFull(false)
@@ -566,7 +570,7 @@ const Home = ({ history }) => {
                     <div className='popup-container'>
                         Column has maximum number of tasks.
                     </div>
-                </Layer>}
+                </Layer>} */}
             </div>
         </DragDropContext>
     )

@@ -7,7 +7,7 @@ import { apiBaseUrl } from './config';
 import DeleteTask from './DeleteTask';
 import { Draggable } from 'react-beautiful-dnd'
 import * as tweenFunctions from "tween-functions";
-import { moveStepByStep, noScroll } from './utils'
+import { moveStepByStep, noScrollMoveToTop } from './utils'
 
 const Task = ({ columnHeader, taskRef, topTask, taskArrLength, columnId, currentlyDragging, setCurrentlyDragging, taskid, taskdropzoneid, heading, description }) => {
 
@@ -18,7 +18,8 @@ const Task = ({ columnHeader, taskRef, topTask, taskArrLength, columnId, current
         setDragColumnId,
         displayedColumns,
         setDisplayedColumns,
-        sensorState
+        sensorState,
+
     } = useContext(Context);
 
 
@@ -40,58 +41,29 @@ const Task = ({ columnHeader, taskRef, topTask, taskArrLength, columnId, current
 
         const midpoint = (rightSidebarEdge - leftSidebarEdge) / 2
         const oneQuarter = midpoint / 2
+        const twoThirds = (rightSidebarEdge - leftSidebarEdge) / 3 * 2
         const threeQuarters = midpoint / 2 + midpoint
         const currentScrollLeft = workingArea.scrollLeft
 
-        const taskRefLeft = taskRef.current.getBoundingClientRect().left
+        const taskRefLeft = document.getElementById(`task-id-${taskid}`).getBoundingClientRect().left
 
 
 
-        workingArea.scrollTop = 0
+        // workingArea.scrollTop = 0
+
+
 
 
         // Everything should be relative to screen size
-
-
-        // Doesn't cause scrolling
-        // taskRefLeft 855
-        // currentScrollLeft 339
-        // threeQuarters 864
-        // threeQuarters - taskRefLeft = 9, taskRefLeft is 9 left from threeQuarters
-
-        // Does cause scrolling
-        // taskRefLeft 857
-        // currentScrollLeft 337
-        // threeQuarters 864
-        // threeQuarters - taskRefLeft = 7 taskRefLeft is 7 left from threeQuarters
-
-
-        // Not sure if you can calculate the adjustment like this. The pixel count is based on my screen size.
-        // It should be 7 / my rightSidebarEdge - leftSidebarEdge maybe
-
-        // 
-
-
-        // What is the formula? 
-        // if threeQuarters - taskRefLeft < 7, 
-        // move workArea.scrollLeft over to the right to make threeQuarters - taskRefLeft === 7
-        // because that's the place the scroll container needs to be at for it to not cause scroll
-        // So how much does the scroll container need to move?
-        // How to find the difference between the current scroll position and the place it needs to go?
-        // Change in scroll left?
-        // With those numbers, scrollLeft had to increase by 2, so change in scrollLeft is 2
-
-        // Can move to scroll position where threeQuarters - taskRefLeft === 7
 
 
 
 
         // This works but fix adjustment. Also don't know why right side needs adjustment
         // but left side doesn't
-        if (taskRefLeft > adjustment + threeQuarters) {
-
-            const amountToMove = taskRefLeft - (adjustment + threeQuarters)
-            workingArea.scrollLeft = currentScrollLeft + amountToMove + 20
+        if (taskRefLeft > twoThirds) {
+            const amountToMove = taskRefLeft - twoThirds
+            workingArea.scrollLeft = currentScrollLeft + amountToMove
         } else if (taskRefLeft < oneQuarter) {
             const amountToMove = oneQuarter - taskRefLeft
             workingArea.scrollLeft = currentScrollLeft - amountToMove
@@ -103,22 +75,17 @@ const Task = ({ columnHeader, taskRef, topTask, taskArrLength, columnId, current
         // console.log(workingArea.getBoundingClientRect().left)
 
 
-        workingArea.addEventListener('scroll', noScroll);
+        // workingArea.addEventListener('scroll', noScrollMoveToTop);
 
 
-        const endX = -(taskRef.current.getBoundingClientRect().x - topTask.current.getBoundingClientRect().x)
+        const endX = -(document.getElementById(`task-id-${taskid}`).getBoundingClientRect().x - topTask.current.getBoundingClientRect().x)
 
-        const endY = -(taskRef.current.getBoundingClientRect().y - topTask.current.getBoundingClientRect().y)
-
+        const endY = -(document.getElementById(`task-id-${taskid}`).getBoundingClientRect().y - topTask.current.getBoundingClientRect().y)
 
         const startSpot = { x: 0, y: 0 }
         const drag = preDrag.fluidLift(startSpot)
 
-
         const end = { x: endX, y: endY }
-        // drag.move(end)
-
-
 
         const points = [];
 
@@ -130,6 +97,14 @@ const Task = ({ columnHeader, taskRef, topTask, taskArrLength, columnId, current
                 y: tweenFunctions.easeOutCirc(i, startSpot.y, end.y, numberOfPoints)
             });
         }
+
+        // const scrollPoints = []
+        // for (let i = 0; i < numberOfPoints; i++) {
+        //     points.push(
+        //         tweenFunctions.easeOutCirc(i, workingArea.scrollTop, 0, numberOfPoints)
+        //     )
+        // }
+
 
         moveStepByStep(drag, points)
     }
@@ -147,7 +122,7 @@ const Task = ({ columnHeader, taskRef, topTask, taskArrLength, columnId, current
                             {...provided.dragHandleProps}
                             ref={provided.innerRef}>
                             <div className='task'
-                                taskid={taskid}
+                                id={`task-id-${taskid}`}
                                 ref={taskRef}>
                                 <div className='task-drop-zone'
                                     ref={topTask}
@@ -176,7 +151,7 @@ const Task = ({ columnHeader, taskRef, topTask, taskArrLength, columnId, current
                             ref={provided.innerRef}>
                             <div className='task'
                                 ref={taskRef}
-                                taskid={taskid}
+                                id={`task-id-${taskid}`}
                                 onClick={toTopClick}
                             >
                                 <div className='task-drop-zone'
@@ -193,7 +168,6 @@ const Task = ({ columnHeader, taskRef, topTask, taskArrLength, columnId, current
 
             </Draggable >
         )
-
 
     }
 

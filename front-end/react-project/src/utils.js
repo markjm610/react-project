@@ -1,4 +1,6 @@
 export function moveStepByStep(drag, values) {
+    const workingArea = document.querySelector('.working-area')
+    workingArea.scrollTo(0, 0);
     requestAnimationFrame(() => {
         const newPosition = values.shift();
         drag.move(newPosition);
@@ -10,6 +12,15 @@ export function moveStepByStep(drag, values) {
     });
 }
 
+export function noScrollMoveToTop() {
+
+    const workingArea = document.querySelector('.working-area')
+    workingArea.scrollTo(workingArea.scrollLeft, 0);
+
+    // workingArea.scrollTo(workingArea.scrollLeft, workingArea.scrollTop)
+    // workingArea.scrollTo(0, 0);
+}
+
 export function noScroll() {
 
     const workingArea = document.querySelector('.working-area')
@@ -18,3 +29,12 @@ export function noScroll() {
     workingArea.scrollTo(workingArea.scrollLeft, workingArea.scrollTop)
     // workingArea.scrollTo(0, 0);
 }
+
+// export function noScroll(scrollLock) {
+
+//     const workingArea = document.querySelector('.working-area')
+//     // workingArea.scrollTo(workingArea.scrollLeft, 0);
+
+//     workingArea.scrollTo(workingArea.scrollLeft, scrollLock)
+//     // workingArea.scrollTo(0, 0);
+// }

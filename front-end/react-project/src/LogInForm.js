@@ -37,31 +37,13 @@ const LogInForm = ({ index }) => {
             setAuthToken(token);
             setCurrentUserId(id);
 
-
-
-
-
         } catch (e) {
             console.error(e)
         }
-
     }
 
-    // const onDragEnd = result => {
-    //     const { destination, source, combine } = result
-
-    //     // if (!destination) {
-    //     //     return
-    //     // }
-
-    //     setValue({ email: 'demo@user.com', password: 'password' })
-
-
-
-    // }
 
     return (
-
         <Draggable
             draggableId={'log-in'}
             index={index}
@@ -78,9 +60,9 @@ const LogInForm = ({ index }) => {
                             <h2>Log In</h2>
                             <div className='form-container'>
                                 <form onSubmit={handleSubmit}>
-
                                     <label className='label'>Email:</label>
                                     <input
+                                        type='email'
                                         className='landing-page-input'
                                         value={emailValue}
                                         onChange={e => {
