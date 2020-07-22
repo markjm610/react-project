@@ -39,5 +39,15 @@ router.get('/users/:userId/invites', asyncHandler(async (req, res, next) => {
     res.json({ invites })
 }))
 
+router.delete('/invites/:inviteId', asyncHandler(async (req, res, next) => {
+    const inviteId = parseInt(req.params.inviteId, 10);
+
+
+    const invite = await Invite.findByPk(inviteId)
+    await invite.destroy()
+
+    res.json('deleted')
+}))
+
 
 module.exports = router;

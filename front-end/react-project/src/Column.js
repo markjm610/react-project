@@ -10,8 +10,11 @@ import { Droppable, Draggable } from 'react-beautiful-dnd'
 import * as tweenFunctions from "tween-functions";
 import { moveStepByStep, noScroll } from './utils'
 import { Trash } from 'grommet-icons';
+import disableScroll from 'disable-scroll'
+import AddColumn from './AddColumn';
 
-const Column = ({ updateTasksArray, columnDropZoneId, tasksArray, name, columnId, currentlyDragging, setCurrentlyDragging }) => {
+
+const Column = ({ columnArrayLength, columnDropZoneId, tasksArray, name, columnId, currentlyDragging, setCurrentlyDragging }) => {
 
     const {
         currentlyDraggingColumn,
@@ -23,29 +26,13 @@ const Column = ({ updateTasksArray, columnDropZoneId, tasksArray, name, columnId
         setAlphabetizing,
         setCurrentSortedTaskArray,
         draggingTaskId,
-        updateColumns
+        updateColumns,
+        setTaskRefs,
+        setDragStartFunction
     } = useContext(Context)
 
     const topTask = useRef(null)
 
-    const taskRefs = {
-        0: useRef(null),
-        1: useRef(null),
-        2: useRef(null),
-        3: useRef(null),
-        4: useRef(null),
-        5: useRef(null),
-        6: useRef(null),
-        7: useRef(null),
-        8: useRef(null),
-        9: useRef(null),
-        10: useRef(null),
-    }
-
-    const refTest = document.querySelectorAll('.task')
-    // if (refTest.length) {
-    //     console.log(refTest)
-    // }
     const columnHeader = useRef(null)
 
 
@@ -110,31 +97,48 @@ const Column = ({ updateTasksArray, columnDropZoneId, tasksArray, name, columnId
                 const midpoint = (rightSidebarEdge - leftSidebarEdge) / 2
                 const oneQuarter = midpoint / 2
                 const threeQuarters = midpoint / 2 + midpoint
+                const twoThirds = (rightSidebarEdge - leftSidebarEdge) / 3 * 2
                 const currentScrollLeft = workingArea.scrollLeft
 
-                const taskRefLeft = taskRefs[taskIndexToMove].current.getBoundingClientRect().left
+                const taskRefLeft = document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().left
 
-                if (taskRefLeft > adjustment + threeQuarters) {
-                    const amountToMove = taskRefLeft - (adjustment + threeQuarters)
-                    workingArea.scrollLeft = currentScrollLeft + amountToMove + 20
+                if (taskRefLeft > twoThirds) {
+                    const amountToMove = taskRefLeft - twoThirds
+                    workingArea.scrollLeft = currentScrollLeft + twoThirds
                 } else if (taskRefLeft < oneQuarter) {
                     const amountToMove = oneQuarter - taskRefLeft
                     workingArea.scrollLeft = currentScrollLeft - amountToMove
                 }
 
 
-                const bottomOfTaskToMove = taskRefs[taskIndexToMove].current.getBoundingClientRect().bottom
+                // const bottomOfTaskToMove = document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().bottom
+                const topOfWorkingArea = workingArea.getBoundingClientRect().top
+                const bottomOfWorkingArea = workingArea.getBoundingClientRect().bottom
 
-                console.log()
+                const bottomOfSpotToMoveTo = document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().bottom
 
+                const verticalMidpoint = (bottomOfWorkingArea - topOfWorkingArea) / 2
+                const verticalThreeQuarters = verticalMidpoint / 2 + verticalMidpoint
+                const third = (bottomOfWorkingArea - topOfWorkingArea) / 3
+                // Before moving, check to see if spot to move is low enough to cause scrolling down
+                // If spot to move is low enough to cause scrolling down, move scroll position so that spot
+                // is as high as possible without causing scrolling up
+                // Maybe can move up further and noScroll will actually work for Y direction
+
+                let scrollLock;
+                if (bottomOfSpotToMoveTo > third * 2) {
+                    scrollLock = workingArea.scrollTop + (bottomOfSpotToMoveTo - third)
+                    workingArea.scrollTop = workingArea.scrollTop + (bottomOfSpotToMoveTo - third)
+                }
+
+                disableScroll.on()
                 workingArea.addEventListener('scroll', noScroll);
 
-                const endX = -(taskRefs[taskIndexToMove].current.getBoundingClientRect().x - taskRefs[i].current.getBoundingClientRect().x)
+                const endX = -(document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().x
+                    - document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().x)
 
-                const endY = -(taskRefs[taskIndexToMove].current.getBoundingClientRect().y - taskRefs[i].current.getBoundingClientRect().y)
-
-                // // const endX = target.current && target.current.getBoundingClientRect().x
-                // // const endY = target.current && target.current.getBoundingClientRect().y
+                const endY = -(document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().y
+                    - document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().y)
 
 
                 const startSpot = { x: 0, y: 0 }
@@ -169,6 +173,7 @@ const Column = ({ updateTasksArray, columnDropZoneId, tasksArray, name, columnId
                 if (sortedTask.description === tasksArray[i].description) {
                     if (i === sortedTasks.length - 1) {
                         setAlphabetizing(false)
+                        disableScroll.off()
                     }
                     continue
                 } else {
@@ -187,14 +192,38 @@ const Column = ({ updateTasksArray, columnDropZoneId, tasksArray, name, columnId
                         return;
                     }
 
+                    const workingArea = document.querySelector('.working-area')
 
-                    const endX = -(taskRefs[taskIndexToMove].current.getBoundingClientRect().x - taskRefs[i].current.getBoundingClientRect().x)
+                    const topOfWorkingArea = workingArea.getBoundingClientRect().top
+                    const bottomOfWorkingArea = workingArea.getBoundingClientRect().bottom
 
-                    const endY = -(taskRefs[taskIndexToMove].current.getBoundingClientRect().y - taskRefs[i].current.getBoundingClientRect().y)
+                    const bottomOfSpotToMoveTo = document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().bottom
 
-                    // // const endX = target.current && target.current.getBoundingClientRect().x
-                    // // const endY = target.current && target.current.getBoundingClientRect().y
+                    const third = (bottomOfWorkingArea - topOfWorkingArea) / 3
+                    const verticalMidpoint = (bottomOfWorkingArea - topOfWorkingArea) / 2
+                    const verticalThreeQuarters = verticalMidpoint / 2 + verticalMidpoint
+                    const verticalOneQuarter = verticalMidpoint / 2
 
+                    // Before moving, check to see if spot to move is low enough to cause scrolling down
+                    // If spot to move is low enough to cause scrolling down, move scroll position so that spot
+                    // is as high as possible without causing scrolling up
+                    // Maybe can move up further and noScroll will actually work for Y direction
+                    let scrollLock;
+                    if (bottomOfSpotToMoveTo > third * 2) {
+                        scrollLock = workingArea.scrollTop + (bottomOfSpotToMoveTo - third)
+                        workingArea.scrollTop = workingArea.scrollTop + (bottomOfSpotToMoveTo - third)
+                    }
+
+
+                    workingArea.addEventListener('scroll', noScroll)
+
+
+
+                    const endX = -(document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().x
+                        - document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().x)
+
+                    const endY = -(document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().y
+                        - document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().y)
 
                     const startSpot = { x: 0, y: 0 }
                     const drag = preDrag.fluidLift(startSpot)
@@ -215,6 +244,7 @@ const Column = ({ updateTasksArray, columnDropZoneId, tasksArray, name, columnId
 
                     if (i === sortedTasks.length - 1) {
                         setAlphabetizing(false)
+                        disableScroll.off()
                     }
                     moveStepByStep(drag, points)
                     break
@@ -228,63 +258,6 @@ const Column = ({ updateTasksArray, columnDropZoneId, tasksArray, name, columnId
 
 
 
-
-    const changePositions = () => {
-
-
-        // if (columnDropZoneId === columnArrLength - 1) {
-        //     return;
-        // }
-        // const saveId = dragTaskId;
-        const drag = currentlyDraggingColumn;
-
-        // let startingColumn;
-
-        let copy = [...displayedColumns];
-
-
-
-        const moved = copy.splice(drag, 1);
-
-        copy.splice(columnDropZoneId, 0, moved[0])
-
-        copy.forEach((column, i) => {
-            column.pagePosition = i;
-        })
-
-
-
-        // setDragColumnId(dragColumnId);
-
-        setDisplayedColumns(copy);
-
-        setCurrentlyDraggingColumn(columnDropZoneId);
-        // setDragTaskId(saveId);
-
-    }
-
-
-
-    const handleDrop = async (item) => {
-        // console.log('handle drop')
-        let sendArr = [...displayedColumns];
-
-
-
-
-        try {
-            await fetch(`${apiBaseUrl}/columns`, {
-                method: 'PUT',
-                body: JSON.stringify({ sendArr }),
-                headers: {
-                    "Content-Type": 'application/json',
-                }
-            })
-
-        } catch (e) {
-            console.error(e)
-        }
-    }
 
     const clearCompleted = async () => {
 
@@ -304,7 +277,6 @@ const Column = ({ updateTasksArray, columnDropZoneId, tasksArray, name, columnId
 
 
     }
-
     return (
         <Draggable draggableId={`column-${columnId}`} index={columnDropZoneId}>
             {(dragProvided, { isDragging }) => {
@@ -358,7 +330,6 @@ const Column = ({ updateTasksArray, columnDropZoneId, tasksArray, name, columnId
                                                         columnId={task.columnId}
                                                         taskArrLength={tasksArray.length}
                                                         topTask={topTask}
-                                                        taskRef={taskRefs[i]}
                                                         columnHeader={columnHeader}
                                                     />)
 
@@ -367,18 +338,6 @@ const Column = ({ updateTasksArray, columnDropZoneId, tasksArray, name, columnId
                                             </div>)
                                     }}
                                 </Droppable>
-                                {/* <div className='highlight-container' style={{ top: `-${updateColumns[columnDropZoneId].Tasks.length * 60 + 5}px` }}>
-                                    {updateColumns[columnDropZoneId].Tasks.map((task, i) => {
-
-                                        return (
-                                            <div key={`highlight-${task}`} className='highlight' style={{
-                                                backgroundColor:
-                                                    task === draggingTaskId &&
-                                                    'lightgoldenrodyellow'
-                                            }} />
-                                        )
-                                    })}
-                                </div> */}
                             </div>
                         </div>
                     </div>
@@ -387,6 +346,7 @@ const Column = ({ updateTasksArray, columnDropZoneId, tasksArray, name, columnId
 
         </Draggable >
     )
+
 
 }
 

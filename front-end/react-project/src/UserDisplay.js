@@ -1,17 +1,23 @@
 import React, { useContext, useState } from 'react';
 import { Layer, Form, Box, FormField, TextInput, Button } from 'grommet';
-import { Notification, UserAdd } from 'grommet-icons';
+import { Notification, UserAdd, FormCheckmark, FormClose } from 'grommet-icons';
+
 import Context from './Context';
 import { apiBaseUrl } from './config';
 
 const UserDisplay = () => {
     const { invites, setInvites, currentUserId, mainProjectArr, listProjectArr } = useContext(Context);
     const [show, setShow] = useState();
-    const clickNotification = () => {
+    const [clickedButton, setClickedButton] = useState(false)
+    const [allowAccept, setAllowAccept] = useState(false)
+
+    const clickNotification = (e) => {
+
         setShow(true)
     }
 
     const acceptInvite = async (invite) => {
+
 
         setShow(false)
 
@@ -36,38 +42,75 @@ const UserDisplay = () => {
                 "Content-Type": 'application/json',
             }
         })
-        // if (res.ok) {
+    }
 
-        // }
+    const rejectInvite = async invite => {
+        setShow(false)
 
+        let invitesCopy = [...invites];
+        let spliceId;
+        invitesCopy.forEach((inviteCopy, i) => {
+            if (inviteCopy.id === invite.id) {
+                spliceId = i;
+            }
+        })
+        invitesCopy.splice(spliceId, 1)
+
+        setInvites(invitesCopy)
+
+        await fetch(`${apiBaseUrl}/invites/${invite.id}`, {
+            method: 'DELETE'
+        })
     }
 
 
 
     return (
-        <div className='user-display'>
+        <>
+            {invites[0] && <div className='user-display'>
+                <div className='notification-icon-container'>
+                    <Notification
+                        color='white'
+                        className='notification-icon'
+                        onClick={clickNotification}
+                    />
+                    <div className='invite-message'>
+                        You have {invites.length} invite{invites.length !== 1 ? 's' : ''}!
+                    </div>
+                </div>
 
-            {invites[0] && <div className='notification-icon-container'><Notification
-                color='white'
-                className='notification-icon' onClick={clickNotification}></Notification>
-                <div className='invite-message'>You have {invites.length} invite{invites.length !== 1 ? 's' : ''}!</div>
             </div>}
-            {show && (
-                <Layer
-                    onEsc={() => setShow(false)}
-                    onClickOutside={() => setShow(false)}
-                >   {invites.map(invite => {
-                    return (
-                        <React.Fragment key={invite.id}>
-                            <div className='invite-message'>
-                                {invite.inviteSender} invited you to a project: {invite.Project.name}
-                            </div>
-                            <Button onClick={() => acceptInvite(invite)} color='lightsteelblue' primary label="Join project" />
-                        </React.Fragment>)
-                })}
-                </Layer>
-            )}
-        </div>
+
+
+            {show && <Layer
+                onEsc={() => setShow(false)}
+                onClickOutside={() => {
+                    setClickedButton(false)
+                    setShow(false)
+                }}>
+                <div className='popup-container'>
+                    {invites.map(invite => {
+                        return (
+                            <div key={invite.id} className='invite-popup-container'>
+                                <div className='accept-invite-text'>
+                                    {invite.inviteSender} invited you to a project: {invite.Project.name}
+                                </div>
+                                <div className='invite-buttons'>
+                                    <div
+                                        className='accept-invite'
+                                        onClick={() => acceptInvite(invite)}
+                                    >
+                                        <FormCheckmark />
+                                    </div>
+                                    <div className='reject-invite' onClick={() => rejectInvite(invite)}>
+                                        <FormClose />
+                                    </div>
+                                </div>
+                            </div>)
+                    })}
+                </div>
+            </Layer>}
+        </>
     )
 }
 

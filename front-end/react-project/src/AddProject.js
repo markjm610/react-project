@@ -3,6 +3,8 @@ import { Add } from 'grommet-icons';
 import { Layer, Form, Box, FormField, TextInput, Button } from 'grommet';
 import Context from './Context';
 import { apiBaseUrl } from './config';
+import Tooltip from '@material-ui/core/Tooltip';
+
 
 const AddProject = () => {
     const { selectedProject, setSelectedProject, currentUserId, mainProjectArr, setMainProjectArr, listProjectArr, setListProjectArr } = useContext(Context)
@@ -17,7 +19,8 @@ const AddProject = () => {
         setShow(true)
     }
 
-    const addProjectSubmit = async () => {
+    const addProjectSubmit = async (e) => {
+        e.preventDefault()
         setClickedButton(true)
         if (!value) {
             return;
@@ -57,12 +60,11 @@ const AddProject = () => {
 
 
     return (<>
-        <div onClick={addProjectClick} className='add-project'>
-            <Add color='black' className='add-project-icon'>
-            </Add>
-            {/* <div className='add-profile-picture-text'>Add Project</div> */}
-        </div>
-
+        <Tooltip title='Add Project' arrow>
+            <div onClick={addProjectClick} className='add-project'>
+                <Add color='black' className='add-project-icon' />
+            </div>
+        </Tooltip>
         {
             show && (
                 <Layer
@@ -76,25 +78,26 @@ const AddProject = () => {
                     <div className='popup-container'>
 
                         <div className='popup-text'>Name your project:</div>
-
-                        <input
-                            className='popup-input'
-                            value={value}
-                            onChange={e => {
-                                if (clickedButton) {
-                                    setClickedButton(false)
-                                }
-                                setValue(e.target.value)
-                            }}
-                            onFocus={() => {
-                                if (clickedButton) {
-                                    setClickedButton(false)
-                                }
-                            }}
-                        />
-                        <div style={{ display: 'flex', justifyContent: 'space-around' }}>
-                            <div className={clickedButton ? 'popup-button-clicked' : 'popup-button'} onClick={addProjectSubmit}>Add</div>
-                        </div>
+                        <form onSubmit={addProjectSubmit}>
+                            <input
+                                className='popup-input'
+                                value={value}
+                                onChange={e => {
+                                    if (clickedButton) {
+                                        setClickedButton(false)
+                                    }
+                                    setValue(e.target.value)
+                                }}
+                                onFocus={() => {
+                                    if (clickedButton) {
+                                        setClickedButton(false)
+                                    }
+                                }}
+                            />
+                            <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+                                <div className={clickedButton ? 'popup-button-clicked' : 'popup-button'} onClick={addProjectSubmit}>Add</div>
+                            </div>
+                        </form>
                     </div>
                 </Layer>
             )
