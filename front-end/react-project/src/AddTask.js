@@ -65,7 +65,7 @@ const AddTask = ({ columnId, taskArrLength }) => {
         setValue('')
         setDescriptionLength(0)
         const workingArea = document.querySelector('.working-area')
-        workingArea.scrollTop = workingArea.scrollHeight
+        // workingArea.scrollTop = workingArea.scrollHeight
     }
 
     return (
