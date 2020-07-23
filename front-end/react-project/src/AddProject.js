@@ -57,51 +57,54 @@ const AddProject = () => {
 
 
 
-
-
-    return (<>
-        <Tooltip title='Add Project' arrow>
-            <div onClick={addProjectClick} className='add-project'>
-                <Add color='black' className='add-project-icon' />
-            </div>
-        </Tooltip>
-        {
-            show && (
-                <Layer
-                    onEsc={() => setShow(false)}
-                    onClickOutside={() => {
-                        setClickedButton(false)
-                        setShow(false)
-                        setValue('')
-                    }}
-                >
-                    <div className='popup-container'>
-
-                        <div className='popup-text'>Name your project:</div>
-                        <form onSubmit={addProjectSubmit}>
-                            <input
-                                className='popup-input'
-                                value={value}
-                                onChange={e => {
-                                    if (clickedButton) {
-                                        setClickedButton(false)
-                                    }
-                                    setValue(e.target.value)
-                                }}
-                                onFocus={() => {
-                                    if (clickedButton) {
-                                        setClickedButton(false)
-                                    }
-                                }}
-                            />
-                            <div style={{ display: 'flex', justifyContent: 'space-around' }}>
-                                <div className={clickedButton ? 'popup-button-clicked' : 'popup-button'} onClick={addProjectSubmit}>Add</div>
-                            </div>
-                        </form>
+    return (
+        <>
+            <div className='add-project'>
+                <Tooltip title='Add Project' arrow placement='top'>
+                    <div onClick={addProjectClick} className='add-project-icon-wrapper'>
+                        <Add color='black' className='add-project-icon' />
                     </div>
-                </Layer>
-            )
-        }</>)
+                </Tooltip>
+            </div>
+
+            {
+                show && (
+                    <Layer
+                        onEsc={() => setShow(false)}
+                        onClickOutside={() => {
+                            setClickedButton(false)
+                            setShow(false)
+                            setValue('')
+                        }}
+                    >
+                        <div className='popup-container'>
+
+                            <div className='popup-text'>Name your project:</div>
+                            <form onSubmit={addProjectSubmit}>
+                                <input
+                                    className='popup-input'
+                                    value={value}
+                                    onChange={e => {
+                                        if (clickedButton) {
+                                            setClickedButton(false)
+                                        }
+                                        setValue(e.target.value)
+                                    }}
+                                    onFocus={() => {
+                                        if (clickedButton) {
+                                            setClickedButton(false)
+                                        }
+                                    }}
+                                />
+                                <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+                                    <div className={clickedButton ? 'popup-button-clicked' : 'popup-button'} onClick={addProjectSubmit}>Add</div>
+                                </div>
+                            </form>
+                        </div>
+                    </Layer>
+                )
+            }
+        </>)
 }
 
 export default AddProject;

@@ -7,7 +7,7 @@ import { apiBaseUrl } from './config';
 import DeleteTask from './DeleteTask';
 import { Draggable } from 'react-beautiful-dnd'
 import * as tweenFunctions from "tween-functions";
-import { moveStepByStep, noScrollMoveToTop } from './utils'
+import { moveStepByStep, noScrollMoveToTop, scrollStepByStep } from './utils'
 
 const Task = ({ columnHeader, taskRef, topTask, taskArrLength, columnId, currentlyDragging, setCurrentlyDragging, taskid, taskdropzoneid, heading, description }) => {
 
@@ -80,7 +80,7 @@ const Task = ({ columnHeader, taskRef, topTask, taskArrLength, columnId, current
 
         const endX = -(document.getElementById(`task-id-${taskid}`).getBoundingClientRect().x - topTask.current.getBoundingClientRect().x)
 
-        const endY = -(document.getElementById(`task-id-${taskid}`).getBoundingClientRect().y - topTask.current.getBoundingClientRect().y)
+        const endY = -(document.getElementById(`task-id-${taskid}`).getBoundingClientRect().y - topTask.current.getBoundingClientRect().y) + workingArea.scrollTop
 
         const startSpot = { x: 0, y: 0 }
         const drag = preDrag.fluidLift(startSpot)
@@ -98,15 +98,15 @@ const Task = ({ columnHeader, taskRef, topTask, taskArrLength, columnId, current
             });
         }
 
-        // const scrollPoints = []
-        // for (let i = 0; i < numberOfPoints; i++) {
-        //     points.push(
-        //         tweenFunctions.easeOutCirc(i, workingArea.scrollTop, 0, numberOfPoints)
-        //     )
-        // }
+        const scrollPoints = []
+        for (let i = 0; i < numberOfPoints; i++) {
+            scrollPoints.push(
+                tweenFunctions.easeOutCirc(i, workingArea.scrollTop, 0, numberOfPoints)
+            )
+        }
 
 
-        moveStepByStep(drag, points)
+        moveStepByStep(drag, points, scrollPoints)
     }
 
 

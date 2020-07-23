@@ -1,34 +1,47 @@
-export function moveStepByStep(drag, values) {
+export function moveStepByStep(drag, values, scrollPoints) {
     const workingArea = document.querySelector('.working-area')
-    workingArea.scrollTo(0, 0);
+
     requestAnimationFrame(() => {
         const newPosition = values.shift();
         drag.move(newPosition);
+        const newScrollPosition = scrollPoints.shift()
+        workingArea.scrollTo(workingArea.scrollLeft, newScrollPosition)
         if (values.length) {
-            moveStepByStep(drag, values);
+            moveStepByStep(drag, values, scrollPoints);
         } else {
             drag.drop();
         }
     });
 }
 
-export function noScrollMoveToTop() {
+// export function scrollStepByStep(scrollPoints) {
+//     const workingArea = document.querySelector('.working-area')
+//     requestAnimationFrame(() => {
+//         const newPosition = scrollPoints.shift()
+//         workingArea.scrollTo(workingArea.scrollLeft, newPosition)
+//         if (scrollPoints.length) {
+//             scrollStepByStep(scrollPoints)
+//         }
+//     })
+// }
 
-    const workingArea = document.querySelector('.working-area')
-    workingArea.scrollTo(workingArea.scrollLeft, 0);
+// export function noScrollMoveToTop() {
 
-    // workingArea.scrollTo(workingArea.scrollLeft, workingArea.scrollTop)
-    // workingArea.scrollTo(0, 0);
-}
+//     const workingArea = document.querySelector('.working-area')
+//     workingArea.scrollTo(workingArea.scrollLeft, 0);
 
-export function noScroll() {
+//     // workingArea.scrollTo(workingArea.scrollLeft, workingArea.scrollTop)
+//     // workingArea.scrollTo(0, 0);
+// }
 
-    const workingArea = document.querySelector('.working-area')
-    // workingArea.scrollTo(workingArea.scrollLeft, 0);
+// export function noScroll() {
 
-    workingArea.scrollTo(workingArea.scrollLeft, workingArea.scrollTop)
-    // workingArea.scrollTo(0, 0);
-}
+//     const workingArea = document.querySelector('.working-area')
+//     // workingArea.scrollTo(workingArea.scrollLeft, 0);
+
+//     workingArea.scrollTo(workingArea.scrollLeft, workingArea.scrollTop)
+//     // workingArea.scrollTo(0, 0);
+// }
 
 // export function noScroll(scrollLock) {
 

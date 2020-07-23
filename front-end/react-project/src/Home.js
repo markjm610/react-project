@@ -175,9 +175,9 @@ const Home = ({ history }) => {
                 setDisplayedColumns(copy);
                 // setCurrentlyDragging(taskdropzoneid);
                 // setDragTaskId(saveId);
-                const workingArea = document.querySelector('.working-area')
-                workingArea.removeEventListener('scroll', noScroll);
-                workingArea.removeEventListener('scroll', noScrollMoveToTop);
+                // const workingArea = document.querySelector('.working-area')
+                // workingArea.removeEventListener('scroll', noScroll);
+                // workingArea.removeEventListener('scroll', noScrollMoveToTop);
             } else {
 
                 // const saveDragColumnId = dragColumnId;

@@ -65,7 +65,7 @@ const Invite = () => {
             {currentProjectId &&
 
                 <div className='invite'>
-                    <Tooltip title='Invite' arrow>
+                    <Tooltip title='Invite' arrow placement='top'>
                         <div>
                             <ShareOption
                                 color='black'

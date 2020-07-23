@@ -111,35 +111,62 @@ const Column = ({ columnArrayLength, columnDropZoneId, tasksArray, name, columnI
                 }
 
 
-                // const bottomOfTaskToMove = document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().bottom
+                const bottomOfTaskToMove = document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().bottom
                 const topOfWorkingArea = workingArea.getBoundingClientRect().top
                 const bottomOfWorkingArea = workingArea.getBoundingClientRect().bottom
 
                 const bottomOfSpotToMoveTo = document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().bottom
+                const topOfSpotToMoveTo = document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().top
 
                 const verticalMidpoint = (bottomOfWorkingArea - topOfWorkingArea) / 2
                 const verticalThreeQuarters = verticalMidpoint / 2 + verticalMidpoint
                 const third = (bottomOfWorkingArea - topOfWorkingArea) / 3
-                // Before moving, check to see if spot to move is low enough to cause scrolling down
-                // If spot to move is low enough to cause scrolling down, move scroll position so that spot
-                // is as high as possible without causing scrolling up
-                // Maybe can move up further and noScroll will actually work for Y direction
+                const bottomOfTopTask = document.getElementById(`task-id-${tasksArray[0].id}`).getBoundingClientRect().bottom
+                const topOfTopTask = document.getElementById(`task-id-${tasksArray[0].id}`).getBoundingClientRect().top
+                // let scrollLock;
+                // let scrollLock;
+                // if (bottomOfSpotToMoveTo > third * 2) {
+                //     scrollLock = workingArea.scrollTop + (bottomOfSpotToMoveTo - third)
+                //     workingArea.scrollTop = workingArea.scrollTop + (bottomOfSpotToMoveTo - third)
+                // }
 
-                let scrollLock;
-                if (bottomOfSpotToMoveTo > third * 2) {
-                    scrollLock = workingArea.scrollTop + (bottomOfSpotToMoveTo - third)
-                    workingArea.scrollTop = workingArea.scrollTop + (bottomOfSpotToMoveTo - third)
-                }
+                // console.log('bottomOfTaskToMove', bottomOfTaskToMove)
+                // console.log('bottomOfWorkingArea', bottomOfWorkingArea)
+                // console.log('workingArea.scrollHeight', workingArea.scrollHeight)
+                let startScrollTop = workingArea.scrollTop
+                let nextScrollTop = workingArea.scrollTop
+                // if (bottomOfTaskToMove > third * 2 + workingArea.scrollTop) {
+                // startScrollTop = bottomOfTaskToMove - (bottomOfWorkingArea - topOfWorkingArea) + verticalMidpoint
+                // if (bottomOfTaskToMove > (bottomOfWorkingArea - topOfWorkingArea) + workingArea.scrollTop) {
+                startScrollTop = bottomOfTaskToMove
+                nextScrollTop = topOfSpotToMoveTo
+                // }
+                // document.getElementById(`task-id-${taskToMove.id}`).scrollIntoView()
+                workingArea.scrollTop = startScrollTop
 
-                disableScroll.on()
-                workingArea.addEventListener('scroll', noScroll);
+                // disableScroll.on()
+                // workingArea.addEventListener('scroll', noScroll);
 
                 const endX = -(document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().x
                     - document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().x)
 
-                const endY = -(document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().y
-                    - document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().y)
 
+                // workingArea.scrollTop becomes maxed out at a certain point and 
+                // topOfTaskToMove keeps increasing
+                let endY;
+                if (topOfSpotToMoveTo < workingArea.scrollTop) {
+                    endY = -(document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().y
+                        - document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().y)
+                        + workingArea.scrollTop - topOfSpotToMoveTo
+                } else {
+                    endY = -(document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().y
+                        - document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().y)
+                }
+
+
+                // console.log('workingArea.scrollTop', workingArea.scrollTop)
+                console.log('endY', endY)
+                // console.log('scrollHeight', workingArea.scrollHeight)
 
                 const startSpot = { x: 0, y: 0 }
                 const drag = preDrag.fluidLift(startSpot)
@@ -156,10 +183,17 @@ const Column = ({ columnArrayLength, columnDropZoneId, tasksArray, name, columnI
                         y: tweenFunctions.easeOutCirc(i, startSpot.y, end.y, numberOfPoints)
                     });
                 }
+                // console.log(points)
 
+                const scrollPoints = []
+                for (let i = 0; i < numberOfPoints; i++) {
+                    scrollPoints.push(
+                        tweenFunctions.easeOutCirc(i, startScrollTop, nextScrollTop, numberOfPoints)
+                    )
+                }
+                // console.log(scrollPoints)
 
-
-                moveStepByStep(drag, points)
+                moveStepByStep(drag, points, scrollPoints)
                 break
             }
         }
@@ -173,7 +207,7 @@ const Column = ({ columnArrayLength, columnDropZoneId, tasksArray, name, columnI
                 if (sortedTask.description === tasksArray[i].description) {
                     if (i === sortedTasks.length - 1) {
                         setAlphabetizing(false)
-                        disableScroll.off()
+                        // disableScroll.off()
                     }
                     continue
                 } else {
@@ -196,9 +230,10 @@ const Column = ({ columnArrayLength, columnDropZoneId, tasksArray, name, columnI
 
                     const topOfWorkingArea = workingArea.getBoundingClientRect().top
                     const bottomOfWorkingArea = workingArea.getBoundingClientRect().bottom
+                    const topOfSpotToMoveTo = document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().top
 
                     const bottomOfSpotToMoveTo = document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().bottom
-
+                    const bottomOfTaskToMove = document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().bottom
                     const third = (bottomOfWorkingArea - topOfWorkingArea) / 3
                     const verticalMidpoint = (bottomOfWorkingArea - topOfWorkingArea) / 2
                     const verticalThreeQuarters = verticalMidpoint / 2 + verticalMidpoint
@@ -208,22 +243,43 @@ const Column = ({ columnArrayLength, columnDropZoneId, tasksArray, name, columnI
                     // If spot to move is low enough to cause scrolling down, move scroll position so that spot
                     // is as high as possible without causing scrolling up
                     // Maybe can move up further and noScroll will actually work for Y direction
-                    let scrollLock;
-                    if (bottomOfSpotToMoveTo > third * 2) {
-                        scrollLock = workingArea.scrollTop + (bottomOfSpotToMoveTo - third)
-                        workingArea.scrollTop = workingArea.scrollTop + (bottomOfSpotToMoveTo - third)
-                    }
+                    // let scrollLock;
+                    // if (bottomOfSpotToMoveTo > third * 2) {
+                    //     scrollLock = workingArea.scrollTop + (bottomOfSpotToMoveTo - third)
+                    //     workingArea.scrollTop = workingArea.scrollTop + (bottomOfSpotToMoveTo - third)
+                    // }
 
 
-                    workingArea.addEventListener('scroll', noScroll)
+                    // workingArea.addEventListener('scroll', noScroll)
+                    let startScrollTop = workingArea.scrollTop
+                    let nextScrollTop = workingArea.scrollTop
+                    // if (bottomOfTaskToMove > third * 2 + workingArea.scrollTop) {
+                    // startScrollTop = bottomOfTaskToMove - (bottomOfWorkingArea - topOfWorkingArea) + verticalMidpoint
+                    // if (bottomOfTaskToMove > (bottomOfWorkingArea - topOfWorkingArea) + workingArea.scrollTop) {
+                    startScrollTop = bottomOfTaskToMove
+                    nextScrollTop = topOfSpotToMoveTo
+                    // }
+                    // document.getElementById(`task-id-${taskToMove.id}`).scrollIntoView()
+                    workingArea.scrollTop = startScrollTop
 
-
+                    // disableScroll.on()
+                    // workingArea.addEventListener('scroll', noScroll);
 
                     const endX = -(document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().x
                         - document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().x)
 
-                    const endY = -(document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().y
-                        - document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().y)
+
+                    // workingArea.scrollTop becomes maxed out at a certain point and 
+                    // topOfTaskToMove keeps increasing
+                    let endY;
+                    if (topOfSpotToMoveTo < workingArea.scrollTop) {
+                        endY = -(document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().y
+                            - document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().y)
+                            + workingArea.scrollTop - topOfSpotToMoveTo
+                    } else {
+                        endY = -(document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().y
+                            - document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().y)
+                    }
 
                     const startSpot = { x: 0, y: 0 }
                     const drag = preDrag.fluidLift(startSpot)
@@ -241,12 +297,18 @@ const Column = ({ columnArrayLength, columnDropZoneId, tasksArray, name, columnI
                         });
                     }
 
+                    const scrollPoints = []
+                    for (let i = 0; i < numberOfPoints; i++) {
+                        scrollPoints.push(
+                            tweenFunctions.easeOutCirc(i, startScrollTop, nextScrollTop, numberOfPoints)
+                        )
+                    }
 
                     if (i === sortedTasks.length - 1) {
                         setAlphabetizing(false)
-                        disableScroll.off()
+                        // disableScroll.off()
                     }
-                    moveStepByStep(drag, points)
+                    moveStepByStep(drag, points, scrollPoints)
                     break
                 }
             }
