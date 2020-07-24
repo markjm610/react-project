@@ -379,7 +379,7 @@ html, body {
 
 .task__description-dragging {
     grid-row: 1 / 2;
-    background-color: whitesmoke;
+    background-color: lightgoldenrodyellow;
     padding: 5px;
     display: flex;
     justify-content: space-between;

@@ -123,27 +123,40 @@ const Column = ({ columnArrayLength, columnDropZoneId, tasksArray, name, columnI
                 const third = (bottomOfWorkingArea - topOfWorkingArea) / 3
                 const bottomOfTopTask = document.getElementById(`task-id-${tasksArray[0].id}`).getBoundingClientRect().bottom
                 const topOfTopTask = document.getElementById(`task-id-${tasksArray[0].id}`).getBoundingClientRect().top
-                // let scrollLock;
+                // console.log('topOfSpotToMoveTo', topOfSpotToMoveTo)
+                // console.log('workingArea.getBoundingClientRect().height', workingArea.getBoundingClientRect().height)
+                // console.log('workingArea.scrollTop', workingArea.scrollTop)
+                // console.log('bottomOfTaskToMove', bottomOfTaskToMove)
+
+                const spotMiddle = document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().top + document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().height / 2
+                const taskMiddle = document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().top + document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().height / 2
+                // Before moving, check to see if spot to move is low enough to cause scrolling down
+                // If spot to move is low enough to cause scrolling down, move scroll position so that spot
+                // is as high as possible without causing scrolling up
+                // Maybe can move up further and noScroll will actually work for Y direction
                 // let scrollLock;
                 // if (bottomOfSpotToMoveTo > third * 2) {
                 //     scrollLock = workingArea.scrollTop + (bottomOfSpotToMoveTo - third)
                 //     workingArea.scrollTop = workingArea.scrollTop + (bottomOfSpotToMoveTo - third)
                 // }
 
-                // console.log('bottomOfTaskToMove', bottomOfTaskToMove)
-                // console.log('bottomOfWorkingArea', bottomOfWorkingArea)
-                // console.log('workingArea.scrollHeight', workingArea.scrollHeight)
+
                 let startScrollTop = workingArea.scrollTop
                 let nextScrollTop = workingArea.scrollTop
-                // if (bottomOfTaskToMove > third * 2 + workingArea.scrollTop) {
-                // startScrollTop = bottomOfTaskToMove - (bottomOfWorkingArea - topOfWorkingArea) + verticalMidpoint
-                // if (bottomOfTaskToMove > (bottomOfWorkingArea - topOfWorkingArea) + workingArea.scrollTop) {
-                startScrollTop = bottomOfTaskToMove
-                nextScrollTop = topOfSpotToMoveTo
-                // }
-                // document.getElementById(`task-id-${taskToMove.id}`).scrollIntoView()
-                workingArea.scrollTop = startScrollTop
 
+                // This part needs to be changed... maybe?
+                if (bottomOfTaskToMove + workingArea.scrollTop > workingArea.getBoundingClientRect().height) {
+                    console.log('bottomOfTaskToMove > workingArea.getBoundingClientRect().height')
+                    startScrollTop = taskMiddle - third + workingArea.scrollTop
+                    nextScrollTop = spotMiddle - third + workingArea.scrollTop
+                }
+                console.log('bottomOfTaskToMove', bottomOfTaskToMove)
+                console.log('workingArea.getBoundingClientRect().height', workingArea.getBoundingClientRect().height)
+
+                // startScrollTop might be too high and workingArea.scrollTop will hit max, making them
+                // not actually equal after this point
+                workingArea.scrollTop = startScrollTop
+                console.log('workingArea.scrollTop', workingArea.scrollTop)
                 // disableScroll.on()
                 // workingArea.addEventListener('scroll', noScroll);
 
@@ -151,18 +164,87 @@ const Column = ({ columnArrayLength, columnDropZoneId, tasksArray, name, columnI
                     - document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().x)
 
 
-                // workingArea.scrollTop becomes maxed out at a certain point and 
-                // topOfTaskToMove keeps increasing
                 let endY;
-                if (topOfSpotToMoveTo < workingArea.scrollTop) {
+                // if (topOfSpotToMoveTo < workingArea.scrollTop) {
+
+                // If else causes the framing to be lower every time until the spot to move to is no longer
+                // on the screen
+                if (startScrollTop > workingArea.scrollTop) {
+                    console.log('if')
+
+                    startScrollTop = workingArea.scrollTop
+                    console.log('startScrollTop', startScrollTop)
+                    if (nextScrollTop > workingArea.scrollTop) {
+                        console.log('if if')
+                        nextScrollTop = workingArea.scrollTop
+                        endY =
+                            -(document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().y
+                                - document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().y)
+                    } else if (nextScrollTop < workingArea.getBoundingClientRect().top) {
+                        console.log('if else if')
+                        endY =
+                            -(document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().y
+                                - document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().y)
+                            + workingArea.scrollTop
+                    } else {
+                        console.log('if else')
+
+                        endY =
+                            -(document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().y
+                                - document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().y)
+                            + workingArea.scrollTop - nextScrollTop
+
+                    }
+
+                } else if (nextScrollTop < workingArea.getBoundingClientRect().top) {
+                    console.log('else if')
+
                     endY = -(document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().y
                         - document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().y)
-                        + workingArea.scrollTop - topOfSpotToMoveTo
+                        + workingArea.scrollTop
                 } else {
+                    console.log('else')
+
                     endY = -(document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().y
                         - document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().y)
+
                 }
 
+                // Apparently the if statement does not mean it's scrolled all the way down?
+                // Because how else would startScrollTop be changing?
+                // How are startScrollTop and nextScrollTop oscillating? I thought startScrollTop would be
+                // the same as long as it's making it past the if statement and nextScrollTop would only
+                // increase as it moves down the list
+
+                //  if
+                //  if else
+                //  startScrollTop 600
+                //  nextScrollTop 360.5
+
+                //  if
+                //  if else
+                //  startScrollTop 454
+                //  nextScrollTop 334.5
+
+                //  if
+                //  if else
+                //  startScrollTop 480
+                //  nextScrollTop 420.5
+
+                //  if
+                //  if else
+                //  startScrollTop 574
+                //  nextScrollTop 394.5
+
+                //  if
+                //  if else
+                //  startScrollTop 660
+                //  nextScrollTop 480.5
+
+                //  if
+                //  if else
+                //  startScrollTop 694
+                //  nextScrollTop 454.5
 
                 // console.log('workingArea.scrollTop', workingArea.scrollTop)
                 console.log('endY', endY)
@@ -231,7 +313,7 @@ const Column = ({ columnArrayLength, columnDropZoneId, tasksArray, name, columnI
                     const topOfWorkingArea = workingArea.getBoundingClientRect().top
                     const bottomOfWorkingArea = workingArea.getBoundingClientRect().bottom
                     const topOfSpotToMoveTo = document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().top
-
+                    const topOfTopTask = document.getElementById(`task-id-${tasksArray[0].id}`).getBoundingClientRect().top
                     const bottomOfSpotToMoveTo = document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().bottom
                     const bottomOfTaskToMove = document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().bottom
                     const third = (bottomOfWorkingArea - topOfWorkingArea) / 3
@@ -239,6 +321,8 @@ const Column = ({ columnArrayLength, columnDropZoneId, tasksArray, name, columnI
                     const verticalThreeQuarters = verticalMidpoint / 2 + verticalMidpoint
                     const verticalOneQuarter = verticalMidpoint / 2
 
+                    const spotMiddle = document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().top + document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().height / 2
+                    const taskMiddle = document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().top + document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().height / 2
                     // Before moving, check to see if spot to move is low enough to cause scrolling down
                     // If spot to move is low enough to cause scrolling down, move scroll position so that spot
                     // is as high as possible without causing scrolling up
@@ -248,18 +332,21 @@ const Column = ({ columnArrayLength, columnDropZoneId, tasksArray, name, columnI
                     //     scrollLock = workingArea.scrollTop + (bottomOfSpotToMoveTo - third)
                     //     workingArea.scrollTop = workingArea.scrollTop + (bottomOfSpotToMoveTo - third)
                     // }
+                    console.log(taskToMove.description)
 
-
-                    // workingArea.addEventListener('scroll', noScroll)
                     let startScrollTop = workingArea.scrollTop
                     let nextScrollTop = workingArea.scrollTop
-                    // if (bottomOfTaskToMove > third * 2 + workingArea.scrollTop) {
-                    // startScrollTop = bottomOfTaskToMove - (bottomOfWorkingArea - topOfWorkingArea) + verticalMidpoint
-                    // if (bottomOfTaskToMove > (bottomOfWorkingArea - topOfWorkingArea) + workingArea.scrollTop) {
-                    startScrollTop = bottomOfTaskToMove
-                    nextScrollTop = topOfSpotToMoveTo
-                    // }
-                    // document.getElementById(`task-id-${taskToMove.id}`).scrollIntoView()
+
+                    // This part needs to be changed... maybe?
+                    if (bottomOfTaskToMove + workingArea.scrollTop > workingArea.getBoundingClientRect().height) {
+                        console.log('bottomOfTaskToMove > workingArea.getBoundingClientRect().height')
+                        startScrollTop = taskMiddle - third + workingArea.scrollTop
+                        nextScrollTop = spotMiddle - third + workingArea.scrollTop
+                    }
+                    console.log('bottomOfTaskToMove', bottomOfTaskToMove)
+                    console.log('workingArea.getBoundingClientRect().height', workingArea.getBoundingClientRect().height)
+                    // startScrollTop might be too high and workingArea.scrollTop will hit max, making them
+                    // not actually equal after this point
                     workingArea.scrollTop = startScrollTop
 
                     // disableScroll.on()
@@ -269,18 +356,53 @@ const Column = ({ columnArrayLength, columnDropZoneId, tasksArray, name, columnI
                         - document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().x)
 
 
-                    // workingArea.scrollTop becomes maxed out at a certain point and 
-                    // topOfTaskToMove keeps increasing
                     let endY;
-                    if (topOfSpotToMoveTo < workingArea.scrollTop) {
-                        endY = -(document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().y
-                            - document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().y)
-                            + workingArea.scrollTop - topOfSpotToMoveTo
-                    } else {
-                        endY = -(document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().y
-                            - document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().y)
-                    }
+                    // if (topOfSpotToMoveTo < workingArea.scrollTop) {
 
+                    if (startScrollTop > workingArea.scrollTop) {
+                        console.log('if')
+                        console.log('workingArea.scrollTop', workingArea.scrollTop)
+                        startScrollTop = workingArea.scrollTop
+                        if (nextScrollTop > workingArea.scrollTop) {
+                            console.log('if nextScrollTop > workingArea.scrollTop')
+                            nextScrollTop = workingArea.scrollTop
+                            endY =
+                                -(document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().y
+                                    - document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().y)
+                        } else if (nextScrollTop < workingArea.getBoundingClientRect().top) {
+                            endY =
+                                -(document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().y
+                                    - document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().y)
+                                + workingArea.scrollTop
+                        } else {
+                            console.log('if else')
+
+                            endY =
+                                -(document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().y
+                                    - document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().y)
+                                + workingArea.scrollTop - nextScrollTop
+
+                        }
+                        // nextScrollTop = workingArea.scrollTop - nextScrollTop
+
+
+                        // - nextScrollTop - workingArea.scrollTop
+                        // + nextScrollTop - workingArea.scrollTop
+                    } else if (nextScrollTop < workingArea.getBoundingClientRect().top) {
+                        console.log('else if')
+
+                        endY = -(document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().y
+                            - document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().y)
+                            + workingArea.scrollTop
+                    } else {
+                        console.log('else')
+
+                        endY = -(document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().y
+                            - document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().y)
+
+                    }
+                    console.log('startScrollTop', startScrollTop)
+                    console.log('nextScrollTop', nextScrollTop)
                     const startSpot = { x: 0, y: 0 }
                     const drag = preDrag.fluidLift(startSpot)
 
