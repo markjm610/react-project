@@ -8,7 +8,7 @@ import Context from './Context';
 import { apiBaseUrl } from './config';
 import { Droppable, Draggable } from 'react-beautiful-dnd'
 import * as tweenFunctions from "tween-functions";
-import { moveStepByStep, noScroll } from './utils'
+import { moveStepByStep, noScroll, moveStepByStepWithScroll } from './utils'
 import { Trash } from 'grommet-icons';
 import disableScroll from 'disable-scroll'
 import AddColumn from './AddColumn';
@@ -156,7 +156,7 @@ const Column = ({ columnArrayLength, columnDropZoneId, tasksArray, name, columnI
                 // startScrollTop might be too high and workingArea.scrollTop will hit max, making them
                 // not actually equal after this point
                 workingArea.scrollTop = startScrollTop
-                console.log('workingArea.scrollTop', workingArea.scrollTop)
+                // console.log('workingArea.scrollTop', workingArea.scrollTop)
                 // disableScroll.on()
                 // workingArea.addEventListener('scroll', noScroll);
 
@@ -170,24 +170,24 @@ const Column = ({ columnArrayLength, columnDropZoneId, tasksArray, name, columnI
                 // If else causes the framing to be lower every time until the spot to move to is no longer
                 // on the screen
                 if (startScrollTop > workingArea.scrollTop) {
-                    console.log('if')
+                    // console.log('if')
 
                     startScrollTop = workingArea.scrollTop
-                    console.log('startScrollTop', startScrollTop)
+                    // console.log('startScrollTop', startScrollTop)
                     if (nextScrollTop > workingArea.scrollTop) {
-                        console.log('if if')
+                        // console.log('if if')
                         nextScrollTop = workingArea.scrollTop
                         endY =
                             -(document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().y
                                 - document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().y)
                     } else if (nextScrollTop < workingArea.getBoundingClientRect().top) {
-                        console.log('if else if')
+                        // console.log('if else if')
                         endY =
                             -(document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().y
                                 - document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().y)
                             + workingArea.scrollTop
                     } else {
-                        console.log('if else')
+                        // console.log('if else')
 
                         endY =
                             -(document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().y
@@ -197,58 +197,19 @@ const Column = ({ columnArrayLength, columnDropZoneId, tasksArray, name, columnI
                     }
 
                 } else if (nextScrollTop < workingArea.getBoundingClientRect().top) {
-                    console.log('else if')
+                    // console.log('else if')
 
                     endY = -(document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().y
                         - document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().y)
                         + workingArea.scrollTop
                 } else {
-                    console.log('else')
+
 
                     endY = -(document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().y
                         - document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().y)
 
                 }
 
-                // Apparently the if statement does not mean it's scrolled all the way down?
-                // Because how else would startScrollTop be changing?
-                // How are startScrollTop and nextScrollTop oscillating? I thought startScrollTop would be
-                // the same as long as it's making it past the if statement and nextScrollTop would only
-                // increase as it moves down the list
-
-                //  if
-                //  if else
-                //  startScrollTop 600
-                //  nextScrollTop 360.5
-
-                //  if
-                //  if else
-                //  startScrollTop 454
-                //  nextScrollTop 334.5
-
-                //  if
-                //  if else
-                //  startScrollTop 480
-                //  nextScrollTop 420.5
-
-                //  if
-                //  if else
-                //  startScrollTop 574
-                //  nextScrollTop 394.5
-
-                //  if
-                //  if else
-                //  startScrollTop 660
-                //  nextScrollTop 480.5
-
-                //  if
-                //  if else
-                //  startScrollTop 694
-                //  nextScrollTop 454.5
-
-                // console.log('workingArea.scrollTop', workingArea.scrollTop)
-                console.log('endY', endY)
-                // console.log('scrollHeight', workingArea.scrollHeight)
 
                 const startSpot = { x: 0, y: 0 }
                 const drag = preDrag.fluidLift(startSpot)
@@ -265,7 +226,7 @@ const Column = ({ columnArrayLength, columnDropZoneId, tasksArray, name, columnI
                         y: tweenFunctions.easeOutCirc(i, startSpot.y, end.y, numberOfPoints)
                     });
                 }
-                // console.log(points)
+
 
                 const scrollPoints = []
                 for (let i = 0; i < numberOfPoints; i++) {
@@ -273,9 +234,9 @@ const Column = ({ columnArrayLength, columnDropZoneId, tasksArray, name, columnI
                         tweenFunctions.easeOutCirc(i, startScrollTop, nextScrollTop, numberOfPoints)
                     )
                 }
-                // console.log(scrollPoints)
 
-                moveStepByStep(drag, points, scrollPoints)
+
+                moveStepByStepWithScroll(drag, points, scrollPoints)
                 break
             }
         }
@@ -332,7 +293,7 @@ const Column = ({ columnArrayLength, columnDropZoneId, tasksArray, name, columnI
                     //     scrollLock = workingArea.scrollTop + (bottomOfSpotToMoveTo - third)
                     //     workingArea.scrollTop = workingArea.scrollTop + (bottomOfSpotToMoveTo - third)
                     // }
-                    console.log(taskToMove.description)
+                    // console.log(taskToMove.description)
 
                     let startScrollTop = workingArea.scrollTop
                     let nextScrollTop = workingArea.scrollTop
@@ -343,8 +304,8 @@ const Column = ({ columnArrayLength, columnDropZoneId, tasksArray, name, columnI
                         startScrollTop = taskMiddle - third + workingArea.scrollTop
                         nextScrollTop = spotMiddle - third + workingArea.scrollTop
                     }
-                    console.log('bottomOfTaskToMove', bottomOfTaskToMove)
-                    console.log('workingArea.getBoundingClientRect().height', workingArea.getBoundingClientRect().height)
+                    // console.log('bottomOfTaskToMove', bottomOfTaskToMove)
+                    // console.log('workingArea.getBoundingClientRect().height', workingArea.getBoundingClientRect().height)
                     // startScrollTop might be too high and workingArea.scrollTop will hit max, making them
                     // not actually equal after this point
                     workingArea.scrollTop = startScrollTop
@@ -389,20 +350,20 @@ const Column = ({ columnArrayLength, columnDropZoneId, tasksArray, name, columnI
                         // - nextScrollTop - workingArea.scrollTop
                         // + nextScrollTop - workingArea.scrollTop
                     } else if (nextScrollTop < workingArea.getBoundingClientRect().top) {
-                        console.log('else if')
+                        // console.log('else if')
 
                         endY = -(document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().y
                             - document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().y)
                             + workingArea.scrollTop
                     } else {
-                        console.log('else')
+                        // console.log('else')
 
                         endY = -(document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().y
                             - document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().y)
 
                     }
-                    console.log('startScrollTop', startScrollTop)
-                    console.log('nextScrollTop', nextScrollTop)
+                    // console.log('startScrollTop', startScrollTop)
+                    // console.log('nextScrollTop', nextScrollTop)
                     const startSpot = { x: 0, y: 0 }
                     const drag = preDrag.fluidLift(startSpot)
 
@@ -430,7 +391,7 @@ const Column = ({ columnArrayLength, columnDropZoneId, tasksArray, name, columnI
                         setAlphabetizing(false)
                         // disableScroll.off()
                     }
-                    moveStepByStep(drag, points, scrollPoints)
+                    moveStepByStepWithScroll(drag, points, scrollPoints)
                     break
                 }
             }

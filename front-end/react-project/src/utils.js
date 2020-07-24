@@ -1,4 +1,4 @@
-export function moveStepByStep(drag, values, scrollPoints) {
+export function moveStepByStepWithScroll(drag, values, scrollPoints) {
     const workingArea = document.querySelector('.working-area')
 
     requestAnimationFrame(() => {
@@ -7,7 +7,21 @@ export function moveStepByStep(drag, values, scrollPoints) {
         const newScrollPosition = scrollPoints.shift()
         workingArea.scrollTo(workingArea.scrollLeft, newScrollPosition)
         if (values.length) {
-            moveStepByStep(drag, values, scrollPoints);
+            moveStepByStepWithScroll(drag, values, scrollPoints);
+        } else {
+            drag.drop();
+        }
+    });
+}
+
+export function moveStepByStep(drag, values) {
+    // const workingArea = document.querySelector('.working-area')
+
+    requestAnimationFrame(() => {
+        const newPosition = values.shift();
+        drag.move(newPosition);
+        if (values.length) {
+            moveStepByStep(drag, values);
         } else {
             drag.drop();
         }

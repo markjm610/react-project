@@ -7,7 +7,7 @@ import { apiBaseUrl } from './config';
 import DeleteTask from './DeleteTask';
 import { Draggable } from 'react-beautiful-dnd'
 import * as tweenFunctions from "tween-functions";
-import { moveStepByStep, noScrollMoveToTop, scrollStepByStep } from './utils'
+import { moveStepByStepWithScroll, noScrollMoveToTop, scrollStepByStep } from './utils'
 
 const Task = ({ columnHeader, taskRef, topTask, taskArrLength, columnId, currentlyDragging, setCurrentlyDragging, taskid, taskdropzoneid, heading, description }) => {
 
@@ -106,7 +106,7 @@ const Task = ({ columnHeader, taskRef, topTask, taskArrLength, columnId, current
         }
 
 
-        moveStepByStep(drag, points, scrollPoints)
+        moveStepByStepWithScroll(drag, points, scrollPoints)
     }
 
 
