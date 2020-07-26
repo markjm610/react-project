@@ -18,4 +18,5 @@ Taskflow is a project management app with columns and tasks within shareable pro
 - PostgreSQL
 - Sequelize
 - react-beautiful-dnd
-
+- CSS3
+- HTML5
