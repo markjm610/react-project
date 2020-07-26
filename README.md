@@ -12,10 +12,10 @@ Taskflow is a project management app that focuses on drag and drop
 
 ## Technologies
 
-React
-JavaScript
-Express
-PostgreSQL
-Sequelize
-react-beautiful-dnd
+- React
+- JavaScript
+- Express
+- PostgreSQL
+- Sequelize
+- react-beautiful-dnd
 
