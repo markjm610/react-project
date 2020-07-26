@@ -20,6 +20,14 @@ Taskflow is a project management application with columns and tasks within share
 
 ![moving-project](https://media.giphy.com/media/XejWce8zMcOEu8VYKO/giphy.gif)
 
+### Create a new project and invite other users to projects
+
+![new-project-and-invite](https://media.giphy.com/media/SwD1o3zFBtcZ0HJ1JJ/giphy.gif)
+
+### Conditionally display invite notifications and accept invites to projects
+
+![accept-invite](https://media.giphy.com/media/mFTOKfZYMFIanKW6ic/giphy.gif
+
 ## Developed By
 
 [Mark Mansolino](https://markjm610.github.io/) ([GitHub](https://github.com/markjm610) | [LinkedIn](https://www.linkedin.com/in/markmansolino/) | [AngelList](https://angel.co/u/mark-mansolino))
