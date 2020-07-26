@@ -12,7 +12,7 @@ Taskflow is a project management application with columns and tasks within share
 
 ![move-task-to-top](https://media.giphy.com/media/UqTCnramz1VKXryqDP/giphy.gif)
 
-### Drag and drop script to show the tasks sorting in alphabetical order
+### Drag and drop script to show the tasks sorting in alphabetical order, regardless of scroll position
 
 ![alphabetize](https://media.giphy.com/media/RlTyMUfN8nz1SQjIXn/giphy.gif)
 
