@@ -4,7 +4,13 @@ Drag the word "Demo" to the middle and click submit to sign in as a demo user
 
 ## What is Taskflow?
 
-Taskflow is a project management app with columns and tasks within shareable projects
+Taskflow is a project management application with columns and tasks within shareable projects
+
+## Features
+
+### Click on a task to move it to the top of its column and scroll the page up automatically
+
+![move-task-to-top](https://media.giphy.com/media/UqTCnramz1VKXryqDP/giphy.gif)
 
 ## Developed By
 
