@@ -26,7 +26,7 @@ Taskflow is a project management application with columns and tasks within share
 
 ### Conditionally display invite notifications and accept invites to projects
 
-![accept-invite](https://media.giphy.com/media/mFTOKfZYMFIanKW6ic/giphy.gif
+![accept-invite](https://media.giphy.com/media/mFTOKfZYMFIanKW6ic/giphy.gif)
 
 ### Drag and drop tasks and columns
 
