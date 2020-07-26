@@ -6,7 +6,7 @@ Drag the word "Demo" to the middle and click submit to sign in as a demo user
 
 Taskflow is a project management app that focuses on drag and drop
 
-## Developer
+## Developed By
 
 - [Mark Mansolino](https://markjm610.github.io/) ([GitHub](https://github.com/markjm610) | [LinkedIn](https://www.linkedin.com/in/markmansolino/) | [AngelList](https://angel.co/u/mark-mansolino))
 
