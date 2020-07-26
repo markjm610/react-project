@@ -49,6 +49,7 @@ Taskflow is a project management application with columns and tasks within share
 - React
 - JavaScript
 - Express
+- Node
 - PostgreSQL
 - Sequelize
 - react-beautiful-dnd
