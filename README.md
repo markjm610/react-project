@@ -16,6 +16,10 @@ Taskflow is a project management application with columns and tasks within share
 
 ![alphabetize](https://media.giphy.com/media/RlTyMUfN8nz1SQjIXn/giphy.gif)
 
+### Drag and drop project navigation tabs between two lists, one displayed and one hidden
+
+![moving-project](https://media.giphy.com/media/XejWce8zMcOEu8VYKO/giphy.gif)
+
 ## Developed By
 
 [Mark Mansolino](https://markjm610.github.io/) ([GitHub](https://github.com/markjm610) | [LinkedIn](https://www.linkedin.com/in/markmansolino/) | [AngelList](https://angel.co/u/mark-mansolino))
