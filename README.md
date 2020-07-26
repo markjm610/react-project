@@ -4,7 +4,7 @@ Drag the word "Demo" to the middle and click submit to sign in as a demo user
 
 ## What is Taskflow?
 
-Taskflow is a project management app that focuses on drag and drop
+Taskflow is a project management app with columns and tasks within shareable projects
 
 ## Developed By
 
