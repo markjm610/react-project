@@ -7,6 +7,7 @@ import SignUpForm from './SignUpForm';
 import Context from './Context'
 import TitleLetter from './TitleLetter'
 import Title from './Title';
+import Links from './Links';
 
 
 const LandingPage = () => {
@@ -122,6 +123,7 @@ const LandingPage = () => {
                         </Droppable>
                     </div>
                 </DragDropContext>
+                <Links />
             </div>
         </div>
 

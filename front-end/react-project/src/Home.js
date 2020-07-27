@@ -10,7 +10,7 @@ import Context from './Context';
 import { apiBaseUrl } from './config';
 import AddColumn from './AddColumn';
 import AddProject from './AddProject';
-import { More } from 'grommet-icons';
+import { More, Tooltip } from 'grommet-icons';
 import { useDrop } from 'react-dnd';
 import LeaveProject from './LeaveProject'
 import { ItemTypes } from './ItemTypes';
@@ -77,12 +77,16 @@ const Home = ({ history }) => {
             const parsedProjectRes = await projectRes.json();
             const projects = parsedProjectRes.projects.Projects;
             const mainProjectArr = projects.slice(0, 5)
-            let projectObj = {}
-            projects.forEach(project => {
-                projectObj[project.id] = false
-            })
+            if (!selectedProject) {
+                let projectObj = {}
+                projects.forEach(project => {
+                    projectObj[project.id] = false
+                })
+                setSelectedProject(projectObj)
+            }
 
-            setSelectedProject(projectObj)
+
+
             const listProjectArr = projects.slice(5)
             setMainProjectArr(mainProjectArr)
             setListProjectArr(listProjectArr)
@@ -534,7 +538,9 @@ const Home = ({ history }) => {
                         <AddProject />
                         <ProjectNavBar />
                         {listProjectArr.length !== 0 && <div style={{ display: 'flex', justifyContent: 'flex-end', marginRight: '5px' }}>
+
                             <More color='black' className='more-projects' onClick={() => setShowProjectList(!showProjectList)} />
+
                         </div>}
                     </div>
                     <LogOut />
