@@ -78,6 +78,7 @@
     padding-top: 10px;
     padding-left: 10px;
     font-family: 'Noto Sans JP', sans-serif;
+    
 }
 
 .landing-page-input:focus {
@@ -126,4 +127,8 @@
 
 .form-button-clicked:hover {
     cursor: pointer;
+}
+
+.links-container {
+    margin-top: 50px
 }

@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
-import { Layer, Form, Box, FormField, TextInput, Button } from 'grommet';
-import { Notification, UserAdd, FormCheckmark, FormClose } from 'grommet-icons';
+import { Layer } from 'grommet';
+import { Notification, FormCheckmark, FormClose } from 'grommet-icons';
 
 import Context from './Context';
 import { apiBaseUrl } from './config';
@@ -8,8 +8,7 @@ import { apiBaseUrl } from './config';
 const UserDisplay = () => {
     const { invites, setInvites, currentUserId, mainProjectArr, listProjectArr } = useContext(Context);
     const [show, setShow] = useState();
-    const [clickedButton, setClickedButton] = useState(false)
-    const [allowAccept, setAllowAccept] = useState(false)
+
 
     const clickNotification = (e) => {
 
@@ -85,7 +84,7 @@ const UserDisplay = () => {
             {show && <Layer
                 onEsc={() => setShow(false)}
                 onClickOutside={() => {
-                    setClickedButton(false)
+
                     setShow(false)
                 }}>
                 <div className='popup-container'>
