@@ -19,7 +19,6 @@ import * as tweenFunctions from "tween-functions";
 import { moveStepByStep, noScroll, noScrollMoveToTop } from './utils'
 import { Layer } from 'grommet';
 import ProjectNavMain from './ProjectNavMain'
-import _ from 'lodash';
 
 
 
