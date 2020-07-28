@@ -5,6 +5,8 @@ import Context from './Context';
 import { apiBaseUrl } from './config';
 import { Draggable, Droppable, DragDropContext } from 'react-beautiful-dnd'
 import { FormNextLink, FormPreviousLink } from 'grommet-icons'
+import Tooltip from '@material-ui/core/Tooltip';
+
 
 const LogInForm = ({ index }) => {
     const [emailValue, setEmailValue] = useState('');
@@ -106,16 +108,20 @@ const LogInForm = ({ index }) => {
                                     </div>
                                 </div>}
                                 {updateFormPosition[0] === 'logIn' && !noForms && <div className='form-name'>
-                                    <div>
-                                        <h2 className='no-form-name'>Log In</h2>
-                                        <FormNextLink size='large' color='steelblue' />
-                                    </div>
+                                    <Tooltip title='DRAG ME'>
+                                        <div>
+                                            <h2 className='no-form-name'>Log In</h2>
+                                            <FormNextLink size='large' color='steelblue' />
+                                        </div>
+                                    </Tooltip>
                                 </div>}
                                 {updateFormPosition[2] === 'logIn' && !noForms && <div className='form-name'>
-                                    <div>
-                                        <h2 className='no-form-name'>Log In</h2>
-                                        <FormPreviousLink size='large' color='steelblue' />
-                                    </div>
+                                    <Tooltip title='DRAG ME'>
+                                        <div>
+                                            <h2 className='no-form-name'>Log In</h2>
+                                            <FormPreviousLink size='large' color='steelblue' />
+                                        </div>
+                                    </Tooltip>
                                 </div>}
                             </>
 
