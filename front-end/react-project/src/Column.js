@@ -1,17 +1,15 @@
-import React, { useState, useContext, useRef, useEffect } from 'react';
+import React, { useContext, useRef, useEffect } from 'react';
 import Task from './Task';
-import { useDrag, useDrop } from 'react-dnd';
-import { ItemTypes } from './ItemTypes';
 import AddTask from './AddTask';
 import DeleteColumn from './DeleteColumn';
 import Context from './Context';
 import { apiBaseUrl } from './config';
 import { Droppable, Draggable } from 'react-beautiful-dnd'
 import * as tweenFunctions from "tween-functions";
-import { moveStepByStep, noScroll, moveStepByStepWithScroll } from './utils'
+import { moveStepByStepWithScroll } from './utils'
 import { Trash } from 'grommet-icons';
 import disableScroll from 'disable-scroll'
-import AddColumn from './AddColumn';
+
 
 
 const Column = ({ columnArrayLength, columnDropZoneId, tasksArray, name, columnId, currentlyDragging, setCurrentlyDragging }) => {
@@ -53,6 +51,7 @@ const Column = ({ columnArrayLength, columnDropZoneId, tasksArray, name, columnI
         }
         setCurrentSortedTaskArray(sortedTasks)
         setAlphabetizing(columnId)
+        disableScroll.on()
 
 
         for (let i = 0; i < sortedTasks.length; i++) {
@@ -60,6 +59,7 @@ const Column = ({ columnArrayLength, columnDropZoneId, tasksArray, name, columnI
             if (sortedTask.description === tasksArray[i].description) {
                 if (i === sortedTasks.length - 1) {
                     setAlphabetizing(false)
+                    disableScroll.off()
                 }
                 continue
             } else {
@@ -119,10 +119,7 @@ const Column = ({ columnArrayLength, columnDropZoneId, tasksArray, name, columnI
                 const third = (bottomOfWorkingArea - topOfWorkingArea) / 3
                 const bottomOfTopTask = document.getElementById(`task-id-${tasksArray[0].id}`).getBoundingClientRect().bottom
                 const topOfTopTask = document.getElementById(`task-id-${tasksArray[0].id}`).getBoundingClientRect().top
-                // console.log('topOfSpotToMoveTo', topOfSpotToMoveTo)
-                // console.log('workingArea.getBoundingClientRect().height', workingArea.getBoundingClientRect().height)
-                // console.log('workingArea.scrollTop', workingArea.scrollTop)
-                // console.log('bottomOfTaskToMove', bottomOfTaskToMove)
+
 
                 const spotMiddle = document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().top + document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().height / 2
                 const taskMiddle = document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().top + document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().height / 2
@@ -134,18 +131,13 @@ const Column = ({ columnArrayLength, columnDropZoneId, tasksArray, name, columnI
 
 
                 if (bottomOfTaskToMove + workingArea.scrollTop > workingArea.getBoundingClientRect().height) {
-                    console.log('bottomOfTaskToMove > workingArea.getBoundingClientRect().height')
+
                     startScrollTop = taskMiddle - third + workingArea.scrollTop
                     nextScrollTop = spotMiddle - third + workingArea.scrollTop
                 }
-                console.log('bottomOfTaskToMove', bottomOfTaskToMove)
-                console.log('workingArea.getBoundingClientRect().height', workingArea.getBoundingClientRect().height)
-
 
                 workingArea.scrollTop = startScrollTop
 
-                // disableScroll.on()
-                // workingArea.addEventListener('scroll', noScroll);
 
                 const endX = -(document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().x
                     - document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().x)
@@ -233,7 +225,7 @@ const Column = ({ columnArrayLength, columnDropZoneId, tasksArray, name, columnI
                 if (sortedTask.description === tasksArray[i].description) {
                     if (i === sortedTasks.length - 1) {
                         setAlphabetizing(false)
-                        // disableScroll.off()
+                        disableScroll.off()
                     }
                     continue
                 } else {
@@ -274,15 +266,11 @@ const Column = ({ columnArrayLength, columnDropZoneId, tasksArray, name, columnI
 
 
                     if (bottomOfTaskToMove + workingArea.scrollTop > workingArea.getBoundingClientRect().height) {
-                        console.log('bottomOfTaskToMove > workingArea.getBoundingClientRect().height')
                         startScrollTop = taskMiddle - third + workingArea.scrollTop
                         nextScrollTop = spotMiddle - third + workingArea.scrollTop
                     }
 
                     workingArea.scrollTop = startScrollTop
-
-                    // disableScroll.on()
-                    // workingArea.addEventListener('scroll', noScroll);
 
                     const endX = -(document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().x
                         - document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().x)
@@ -291,11 +279,9 @@ const Column = ({ columnArrayLength, columnDropZoneId, tasksArray, name, columnI
                     let endY;
 
                     if (startScrollTop > workingArea.scrollTop) {
-                        console.log('if')
-                        console.log('workingArea.scrollTop', workingArea.scrollTop)
                         startScrollTop = workingArea.scrollTop
                         if (nextScrollTop > workingArea.scrollTop) {
-                            console.log('if nextScrollTop > workingArea.scrollTop')
+
                             nextScrollTop = workingArea.scrollTop
                             endY =
                                 -(document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().y
@@ -306,7 +292,7 @@ const Column = ({ columnArrayLength, columnDropZoneId, tasksArray, name, columnI
                                     - document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().y)
                                 + workingArea.scrollTop
                         } else {
-                            console.log('if else')
+
 
                             endY =
                                 -(document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().y
@@ -353,7 +339,7 @@ const Column = ({ columnArrayLength, columnDropZoneId, tasksArray, name, columnI
 
                     if (i === sortedTasks.length - 1) {
                         setAlphabetizing(false)
-                        // disableScroll.off()
+                        disableScroll.off()
                     }
                     moveStepByStepWithScroll(drag, points, scrollPoints)
                     break

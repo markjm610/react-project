@@ -14,13 +14,15 @@ const AddInstructionalProject = () => {
         setListProjectArr,
         selectedProject,
         setSelectedProject,
-        currentUserId
+        currentUserId,
+        alphabetizing
     } = useContext(Context)
 
     const [show, setShow] = useState(false)
     const [clickedButton, setClickedButton] = useState(false)
 
     const addInstructionalProject = async () => {
+
         const res = await fetch(`${apiBaseUrl}/users/${currentUserId}/projects/instructions`)
 
         const parsedRes = await res.json()
@@ -46,11 +48,18 @@ const AddInstructionalProject = () => {
         setShow(false)
     }
 
+    const clickIcon = () => {
+        if (alphabetizing) {
+            return
+        }
+        setShow(true)
+    }
+
     return (
         <>
             <Tooltip arrow title='Instructions'>
                 <div className='add-instructional-project'>
-                    <CircleInformation className='circle-information' onClick={() => setShow(true)} />
+                    <CircleInformation className='circle-information' onClick={clickIcon} />
                 </div>
             </Tooltip>
             {show &&
