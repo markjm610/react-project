@@ -5,6 +5,8 @@ import { apiBaseUrl } from './config';
 import Context from './Context';
 import { Draggable, Droppable } from 'react-beautiful-dnd'
 import { FormNextLink, FormPreviousLink } from 'grommet-icons'
+import Tooltip from '@material-ui/core/Tooltip';
+
 
 const SignUpForm = ({ index }) => {
     const [emailValue, setEmailValue] = useState('');
@@ -138,16 +140,20 @@ const SignUpForm = ({ index }) => {
                                 </div>}
 
                                 {updateFormPosition[0] === 'signUp' && !noForms && <div className='form-name'>
-                                    <div>
-                                        <h2 className='no-form-name'>Sign Up</h2>
-                                        <FormNextLink size='large' color='steelblue' />
-                                    </div>
+                                    <Tooltip title='DRAG ME'>
+                                        <div>
+                                            <h2 className='no-form-name'>Sign Up</h2>
+                                            <FormNextLink size='large' color='steelblue' />
+                                        </div>
+                                    </Tooltip>
                                 </div>}
                                 {updateFormPosition[2] === 'signUp' && !noForms && <div className='form-name'>
-                                    <div>
-                                        <h2 className='no-form-name'>Sign Up</h2>
-                                        <FormPreviousLink size='large' color='steelblue' />
-                                    </div>
+                                    <Tooltip title='DRAG ME'>
+                                        <div>
+                                            <h2 className='no-form-name'>Sign Up</h2>
+                                            <FormPreviousLink size='large' color='steelblue' />
+                                        </div>
+                                    </Tooltip>
                                 </div>}
                             </>
                         }
