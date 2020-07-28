@@ -464,7 +464,7 @@ html, body {
     margin-left: 150px;
     position: absolute;
     width: 150px;
-    height: 250px;
+    height: 150px;
     overflow-y: auto;
     overflow-x: hidden;
 }
@@ -703,4 +703,5 @@ html, body {
 
 .project-list-droppable {
     min-height: 100px;
+
 }
