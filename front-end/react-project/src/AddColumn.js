@@ -7,12 +7,15 @@ import Tooltip from '@material-ui/core/Tooltip';
 
 const AddColumn = () => {
 
-    const { currentProjectId, displayedColumns, setDisplayedColumns, columnDragging } = useContext(Context)
+    const { alphabetizing, currentProjectId, displayedColumns, setDisplayedColumns, columnDragging } = useContext(Context)
     const [show, setShow] = useState();
     const [value, setValue] = useState('');
     const [clickedButton, setClickedButton] = useState(false)
-
+    const [descriptionLength, setDescriptionLength] = useState(0)
     const addColumnClick = () => {
+        if (alphabetizing) {
+            return
+        }
         if (clickedButton) {
             setClickedButton(false)
         }
@@ -24,7 +27,7 @@ const AddColumn = () => {
         e.preventDefault()
         setClickedButton(true)
 
-        if (!value) {
+        if (value.length > 20 || !value) {
             return
         }
 
@@ -76,6 +79,7 @@ const AddColumn = () => {
                         setClickedButton(false)
                         setShow(false)
                         setValue('')
+                        setDescriptionLength(0)
                     }}
                 >
                     <div className='popup-container'>
@@ -89,6 +93,7 @@ const AddColumn = () => {
                                     if (clickedButton) {
                                         setClickedButton(false)
                                     }
+                                    setDescriptionLength(e.target.value.length)
                                     setValue(e.target.value)
                                 }}
                                 onFocus={() => {
@@ -99,6 +104,7 @@ const AddColumn = () => {
                             />
                             <div style={{ display: 'flex', justifyContent: 'space-around' }}>
                                 <div className={clickedButton ? 'popup-button-clicked' : 'popup-button'} onClick={addColumnSubmit}>Add</div>
+                                <div style={{ color: descriptionLength > 20 && 'red', marginTop: '15px' }}>{descriptionLength} / 20</div>
                             </div>
                         </form>
                     </div>

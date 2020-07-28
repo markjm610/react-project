@@ -6,12 +6,14 @@ import Context from './Context';
 import { apiBaseUrl } from './config';
 
 const UserDisplay = () => {
-    const { invites, setInvites, currentUserId, mainProjectArr, listProjectArr } = useContext(Context);
+    const { invites, setInvites, currentUserId, mainProjectArr, listProjectArr, alphabetizing } = useContext(Context);
     const [show, setShow] = useState();
 
 
     const clickNotification = (e) => {
-
+        if (alphabetizing) {
+            return
+        }
         setShow(true)
     }
 

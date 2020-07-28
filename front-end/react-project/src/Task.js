@@ -12,14 +12,8 @@ import { moveStepByStepWithScroll, noScrollMoveToTop, scrollStepByStep } from '.
 const Task = ({ columnHeader, taskRef, topTask, taskArrLength, columnId, currentlyDragging, setCurrentlyDragging, taskid, taskdropzoneid, heading, description }) => {
 
     const {
-        dragTaskId,
-        setDragTaskId,
-        dragColumnId,
-        setDragColumnId,
-        displayedColumns,
-        setDisplayedColumns,
         sensorState,
-
+        alphabetizing
     } = useContext(Context);
 
 
@@ -112,10 +106,8 @@ const Task = ({ columnHeader, taskRef, topTask, taskArrLength, columnId, current
 
     if (taskdropzoneid === 0) {
         return (
-
-            <Draggable draggableId={`task-${taskid}`} index={taskdropzoneid}>
+            <Draggable draggableId={`task-${taskid}`} index={taskdropzoneid} isDragDisabled={!!alphabetizing && alphabetizing !== columnId}>
                 {(provided, snapshot) => {
-
                     return (
                         <div
                             {...provided.draggableProps}
@@ -141,7 +133,7 @@ const Task = ({ columnHeader, taskRef, topTask, taskArrLength, columnId, current
         )
     } else {
         return (
-            <Draggable draggableId={`task-${taskid}`} index={taskdropzoneid}>
+            <Draggable draggableId={`task-${taskid}`} index={taskdropzoneid} isDragDisabled={!!alphabetizing && alphabetizing !== columnId}>
                 {(provided, snapshot) => {
 
                     return (

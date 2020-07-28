@@ -6,9 +6,12 @@ import { Layer } from 'grommet';
 
 const DeleteColumn = ({ columnId }) => {
 
-    const { displayedColumns, setDisplayedColumns } = useContext(Context);
+    const { displayedColumns, setDisplayedColumns, alphabetizing } = useContext(Context);
     const [columnEmpty, setColumnEmpty] = useState(true)
     const deleteColumnClick = async () => {
+        if (alphabetizing) {
+            return
+        }
 
         const columnsCopy = [...displayedColumns];
         let empty = true;

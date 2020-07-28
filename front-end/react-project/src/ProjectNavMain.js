@@ -8,10 +8,12 @@ import { Draggable } from 'react-beautiful-dnd';
 
 const ProjectNavMain = ({ id, name, position, dropZone }) => {
 
-    const { setUpdateColumns, selectedProject, setSelectedProject, bottomOfMain, dragProjectId, setDragProjectId, listProjectArr, setListProjectArr, mainProjectArr, setMainProjectArr, setProjectMembers, setDisplayedColumns, setCurrentProjectId, currentlyDraggingProject, setCurrentlyDraggingProject } = useContext(Context);
+    const { alphabetizing, setUpdateColumns, selectedProject, setSelectedProject, bottomOfMain, dragProjectId, setDragProjectId, listProjectArr, setListProjectArr, mainProjectArr, setMainProjectArr, setProjectMembers, setDisplayedColumns, setCurrentProjectId, currentlyDraggingProject, setCurrentlyDraggingProject } = useContext(Context);
 
     const handleProjectNavLinkClick = async () => {
-
+        if (alphabetizing) {
+            return
+        }
         const usersRes = await fetch(`${apiBaseUrl}/projects/${id}/users`);
         const parsedUsersRes = await usersRes.json();
 
@@ -45,6 +47,7 @@ const ProjectNavMain = ({ id, name, position, dropZone }) => {
             <Draggable
                 draggableId={`main-${id}`}
                 index={dropZone}
+                isDragDisabled={!!alphabetizing}
             >
                 {provided => {
                     return (
@@ -80,6 +83,7 @@ const ProjectNavMain = ({ id, name, position, dropZone }) => {
             <Draggable
                 draggableId={`main-${id}`}
                 index={dropZone}
+                isDragDisabled={!!alphabetizing}
             >
                 {provided => {
                     return (

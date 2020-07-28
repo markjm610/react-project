@@ -28,15 +28,15 @@ const AddProject = () => {
         setShow(false);
 
 
-        const projectsCopy = [...mainProjectArr]
+        const mainProjectsCopy = [...mainProjectArr]
+        const listProjectsCopy = [...listProjectArr]
 
-        projectsCopy.push(...listProjectArr)
 
 
         const res = await fetch(`${apiBaseUrl}/users/${currentUserId}/projects`, {
             method: 'POST',
             body: JSON.stringify(
-                { name: value, position: projectsCopy.length }
+                { name: value, position: mainProjectArr.length + listProjectArr.length }
             ),
             headers: {
                 "Content-Type": 'application/json',
@@ -47,9 +47,16 @@ const AddProject = () => {
         const newProject = parsedRes.newProject
         const newUsersProject = parsedRes.newUsersProject
         newProject.UsersProject = newUsersProject
-        projectsCopy.push(newProject)
-        setMainProjectArr(projectsCopy.slice(0, 5))
-        setListProjectArr(projectsCopy.slice(5))
+        if (mainProjectsCopy.length < 5 && listProjectsCopy.length) {
+            listProjectsCopy.push(newProject)
+        } else if (mainProjectsCopy.length < 5 && !listProjectsCopy.length) {
+            mainProjectsCopy.push(newProject)
+        } else if (mainProjectsCopy.length === 5) {
+            listProjectsCopy.push(newProject)
+        }
+
+        setMainProjectArr(mainProjectsCopy)
+        setListProjectArr(listProjectsCopy)
         setSelectedProject({ ...selectedProject, [newProject.id]: false })
 
         setValue('')

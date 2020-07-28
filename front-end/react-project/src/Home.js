@@ -19,6 +19,7 @@ import * as tweenFunctions from "tween-functions";
 import { moveStepByStep, noScroll, noScrollMoveToTop } from './utils'
 import { Layer } from 'grommet';
 import ProjectNavMain from './ProjectNavMain'
+import AddInstructionalProject from './AddInstructionalProject';
 
 
 
@@ -40,8 +41,6 @@ const Home = ({ history }) => {
         showProjectList,
         setShowProjectList,
         setSelectedProject,
-        setColumnFull,
-        columnFull,
         selectedProject,
         setProjectMembers,
         setCurrentProjectId,
@@ -52,7 +51,7 @@ const Home = ({ history }) => {
         taskRefs
     } = useContext(Context);
 
-
+    const [showInstructions, setShowInstructions] = useState(true)
     const userId = localStorage.getItem('USER_ID');
 
     useEffect(() => {
@@ -75,8 +74,10 @@ const Home = ({ history }) => {
             const projectRes = await fetch(`${apiBaseUrl}/users/${userId}/projects`);
             const parsedProjectRes = await projectRes.json();
             const projects = parsedProjectRes.projects.Projects;
+
             const mainProjectArr = projects.slice(0, 5)
-            if (!selectedProject) {
+
+            if (!selectedProject.id) {
                 let projectObj = {}
                 projects.forEach(project => {
                     projectObj[project.id] = false
@@ -174,19 +175,14 @@ const Home = ({ history }) => {
                     }
                 })
 
-                // setDragColumnId(dragColumnId);
                 setDisplayedColumns(copy);
-                // setCurrentlyDragging(taskdropzoneid);
                 // setDragTaskId(saveId);
                 // const workingArea = document.querySelector('.working-area')
                 // workingArea.removeEventListener('scroll', noScroll);
                 // workingArea.removeEventListener('scroll', noScrollMoveToTop);
             } else {
 
-                // const saveDragColumnId = dragColumnId;
-                // const saveId = dragTaskId;
-
-
+                const projectCopy = [...mainProjectArr, ...listProjectArr]
 
                 let startingColumn;
 
@@ -204,10 +200,7 @@ const Home = ({ history }) => {
                     }
                 })
 
-                // if (newColumn.length === 11) {
-                //     setColumnFull(true)
-                //     return
-                // }
+
 
                 const moved = startingColumn.splice(source.index, 1)
 
@@ -412,9 +405,9 @@ const Home = ({ history }) => {
         if (mainProjectArr.length > 5) {
             const preDrag = sensorState.tryGetLock(`main-${mainProjectArr[5].id}`);
 
-            // if (!preDrag) {
-            //     return;
-            // }
+            if (!preDrag) {
+                return;
+            }
 
             const endX = topOfList.current.getBoundingClientRect().x - bottomOfMain.current.getBoundingClientRect().x
             const endY = topOfList.current.getBoundingClientRect().y - bottomOfMain.current.getBoundingClientRect().y
@@ -453,93 +446,20 @@ const Home = ({ history }) => {
         setSensorState(api)
     }
 
-    const onDragUpdate = (result) => {
-        // const { destination, source, draggableId, type } = result
 
-        // if (!destination) {
-        //     return
-        // }
-        // if (type === 'task') {
-
-        //     if (destination.droppableId === source.droppableId) {
-        //         let copy = [...updateColumns];
-
-        //         let startingColumn;
-        //         copy.forEach(column => {
-        //             if (`${column.id}` === destination.droppableId) {
-        //                 startingColumn = column.Tasks.slice();
-        //             }
-        //         })
-
-        //         const moved = startingColumn.splice(source.index, 1);
-        //         startingColumn.splice(destination.index, 0, moved[0])
-        //         copy.forEach(column => {
-        //             if (`${column.id}` === destination.droppableId) {
-
-        //                 column.Tasks = startingColumn
-        //             }
-        //         })
-
-        //         setUpdateColumns(copy);
-        //         // console.log(updateColumns)
-        //         setDraggingTaskId(moved[0])
-
-        //     } else if (destination.droppableId !== source.droppableId) {
-        //         let copy = [...updateColumns]
-
-        //         let startingColumn;
-
-        //         copy.forEach(column => {
-        //             if (`${column.id}` === source.droppableId) {
-        //                 startingColumn = column.Tasks.slice();
-        //             }
-        //         })
-
-        //         let newColumn;
-
-        //         copy.forEach(column => {
-        //             if (`${column.id}` === destination.droppableId) {
-        //                 newColumn = column.Tasks.slice();
-        //             }
-        //         })
-
-        //         const moved = startingColumn.splice(source.index, 1)
-
-
-        //         newColumn.splice(destination.index, 0, moved[0])
-
-
-
-        //         setUpdateColumns(copy);
-        //         setDraggingTaskId(moved[0])
-        //     }
-        // }
-    }
-
-    const onDragStart = (initial) => {
-        // const { source, draggableId, type } = initial
-        // if (type === 'task') {
-
-        //     setDraggingTaskId(parseInt(draggableId.slice(5)))
-        // }
-
-
-    }
 
 
     return (
-        <DragDropContext onDragStart={onDragStart} onDragEnd={onDragEnd} onDragUpdate={onDragUpdate} sensors={[sensorStateSetter]}>
+        <DragDropContext onDragEnd={onDragEnd} sensors={[sensorStateSetter]}>
             <div id='home'>
                 <div className='sidebar-left'>
+                    <AddInstructionalProject />
                     <UserDisplay />
-
                     <div className='project-stuff'>
                         <AddProject />
                         <ProjectNavBar />
                         {listProjectArr.length !== 0 && <div style={{ display: 'flex', justifyContent: 'flex-end', marginRight: '5px' }}>
-
                             <More color='black' className='more-projects' onClick={() => setShowProjectList(!showProjectList)} />
-
                         </div>}
                     </div>
                     <LogOut />
@@ -566,14 +486,32 @@ const Home = ({ history }) => {
                     <ProjectMembers />
                     <LeaveProject />
                 </div>
-                {/* {columnFull && <Layer
-                    onEsc={() => setColumnFull(false)}
+                {/* {showInstructions && <Layer
+                    onEsc={() => setShowInstructions(false)}
                     onClickOutside={() => {
-                        setColumnFull(false)
+                        setShowInstructions(false)
                     }}
                 >
                     <div className='popup-container'>
-                        Column has maximum number of tasks.
+                        <h3>Welcome to Taskflow!</h3>
+                        <div>Taskflow lets you and your team manage projects together.</div>
+                        <div>Tasks:</div>
+                        <div>Create a task by clicking the plus sign to the left of the column name.</div>
+                        <div>Drag tasks and drop them in any column. They'll stay there when you reload or switch projects.</div>
+                        <div>When a task is complete, move it over to the completed column to delete it.</div>
+                        <div>Right of a column's name is the ABC button. Click it to alphabetize its tasks. Pretty cool, huh?</div>
+                        <div>Right of the ABC button is an X that deletes the column - as long as it's empty.</div>
+                        <div>Click any task to move it up to the top spot in its column.</div>
+                        <div>Columns:</div>
+                        <div>Columns can be moved around, too.</div>
+                        <div>In the bottom right of the working area is the button to create a column.</div>
+                        <div>Projects:</div>
+                        <div>Your list of projects is on the left sidebar and can be rearranged too.</div>
+                        <div>Five projects can be in the sidebar at a time. After that, the projects overflow into another list.</div>
+                        <div>Projects can be dragged between lists. See what happens if you try to add too many to the main list.</div>
+                        <div>Share projects by inviting team members! On top of the right sidebar, you'll find the invite button.</div>
+                        <div>The notification icon in the top left will let you see any projects you've been invited to.</div>
+                        <div>The button in the bottom left is to leave a project.</div>
                     </div>
                 </Layer>} */}
             </div>
