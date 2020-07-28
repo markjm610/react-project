@@ -45,12 +45,14 @@ const Column = ({ columnArrayLength, columnDropZoneId, tasksArray, name, columnI
         // Match each task with its final array position based on sortedTaskHeadings
         // Find ref of task currently at that position: taskRefs[finalposition]
         // Move task to that position
-
+        if (alphabetizing) {
+            return
+        }
         if (tasksArray.length === 0) {
             return;
         }
         setCurrentSortedTaskArray(sortedTasks)
-        setAlphabetizing(true)
+        setAlphabetizing(columnId)
 
 
         for (let i = 0; i < sortedTasks.length; i++) {
@@ -368,7 +370,9 @@ const Column = ({ columnArrayLength, columnDropZoneId, tasksArray, name, columnI
 
     const clearCompleted = async () => {
 
-
+        if (alphabetizing) {
+            return
+        }
         await fetch(`${apiBaseUrl}/columns/${columnId}/tasks`, {
             method: 'DELETE'
         })
@@ -385,7 +389,11 @@ const Column = ({ columnArrayLength, columnDropZoneId, tasksArray, name, columnI
 
     }
     return (
-        <Draggable draggableId={`column-${columnId}`} index={columnDropZoneId}>
+        <Draggable
+            draggableId={`column-${columnId}`}
+            index={columnDropZoneId}
+            isDragDisabled={!!alphabetizing}
+        >
             {(dragProvided, { isDragging }) => {
                 return (
                     <div

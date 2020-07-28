@@ -26,36 +26,41 @@ html, body {
     grid-column-start: 1;
     background-color: lightsteelblue; 
     display: grid;
-    grid-template-rows: 50px 1fr 50px;
+    grid-template-rows: 50px 50px 1fr 50px;
     height: 100vh;
     border-right: 1px solid rgb(83, 83, 83);
 }
 
+.add-instructional-project {
+    grid-row: 1 / 2;
+    display: flex;
+    justify-content: center;
+}
 
+.circle-information {
+    margin-top: 10px;
+}
+
+.circle-information:hover {
+    cursor: pointer;
+}
 
 .add-project {
-    /* grid-row: 1 / 2; */
     display: flex;
     justify-content: flex-end;
 
 }
 
-
 .add-project-icon {
     padding: 5px;
 }
 
-/* .add-project-icon:hover {
-    cursor: pointer;
-    opacity: 1;
-} */
-
 .user-display {
-    grid-row: 1 / 2;
+    grid-row: 2 / 3;
 }
 
 .project-stuff {
-    grid-row: 2 / 3;
+    grid-row: 3/ 4;
     padding-top: 300px;
 }
 
@@ -107,7 +112,7 @@ html, body {
      /* border-top-right-radius: 10px; */
     background-color: whitesmoke;
     padding: 5px;
-    margin-left: 0px;
+    margin-left: 5px;
     color: black;
     text-decoration: none;
     border-top: solid 1px lightsteelblue;
@@ -124,7 +129,7 @@ html, body {
     /* border-top-right-radius: 10px; */
     background-color: lightgoldenrodyellow;
     padding: 5px;
-    margin-left: 0px;
+    margin-left: 5px;
     color: black;
     text-decoration: none;
     border-top: solid 1px lightsteelblue;
@@ -142,7 +147,7 @@ html, body {
 }
 
 .log-out-container {
-    grid-row: 3 / 4;
+    grid-row: 4 / 5;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -694,4 +699,8 @@ html, body {
 .add-project-icon-wrapper {
     cursor: pointer;
     opacity: 0.6;
+}
+
+.project-list-droppable {
+    min-height: 100px;
 }

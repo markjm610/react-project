@@ -92,7 +92,7 @@ const SignUpForm = ({ index }) => {
                                             }
                                         }}
                                     />
-                                    <label className='label'>Name:</label>
+                                    <label className='label'>Username:</label>
                                     <input
                                         className='landing-page-input'
                                         value={nameValue}

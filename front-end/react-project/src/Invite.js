@@ -6,7 +6,7 @@ import Context from './Context';
 import Tooltip from '@material-ui/core/Tooltip';
 
 const Invite = () => {
-    const { currentProjectId } = useContext(Context);
+    const { currentProjectId, alphabetizing } = useContext(Context);
     const [show, setShow] = useState();
     const [value, setValue] = useState('');
     const [showConfirm, setShowConfirm] = useState()
@@ -70,7 +70,13 @@ const Invite = () => {
                             <ShareOption
                                 color='black'
                                 className='invite-icon'
-                                onClick={() => setShow(true)} />
+                                onClick={() => {
+                                    if (alphabetizing) {
+                                        return
+                                    }
+                                    setShow(true)
+                                }
+                                } />
                         </div>
                     </Tooltip>
                 </div>

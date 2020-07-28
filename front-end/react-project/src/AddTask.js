@@ -5,24 +5,21 @@ import Context from './Context';
 import { apiBaseUrl } from './config';
 
 const AddTask = ({ columnId, taskArrLength }) => {
-    const { currentUserId, displayedColumns, setDisplayedColumns } = useContext(Context);
+    const { alphabetizing, currentUserId, displayedColumns, setDisplayedColumns } = useContext(Context);
     const [show, setShow] = useState();
     const [value, setValue] = useState('');
     const [descriptionLength, setDescriptionLength] = useState(0)
     const [clickedButton, setClickedButton] = useState(false)
 
     const addTaskClick = async () => {
+        if (alphabetizing) {
+            return
+        }
 
-        // if (taskArrLength === 11) {
-        //     setColumnFull(true)
-        //     setValue('')
-        //     setDescriptionLength(0)
-        // } else {
         if (clickedButton) {
             setClickedButton(false)
         }
         setShow(true)
-        // }
 
     }
 
@@ -64,8 +61,10 @@ const AddTask = ({ columnId, taskArrLength }) => {
         setDisplayedColumns(columnsCopy)
         setValue('')
         setDescriptionLength(0)
-        const workingArea = document.querySelector('.working-area')
-        // workingArea.scrollTop = workingArea.scrollHeight
+
+        const addedTask = document.getElementById(`task-id-${parsedRes.newTask.id}`)
+
+        addedTask.scrollIntoView(false)
     }
 
     return (
@@ -78,6 +77,7 @@ const AddTask = ({ columnId, taskArrLength }) => {
                     <Layer
                         onEsc={() => setShow(false)}
                         onClickOutside={() => {
+                            setClickedButton(false)
                             setShow(false)
                             setValue('')
                             setDescriptionLength(0)

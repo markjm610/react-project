@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
-import { Layer, Form, Box, FormField, TextInput, Button } from 'grommet';
-import { ShareOption, Checkmark, Close, Eject } from 'grommet-icons';
+import { Layer } from 'grommet';
+import { Eject } from 'grommet-icons';
 import { apiBaseUrl } from './config';
 import Context from './Context';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -9,6 +9,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 const LeaveProject = () => {
     const [clickedButton, setClickedButton] = useState(false)
     const [show, setShow] = useState(false)
+    const [cannotLeave, setCannotLeave] = useState(false)
     const {
         currentProjectId,
         setCurrentProjectId,
@@ -17,7 +18,8 @@ const LeaveProject = () => {
         listProjectArr,
         setMainProjectArr,
         setListProjectArr,
-        setProjectMembers
+        setProjectMembers,
+        alphabetizing
     } = useContext(Context);
 
     const leaveProjectClick = async () => {
@@ -27,6 +29,7 @@ const LeaveProject = () => {
         })
         // Reassign project positions
 
+        // this fucks up the positions
         const projectCopy = [...mainProjectArr, ...listProjectArr]
         const projectRemoved = projectCopy.filter((project, i) => {
             return project.id !== currentProjectId
@@ -40,6 +43,24 @@ const LeaveProject = () => {
         setProjectMembers([])
         setShow(false)
     }
+    const handleIconClick = () => {
+
+
+
+        if (alphabetizing) {
+            return
+        }
+
+        if (clickedButton) {
+            setClickedButton(false)
+        }
+
+
+        setShow(true)
+
+
+    }
+
 
     return (
         <>
@@ -49,12 +70,7 @@ const LeaveProject = () => {
                         <div className='leave-project'>
                             <Eject
                                 color='black'
-                                onClick={() => {
-                                    if (clickedButton) {
-                                        setClickedButton(false)
-                                    }
-                                    setShow(true)
-                                }} />
+                                onClick={handleIconClick} />
                         </div>
                     </Tooltip>
                     {show && (
@@ -72,6 +88,10 @@ const LeaveProject = () => {
                                 </div>
                             </div>
                         </Layer>)}
+
+
+
+
                 </>
             }
         </>
