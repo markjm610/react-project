@@ -40,6 +40,49 @@ Taskflow is a project management application with columns and tasks within share
 
 ![delete](https://media.giphy.com/media/H2sTP0lPnkhze8YGry/giphy.gif)
 
+### Code Highlight
+
+```javascript
+
+const spotMiddle = document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().top + document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().height / 2
+const taskMiddle = document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().top + document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().height / 2
+
+
+let startScrollTop = workingArea.scrollTop
+let nextScrollTop = workingArea.scrollTop
+
+
+if (bottomOfTaskToMove + workingArea.scrollTop > workingArea.getBoundingClientRect().height) {
+    startScrollTop = taskMiddle - third + workingArea.scrollTop
+    nextScrollTop = spotMiddle - third + workingArea.scrollTop
+}
+
+workingArea.scrollTop = startScrollTop
+
+const endX = -(document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().x - document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().x)
+
+let endY;
+
+if (startScrollTop > workingArea.scrollTop) {
+    startScrollTop = workingArea.scrollTop
+    if (nextScrollTop > workingArea.scrollTop) {
+
+        nextScrollTop = workingArea.scrollTop
+        endY = -(document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().y - document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().y)
+    } else if (nextScrollTop < workingArea.getBoundingClientRect().top) {
+        endY = -(document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().y - document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().y) + workingArea.scrollTop
+    } else {
+    endY = -(document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().y - document.getElementById(`task-   id-${tasksArray[i].id}`).getBoundingClientRect().y) + workingArea.scrollTop - nextScrollTop
+    }
+
+} else if (nextScrollTop < workingArea.getBoundingClientRect().top) {
+
+endY = -(document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().y - document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().y) + workingArea.scrollTop
+} else {
+endY = -(document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().y - document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().y)
+}
+```
+
 ## Developed By
 
 [Mark Mansolino](https://markjm610.github.io/) ([GitHub](https://github.com/markjm610) | [LinkedIn](https://www.linkedin.com/in/markmansolino/) | [AngelList](https://angel.co/u/mark-mansolino))
