@@ -10,7 +10,7 @@ import { Draggable } from 'react-beautiful-dnd';
 
 const ProjectNavList = ({ id, name, position, dropZone }) => {
 
-    const { alphabetizing, setUpdateColumns, selectedProject, setSelectedProject, topOfList, listProjectArr, setListProjectArr, setProjectMembers, setDisplayedColumns, setCurrentProjectId, currentlyDraggingProject, setCurrentlyDraggingProject } = useContext(Context);
+    const { alphabetizing, setAlphabetizing, setUpdateColumns, selectedProject, setSelectedProject, topOfList, listProjectArr, setListProjectArr, setProjectMembers, setDisplayedColumns, setCurrentProjectId, currentlyDraggingProject, setCurrentlyDraggingProject } = useContext(Context);
 
     const handleProjectNavLinkClick = async () => {
         if (alphabetizing) {

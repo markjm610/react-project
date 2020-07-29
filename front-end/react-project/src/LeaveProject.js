@@ -6,7 +6,7 @@ import Context from './Context';
 import Tooltip from '@material-ui/core/Tooltip';
 
 
-const LeaveProject = () => {
+const LeaveProject = ({ history }) => {
     const [clickedButton, setClickedButton] = useState(false)
     const [show, setShow] = useState(false)
     const [cannotLeave, setCannotLeave] = useState(false)
@@ -29,7 +29,7 @@ const LeaveProject = () => {
         })
         // Reassign project positions
 
-        // this fucks up the positions
+
         const projectCopy = [...mainProjectArr, ...listProjectArr]
         const projectRemoved = projectCopy.filter((project, i) => {
             return project.id !== currentProjectId
@@ -42,6 +42,7 @@ const LeaveProject = () => {
         setCurrentProjectId(null)
         setProjectMembers([])
         setShow(false)
+        window.location.href = '/home'
     }
     const handleIconClick = () => {
 
