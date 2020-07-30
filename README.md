@@ -80,18 +80,18 @@ if (startScrollTop > workingArea.scrollTop) {
         
     // Indicates that the container will start all the way scrolled down, then move all the way up to the top
     } else if (nextScrollTop < workingArea.getBoundingClientRect().top) {
-        // The distance to move the task needs to be decreased by the starting scrollTop because scrolling moves the task. Otherwise the task would move too far and miss its end spot (adding reduces the distance moved due to how I set up the calculation)
+        // The distance to move the task needs to be decreased by the starting scrollTop because scrolling moves the task. Otherwise the task would move too far and miss its end spot (adding reduces the distance moved)
         endY = -(document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().y - document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().y) + workingArea.scrollTop
     
     // This means that the container starts scrolled all the way down, but ends up scrolled somewhere in between the top and bottom
     } else {
-    // This is the same concept as decreasing the amount scrolled by the starting scrollTop, except it also has to increase (subtracting increases the distance) the distance travelled by the end scroll position since it  
+    // This is the same concept as decreasing the amount scrolled by the starting scrollTop, except it also has to increase (subtracting increases the distance) the distance travelled by the end scroll position 
     endY = -(document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().y - document.getElementById(`task-   id-${tasksArray[i].id}`).getBoundingClientRect().y) + workingArea.scrollTop - nextScrollTop
     }
 
 // Indicates that the end position to scroll will be all the way to the top of the container
 } else if (nextScrollTop < workingArea.getBoundingClientRect().top) {
-
+// Decrease distance travelled by the scrollTop
 endY = -(document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().y - document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().y) + workingArea.scrollTop
 } else {
 endY = -(document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().y - document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().y)
