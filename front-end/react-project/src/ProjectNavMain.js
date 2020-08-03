@@ -12,7 +12,7 @@ const ProjectNavMain = ({ id, name, position, dropZone }) => {
 
     const handleProjectNavLinkClick = async () => {
         if (alphabetizing) {
-            return
+            setAlphabetizing(false)
         }
         const usersRes = await fetch(`${apiBaseUrl}/projects/${id}/users`);
         const parsedUsersRes = await usersRes.json();
