@@ -148,11 +148,11 @@ const Column = ({ columnArrayLength, columnDropZoneId, tasksArray, name, columnI
                 if (startScrollTop > workingArea.scrollTop) {
 
 
-                    startScrollTop = workingArea.scrollTop
+                    // startScrollTop = workingArea.scrollTop
 
                     if (nextScrollTop > workingArea.scrollTop) {
 
-                        nextScrollTop = workingArea.scrollTop
+                        // nextScrollTop = workingArea.scrollTop
                         endY =
                             -(document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().y
                                 - document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().y)
@@ -206,7 +206,7 @@ const Column = ({ columnArrayLength, columnDropZoneId, tasksArray, name, columnI
                 const scrollPoints = []
                 for (let i = 0; i < numberOfPoints; i++) {
                     scrollPoints.push(
-                        tweenFunctions.easeOutCirc(i, startScrollTop, nextScrollTop, numberOfPoints)
+                        tweenFunctions.easeOutCirc(i, workingArea.scrollTop, nextScrollTop, numberOfPoints)
                     )
                 }
 
@@ -279,21 +279,23 @@ const Column = ({ columnArrayLength, columnDropZoneId, tasksArray, name, columnI
                     let endY;
 
                     if (startScrollTop > workingArea.scrollTop) {
-                        startScrollTop = workingArea.scrollTop
+                        // startScrollTop = workingArea.scrollTop
                         if (nextScrollTop > workingArea.scrollTop) {
 
-                            nextScrollTop = workingArea.scrollTop
+                            // nextScrollTop = workingArea.scrollTop
                             endY =
                                 -(document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().y
                                     - document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().y)
                         } else if (nextScrollTop < workingArea.getBoundingClientRect().top) {
+
                             endY =
                                 -(document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().y
                                     - document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().y)
                                 + workingArea.scrollTop
                         } else {
 
-
+                            console.log('if else')
+                            console.log(nextScrollTop)
                             endY =
                                 -(document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().y
                                     - document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().y)
@@ -302,12 +304,12 @@ const Column = ({ columnArrayLength, columnDropZoneId, tasksArray, name, columnI
                         }
 
                     } else if (nextScrollTop < workingArea.getBoundingClientRect().top) {
-
+                        console.log('else if')
                         endY = -(document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().y
                             - document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().y)
                             + workingArea.scrollTop
                     } else {
-
+                        console.log('else')
 
                         endY = -(document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().y
                             - document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().y)
@@ -333,7 +335,7 @@ const Column = ({ columnArrayLength, columnDropZoneId, tasksArray, name, columnI
                     const scrollPoints = []
                     for (let i = 0; i < numberOfPoints; i++) {
                         scrollPoints.push(
-                            tweenFunctions.easeOutCirc(i, startScrollTop, nextScrollTop, numberOfPoints)
+                            tweenFunctions.easeOutCirc(i, workingArea.scrollTop, nextScrollTop, numberOfPoints)
                         )
                     }
 
