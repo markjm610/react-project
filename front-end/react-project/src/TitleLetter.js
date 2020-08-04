@@ -12,7 +12,7 @@ const TitleLetter = ({ letter, i, letterRef }) => {
                         {...provided.dragHandleProps}
                         ref={provided.innerRef}
                     >
-                        <div className='title' ref={letterRef}>{letter}</div>
+                        <div className='title' id={letter} ref={letterRef}>{letter}</div>
                     </div>
                 )
             }}

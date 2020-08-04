@@ -10,8 +10,19 @@ const Title = () => {
 
     const { letterPositions, setLetterPositions } = useContext(Context)
     const [titleSensor, setTitleSensor] = useState(null)
+    const [firstTime, setFirstTime] = useState(true)
+    const [movedLast, setMovedLast] = useState(null)
     const sortedTitle = ['T', 'A', 'S', 'K', 'F', 'L', 'O', 'W']
-
+    const titleObj = {
+        T: 0,
+        A: 1,
+        S: 2,
+        K: 3,
+        F: 4,
+        L: 5,
+        O: 6,
+        W: 7
+    }
     const letterRefs = {
         0: useRef(null),
         1: useRef(null),
@@ -45,6 +56,8 @@ const Title = () => {
         copy.splice(destination.index, 0, moved[0])
 
         setLetterPositions(copy)
+        setMovedLast(draggableId)
+
     }
 
 
@@ -52,62 +65,121 @@ const Title = () => {
 
     useEffect(() => {
         if (titleSensor) {
+            if (firstTime) {
+                for (let i = 0; i < sortedTitle.length; i++) {
+                    const sortedLetter = sortedTitle[i]
+                    if (i === sortedTitle.length - 1) {
+                        setFirstTime(false)
+                    }
+                    if (sortedLetter === letterPositions[i]) {
+                        continue
+                    } else {
+                        let letterToMove;
+                        let letterIndexToMove;
+                        letterPositions.forEach((letter, i) => {
+                            if (letter === sortedLetter) {
+                                letterToMove = letter
+                                letterIndexToMove = i
+                            }
+                        })
 
-            for (let i = 0; i < sortedTitle.length; i++) {
-                const sortedLetter = sortedTitle[i]
-                if (sortedLetter === letterPositions[i]) {
-                    continue
-                } else {
-                    let letterToMove;
-                    let letterIndexToMove;
-                    letterPositions.forEach((letter, i) => {
-                        if (letter === sortedLetter) {
-                            letterToMove = letter
-                            letterIndexToMove = i
+                        const preDrag = titleSensor.tryGetLock(`${letterToMove}`);
+
+                        if (!preDrag) {
+                            return;
                         }
-                    })
 
-                    const preDrag = titleSensor.tryGetLock(`${letterToMove}`);
 
-                    if (!preDrag) {
-                        return;
+                        const endX = -(letterRefs[letterIndexToMove].current.getBoundingClientRect().x - letterRefs[i].current.getBoundingClientRect().x)
+
+                        const endY = -(letterRefs[letterIndexToMove].current.getBoundingClientRect().y - letterRefs[i].current.getBoundingClientRect().y)
+
+                        // // const endX = target.current && target.current.getBoundingClientRect().x
+                        // // const endY = target.current && target.current.getBoundingClientRect().y
+
+
+                        const startSpot = { x: 0, y: 0 }
+                        const drag = preDrag.fluidLift(startSpot)
+
+                        const end = { x: endX, y: endY }
+
+                        const points = [];
+
+                        const numberOfPoints = 50;
+
+                        for (let i = 0; i < numberOfPoints; i++) {
+                            points.push({
+                                x: tweenFunctions.easeOutCirc(i, startSpot.x, end.x, numberOfPoints),
+                                y: tweenFunctions.easeOutCirc(i, startSpot.y, end.y, numberOfPoints)
+                            });
+                        }
+
+
+                        moveStepByStep(drag, points)
+
+
+
+                        // break after each move so it only does one at a time
+                        break
+                    }
+
+                }
+            } else {
+
+                let letterIndexToMove;
+
+                for (let i = 0; i < sortedTitle.length; i++) {
+
+                    if (sortedTitle[i] === movedLast) {
+
+                        letterIndexToMove = i
+
+                        const preDrag = titleSensor.tryGetLock(`${movedLast}`);
+
+                        if (!preDrag) {
+                            return;
+                        }
+
+
+                        const endX = (letterRefs[letterIndexToMove].current.getBoundingClientRect().x - document.getElementById(`${movedLast}`).getBoundingClientRect().x)
+
+                        const endY = (letterRefs[letterIndexToMove].current.getBoundingClientRect().y - document.getElementById(`${movedLast}`).getBoundingClientRect().y)
+
+                        // console.log(letterRefs[letterIndexToMove])
+
+                        const startSpot = { x: 0, y: 0 }
+                        const drag = preDrag.fluidLift(startSpot)
+
+                        const end = { x: endX, y: endY }
+
+                        const points = [];
+
+                        const numberOfPoints = 50;
+
+                        for (let i = 0; i < numberOfPoints; i++) {
+                            points.push({
+                                x: tweenFunctions.easeOutCirc(i, startSpot.x, end.x, numberOfPoints),
+                                y: tweenFunctions.easeOutCirc(i, startSpot.y, end.y, numberOfPoints)
+                            });
+                        }
+
+
+                        moveStepByStep(drag, points)
                     }
 
 
-                    const endX = -(letterRefs[letterIndexToMove].current.getBoundingClientRect().x - letterRefs[i].current.getBoundingClientRect().x)
 
-                    const endY = -(letterRefs[letterIndexToMove].current.getBoundingClientRect().y - letterRefs[i].current.getBoundingClientRect().y)
-
-                    // // const endX = target.current && target.current.getBoundingClientRect().x
-                    // // const endY = target.current && target.current.getBoundingClientRect().y
-
-
-                    const startSpot = { x: 0, y: 0 }
-                    const drag = preDrag.fluidLift(startSpot)
-
-                    const end = { x: endX, y: endY }
-
-                    const points = [];
-
-                    const numberOfPoints = 50;
-
-                    for (let i = 0; i < numberOfPoints; i++) {
-                        points.push({
-                            x: tweenFunctions.easeOutCirc(i, startSpot.x, end.x, numberOfPoints),
-                            y: tweenFunctions.easeOutCirc(i, startSpot.y, end.y, numberOfPoints)
-                        });
-                    }
-
-
-                    moveStepByStep(drag, points)
-
-
-
-                    // break after each move so it only does one at a time
-                    break
                 }
 
+
+
+
+
+
+
+
             }
+
         }
     }, [titleSensor, letterPositions])
 
