@@ -134,14 +134,16 @@ const Title = () => {
 
                         letterIndexToMove = i
 
+                        const endX = (letterRefs[letterIndexToMove].current.getBoundingClientRect().x - document.getElementById(`${movedLast}`).getBoundingClientRect().x)
+                        if (endX === 0) {
+                            return
+                        }
                         const preDrag = titleSensor.tryGetLock(`${movedLast}`);
 
                         if (!preDrag) {
                             return;
                         }
 
-
-                        const endX = (letterRefs[letterIndexToMove].current.getBoundingClientRect().x - document.getElementById(`${movedLast}`).getBoundingClientRect().x)
 
                         const endY = (letterRefs[letterIndexToMove].current.getBoundingClientRect().y - document.getElementById(`${movedLast}`).getBoundingClientRect().y)
 
