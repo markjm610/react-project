@@ -301,7 +301,7 @@ const Home = ({ history }) => {
 
         }
         else if (type === 'project') {
-            console.log(result)
+            // console.log(result)
             if (destination.droppableId === 'project-nav-list' && source.droppableId === 'project-nav-main') {
                 return
             }
@@ -421,8 +421,6 @@ const Home = ({ history }) => {
             const drag = preDrag.fluidLift(startSpot)
 
             const end = { x: endX, y: endY }
-            // drag.move(end)
-            // drag.drop()
 
             const points = [];
 
@@ -455,18 +453,7 @@ const Home = ({ history }) => {
     return (
         <DragDropContext onDragEnd={onDragEnd} sensors={[sensorStateSetter]}>
             <div id='home'>
-                <div className='sidebar-left'>
-                    <AddInstructionalProject />
-                    <UserDisplay />
-                    <div className='project-stuff'>
-                        <AddProject />
-                        <ProjectNavBar />
-                        {listProjectArr.length !== 0 && <div style={{ display: 'flex', justifyContent: 'flex-end', marginRight: '5px' }}>
-                            <More color='black' className='more-projects' onClick={() => setShowProjectList(!showProjectList)} />
-                        </div>}
-                    </div>
-                    <LogOut />
-                </div>
+
                 <Droppable droppableId={`working-area`} direction='horizontal' type='column'>
                     {provided => {
                         return (
@@ -482,15 +469,27 @@ const Home = ({ history }) => {
                         )
                     }}
                 </Droppable>
-
-                <div className='sidebar-right'>
-                    <ControlSpeed />
-                    <AddColumn />
-                    <Invite />
-                    <ProjectMembers />
-                    <LeaveProject />
-                </div>
             </div>
+            <div className='sidebar-left'>
+                <AddInstructionalProject />
+                <UserDisplay />
+                <div className='project-stuff'>
+                    <AddProject />
+                    <ProjectNavBar />
+                    {listProjectArr.length !== 0 && <div style={{ display: 'flex', justifyContent: 'flex-end', marginRight: '5px' }}>
+                        <More color='black' className='more-projects' onClick={() => setShowProjectList(!showProjectList)} />
+                    </div>}
+                </div>
+                <LogOut />
+            </div>
+            <div className='sidebar-right'>
+                <ControlSpeed />
+                <AddColumn />
+                <Invite />
+                <ProjectMembers />
+                <LeaveProject />
+            </div>
+
         </DragDropContext>
     )
 

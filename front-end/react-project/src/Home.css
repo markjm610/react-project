@@ -15,15 +15,17 @@ html, body {
 #home {
     width: 100%;
     height: 100%;
-    display: grid;
+    display: flex;
+    /* display: grid;
     grid-template-columns: 10vw 80vw 10vw;
-    grid-template-rows: 100vh;
+    grid-template-rows: 100vh; */
     font-family: 'Noto Sans JP', sans-serif;
     font-size: 14px;
 }
 
 .sidebar-left {
-    grid-column-start: 1;
+    /* grid-column-start: 1; */
+    width: 10vw;
     background-color: lightsteelblue; 
     display: grid;
     grid-template-rows: 50px 50px 1fr 50px;
@@ -192,7 +194,7 @@ html, body {
 
 .working-area {
     display: flex;
-    grid-column-start: 2;
+    /* grid-column-start: 2; */
     background-color: #ebebeb;
     overflow: auto;
     width: 80vw;
@@ -200,12 +202,13 @@ html, body {
 }
 
 .sidebar-right {
-    grid-column-start: 3;
+    /* grid-column-start: 3; */
     background-color: lightsteelblue;
     display: grid;
     grid-template-rows: 75px 1fr 1fr 1fr;
     border-left: 1px solid rgb(83, 83, 83);
     height: 100vh;
+    width: 10vw;
 }
 
 
