@@ -203,7 +203,7 @@ html, body {
     grid-column-start: 3;
     background-color: lightsteelblue;
     display: grid;
-    grid-template-rows: 30px 1fr 1fr 1fr;
+    grid-template-rows: 75px 1fr 1fr 1fr;
     border-left: 1px solid rgb(83, 83, 83);
     height: 100vh;
 }
@@ -713,4 +713,20 @@ html, body {
 
 .control-speed {
     grid-row: 1 / 2;
+    display: flex;
+    justify-content: space-around;
+    /* flex-direction: column; */
+    align-items: center;
+}
+
+.speed-icon:hover {
+    cursor: pointer;
+}
+
+.speed-icon-clicked {
+    color: black;
+}
+
+.speed-icon-clicked:hover {
+    cursor: pointer;
 }

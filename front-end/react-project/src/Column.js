@@ -21,6 +21,7 @@ const Column = ({ columnArrayLength, columnDropZoneId, tasksArray, name, columnI
         alphabetizing,
         setAlphabetizing,
         setCurrentSortedTaskArray,
+        scriptSpeed
     } = useContext(Context)
 
     const topTask = useRef(null)
@@ -193,7 +194,7 @@ const Column = ({ columnArrayLength, columnDropZoneId, tasksArray, name, columnI
 
                 const points = [];
 
-                const numberOfPoints = 50;
+                const numberOfPoints = scriptSpeed;
 
                 for (let i = 0; i < numberOfPoints; i++) {
                     points.push({
@@ -323,7 +324,7 @@ const Column = ({ columnArrayLength, columnDropZoneId, tasksArray, name, columnI
 
                     const points = [];
 
-                    const numberOfPoints = 50;
+                    const numberOfPoints = scriptSpeed;
 
                     for (let i = 0; i < numberOfPoints; i++) {
                         points.push({

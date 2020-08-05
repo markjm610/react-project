@@ -13,7 +13,8 @@ const Task = ({ columnHeader, taskRef, topTask, taskArrLength, columnId, current
 
     const {
         sensorState,
-        alphabetizing
+        alphabetizing,
+        scriptSpeed
     } = useContext(Context);
 
 
@@ -75,7 +76,7 @@ const Task = ({ columnHeader, taskRef, topTask, taskArrLength, columnId, current
         const endX = -(document.getElementById(`task-id-${taskid}`).getBoundingClientRect().x - topTask.current.getBoundingClientRect().x)
 
         const endY = -(document.getElementById(`task-id-${taskid}`).getBoundingClientRect().y - topTask.current.getBoundingClientRect().y) + workingArea.scrollTop
-        console.log(endY)
+
         const startSpot = { x: 0, y: 0 }
         const drag = preDrag.fluidLift(startSpot)
 
@@ -83,7 +84,7 @@ const Task = ({ columnHeader, taskRef, topTask, taskArrLength, columnId, current
 
         const points = [];
 
-        const numberOfPoints = 50;
+        const numberOfPoints = scriptSpeed;
 
         for (let i = 0; i < numberOfPoints; i++) {
             points.push({

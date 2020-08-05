@@ -1,30 +1,49 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import Context from './Context'
+import { Play, FastForward, Rewind } from 'grommet-icons'
+import Tooltip from '@material-ui/core/Tooltip';
 
 const ControlSpeed = () => {
 
     const { setScriptSpeed } = useContext(Context)
-
+    const [clicked, setClicked] = useState('medium')
     const fast = () => {
-        setScriptSpeed(10)
+        setScriptSpeed(25)
+        setClicked('fast')
     }
 
     const medium = () => {
-        setScriptSpeed(50)
+        setScriptSpeed(75)
+        setClicked('medium')
     }
 
     const slow = () => {
-        setScriptSpeed(100)
+        setScriptSpeed(120)
+        setClicked('slow')
     }
 
     return (
         <div
             className='control-speed'
-
         >
-            <div onClick={fast}>FAST</div>
-            <div onClick={medium}>MEDIUM</div>
-            <div onClick={slow}>SLOW</div>
+            <Tooltip arrow title='Slow'>
+                <div onClick={slow} className={'speed-icon'}>
+                    <Rewind color={clicked === 'slow' && 'white'} />
+                </div>
+            </Tooltip>
+            <Tooltip arrow title='Medium'>
+                <div onClick={medium} className={'speed-icon'}>
+                    <Play color={clicked === 'medium' && 'white'} />
+                </div>
+            </Tooltip>
+            <Tooltip arrow title='Fast'>
+                <div onClick={fast} className={'speed-icon'}>
+                    <FastForward color={clicked === 'fast' && 'white'} />
+                </div>
+            </Tooltip>
+
+
+
         </div>
     )
 }
