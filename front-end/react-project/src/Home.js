@@ -20,6 +20,7 @@ import { moveStepByStep, noScroll, noScrollMoveToTop } from './utils'
 import { Layer } from 'grommet';
 import ProjectNavMain from './ProjectNavMain'
 import AddInstructionalProject from './AddInstructionalProject';
+import ControlSpeed from './ControlSpeed';
 
 
 
@@ -483,39 +484,12 @@ const Home = ({ history }) => {
                 </Droppable>
 
                 <div className='sidebar-right'>
+                    <ControlSpeed />
                     <AddColumn />
                     <Invite />
                     <ProjectMembers />
                     <LeaveProject />
                 </div>
-                {/* {showInstructions && <Layer
-                    onEsc={() => setShowInstructions(false)}
-                    onClickOutside={() => {
-                        setShowInstructions(false)
-                    }}
-                >
-                    <div className='popup-container'>
-                        <h3>Welcome to Taskflow!</h3>
-                        <div>Taskflow lets you and your team manage projects together.</div>
-                        <div>Tasks:</div>
-                        <div>Create a task by clicking the plus sign to the left of the column name.</div>
-                        <div>Drag tasks and drop them in any column. They'll stay there when you reload or switch projects.</div>
-                        <div>When a task is complete, move it over to the completed column to delete it.</div>
-                        <div>Right of a column's name is the ABC button. Click it to alphabetize its tasks. Pretty cool, huh?</div>
-                        <div>Right of the ABC button is an X that deletes the column - as long as it's empty.</div>
-                        <div>Click any task to move it up to the top spot in its column.</div>
-                        <div>Columns:</div>
-                        <div>Columns can be moved around, too.</div>
-                        <div>In the bottom right of the working area is the button to create a column.</div>
-                        <div>Projects:</div>
-                        <div>Your list of projects is on the left sidebar and can be rearranged too.</div>
-                        <div>Five projects can be in the sidebar at a time. After that, the projects overflow into another list.</div>
-                        <div>Projects can be dragged between lists. See what happens if you try to add too many to the main list.</div>
-                        <div>Share projects by inviting team members! On top of the right sidebar, you'll find the invite button.</div>
-                        <div>The notification icon in the top left will let you see any projects you've been invited to.</div>
-                        <div>The button in the bottom left is to leave a project.</div>
-                    </div>
-                </Layer>} */}
             </div>
         </DragDropContext>
     )

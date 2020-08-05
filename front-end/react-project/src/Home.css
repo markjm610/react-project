@@ -203,12 +203,15 @@ html, body {
     grid-column-start: 3;
     background-color: lightsteelblue;
     display: grid;
-    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-rows: 30px 1fr 1fr 1fr;
     border-left: 1px solid rgb(83, 83, 83);
+    height: 100vh;
 }
 
+
+
 .invite {
-    grid-row: 1 / 2;
+    grid-row: 2 / 3;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -230,7 +233,7 @@ html, body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    grid-row: 2 / 3;
+    grid-row: 3 / 4;
     overflow-y: auto;
 }
 
@@ -494,6 +497,7 @@ html, body {
     height: 20px;
     margin-top: 200px;
     opacity: 0.6;
+    grid-row: 4 / 5;
 }
 
 .leave-project:hover {
@@ -704,4 +708,9 @@ html, body {
 .project-list-droppable {
     min-height: 100px;
 
+}
+
+
+.control-speed {
+    grid-row: 1 / 2;
 }
