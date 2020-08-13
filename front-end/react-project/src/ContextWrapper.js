@@ -42,6 +42,7 @@ const ContextWrapper = () => {
     const [dragStartFunction, setDragStartFunction] = useState(null)
     const [columnDragging, setColumnDragging] = useState(false)
     const [scriptSpeed, setScriptSpeed] = useState(75)
+    const placeToMoveCompletedTask = useRef(null)
 
     return (
         <Context.Provider value={
@@ -83,7 +84,8 @@ const ContextWrapper = () => {
                 taskRefs, setTaskRefs,
                 dragStartFunction, setDragStartFunction,
                 columnDragging, setColumnDragging,
-                scriptSpeed, setScriptSpeed
+                scriptSpeed, setScriptSpeed,
+                placeToMoveCompletedTask,
             }
         } >
             <App />

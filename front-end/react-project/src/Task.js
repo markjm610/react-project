@@ -7,14 +7,15 @@ import { apiBaseUrl } from './config';
 import DeleteTask from './DeleteTask';
 import { Draggable } from 'react-beautiful-dnd'
 import * as tweenFunctions from "tween-functions";
-import { moveStepByStepWithScroll, noScrollMoveToTop, scrollStepByStep } from './utils'
+import { moveStepByStepWithScroll, moveStepByStep } from './utils'
 
-const Task = ({ columnHeader, taskRef, topTask, taskArrLength, columnId, currentlyDragging, setCurrentlyDragging, taskid, taskdropzoneid, heading, description }) => {
+const Task = ({ columnName, taskRef, topTask, taskArrLength, columnId, currentlyDragging, setCurrentlyDragging, taskid, taskdropzoneid, heading, description }) => {
 
     const {
         sensorState,
         alphabetizing,
-        scriptSpeed
+        scriptSpeed,
+        placeToMoveCompletedTask
     } = useContext(Context);
 
 
@@ -107,6 +108,70 @@ const Task = ({ columnHeader, taskRef, topTask, taskArrLength, columnId, current
     const clickComplete = (e) => {
         e.stopPropagation()
 
+
+        const preDrag = sensorState.tryGetLock(`task-${taskid}`);
+
+        // if (!preDrag) {
+        //     return;
+        // }
+        const workingArea = document.querySelector('.working-area')
+        // const beforeScrollTop = workingArea.scrollTop
+        const leftSidebar = document.querySelector('.sidebar-left')
+        const rightSidebar = document.querySelector('.sidebar-right')
+        const leftSidebarEdge = leftSidebar.getBoundingClientRect().right
+        const rightSidebarEdge = rightSidebar.getBoundingClientRect().left
+        const percentage = 9 / (rightSidebarEdge - leftSidebarEdge)
+        const widthOfWorkingArea = rightSidebarEdge - leftSidebarEdge
+        const adjustment = percentage * widthOfWorkingArea
+
+        const midpoint = (rightSidebarEdge - leftSidebarEdge) / 2
+        const oneQuarter = midpoint / 2
+        const twoThirds = (rightSidebarEdge - leftSidebarEdge) / 3 * 2
+        const threeQuarters = midpoint / 2 + midpoint
+        const currentScrollLeft = workingArea.scrollLeft
+
+        const taskRefLeft = document.getElementById(`task-id-${taskid}`).getBoundingClientRect().left
+
+
+        // if (taskRefLeft > twoThirds) {
+        //     const amountToMove = taskRefLeft - twoThirds
+        //     workingArea.scrollLeft = currentScrollLeft + amountToMove
+        // } else if (taskRefLeft < oneQuarter) {
+        //     const amountToMove = oneQuarter - taskRefLeft
+        //     workingArea.scrollLeft = currentScrollLeft - amountToMove
+        // }
+
+
+        const endX = -(document.getElementById(`task-id-${taskid}`).getBoundingClientRect().x - placeToMoveCompletedTask.current.getBoundingClientRect().x)
+
+        const endY = -(document.getElementById(`task-id-${taskid}`).getBoundingClientRect().y - placeToMoveCompletedTask.current.getBoundingClientRect().y)
+
+        const startSpot = { x: 0, y: 0 }
+        const drag = preDrag.fluidLift(startSpot)
+
+        const end = { x: endX, y: endY }
+
+        const points = [];
+
+        const numberOfPoints = scriptSpeed;
+
+        for (let i = 0; i < numberOfPoints; i++) {
+            points.push({
+                x: tweenFunctions.easeOutCirc(i, startSpot.x, end.x, numberOfPoints),
+                y: tweenFunctions.easeOutCirc(i, startSpot.y, end.y, numberOfPoints)
+            });
+        }
+
+        const scrollPoints = []
+        for (let i = 0; i < numberOfPoints; i++) {
+            scrollPoints.push(
+                tweenFunctions.easeOutCirc(i, workingArea.scrollTop, 0, numberOfPoints)
+            )
+        }
+
+        moveStepByStep(drag, points)
+        // moveStepByStepWithScroll(drag, points, scrollPoints)
+
     }
 
     if (taskdropzoneid === 0) {
@@ -128,7 +193,45 @@ const Task = ({ columnHeader, taskRef, topTask, taskArrLength, columnId, current
                                         className={snapshot.isDragging ? 'task__description-dragging' : 'task__description'}
                                     >
                                         <div>{description}</div>
-                                        <div className='mark-task-as-complete'><FormCheckmark /></div>
+                                        {columnName !== 'Completed' &&
+                                            <div className='mark-task-as-complete' onClick={clickComplete}>
+                                                <FormCheckmark />
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>)
+                }
+                }
+
+            </Draggable >
+
+        )
+    } else if (columnName === 'Completed' && taskdropzoneid === taskArrLength - 1) {
+        return (
+            <Draggable draggableId={`task-${taskid}`} index={taskdropzoneid} isDragDisabled={!!alphabetizing && alphabetizing !== columnId}>
+                {(provided, snapshot) => {
+                    return (
+                        <div
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                            ref={provided.innerRef}>
+                            <div className='task'
+                                id={`task-id-${taskid}`}
+                            >
+                                <div className='task-drop-zone'
+                                    ref={placeToMoveCompletedTask}
+                                    taskdropzoneid={taskdropzoneid}>
+                                    <div
+                                        className={snapshot.isDragging ? 'task__description-dragging' : 'task__description'}
+                                    >
+                                        <div>{description}</div>
+                                        {columnName !== 'Completed' &&
+                                            <div className='mark-task-as-complete' onClick={clickComplete}>
+                                                <FormCheckmark />
+                                            </div>
+                                        }
                                     </div>
                                 </div>
                             </div>
@@ -158,7 +261,11 @@ const Task = ({ columnHeader, taskRef, topTask, taskArrLength, columnId, current
                                     taskdropzoneid={taskdropzoneid}>
                                     <div className={snapshot.isDragging ? 'task__description-dragging' : 'task__description'} >
                                         <div>{description}</div>
-                                        <div className='mark-task-as-complete' onClick={clickComplete}><FormCheckmark /></div>
+                                        {columnName !== 'Completed' &&
+                                            <div className='mark-task-as-complete' onClick={clickComplete}>
+                                                <FormCheckmark />
+                                            </div>
+                                        }
                                     </div>
                                 </div>
                             </div>

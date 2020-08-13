@@ -435,6 +435,7 @@ const Column = ({ columnArrayLength, columnDropZoneId, tasksArray, name, columnI
                                                         taskArrLength={tasksArray.length}
                                                         topTask={topTask}
                                                         columnHeader={columnHeader}
+                                                        columnName={name}
                                                     />)
 
                                                 })}
