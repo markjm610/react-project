@@ -730,3 +730,16 @@ html, body {
 .speed-icon-clicked:hover {
     cursor: pointer;
 }
+
+.mark-task-as-complete {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    opacity: 0;
+}
+
+.mark-task-as-complete:hover {
+    opacity: 1;
+    cursor: pointer;
+}
+

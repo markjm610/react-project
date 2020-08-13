@@ -1,5 +1,5 @@
 import React, { useState, useContext, useRef, useCallback, useEffect } from 'react';
-// import { Add } from 'grommet-icons'
+import { FormCheckmark } from 'grommet-icons'
 import { useDrag, useDrop } from 'react-dnd';
 import { ItemTypes } from './ItemTypes';
 import Context from './Context';
@@ -104,6 +104,10 @@ const Task = ({ columnHeader, taskRef, topTask, taskArrLength, columnId, current
         moveStepByStepWithScroll(drag, points, scrollPoints)
     }
 
+    const clickComplete = (e) => {
+        e.stopPropagation()
+
+    }
 
     if (taskdropzoneid === 0) {
         return (
@@ -122,7 +126,10 @@ const Task = ({ columnHeader, taskRef, topTask, taskArrLength, columnId, current
                                     taskdropzoneid={taskdropzoneid}>
                                     <div
                                         className={snapshot.isDragging ? 'task__description-dragging' : 'task__description'}
-                                    >{description}</div>
+                                    >
+                                        <div>{description}</div>
+                                        <div className='mark-task-as-complete'><FormCheckmark /></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>)
@@ -150,8 +157,8 @@ const Task = ({ columnHeader, taskRef, topTask, taskArrLength, columnId, current
                                 <div className='task-drop-zone'
                                     taskdropzoneid={taskdropzoneid}>
                                     <div className={snapshot.isDragging ? 'task__description-dragging' : 'task__description'} >
-                                        {description}
-
+                                        <div>{description}</div>
+                                        <div className='mark-task-as-complete' onClick={clickComplete}><FormCheckmark /></div>
                                     </div>
                                 </div>
                             </div>
