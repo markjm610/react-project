@@ -134,10 +134,13 @@ const Title = () => {
 
                         letterIndexToMove = i
 
-                        const endX = (letterRefs[letterIndexToMove].current.getBoundingClientRect().x - document.getElementById(`${movedLast}`).getBoundingClientRect().x)
+                        const endX = letterRefs[letterIndexToMove].current.getBoundingClientRect().x - document.getElementById(`${movedLast}`).getBoundingClientRect().x
                         if (endX === 0) {
                             return
                         }
+                        console.log('indextomove', letterRefs[letterIndexToMove].current.getBoundingClientRect())
+                        console.log('movedlast', document.getElementById(`${movedLast}`).getBoundingClientRect())
+
                         const preDrag = titleSensor.tryGetLock(`${movedLast}`);
 
                         if (!preDrag) {
@@ -146,8 +149,6 @@ const Title = () => {
 
 
                         const endY = (letterRefs[letterIndexToMove].current.getBoundingClientRect().y - document.getElementById(`${movedLast}`).getBoundingClientRect().y)
-
-                        // console.log(letterRefs[letterIndexToMove])
 
                         const startSpot = { x: 0, y: 0 }
                         const drag = preDrag.fluidLift(startSpot)

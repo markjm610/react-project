@@ -84,7 +84,7 @@ router.get('/users/:userId/projects/instructions', asyncHandler(async (req, res,
 
     const newProject = await Project.create({ name: 'Using the site', creatorId: userId })
     const newUsersProject = await UsersProject.create({ userId: userId, projectId: newProject.id, position: 0 })
-    const completedColumn = await Column.create({ name: 'Completed', pagePosition: 3, projectId: newProject.id })
+    const completedColumn = await Column.create({ name: 'Completed', pagePosition: 4, projectId: newProject.id })
     const completedTask = await Task.create({
         heading: 'heading',
         description: 'I have been completed. Click the trash icon to delete me forever.',
@@ -199,6 +199,169 @@ router.get('/users/:userId/projects/instructions', asyncHandler(async (req, res,
         description: "The notification icon in the top left will let you see any projects you've been invited to.",
         columnPosition: 4,
         columnId: projectsColumn.id,
+        creatorId: userId
+    })
+
+    const overflowColumn = await Column.create({ name: 'Overflow Demo', pagePosition: 3, projectId: newProject.id })
+    const overflowTask0 = await Task.create({
+        heading: 'heading',
+        description: "This column is here to show what happens when a column overflows passed the bottom of the page with tasks.",
+        columnPosition: 0,
+        columnId: overflowColumn.id,
+        creatorId: userId
+    })
+    const overflowTask1 = await Task.create({
+        heading: 'heading',
+        description: "Try scrolling to the bottom and clicking on one of the tasks.",
+        columnPosition: 1,
+        columnId: overflowColumn.id,
+        creatorId: userId
+    })
+    const overflowTask2 = await Task.create({
+        heading: 'heading',
+        description: "Try clicking the ABC button.",
+        columnPosition: 2,
+        columnId: overflowColumn.id,
+        creatorId: userId
+    })
+    const overflowTask3 = await Task.create({
+        heading: 'heading',
+        description: "Filler task",
+        columnPosition: 3,
+        columnId: overflowColumn.id,
+        creatorId: userId
+    })
+    const overflowTask4 = await Task.create({
+        heading: 'heading',
+        description: "I am a filler task",
+        columnPosition: 4,
+        columnId: overflowColumn.id,
+        creatorId: userId
+    })
+    const overflowTask5 = await Task.create({
+        heading: 'heading',
+        description: "I am also a filler task",
+        columnPosition: 5,
+        columnId: overflowColumn.id,
+        creatorId: userId
+    })
+    const overflowTask6 = await Task.create({
+        heading: 'heading',
+        description: "You can change the speed of this script while it's running by clicking the top right buttons",
+        columnPosition: 6,
+        columnId: overflowColumn.id,
+        creatorId: userId
+    })
+    const overflowTask7 = await Task.create({
+        heading: 'heading',
+        description: "Another filler task",
+        columnPosition: 7,
+        columnId: overflowColumn.id,
+        creatorId: userId
+    })
+    const overflowTask8 = await Task.create({
+        heading: 'heading',
+        description: "There are a lot of filler tasks in this column.",
+        columnPosition: 8,
+        columnId: overflowColumn.id,
+        creatorId: userId
+    })
+    const overflowTask9 = await Task.create({
+        heading: 'heading',
+        description: "So many tasks in this column.",
+        columnPosition: 9,
+        columnId: overflowColumn.id,
+        creatorId: userId
+    })
+    const overflowTask10 = await Task.create({
+        heading: 'heading',
+        description: "If this was a real column, there'd be a lot of work to get done.",
+        columnPosition: 10,
+        columnId: overflowColumn.id,
+        creatorId: userId
+    })
+    const overflowTask11 = await Task.create({
+        heading: 'heading',
+        description: "Another one",
+        columnPosition: 11,
+        columnId: overflowColumn.id,
+        creatorId: userId
+    })
+    const overflowTask12 = await Task.create({
+        heading: 'heading',
+        description: "Yet another task",
+        columnPosition: 12,
+        columnId: overflowColumn.id,
+        creatorId: userId
+    })
+    const overflowTask13 = await Task.create({
+        heading: 'heading',
+        description: "You can change the speed of this script while it's running by clicking the top right buttons",
+        columnPosition: 13,
+        columnId: overflowColumn.id,
+        creatorId: userId
+    })
+    const overflowTask14 = await Task.create({
+        heading: 'heading',
+        description: "Making the seed data for this column was pretty tedious",
+        columnPosition: 14,
+        columnId: overflowColumn.id,
+        creatorId: userId
+    })
+    const overflowTask15 = await Task.create({
+        heading: 'heading',
+        description: "Is anyone reading these?",
+        columnPosition: 15,
+        columnId: overflowColumn.id,
+        creatorId: userId
+    })
+    const overflowTask16 = await Task.create({
+        heading: 'heading',
+        description: "I hope your day is going well",
+        columnPosition: 16,
+        columnId: overflowColumn.id,
+        creatorId: userId
+    })
+    const overflowTask17 = await Task.create({
+        heading: 'heading',
+        description: "Z This task starts with a Z",
+        columnPosition: 17,
+        columnId: overflowColumn.id,
+        creatorId: userId
+    })
+    const overflowTask18 = await Task.create({
+        heading: 'heading',
+        description: "Q This task starts with a Q",
+        columnPosition: 18,
+        columnId: overflowColumn.id,
+        creatorId: userId
+    })
+    const overflowTask19 = await Task.create({
+        heading: 'heading',
+        description: "You can change the speed of this script while it's running by clicking the top right buttons",
+        columnPosition: 19,
+        columnId: overflowColumn.id,
+        creatorId: userId
+    })
+    const overflowTask20 = await Task.create({
+        heading: 'heading',
+        description: "You can change the speed of this script while it's running by clicking the top right buttons",
+        columnPosition: 20,
+        columnId: overflowColumn.id,
+        creatorId: userId
+    })
+    const overflowTask21 = await Task.create({
+        heading: 'heading',
+        description: "I want there to be a lot of overflow in this column so you see the scrolling",
+        columnPosition: 21,
+        columnId: overflowColumn.id,
+        creatorId: userId
+    })
+    const overflowTask22 = await Task.create({
+        heading: 'heading',
+        description: "The scrolling during alphabetizing was the hardest feature to add",
+        columnPosition: 22,
+        columnId: overflowColumn.id,
         creatorId: userId
     })
 
