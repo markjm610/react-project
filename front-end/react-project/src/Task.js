@@ -144,7 +144,11 @@ const Task = ({ columnName, taskRef, topTask, taskArrLength, columnId, currently
 
         const endX = -(document.getElementById(`task-id-${taskid}`).getBoundingClientRect().x - placeToMoveCompletedTask.current.getBoundingClientRect().x)
 
-        const endY = -(document.getElementById(`task-id-${taskid}`).getBoundingClientRect().y - placeToMoveCompletedTask.current.getBoundingClientRect().y)
+        const endY = -(document.getElementById(`task-id-${taskid}`).getBoundingClientRect().y
+            - placeToMoveCompletedTask.current.getBoundingClientRect().bottom)
+
+
+        console.log(placeToMoveCompletedTask.current.getBoundingClientRect())
 
         const startSpot = { x: 0, y: 0 }
         const drag = preDrag.fluidLift(startSpot)
@@ -221,7 +225,7 @@ const Task = ({ columnName, taskRef, topTask, taskArrLength, columnId, currently
                                 id={`task-id-${taskid}`}
                             >
                                 <div className='task-drop-zone'
-                                    ref={placeToMoveCompletedTask}
+                                    // ref={placeToMoveCompletedTask}
                                     taskdropzoneid={taskdropzoneid}>
                                     <div
                                         className={snapshot.isDragging ? 'task__description-dragging' : 'task__description'}

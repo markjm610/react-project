@@ -21,7 +21,8 @@ const Column = ({ columnArrayLength, columnDropZoneId, tasksArray, name, columnI
         alphabetizing,
         setAlphabetizing,
         setCurrentSortedTaskArray,
-        scriptSpeed
+        scriptSpeed,
+        placeToMoveCompletedTask
     } = useContext(Context)
 
     const topTask = useRef(null)
@@ -377,80 +378,165 @@ const Column = ({ columnArrayLength, columnDropZoneId, tasksArray, name, columnI
 
 
     }
-    return (
-        <Draggable
-            draggableId={`column-${columnId}`}
-            index={columnDropZoneId}
-            isDragDisabled={!!alphabetizing}
-        >
-            {(dragProvided, { isDragging }) => {
-                return (
-                    <div
-                        {...dragProvided.draggableProps}
-                        ref={dragProvided.innerRef}
-                    >
+
+
+
+    if (name === 'Completed') {
+
+        return (
+            <Draggable
+                draggableId={`column-${columnId}`}
+                index={columnDropZoneId}
+                isDragDisabled={!!alphabetizing}
+            >
+                {(dragProvided, { isDragging }) => {
+                    return (
                         <div
-                            className='column-drop-zone'>
-                            <div className={isDragging ? 'column-dragging' : 'column'}>
+                            {...dragProvided.draggableProps}
+                            ref={dragProvided.innerRef}
+                        >
+                            <div
+                                ref={placeToMoveCompletedTask}
+                                className='column-drop-zone'>
                                 <div
-                                    ref={columnHeader}
-                                    className='column__header' {...dragProvided.dragHandleProps}>
-                                    {name !== 'Completed'
-                                        ?
-                                        <>
-                                            <AddTask
-                                                columnId={columnId}
-                                                taskArrLength={tasksArray.length} />
-                                            <div className='column__name'>{name}</div>
-                                            <div className='alphabetize' onClick={alphabetizeClick}>ABC</div>
-                                            <DeleteColumn columnId={columnId} />
-                                        </>
-                                        :
-                                        <>
-                                            <div><Trash color='black' className='trash-can' onClick={clearCompleted} /></div>
-                                            <div className='completed-name'>{name}</div>
+                                    // ref={placeToMoveCompletedTask}
+                                    className={isDragging ? 'column-dragging' : 'column'}>
+                                    <div
+                                        ref={columnHeader}
+                                        className='column__header' {...dragProvided.dragHandleProps}>
+                                        {name !== 'Completed'
+                                            ?
+                                            <>
+                                                <AddTask
+                                                    columnId={columnId}
+                                                    taskArrLength={tasksArray.length} />
+                                                <div className='column__name'>{name}</div>
+                                                <div className='alphabetize' onClick={alphabetizeClick}>ABC</div>
+                                                <DeleteColumn columnId={columnId} />
+                                            </>
+                                            :
+                                            <>
+                                                <div><Trash color='black' className='trash-can' onClick={clearCompleted} /></div>
+                                                <div className='completed-name'>{name}</div>
 
-                                        </>}
+                                            </>}
+                                    </div>
+
+                                    <Droppable droppableId={`${columnId}`} type='task'>
+                                        {(provided, snapshot) => {
+                                            return (
+
+                                                <div
+
+                                                    ref={provided.innerRef}
+                                                    {...provided.droppableProps}
+                                                    className='tasks-container'>
+                                                    {tasksArray.map((task, i) => {
+                                                        return (<Task
+                                                            key={task.id}
+                                                            taskid={task.id}
+                                                            taskdropzoneid={i}
+                                                            heading={task.heading}
+                                                            description={task.description}
+                                                            currentlyDragging={currentlyDragging}
+                                                            setCurrentlyDragging={setCurrentlyDragging}
+                                                            columnId={task.columnId}
+                                                            taskArrLength={tasksArray.length}
+                                                            topTask={topTask}
+                                                            columnHeader={columnHeader}
+                                                            columnName={name}
+                                                        />)
+
+                                                    })}
+                                                    {provided.placeholder}
+                                                </div>)
+                                        }}
+                                    </Droppable>
                                 </div>
-
-                                <Droppable droppableId={`${columnId}`} type='task'>
-                                    {(provided, snapshot) => {
-                                        return (
-
-                                            <div
-
-                                                ref={provided.innerRef}
-                                                {...provided.droppableProps}
-                                                className='tasks-container'>
-                                                {tasksArray.map((task, i) => {
-                                                    return (<Task
-                                                        key={task.id}
-                                                        taskid={task.id}
-                                                        taskdropzoneid={i}
-                                                        heading={task.heading}
-                                                        description={task.description}
-                                                        currentlyDragging={currentlyDragging}
-                                                        setCurrentlyDragging={setCurrentlyDragging}
-                                                        columnId={task.columnId}
-                                                        taskArrLength={tasksArray.length}
-                                                        topTask={topTask}
-                                                        columnHeader={columnHeader}
-                                                        columnName={name}
-                                                    />)
-
-                                                })}
-                                                {provided.placeholder}
-                                            </div>)
-                                    }}
-                                </Droppable>
                             </div>
                         </div>
-                    </div>
-                )
-            }}
+                    )
+                }}
 
-        </Draggable >
-    )
+            </Draggable >
+        )
+    } else {
+
+        return (
+            <Draggable
+                draggableId={`column-${columnId}`}
+                index={columnDropZoneId}
+                isDragDisabled={!!alphabetizing}
+            >
+                {(dragProvided, { isDragging }) => {
+                    return (
+                        <div
+                            {...dragProvided.draggableProps}
+                            ref={dragProvided.innerRef}
+                        >
+                            <div
+                                className='column-drop-zone'>
+                                <div className={isDragging ? 'column-dragging' : 'column'}>
+                                    <div
+                                        ref={columnHeader}
+                                        className='column__header' {...dragProvided.dragHandleProps}>
+                                        {name !== 'Completed'
+                                            ?
+                                            <>
+                                                <AddTask
+                                                    columnId={columnId}
+                                                    taskArrLength={tasksArray.length} />
+                                                <div className='column__name'>{name}</div>
+                                                <div className='alphabetize' onClick={alphabetizeClick}>ABC</div>
+                                                <DeleteColumn columnId={columnId} />
+                                            </>
+                                            :
+                                            <>
+                                                <div><Trash color='black' className='trash-can' onClick={clearCompleted} /></div>
+                                                <div className='completed-name'>{name}</div>
+
+                                            </>}
+                                    </div>
+
+                                    <Droppable droppableId={`${columnId}`} type='task'>
+                                        {(provided, snapshot) => {
+                                            return (
+
+                                                <div
+
+                                                    ref={provided.innerRef}
+                                                    {...provided.droppableProps}
+                                                    className='tasks-container'>
+                                                    {tasksArray.map((task, i) => {
+                                                        return (<Task
+                                                            key={task.id}
+                                                            taskid={task.id}
+                                                            taskdropzoneid={i}
+                                                            heading={task.heading}
+                                                            description={task.description}
+                                                            currentlyDragging={currentlyDragging}
+                                                            setCurrentlyDragging={setCurrentlyDragging}
+                                                            columnId={task.columnId}
+                                                            taskArrLength={tasksArray.length}
+                                                            topTask={topTask}
+                                                            columnHeader={columnHeader}
+                                                            columnName={name}
+                                                        />)
+
+                                                    })}
+                                                    {provided.placeholder}
+                                                </div>)
+                                        }}
+                                    </Droppable>
+                                </div>
+                            </div>
+                        </div>
+                    )
+                }}
+
+            </Draggable >
+        )
+    }
 
 
 }
