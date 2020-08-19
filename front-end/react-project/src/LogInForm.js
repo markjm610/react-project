@@ -12,6 +12,9 @@ const LogInForm = ({ index }) => {
     const [emailValue, setEmailValue] = useState('');
     const [passwordValue, setPasswordValue] = useState('')
     const [invalidUser, setInvalidUser] = useState(false)
+    const [errors, setErrors] = useState(null)
+
+
     const { noForms, setAuthToken, setCurrentUserId, updateFormPosition } = useContext(Context);
 
     const [clickedButton, setClickedButton] = useState(false)
@@ -29,7 +32,10 @@ const LogInForm = ({ index }) => {
             })
 
             if (!res.ok) {
-                throw res;
+                const errorObj = await res.json()
+                setErrors(errorObj.errors)
+                return
+
             }
             const { token, user: { id, name } } = await res.json();
             if (!token) {
@@ -70,6 +76,9 @@ const LogInForm = ({ index }) => {
                                         <div>
                                             Invalid email or password
                                         </div>}
+                                    {errors && errors.map(error => {
+                                        return <div>{error}</div>
+                                    })}
                                     <label className='label'>Email:</label>
                                     <input
                                         type='email'
@@ -81,6 +90,9 @@ const LogInForm = ({ index }) => {
                                             }
                                             if (invalidUser) {
                                                 setInvalidUser(false)
+                                            }
+                                            if (errors) {
+                                                setErrors(null)
                                             }
                                             setEmailValue(e.target.value)
                                         }}
@@ -102,6 +114,9 @@ const LogInForm = ({ index }) => {
                                             }
                                             if (invalidUser) {
                                                 setInvalidUser(false)
+                                            }
+                                            if (errors) {
+                                                setErrors(null)
                                             }
                                             setPasswordValue(e.target.value)
                                         }}

@@ -12,6 +12,7 @@ const SignUpForm = ({ index }) => {
     const [emailValue, setEmailValue] = useState('');
     const [nameValue, setNameValue] = useState('');
     const [passwordValue, setPasswordValue] = useState('');
+    const [errors, setErrors] = useState(null)
     const {
         noForms,
         setAuthToken,
@@ -37,7 +38,9 @@ const SignUpForm = ({ index }) => {
             })
 
             if (!res.ok) {
-                throw res;
+                const errorObj = await res.json()
+                setErrors(errorObj.errors)
+                return
             }
             const { token, user: { id, name }, newProject, newUsersProject } = await res.json();
 
@@ -77,7 +80,9 @@ const SignUpForm = ({ index }) => {
                             <h2>Sign Up</h2>
                             <div className='form-container'>
                                 <form onSubmit={handleSubmit}>
-
+                                    {errors && errors.map(error => {
+                                        return <div>{error}</div>
+                                    })}
                                     <label className='label'>Email:</label>
                                     <input
                                         className='landing-page-input'
@@ -85,6 +90,9 @@ const SignUpForm = ({ index }) => {
                                         onChange={e => {
                                             if (clickedButton) {
                                                 setClickedButton(false)
+                                            }
+                                            if (errors) {
+                                                setErrors(null)
                                             }
                                             setEmailValue(e.target.value)
                                         }}
@@ -102,6 +110,9 @@ const SignUpForm = ({ index }) => {
                                             if (clickedButton) {
                                                 setClickedButton(false)
                                             }
+                                            if (errors) {
+                                                setErrors(null)
+                                            }
                                             setNameValue(e.target.value)
                                         }}
                                         onFocus={() => {
@@ -118,6 +129,9 @@ const SignUpForm = ({ index }) => {
                                         onChange={e => {
                                             if (clickedButton) {
                                                 setClickedButton(false)
+                                            }
+                                            if (errors) {
+                                                setErrors(null)
                                             }
                                             setPasswordValue(e.target.value)
                                         }}
