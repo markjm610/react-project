@@ -178,13 +178,17 @@ router.put('/users/token', validateEmailAndPassword, handleValidationErrors, asy
         const user = await User.findOne({ where: { email }, include: Invite });
 
         // If user is not found or password does not match, make new error object:
-        if (!user || !user.validatePassword(password)) {
-            const err = new Error("Login failed");
-            err.status = 401;
-            err.title = "Login failed";
-            err.errors = ["The provided credentials were invalid."];
+        // if (!user || !user.validatePassword(password)) {
+        //     const err = new Error("Login failed");
+        //     err.status = 401;
+        //     err.title = "Login failed";
+        //     err.errors = ["The provided credentials were invalid."];
 
-            return next(err);
+        //     return next(err);
+        // }
+        if (!user || !user.validatePassword(password)) {
+            res.json({ token: null, user: { id: null, name: null, invites: null } })
+            return
         }
 
         // Generate JWT token and send JSON response with token and user ID

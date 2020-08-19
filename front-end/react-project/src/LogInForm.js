@@ -11,6 +11,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 const LogInForm = ({ index }) => {
     const [emailValue, setEmailValue] = useState('');
     const [passwordValue, setPasswordValue] = useState('')
+    const [invalidUser, setInvalidUser] = useState(false)
     const { noForms, setAuthToken, setCurrentUserId, updateFormPosition } = useContext(Context);
 
     const [clickedButton, setClickedButton] = useState(false)
@@ -31,7 +32,10 @@ const LogInForm = ({ index }) => {
                 throw res;
             }
             const { token, user: { id, name } } = await res.json();
-
+            if (!token) {
+                setInvalidUser(true)
+                return
+            }
             localStorage.setItem('TOKEN', token);
             localStorage.setItem('USER_ID', id);
             localStorage.setItem('USER_NAME', name);
@@ -62,6 +66,10 @@ const LogInForm = ({ index }) => {
                             <h2>Log In</h2>
                             <div className='form-container'>
                                 <form onSubmit={handleSubmit}>
+                                    {invalidUser &&
+                                        <div>
+                                            Invalid email or password
+                                        </div>}
                                     <label className='label'>Email:</label>
                                     <input
                                         type='email'
@@ -71,6 +79,9 @@ const LogInForm = ({ index }) => {
                                             if (clickedButton) {
                                                 setClickedButton(false)
                                             }
+                                            if (invalidUser) {
+                                                setInvalidUser(false)
+                                            }
                                             setEmailValue(e.target.value)
                                         }}
                                         onFocus={() => {
@@ -79,6 +90,7 @@ const LogInForm = ({ index }) => {
                                             }
                                         }}
                                     />
+
                                     <label className='label'>Password:</label>
                                     <input
                                         type='password'
@@ -87,6 +99,9 @@ const LogInForm = ({ index }) => {
                                         onChange={e => {
                                             if (clickedButton) {
                                                 setClickedButton(false)
+                                            }
+                                            if (invalidUser) {
+                                                setInvalidUser(false)
                                             }
                                             setPasswordValue(e.target.value)
                                         }}
