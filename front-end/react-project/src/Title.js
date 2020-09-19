@@ -133,13 +133,23 @@ const Title = () => {
                     if (sortedTitle[i] === movedLast) {
 
                         letterIndexToMove = i
+                        // if (letterIndexToMove > )
+                        let endX;
+                        if (letterRefs[letterIndexToMove].current.getBoundingClientRect().x > document.getElementById(`${movedLast}`).getBoundingClientRect().x) {
+                            endX = letterRefs[letterIndexToMove].current.getBoundingClientRect().x - document.getElementById(`${movedLast}`).getBoundingClientRect().x
+                                + (letterRefs[letterIndexToMove].current.getBoundingClientRect().width - document.getElementById(`${movedLast}`).getBoundingClientRect().width)
+                        } else {
+                            endX = letterRefs[letterIndexToMove].current.getBoundingClientRect().x - document.getElementById(`${movedLast}`).getBoundingClientRect().x
+                        }
 
-                        const endX = letterRefs[letterIndexToMove].current.getBoundingClientRect().x - document.getElementById(`${movedLast}`).getBoundingClientRect().x
+
+                        // console.log(letterRefs[letterIndexToMove].current.getBoundingClientRect().width - document.getElementById(`${movedLast}`).getBoundingClientRect().width)
+
                         if (endX === 0) {
                             return
                         }
-                        console.log('indextomove', letterRefs[letterIndexToMove].current.getBoundingClientRect())
-                        console.log('movedlast', document.getElementById(`${movedLast}`).getBoundingClientRect())
+                        // console.log('indextomove', letterRefs[letterIndexToMove].current.getBoundingClientRect())
+                        // console.log('movedlast', document.getElementById(`${movedLast}`).getBoundingClientRect())
 
                         const preDrag = titleSensor.tryGetLock(`${movedLast}`);
 
@@ -170,16 +180,7 @@ const Title = () => {
                         moveStepByStep(drag, points)
                     }
 
-
-
                 }
-
-
-
-
-
-
-
 
             }
 
