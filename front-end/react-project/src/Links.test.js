@@ -16,3 +16,11 @@ it('links to my GitHub with GitHub icon', () => {
     </a>
     expect(wrapper.contains(githubLink)).toEqual(true)
 })
+
+it('links to my LinkedIn with LinkedIn icon', () => {
+    const wrapper = shallow(<Links />)
+    const linkedinLink = <a href='https://www.linkedin.com/in/markmansolino/'>
+        <Linkedin color='steelblue' style={{ marginLeft: '10px' }} />
+    </a>
+    expect(wrapper.contains(linkedinLink)).toEqual(true)
+})
