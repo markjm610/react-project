@@ -1,5 +1,6 @@
 import React from 'react'
 import { shallow, mount } from 'enzyme';
+import { act } from 'react-dom/test-utils'
 import Invite from './Invite';
 import Context from './Context'
 import { Layer } from 'grommet';
@@ -34,21 +35,35 @@ it('is disabled while alphabetizing', () => {
     expect(wrapper.find('Layer').length).toBe(0)
 })
 
-
-it('displays different invite statuses based on response after submitting invite', () => {
+it('opens the layer on click and closes the layer on click outside', () => {
     const context = {
         currentProjectId: 1,
         alphabetizing: false
     }
     const wrapper = mount(<Context.Provider value={context}><Invite /></Context.Provider>)
-    const invite = wrapper.find('Invite')
-    // mimic response
-    // test jsx changes
+    const icon = wrapper.find('ShareOption')
+    icon.simulate('click')
+    const layer = wrapper.find('Layer')
+    expect(layer.length).toBe(1)
+    act(() => layer.prop('onClickOutside')())
+    const newWrapper = mount(<Context.Provider value={context}><Invite /></Context.Provider>)
+    const newLayer = newWrapper.find('Layer')
+    expect(newLayer.length).toBe(0)
 })
 
-// it('displays different things based on invite status')
+it('displays different invite statuses based on inviteStatus hook', () => {
+    const context = {
+        currentProjectId: 1,
+        alphabetizing: false
+    }
+    const wrapper = mount(<Context.Provider value={context}><Invite /></Context.Provider>)
+    const icon = wrapper.find('ShareOption')
+    icon.simulate('click')
+    const popupContainer = wrapper.find('.popup-container')
+    expect(popupContainer.contains(<div className='popup-text'>Who would you like to invite?</div>)).toBe(true)
+})
 
-// it('resets form input value and invite status to empty string when closing the layer', () => {
+// it('clears input value and invite status on click outside', () => {
 //     const context = {
 //         currentProjectId: 1,
 //         alphabetizing: false
@@ -56,10 +71,12 @@ it('displays different invite statuses based on response after submitting invite
 //     const wrapper = mount(<Context.Provider value={context}><Invite /></Context.Provider>)
 //     const icon = wrapper.find('ShareOption')
 //     icon.simulate('click')
+//     const input = wrapper.find('input')
+//     input.instance().value = 'Persontoinvite'
 //     const layer = wrapper.find('Layer')
-//     expect(layer.length).toBe(1)
-//     layer.prop('onClickOutside')
-//     const layerAfter = wrapper.find('Layer')
-//     expect(layerAfter.length).toBe(0)
-//     expect()
+//     act(() => layer.prop('onClickOutside')())
+//     const newWrapper = mount(<Context.Provider value={context}><Invite /></Context.Provider>)
+//     const newInput = newWrapper.find('input')
+//     expect(newInput.instance().value).toBe('')
+
 // })
