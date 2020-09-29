@@ -7,7 +7,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 
 const Invite = () => {
     const { currentProjectId, alphabetizing } = useContext(Context);
-    const [show, setShow] = useState();
+    const [show, setShow] = useState(false);
     const [value, setValue] = useState('');
     const [showConfirm, setShowConfirm] = useState()
     const [inviteStatus, setInviteStatus] = useState('')
