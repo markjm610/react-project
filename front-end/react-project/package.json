@@ -12,6 +12,7 @@
     "disable-scroll": "^0.5.1",
     "grommet": "^2.13.0",
     "grommet-icons": "^4.4.0",
+    "jest-fetch-mock": "^3.0.3",
     "mocha": "^8.1.3",
     "polished": "^3.6.3",
     "react": "^16.13.1",
