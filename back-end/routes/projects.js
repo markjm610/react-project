@@ -1,13 +1,36 @@
 const express = require('express');
 const { check } = require("express-validator");
 const { requireAuth } = require('../auth');
-
+const fetch = require('node-fetch');
 const { Project, User, Column, Task, UsersProject } = require('../db/models');
 const { asyncHandler, handleValidationErrors } = require('../utils');
 
 const router = express.Router();
 
 // router.use(requireAuth);
+
+router.post('/users/test', asyncHandler(async (req, res, next) => {
+    // console.log('REQ.BODY', JSON.stringify(req.body))
+    try {
+        // const testRes = await fetch('https://mark-mansolino.atlassian.net/rest/api/2/issue', {
+        //     method: 'POST',
+        //         body: JSON.stringify(req.body),
+        //             headers: {
+        //         "Content-Type": 'application/json',
+        //         }
+        // })
+        // const testRes = await fetch('https://jira.atlassian.com/rest/api/2/project/')
+        const testRes = await fetch('https://mark-mansolino.atlassian.net/rest/api/2/project/search')
+        // console.log('TESTRES', testRes)
+        const parsedTestRes = await testRes.json()
+        console.log('PARSEDTESTRES', parsedTestRes)
+
+    } catch (e) {
+        console.error(e)
+    }
+    res.json('asdf')
+}))
+
 
 router.get('/users/:userId/projects', asyncHandler(async (req, res, next) => {
     const userId = parseInt(req.params.userId, 10);
