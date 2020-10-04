@@ -38,28 +38,43 @@ router.post('/users/test', asyncHandler(async (req, res, next) => {
 router.get('/projects/sync', asyncHandler(async (req, res, next) => {
     let taskflowRes;
     try {
-        const res = await fetch(`https://api.trello.com/1/boards/${boardId}/lists?key=${key}&token=${token}`, {
+        const columnRes = await fetch(`https://api.trello.com/1/boards/${boardId}/lists?key=${key}&token=${token}`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json'
             }
         })
-        const parsedRes = await res.json()
-        console.log(parsedRes)
+        const parsedColumnRes = await columnRes.json()
+
+        const taskRes = await fetch(`https://api.trello.com/1/boards/${boardId}/cards?key=${key}&token=${token}`)
+        const parsedTaskRes = await taskRes.json()
+        // console.log(parsedTaskRes)
+        const taskObj = {}
+        parsedTaskRes.forEach(task => {
+            const convertedTask = {
+                id: task.id,
+                description: task.name
+            }
+            if (task.idList in taskObj) {
+                taskObj[task.idList].push(convertedTask)
+            } else {
+                taskObj[task.idList] = [convertedTask]
+            }
+        })
         taskflowRes = {
             id: 'integration',
             name: 'Trello Integration',
-            Columns: parsedRes.map(({ id, name }, i) => {
+            Columns: parsedColumnRes.map(({ id, name }, i) => {
                 return {
                     id,
                     name,
                     pagePosition: i,
-                    projectId: boardId
+                    projectId: boardId,
+                    Tasks: taskObj[id] ? taskObj[id] : []
                 }
             })
         }
-
-
+        console.log(taskflowRes)
     } catch (e) {
         console.error(e)
     }
