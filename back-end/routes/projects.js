@@ -20,18 +20,153 @@ router.post('/users/test', asyncHandler(async (req, res, next) => {
         //         }
         // })
         // const testRes = await fetch('https://jira.atlassian.com/rest/api/2/project/')
-        const testRes = await fetch('https://mark-mansolino.atlassian.net/rest/api/3/issue/MP-1', {
-            method: 'GET',
+        // const testRes = await fetch('https://mark-mansolino.atlassian.net/rest/api/3/issue/MP-1', {
+        //     method: 'GET',
+        //     headers: {
+        //         'Authorization': `Basic ${Buffer.from(
+        //             'markjm610@gmail.com:h1xUD26WcDuihTwW0ugX255E'
+        //         ).toString('base64')}`,
+        //         'Accept': 'application/json'
+        //     }
+        // })
+
+        const bodyData = {
+            update: {},
+            fields: {
+                "summary": "Main order flow broken",
+                // "parent": {
+                //     "key": "MP"
+                // },
+                "issuetype": {
+                    "id": "10002"
+                },
+                // "components": [
+                //     {
+                //         "id": "10000"
+                //     }
+                // ],
+                // "customfield_20000": "06/Jul/19 3:25 PM",
+                // "customfield_40000": {
+                //     "type": "doc",
+                //     "version": 1,
+                //     "content": [
+                //         {
+                //             "type": "paragraph",
+                //             "content": [
+                //                 {
+                //                     "text": "Occurs on all orders",
+                //                     "type": "text"
+                //                 }
+                //             ]
+                //         }
+                //     ]
+                // },
+                // "customfield_70000": [
+                //     "jira-administrators",
+                //     "jira-software-users"
+                // ],
+                "project": {
+                    "id": "10000"
+                },
+                // "description": {
+                //     "type": "doc",
+                //     "version": 1,
+                //     "content": [
+                //         {
+                //             "type": "paragraph",
+                //             "content": [
+                //                 {
+                //                     "text": "Order entry fails when selecting supplier.",
+                //                     "type": "text"
+                //                 }
+                //             ]
+                //         }
+                //     ]
+                // },
+                // "fixVersions": [
+                //     {
+                //         "id": "10001"
+                //     }
+                // ],
+                // "priority": {
+                //     "id": "20000"
+                // },
+                // "labels": [
+                //     "bugfix",
+                //     "blitz_test"
+                // ],
+                // timetracking: {
+                //     "remainingEstimate": "5",
+                //     "originalEstimate": "10"
+                // },
+                // "security": {
+                //     "id": "10000"
+                // },
+                // "environment": {
+                //     "type": "doc",
+                //     "version": 1,
+                //     "content": [
+                //         {
+                //             "type": "paragraph",
+                //             "content": [
+                //                 {
+                //                     "text": "UAT",
+                //                     "type": "text"
+                //                 }
+                //             ]
+                //         }
+                //     ]
+                // },
+                // "versions": [
+                //     {
+                //         "id": "10000"
+                //     }
+                // ],
+                // "duedate": "2020-12-12",
+                // "customfield_60000": "jira-software-users",
+                // "customfield_50000": {
+                //     "type": "doc",
+                //     "version": 1,
+                //     "content": [
+                //         {
+                //             "type": "paragraph",
+                //             "content": [
+                //                 {
+                //                     "text": "Could impact day-to-day work.",
+                //                     "type": "text"
+                //                 }
+                //             ]
+                //         }
+                //     ]
+                // },
+            }
+        }
+
+        const testRes = await fetch('https://mark-mansolino.atlassian.net/rest/api/3/issue', {
+            method: 'POST',
             headers: {
                 'Authorization': `Basic ${Buffer.from(
                     'markjm610@gmail.com:h1xUD26WcDuihTwW0ugX255E'
                 ).toString('base64')}`,
-                'Accept': 'application/json'
-            }
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(bodyData)
         })
+        // const testRes = await fetch('https://mark-mansolino.atlassian.net/rest/api/3/issue/createmeta', {
+        //     method: 'GET',
+        //     headers: {
+        //         'Authorization': `Basic ${Buffer.from(
+        //             'markjm610@gmail.com:h1xUD26WcDuihTwW0ugX255E'
+        //         ).toString('base64')}`,
+        //         'Accept': 'application/json',
+        //         'Content-Type': 'application/json'
+        //     },
+        // })
         // console.log('TESTRES', testRes)
         const parsedTestRes = await testRes.json()
         console.log('PARSEDTESTRES', parsedTestRes)
+        // console.log('ISSUETYPES', parsedTestRes.projects[0].issuetypes)
 
     } catch (e) {
         console.error(e)
