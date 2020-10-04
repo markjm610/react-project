@@ -21,7 +21,7 @@ import { Layer } from 'grommet';
 import ProjectNavMain from './ProjectNavMain'
 import AddInstructionalProject from './AddInstructionalProject';
 import ControlSpeed from './ControlSpeed';
-
+import SwitchMode from './SwitchMode'
 
 
 const Home = ({ history }) => {
@@ -485,6 +485,7 @@ const Home = ({ history }) => {
 
                 <div className='sidebar-right'>
                     <ControlSpeed />
+                    <SwitchMode />
                     <AddColumn />
                     <Invite />
                     <ProjectMembers />
