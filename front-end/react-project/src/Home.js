@@ -86,8 +86,6 @@ const Home = ({ history }) => {
                 setSelectedProject(projectObj)
             }
 
-
-
             const listProjectArr = projects.slice(5)
             setMainProjectArr(mainProjectArr)
             setListProjectArr(listProjectArr)

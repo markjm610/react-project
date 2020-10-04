@@ -4,7 +4,18 @@ import { apiBaseUrl } from './config';
 import Context from './Context';
 
 const SwitchMode = () => {
-    const { setDisplayedColumns, integrationMode, setIntegrationMode } = useContext(Context)
+    const {
+        alphabetizing,
+        setDisplayedColumns,
+        integrationMode,
+        setIntegrationMode,
+        mainProjectArr,
+        selectedProject,
+        setSelectedProject,
+        setProjectMembers,
+        setCurrentProjectId,
+        setUpdateColumns
+    } = useContext(Context)
     const [show, setShow] = useState(false)
     const [clickedButton, setClickedButton] = useState(false)
 
@@ -16,12 +27,37 @@ const SwitchMode = () => {
             setDisplayedColumns(Columns)
         } else {
             // display top project on left
+            const usersRes = await fetch(`${apiBaseUrl}/projects/${mainProjectArr[0].id}/users`);
+            const parsedUsersRes = await usersRes.json();
+
+            const res = await fetch(`${apiBaseUrl}/projects/${mainProjectArr[0].id}`);
+            const parsedRes = await res.json();
+            const columns = parsedRes.projectInfo.Columns;
+
+
+            let selectedProjectCopy = { ...selectedProject }
+            for (let projectId in selectedProjectCopy) {
+
+                if (projectId === `${mainProjectArr[0].id}`) {
+                    selectedProjectCopy[projectId] = true
+                } else {
+                    selectedProjectCopy[projectId] = false
+                }
+            }
+            const columnsCopy = [...columns]
+            setSelectedProject(selectedProjectCopy)
+            setProjectMembers(parsedUsersRes.projects.Users || []);
+            setDisplayedColumns(columns);
+            setCurrentProjectId(mainProjectArr[0].id);
+            setUpdateColumns(columnsCopy)
         }
         setIntegrationMode(!integrationMode)
         // setShow(false)
-
     }
     const showLayer = () => {
+        if (alphabetizing) {
+            return
+        }
         setShow(true)
         setClickedButton(false)
     }

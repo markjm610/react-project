@@ -21,7 +21,7 @@ const ProjectNavList = ({ id, name, position, dropZone }) => {
 
         const res = await fetch(`${apiBaseUrl}/projects/${id}`);
         const parsedRes = await res.json();
-        console.log(parsedRes)
+        // console.log(parsedRes)
         const columns = parsedRes.projectInfo.Columns;
 
         let selectedProjectCopy = { ...selectedProject }
