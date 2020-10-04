@@ -25,6 +25,13 @@ const SwitchMode = () => {
             const res = await fetch(`${apiBaseUrl}/projects/sync`)
             const { Columns } = await res.json()
             setDisplayedColumns(Columns)
+
+            let selectedProjectCopy = { ...selectedProject }
+
+            for (let projectId in selectedProjectCopy) {
+                selectedProjectCopy[projectId] = false
+            }
+            setSelectedProject(selectedProjectCopy)
         } else {
             // display top project on left
             const usersRes = await fetch(`${apiBaseUrl}/projects/${mainProjectArr[0].id}/users`);
@@ -52,7 +59,7 @@ const SwitchMode = () => {
             setUpdateColumns(columnsCopy)
         }
         setIntegrationMode(!integrationMode)
-        // setShow(false)
+        setShow(false)
     }
     const showLayer = () => {
         if (alphabetizing) {
@@ -63,8 +70,8 @@ const SwitchMode = () => {
     }
 
     return (
-        <>
-            <button onClick={showLayer}>Switch Mode</button>
+        <div className='switch-mode'>
+            <button onClick={showLayer} style={{ backgroundColor: integrationMode && 'blue' }}>Switch Mode</button>
             { show &&
                 <Layer
                     onEsc={() => setShow(false)}
@@ -84,7 +91,7 @@ const SwitchMode = () => {
                         </div>}
 
                 </Layer>}
-        </>
+        </div>
     )
 }
 

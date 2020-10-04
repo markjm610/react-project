@@ -26,7 +26,7 @@ html, body {
     grid-column-start: 1;
     background-color: lightsteelblue; 
     display: grid;
-    grid-template-rows: 50px 50px 1fr 50px;
+    grid-template-rows: 50px 50px 200px 1fr 50px;
     height: 100vh;
     border-right: 1px solid rgb(83, 83, 83);
 }
@@ -57,11 +57,22 @@ html, body {
 
 .user-display {
     grid-row: 2 / 3;
+    height: 100%;
+}
+
+.switch-mode {
+    grid-row: 3 / 4;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
 }
 
 .project-stuff {
-    grid-row: 3/ 4;
-    padding-top: 300px;
+    grid-row: 4 / 5;
+    padding-top: 100px;
 }
 
 .project-navlink {
@@ -147,7 +158,7 @@ html, body {
 }
 
 .log-out-container {
-    grid-row: 4 / 5;
+    grid-row: 5 / 6;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
