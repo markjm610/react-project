@@ -4,6 +4,7 @@ const { requireAuth } = require('../auth');
 const fetch = require('node-fetch');
 const { Project, User, Column, Task, UsersProject } = require('../db/models');
 const { asyncHandler, handleValidationErrors } = require('../utils');
+const { key, token, boardId } = require('../tokens')
 
 const router = express.Router();
 
@@ -15,9 +16,9 @@ const router = express.Router();
 // key: 3bfd079ada832b77563e8a1480c7066a
 // token: 15f7a908bb8befc9a6bb9085ef25acc1e1aff0b6c6e761b45b555f8e99e33a6f
 
-const key = '3bfd079ada832b77563e8a1480c7066a'
-const token = '15f7a908bb8befc9a6bb9085ef25acc1e1aff0b6c6e761b45b555f8e99e33a6f'
-const boardId = '5f7a1942b83a507a552c274d'
+// const key = '3bfd079ada832b77563e8a1480c7066a'
+// const token = '15f7a908bb8befc9a6bb9085ef25acc1e1aff0b6c6e761b45b555f8e99e33a6f'
+// const boardId = '5f7a1942b83a507a552c274d'
 router.post('/users/test', asyncHandler(async (req, res, next) => {
     // console.log('REQ.BODY', JSON.stringify(req.body))
     try {
@@ -74,7 +75,7 @@ router.get('/projects/sync', asyncHandler(async (req, res, next) => {
                 }
             })
         }
-        console.log(taskflowRes)
+        // console.log(taskflowRes)
     } catch (e) {
         console.error(e)
     }

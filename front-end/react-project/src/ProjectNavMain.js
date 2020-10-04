@@ -8,11 +8,34 @@ import { Draggable } from 'react-beautiful-dnd';
 
 const ProjectNavMain = ({ id, name, position, dropZone }) => {
 
-    const { alphabetizing, setAlphabetizing, setUpdateColumns, selectedProject, setSelectedProject, bottomOfMain, dragProjectId, setDragProjectId, listProjectArr, setListProjectArr, mainProjectArr, setMainProjectArr, setProjectMembers, setDisplayedColumns, setCurrentProjectId, currentlyDraggingProject, setCurrentlyDraggingProject } = useContext(Context);
+    const {
+        integrationMode,
+        setIntegrationMode,
+        alphabetizing,
+        setAlphabetizing,
+        setUpdateColumns,
+        selectedProject,
+        setSelectedProject,
+        bottomOfMain,
+        dragProjectId,
+        setDragProjectId,
+        listProjectArr,
+        setListProjectArr,
+        mainProjectArr,
+        setMainProjectArr,
+        setProjectMembers,
+        setDisplayedColumns,
+        setCurrentProjectId,
+        currentlyDraggingProject,
+        setCurrentlyDraggingProject
+    } = useContext(Context);
 
     const handleProjectNavLinkClick = async () => {
         if (alphabetizing) {
             setAlphabetizing(false)
+        }
+        if (integrationMode) {
+            setIntegrationMode(false)
         }
         const usersRes = await fetch(`${apiBaseUrl}/projects/${id}/users`);
         const parsedUsersRes = await usersRes.json();
@@ -24,13 +47,13 @@ const ProjectNavMain = ({ id, name, position, dropZone }) => {
 
         let selectedProjectCopy = { ...selectedProject }
         for (let projectId in selectedProjectCopy) {
-
             if (projectId === `${id}`) {
                 selectedProjectCopy[projectId] = true
             } else {
                 selectedProjectCopy[projectId] = false
             }
         }
+
         const columnsCopy = [...columns]
         setSelectedProject(selectedProjectCopy)
         setProjectMembers(parsedUsersRes.projects.Users || []);

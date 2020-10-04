@@ -7,7 +7,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 
 const AddColumn = () => {
 
-    const { alphabetizing, currentProjectId, displayedColumns, setDisplayedColumns, columnDragging } = useContext(Context)
+    const { integrationMode, alphabetizing, currentProjectId, displayedColumns, setDisplayedColumns, columnDragging } = useContext(Context)
     const [show, setShow] = useState();
     const [value, setValue] = useState('');
     const [clickedButton, setClickedButton] = useState(false)
@@ -32,21 +32,36 @@ const AddColumn = () => {
         }
 
         setShow(false);
-
+        let res;
         const columnsCopy = [...displayedColumns];
+        if (!integrationMode) {
 
-        const pagePositionOfNewColumn = columnsCopy.length;
 
-        const res = await fetch(`${apiBaseUrl}/projects/${currentProjectId}/columns`, {
-            method: 'POST',
-            body: JSON.stringify(
-                { name: value, pagePosition: pagePositionOfNewColumn }
-            ),
-            headers: {
-                "Content-Type": 'application/json',
-            }
-        })
+            const pagePositionOfNewColumn = columnsCopy.length;
 
+            res = await fetch(`${apiBaseUrl}/projects/${currentProjectId}/columns`, {
+                method: 'POST',
+                body: JSON.stringify(
+                    { name: value, pagePosition: pagePositionOfNewColumn }
+                ),
+                headers: {
+                    "Content-Type": 'application/json',
+                }
+            })
+
+
+        } else {
+            // back end endpoint for API
+            res = await fetch(`${apiBaseUrl}/columns/integration`, {
+                method: 'POST',
+                body: JSON.stringify(
+                    { name: value }
+                ),
+                headers: {
+                    "Content-Type": 'application/json',
+                }
+            })
+        }
         const parsedRes = await res.json();
         const newColumn = parsedRes.newColumn;
         newColumn.Tasks = []

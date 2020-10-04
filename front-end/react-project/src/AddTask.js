@@ -5,7 +5,13 @@ import Context from './Context';
 import { apiBaseUrl } from './config';
 
 const AddTask = ({ columnId, taskArrLength }) => {
-    const { alphabetizing, currentUserId, displayedColumns, setDisplayedColumns } = useContext(Context);
+    const {
+        integrationMode,
+        alphabetizing,
+        currentUserId,
+        displayedColumns,
+        setDisplayedColumns
+    } = useContext(Context);
     const [show, setShow] = useState();
     const [value, setValue] = useState('');
     const [descriptionLength, setDescriptionLength] = useState(0)
@@ -33,16 +39,29 @@ const AddTask = ({ columnId, taskArrLength }) => {
         setShow(false)
 
         const columnPosition = taskArrLength;
+        let res;
+        if (!integrationMode) {
+            res = await fetch(`${apiBaseUrl}/columns/${columnId}/tasks`, {
+                method: 'POST',
+                body: JSON.stringify(
+                    { columnPosition, heading: 'heading', description: value, creatorId: currentUserId }
+                ),
+                headers: {
+                    "Content-Type": 'application/json',
+                }
+            })
+        } else {
+            res = await fetch(`${apiBaseUrl}/columns/${columnId}/tasks/integration`, {
+                method: 'POST',
+                body: JSON.stringify(
+                    { description: value }
+                ),
+                headers: {
+                    "Content-Type": 'application/json',
+                }
+            })
+        }
 
-        const res = await fetch(`${apiBaseUrl}/columns/${columnId}/tasks`, {
-            method: 'POST',
-            body: JSON.stringify(
-                { columnPosition, heading: 'heading', description: value, creatorId: currentUserId }
-            ),
-            headers: {
-                "Content-Type": 'application/json',
-            }
-        })
 
         const parsedRes = await res.json();
 

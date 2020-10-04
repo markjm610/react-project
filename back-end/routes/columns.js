@@ -1,16 +1,15 @@
 const express = require('express');
 const { check } = require("express-validator");
 const { requireAuth } = require('../auth');
-
+const fetch = require('node-fetch');
 const { Column, Task } = require('../db/models');
 const { asyncHandler, handleValidationErrors } = require('../utils');
-
+const { key, token, boardId } = require('../tokens')
 
 
 const router = express.Router();
 
 // router.use(requireAuth);
-
 
 router.get('/projects/:projectId/columns', asyncHandler(async (req, res) => {
     const projectId = parseInt(req.params.projectId, 10);
@@ -61,5 +60,26 @@ router.put('/columns', asyncHandler(async (req, res) => {
     }
 }))
 
+router.post('/columns/integration', asyncHandler(async (req, res) => {
+    const { name } = req.body
+    try {
+        const apiRes = await fetch(`https://api.trello.com/1/lists?key=${key}&token=${token}&name=${name}&idBoard=${boardId}&pos=bottom`, {
+            method: 'POST'
+        })
+
+        const { name: apiName, id: apiId } = await apiRes.json()
+
+        res.json({
+            newColumn: {
+                name: apiName,
+                id: apiId
+            }
+        })
+    } catch (e) {
+        console.error(e)
+    }
+
+
+}))
 
 module.exports = router;

@@ -1,9 +1,10 @@
 const express = require('express');
 const { check } = require("express-validator");
 const { requireAuth } = require('../auth');
-
+const fetch = require('node-fetch');
 const { Task } = require('../db/models');
 const { asyncHandler, handleValidationErrors } = require('../utils');
+const { key, token, boardId } = require('../tokens')
 
 const router = express.Router();
 
@@ -25,6 +26,35 @@ router.post('/columns/:columnId/tasks', asyncHandler(async (req, res) => {
     const newTask = await Task.create({ heading, description, columnPosition, columnId, creatorId });
 
     res.json({ newTask })
+}))
+
+router.post('/columns/:columnId/tasks/integration', asyncHandler(async (req, res) => {
+    const columnId = req.params.columnId;
+    const { description } = req.body;
+
+    const apiRes = await fetch(`https://api.trello.com/1/cards`, {
+        method: 'POST',
+        body: JSON.stringify({
+            key: key,
+            token: token,
+            idList: columnId,
+            name: description
+        }),
+        headers: {
+            "Content-Type": 'application/json',
+        }
+    })
+
+    const { id, idList, name } = await apiRes.json()
+
+    res.json({
+        newTask: {
+            heading: 'heading',
+            id: id,
+            description: name,
+            columnId: idList
+        }
+    })
 }))
 
 router.delete('/tasks/:taskId', asyncHandler(async (req, res) => {
@@ -62,6 +92,7 @@ router.delete('/columns/:columnId/tasks', asyncHandler(async (req, res) => {
     res.json({ message: 'deleted' })
 
 }))
+
 
 
 module.exports = router;

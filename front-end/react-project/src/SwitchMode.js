@@ -32,6 +32,7 @@ const SwitchMode = () => {
                 selectedProjectCopy[projectId] = false
             }
             setSelectedProject(selectedProjectCopy)
+            setProjectMembers([])
         } else {
             // display top project on left
             const usersRes = await fetch(`${apiBaseUrl}/projects/${mainProjectArr[0].id}/users`);
