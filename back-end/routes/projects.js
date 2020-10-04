@@ -8,7 +8,7 @@ const { asyncHandler, handleValidationErrors } = require('../utils');
 const router = express.Router();
 
 // router.use(requireAuth);
-
+// h1xUD26WcDuihTwW0ugX255E
 router.post('/users/test', asyncHandler(async (req, res, next) => {
     // console.log('REQ.BODY', JSON.stringify(req.body))
     try {
@@ -20,7 +20,15 @@ router.post('/users/test', asyncHandler(async (req, res, next) => {
         //         }
         // })
         // const testRes = await fetch('https://jira.atlassian.com/rest/api/2/project/')
-        const testRes = await fetch('https://mark-mansolino.atlassian.net/rest/api/2/project/search')
+        const testRes = await fetch('https://mark-mansolino.atlassian.net/rest/api/3/issue/MP-1', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Basic ${Buffer.from(
+                    'markjm610@gmail.com:h1xUD26WcDuihTwW0ugX255E'
+                ).toString('base64')}`,
+                'Accept': 'application/json'
+            }
+        })
         // console.log('TESTRES', testRes)
         const parsedTestRes = await testRes.json()
         console.log('PARSEDTESTRES', parsedTestRes)
