@@ -4,11 +4,17 @@ import { apiBaseUrl } from './config';
 
 const SwitchMode = () => {
     const [show, setShow] = useState(false)
-    const click = async () => {
-        await fetch(`${apiBaseUrl}/projects/sync`)
+    const [clickedButton, setClickedButton] = useState(false)
+
+    const switchModeClick = async () => {
+        setClickedButton(true)
+        // setShow(false)
+        const res = await fetch(`${apiBaseUrl}/projects/sync`)
+        console.log(await res.json())
     }
     const showLayer = () => {
         setShow(true)
+        setClickedButton(false)
     }
 
     return (
@@ -18,9 +24,13 @@ const SwitchMode = () => {
                 <Layer
                     onEsc={() => setShow(false)}
                     onClickOutside={() => {
+                        setClickedButton(false)
                         setShow(false)
                     }}>
-                    <div className='popup-container'></div>
+                    <div className='popup-container'>
+                        <div className='popup-text'>Switch modes?</div>
+                        <div className={clickedButton ? 'popup-button-clicked' : 'popup-button'} onClick={switchModeClick}>Yes</div>
+                    </div>
                 </Layer>}
         </>
     )

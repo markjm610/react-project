@@ -36,7 +36,34 @@ router.post('/users/test', asyncHandler(async (req, res, next) => {
 }))
 
 router.get('/projects/sync', asyncHandler(async (req, res, next) => {
+    let taskflowRes;
+    try {
+        const res = await fetch(`https://api.trello.com/1/boards/${boardId}/lists?key=${key}&token=${token}`, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json'
+            }
+        })
+        const parsedRes = await res.json()
+        console.log(parsedRes)
+        taskflowRes = {
+            id: 'integration',
+            name: 'Trello Integration',
+            Columns: parsedRes.map(({ id, name }, i) => {
+                return {
+                    id,
+                    name,
+                    pagePosition: i,
+                    projectId: boardId
+                }
+            })
+        }
 
+
+    } catch (e) {
+        console.error(e)
+    }
+    res.json(taskflowRes)
 }))
 
 router.get('/users/:userId/projects', asyncHandler(async (req, res, next) => {
