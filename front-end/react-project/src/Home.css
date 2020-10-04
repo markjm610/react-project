@@ -208,8 +208,6 @@ html, body {
     height: 100vh;
 }
 
-
-
 .invite {
     grid-row: 2 / 3;
     display: flex;
