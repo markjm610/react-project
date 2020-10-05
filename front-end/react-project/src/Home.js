@@ -285,9 +285,6 @@ const Home = ({ history }) => {
 
         } else if (type === 'column') {
 
-            // const drag = currentlyDraggingColumn;
-
-            // let startingColumn;
 
             let copy = [...displayedColumns];
 
@@ -305,13 +302,24 @@ const Home = ({ history }) => {
 
 
             try {
-                await fetch(`${apiBaseUrl}/columns`, {
-                    method: 'PUT',
-                    body: JSON.stringify({ sendArr: copy }),
-                    headers: {
-                        "Content-Type": 'application/json',
-                    }
-                })
+                if (!integrationMode) {
+                    await fetch(`${apiBaseUrl}/columns`, {
+                        method: 'PUT',
+                        body: JSON.stringify({ sendArr: copy }),
+                        headers: {
+                            "Content-Type": 'application/json',
+                        }
+                    })
+
+                } else {
+                    await fetch(`${apiBaseUrl}/columns/integration`, {
+                        method: 'PUT',
+                        body: JSON.stringify({ sendArr: copy }),
+                        headers: {
+                            "Content-Type": 'application/json',
+                        }
+                    })
+                }
 
             } catch (e) {
                 console.error(e)

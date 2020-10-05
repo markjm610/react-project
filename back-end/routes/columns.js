@@ -82,6 +82,21 @@ router.put('/columns', asyncHandler(async (req, res) => {
     }
 }))
 
+router.put('/columns/integration', asyncHandler(async (req, res) => {
+    try {
+        const { sendArr } = req.body;
+        for (let i = sendArr.length - 1; i >= 0; i--) {
+            await fetch(`https://api.trello.com/1/lists/${sendArr[i].id}?key=${key}&token=${token}&pos=top`, {
+                method: 'PUT'
+            })
+
+        }
+        res.json({ message: 'success' })
+    } catch (e) {
+        console.error(e)
+    }
+}))
+
 router.post('/columns/integration', asyncHandler(async (req, res) => {
     const { name } = req.body
     try {

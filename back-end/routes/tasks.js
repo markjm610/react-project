@@ -97,7 +97,7 @@ router.put('/tasks', asyncHandler(async (req, res) => {
 router.put('/tasks/integration', asyncHandler(async (req, res) => {
     try {
         const { sendArr } = req.body;
-        console.log(sendArr)
+        // console.log(sendArr)
         for (let i = sendArr.length - 1; i >= 0; i--) {
             const apiRes = await fetch(`https://api.trello.com/1/cards/${sendArr[i].id}?key=${key}&token=${token}&pos=top&idList=${sendArr[i].columnId}`, {
                 method: 'PUT',
@@ -109,8 +109,8 @@ router.put('/tasks/integration', asyncHandler(async (req, res) => {
                 }
             })
             // console.log(await apiRes.json())
-            const { id, name, pos } = await apiRes.json()
-            console.log(id, name, pos)
+            // const { id, name, pos } = await apiRes.json()
+            // console.log(id, name, pos)
         }
 
 
