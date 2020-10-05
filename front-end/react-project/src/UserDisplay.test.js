@@ -2,6 +2,7 @@ import React from 'react'
 import { shallow, mount, render, configure } from 'enzyme';
 import { act } from 'react-dom/test-utils'
 import Context from './Context'
+import ContextWrapper from './ContextWrapper'
 import UserDisplay from './UserDisplay';
 import Notification from 'grommet-icons';
 

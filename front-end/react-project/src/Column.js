@@ -416,9 +416,7 @@ const Column = ({ columnArrayLength, columnDropZoneId, tasksArray, name, columnI
                                 <Droppable droppableId={`${columnId}`} type='task'>
                                     {(provided, snapshot) => {
                                         return (
-
                                             <div
-
                                                 ref={provided.innerRef}
                                                 {...provided.droppableProps}
                                                 className='tasks-container'>
@@ -436,7 +434,6 @@ const Column = ({ columnArrayLength, columnDropZoneId, tasksArray, name, columnI
                                                         topTask={topTask}
                                                         columnHeader={columnHeader}
                                                     />)
-
                                                 })}
                                                 {provided.placeholder}
                                             </div>)

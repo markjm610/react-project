@@ -136,7 +136,6 @@ const Task = ({ columnHeader, taskRef, topTask, taskArrLength, columnId, current
         return (
             <Draggable draggableId={`task-${taskid}`} index={taskdropzoneid} isDragDisabled={!!alphabetizing && alphabetizing !== columnId}>
                 {(provided, snapshot) => {
-
                     return (
                         <div
                             {...provided.draggableProps}
