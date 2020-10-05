@@ -84,7 +84,7 @@ it('opens the layer on click and closes the layer on click outside', () => {
 //     // expect(newWrapper.contains(<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '150px', marginTop: '10px' }}>User not found</div>)).toBe(true)
 //     // expect(input.instance().value).toBe('User')
 //     expect(newWrapper.contains(<div>User is already a member of this project.</div>)).toBe(true)
-})
+// })
 
 // it('clears input value and invite status on click outside', () => {
 //     const context = {

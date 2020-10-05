@@ -11,7 +11,7 @@ const ProjectMembers = () => {
             <div className='project-members'>
                 {projectMembers.map(({ name }, i) => {
                     return (
-                        <div key={i} className='each-member'>{name}</div>
+                        <div key={`${i}${name}`} className='each-member'>{name}</div>
                     )
                 })}
             </div>
