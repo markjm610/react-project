@@ -327,7 +327,7 @@ const Home = ({ history }) => {
 
         }
         else if (type === 'project') {
-            console.log(result)
+            // console.log(result)
             // if (destination.droppableId === 'project-nav-list' && source.droppableId === 'project-nav-main') {
             //     return
             // }
