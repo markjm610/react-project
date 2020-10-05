@@ -10,7 +10,7 @@ const Test = () => {
             }
         })
         const parsedRes = await res.json()
-        console.log(parsedRes)
+        // console.log(parsedRes)
     }
     return (
         <button onClick={click}></button>

@@ -12,22 +12,22 @@ const router = express.Router();
 
 // Jira: h1xUD26WcDuihTwW0ugX255E
 
-router.post('/users/test', asyncHandler(async (req, res, next) => {
-    // console.log('REQ.BODY', JSON.stringify(req.body))
-    try {
-        const res = await fetch(`https://api.trello.com/1/boards/${boardId}/cards?key=${key}&token=${token}`, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json'
-            }
-        })
-        const parsedRes = await res.json()
-        console.log(parsedRes)
-    } catch (e) {
-        console.error(e)
-    }
-    res.json('response')
-}))
+// router.post('/users/test', asyncHandler(async (req, res, next) => {
+//     // console.log('REQ.BODY', JSON.stringify(req.body))
+//     try {
+//         const res = await fetch(`https://api.trello.com/1/boards/${boardId}/cards?key=${key}&token=${token}`, {
+//             method: 'GET',
+//             headers: {
+//                 'Accept': 'application/json'
+//             }
+//         })
+//         const parsedRes = await res.json()
+//         // console.log(parsedRes)
+//     } catch (e) {
+//         console.error(e)
+//     }
+//     res.json('response')
+// }))
 
 router.get('/projects/sync', asyncHandler(async (req, res, next) => {
     let taskflowRes;
@@ -47,7 +47,8 @@ router.get('/projects/sync', asyncHandler(async (req, res, next) => {
         parsedTaskRes.forEach(task => {
             const convertedTask = {
                 id: task.id,
-                description: task.name
+                description: task.name,
+                columnId: task.idList
             }
             if (task.idList in taskObj) {
                 taskObj[task.idList].push(convertedTask)

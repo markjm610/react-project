@@ -49,7 +49,8 @@ const Home = ({ history }) => {
         updateColumns,
         setUpdateColumns,
         setDraggingTaskId,
-        taskRefs
+        taskRefs,
+        integrationMode
     } = useContext(Context);
 
     const [showInstructions, setShowInstructions] = useState(true)
@@ -152,7 +153,8 @@ const Home = ({ history }) => {
         }
 
         if (type === 'task') {
-
+            // console.log(destination)
+            // console.log(source)
             let copy = [...displayedColumns];
 
             if (destination.droppableId === source.droppableId) {
@@ -208,9 +210,13 @@ const Home = ({ history }) => {
 
 
                 // Reassign columnId of dragged task, now in its new spot
-                newColumn[destination.index].columnId = parseInt(destination.droppableId)
+                if (!integrationMode) {
+                    newColumn[destination.index].columnId = parseInt(destination.droppableId)
+                } else {
+                    newColumn[destination.index].columnId = destination.droppableId
+                }
 
-                // console.log(newColumn[destination.index].columnId)
+
 
                 copy.forEach(column => {
                     if (`${column.id}` === destination.droppableId) {
@@ -236,7 +242,7 @@ const Home = ({ history }) => {
 
             let sendArr = [];
 
-
+            // console.log(copy)
             copy.forEach(column => {
                 if (`${column.id}` === destination.droppableId) {
                     // console.log('column.id === columnId')
@@ -251,13 +257,27 @@ const Home = ({ history }) => {
             // console.log(sendArr)
 
             try {
-                const res = await fetch(`${apiBaseUrl}/tasks`, {
-                    method: 'PUT',
-                    body: JSON.stringify({ sendArr }),
-                    headers: {
-                        "Content-Type": 'application/json',
-                    }
-                })
+                let res;
+
+                if (!integrationMode) {
+                    res = await fetch(`${apiBaseUrl}/tasks`, {
+                        method: 'PUT',
+                        body: JSON.stringify({ sendArr }),
+                        headers: {
+                            "Content-Type": 'application/json',
+                        }
+                    })
+                } else {
+
+                    res = await fetch(`${apiBaseUrl}/tasks/integration`, {
+                        method: 'PUT',
+                        body: JSON.stringify({ sendArr }),
+                        headers: {
+                            "Content-Type": 'application/json',
+                        }
+                    })
+                }
+
                 // console.log(await res.json())
             } catch (e) {
                 console.error(e)

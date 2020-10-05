@@ -69,14 +69,14 @@ router.delete('/tasks/:taskId', asyncHandler(async (req, res) => {
 
 }))
 
-// router.delete('/tasks/:taskId/integration', asyncHandler(async (req, res) => {
+router.delete('/tasks/:taskId/integration', asyncHandler(async (req, res) => {
 
-//     const taskId = parseInt(req.params.taskId, 10);
+    const taskId = req.params.taskId
 
-//     const res = await fetch(`https://api.trello.com/1/cards/${taskId}`, {
-//         method: 'DELETE'
-//     })
-// }))
+    const apiRes = await fetch(`https://api.trello.com/1/cards/${taskId}`, {
+        method: 'PUT'
+    })
+}))
 
 router.put('/tasks', asyncHandler(async (req, res) => {
     try {
@@ -87,6 +87,45 @@ router.put('/tasks', asyncHandler(async (req, res) => {
                 { columnPosition: task.columnPosition, columnId: task.columnId },
                 { where: { id: task.id } });
         })
+
+        res.json({ message: 'success' })
+    } catch (e) {
+        console.error(e)
+    }
+}))
+
+router.put('/tasks/integration', asyncHandler(async (req, res) => {
+    try {
+        const { sendArr } = req.body;
+        console.log(sendArr)
+        for (let i = sendArr.length - 1; i >= 0; i--) {
+            const apiRes = await fetch(`https://api.trello.com/1/cards/${sendArr[i].id}?key=${key}&token=${token}&pos=top&idList=${sendArr[i].columnId}`, {
+                method: 'PUT',
+                // body: JSON.stringify({
+                //     pos: task.columnPosition + 1
+                // }),
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+            // console.log(await apiRes.json())
+            const { id, name, pos } = await apiRes.json()
+            console.log(id, name, pos)
+        }
+
+
+
+        // const apiRes = await fetch(`https://api.trello.com/1/cards/${sendArr[0].id}?key=${key}&token=${token}&pos=top`, {
+        //     method: 'PUT',
+        //     // body: JSON.stringify({
+        //     //     pos: 'top'
+        //     // }),
+        //     headers: {
+        //         'Accept': 'application/json'
+        //     }
+        // })
+        // console.log(await apiRes.json())
+
         res.json({ message: 'success' })
     } catch (e) {
         console.error(e)

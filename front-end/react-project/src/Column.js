@@ -295,8 +295,8 @@ const Column = ({ columnArrayLength, columnDropZoneId, tasksArray, name, columnI
                                 + workingArea.scrollTop
                         } else {
 
-                            console.log('if else')
-                            console.log(nextScrollTop)
+                            // console.log('if else')
+                            // console.log(nextScrollTop)
                             endY =
                                 -(document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().y
                                     - document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().y)
@@ -305,12 +305,12 @@ const Column = ({ columnArrayLength, columnDropZoneId, tasksArray, name, columnI
                         }
 
                     } else if (nextScrollTop < workingArea.getBoundingClientRect().top) {
-                        console.log('else if')
+                        // console.log('else if')
                         endY = -(document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().y
                             - document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().y)
                             + workingArea.scrollTop
                     } else {
-                        console.log('else')
+                        // console.log('else')
 
                         endY = -(document.getElementById(`task-id-${taskToMove.id}`).getBoundingClientRect().y
                             - document.getElementById(`task-id-${tasksArray[i].id}`).getBoundingClientRect().y)
