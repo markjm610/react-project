@@ -72,7 +72,6 @@ const SwitchMode = () => {
 
     return (
         <div className='switch-mode'>
-            {/* <button onClick={showLayer} style={{ backgroundColor: integrationMode && 'blue' }}>Switch Mode</button> */}
             <div
                 onClick={showLayer}
                 className={integrationMode ? 'selected-project-navlink' : 'project-navlink'}

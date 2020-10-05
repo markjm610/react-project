@@ -4,9 +4,12 @@ import { act } from 'react-dom/test-utils'
 import Invite from './Invite';
 import Context from './Context'
 import { Layer } from 'grommet';
+import { jssPreset } from '@material-ui/core';
+import { Escalator } from 'grommet-icons';
 
 beforeEach(() => {
     fetch.resetMocks();
+    jest.spyOn(window, 'fetch')
 });
 
 
@@ -59,30 +62,37 @@ it('opens the layer on click and closes the layer on click outside', () => {
 // it('displays different invite statuses based on response from submitting an invite', () => {
 //     const context = {
 //         currentProjectId: 1,
-//         alphabetizing: false
+//         alphabetizing: false,
+//         integrationMode: false
 //     }
 //     const wrapper = mount(<Context.Provider value={context}><Invite /></Context.Provider>)
+
 //     const icon = wrapper.find('ShareOption')
+//     // act(() => {
 //     icon.simulate('click')
+//     // })
 //     const popupContainer = wrapper.find('.popup-container')
 //     expect(popupContainer.contains(<div className='popup-text'>Who would you like to invite?</div>)).toBe(true)
-//     expect(popupContainer.contains(<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '150px', marginTop: '10px' }}>User not found</div>)).toBe(false)
+//     // expect(popupContainer.contains(<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '150px', marginTop: '10px' }}>User not found</div>)).toBe(false)
 
 //     // Mock response from fetch
 //     fetch.mockResponseOnce(JSON.stringify({ message: 'already in project' }))
-//     // fetch.mockResponseOnce(JSON.stringify({ message: 'sent' }))
-//     // Simulate form submit
-//     // const form = popupContainer.find('form')
+
 //     const input = popupContainer.find('input')
 
-//     input.instance().value = 'User'
-//     expect(input.instance().value).toBe('User')
-//     // form.simulate('submit')
+//     act(() => {
+//         input.simulate('change', { target: { value: 'User' } })
+//     })
+
 //     const button = popupContainer.find('.popup-button')
-//     button.simulate('submit')
+//     act(() => {
+//         button.simulate('click')
+//     })
+//     expect(fetch).toHaveBeenCalled()
 //     const newWrapper = mount(<Context.Provider value={context}><Invite /></Context.Provider>)
 //     // expect(newWrapper.contains(<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '150px', marginTop: '10px' }}>User not found</div>)).toBe(true)
-//     // expect(input.instance().value).toBe('User')
+//     // const newPopupContainer = newWrapper.find('.popup-container')
+//     expect(newWrapper.contains(<div className='popup-text'>Who would you like to invite?</div>)).toBe(false)
 //     expect(newWrapper.contains(<div>User is already a member of this project.</div>)).toBe(true)
 // })
 
