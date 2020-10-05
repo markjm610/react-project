@@ -38,7 +38,8 @@ router.post('/columns/:columnId/tasks/integration', asyncHandler(async (req, res
             key: key,
             token: token,
             idList: columnId,
-            name: description
+            name: description,
+            pos: 'bottom'
         }),
         headers: {
             "Content-Type": 'application/json',
@@ -67,6 +68,15 @@ router.delete('/tasks/:taskId', asyncHandler(async (req, res) => {
     res.json({ message: 'deleted' })
 
 }))
+
+// router.delete('/tasks/:taskId/integration', asyncHandler(async (req, res) => {
+
+//     const taskId = parseInt(req.params.taskId, 10);
+
+//     const res = await fetch(`https://api.trello.com/1/cards/${taskId}`, {
+//         method: 'DELETE'
+//     })
+// }))
 
 router.put('/tasks', asyncHandler(async (req, res) => {
     try {

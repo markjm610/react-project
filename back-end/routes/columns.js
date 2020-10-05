@@ -46,6 +46,28 @@ router.delete('/columns/:columnId', asyncHandler(async (req, res) => {
 
 }))
 
+router.delete('/columns/:columnId/integration', asyncHandler(async (req, res) => {
+    try {
+        const columnId = req.params.columnId
+
+        await fetch(`https://api.trello.com/1/lists/${columnId}/closed?key=${key}&token=${token}`, {
+            method: 'PUT',
+            body: JSON.stringify({
+                value: true
+            }),
+            headers: {
+                "Content-Type": 'application/json',
+            }
+        })
+
+        res.json({ message: 'deleted' })
+    } catch (e) {
+        console.error(e)
+    }
+
+}))
+
+
 router.put('/columns', asyncHandler(async (req, res) => {
     try {
         const { sendArr } = req.body;
