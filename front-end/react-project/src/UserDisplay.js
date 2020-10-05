@@ -103,7 +103,10 @@ const UserDisplay = () => {
                                     >
                                         <FormCheckmark />
                                     </div>
-                                    <div className='reject-invite' onClick={() => rejectInvite(invite)}>
+                                    <div
+                                        className='reject-invite'
+                                        onClick={() => rejectInvite(invite)}
+                                    >
                                         <FormClose />
                                     </div>
                                 </div>

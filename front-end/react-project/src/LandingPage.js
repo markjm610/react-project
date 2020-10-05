@@ -8,7 +8,6 @@ import Context from './Context'
 import TitleLetter from './TitleLetter'
 import Title from './Title';
 import Links from './Links';
-import Test from './Test';
 
 const LandingPage = () => {
 

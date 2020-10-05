@@ -92,8 +92,8 @@ it('opens the layer on click and closes the layer on click outside', () => {
 //     const newWrapper = mount(<Context.Provider value={context}><Invite /></Context.Provider>)
 //     // expect(newWrapper.contains(<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '150px', marginTop: '10px' }}>User not found</div>)).toBe(true)
 //     // const newPopupContainer = newWrapper.find('.popup-container')
-//     expect(newWrapper.contains(<div className='popup-text'>Who would you like to invite?</div>)).toBe(false)
-//     expect(newWrapper.contains(<div>User is already a member of this project.</div>)).toBe(true)
+//     expect(wrapper.contains(<div className='popup-text'>Who would you like to invite?</div>)).toBe(false)
+//     expect(wrapper.contains(<div>User is already a member of this project.</div>)).toBe(true)
 // })
 
 // it('clears input value and invite status on click outside', () => {
