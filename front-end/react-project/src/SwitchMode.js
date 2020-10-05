@@ -72,7 +72,16 @@ const SwitchMode = () => {
 
     return (
         <div className='switch-mode'>
-            <button onClick={showLayer} style={{ backgroundColor: integrationMode && 'blue' }}>Switch Mode</button>
+            {/* <button onClick={showLayer} style={{ backgroundColor: integrationMode && 'blue' }}>Switch Mode</button> */}
+            <div
+                onClick={showLayer}
+                className={integrationMode ? 'selected-project-navlink' : 'project-navlink'}
+                style={
+                    {
+                        textDecoration: 'none'
+                    }}>
+                Trello Integration Project
+            </div>
             { show &&
                 <Layer
                     onEsc={() => setShow(false)}
@@ -82,14 +91,17 @@ const SwitchMode = () => {
                     }}>
                     {!integrationMode &&
                         <div className='popup-container'>
-                            <div className='popup-text'>Switch to integration mode?</div>
-                            <div className={clickedButton ? 'popup-button-clicked' : 'popup-button'} onClick={switchModeClick}>Yes</div>
+                            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+                                <div className='popup-text'>This will open a project that is integrated with the Trello Developer API. Changes you make will be reflected on <a href="https://trello.com/b/VlAlibRo/taskflow" target="_blank" rel="noopener noreferrer">this board</a>.</div>
+
+                                <div className={clickedButton ? 'popup-button-clicked' : 'popup-button'} onClick={switchModeClick}>Switch</div>
+                            </div>
                         </div>}
-                    {integrationMode &&
+                    {/* {integrationMode &&
                         <div className='popup-container'>
-                            <div className='popup-text'>Switch to normal mode?</div>
+                            <div className='popup-text'>Switch back to normal mode?</div>
                             <div className={clickedButton ? 'popup-button-clicked' : 'popup-button'} onClick={switchModeClick}>Yes</div>
-                        </div>}
+                        </div>} */}
 
                 </Layer>}
         </div>

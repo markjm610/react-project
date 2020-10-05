@@ -109,7 +109,8 @@ router.post('/columns/integration', asyncHandler(async (req, res) => {
         res.json({
             newColumn: {
                 name: apiName,
-                id: apiId
+                id: apiId,
+                projectId: boardId
             }
         })
     } catch (e) {
