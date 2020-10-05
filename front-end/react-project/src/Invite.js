@@ -6,7 +6,7 @@ import Context from './Context';
 import Tooltip from '@material-ui/core/Tooltip';
 
 const Invite = () => {
-    const { currentProjectId, alphabetizing } = useContext(Context);
+    const { currentProjectId, alphabetizing, integrationMode } = useContext(Context);
     const [show, setShow] = useState(false);
     const [value, setValue] = useState('');
     const [showConfirm, setShowConfirm] = useState()
@@ -62,7 +62,7 @@ const Invite = () => {
 
     return (
         <>
-            {currentProjectId &&
+            {(currentProjectId && !integrationMode) &&
 
                 <div className='invite'>
                     <Tooltip title='Invite' arrow placement='top'>

@@ -6,7 +6,7 @@ import { Layer } from 'grommet';
 
 const DeleteColumn = ({ columnId }) => {
 
-    const { displayedColumns, setDisplayedColumns, alphabetizing } = useContext(Context);
+    const { displayedColumns, setDisplayedColumns, alphabetizing, integrationMode } = useContext(Context);
     const [columnEmpty, setColumnEmpty] = useState(true)
     const deleteColumnClick = async () => {
         if (alphabetizing) {
@@ -32,9 +32,16 @@ const DeleteColumn = ({ columnId }) => {
 
             setDisplayedColumns(columnsCopy)
 
-            await fetch(`${apiBaseUrl}/columns/${columnId}`, {
-                method: 'DELETE'
-            })
+            if (!integrationMode) {
+                await fetch(`${apiBaseUrl}/columns/${columnId}`, {
+                    method: 'DELETE'
+                })
+            } else {
+                await fetch(`${apiBaseUrl}/columns/${columnId}/integration`, {
+                    method: 'DELETE'
+                })
+            }
+
         } else {
             setColumnEmpty(false)
         }

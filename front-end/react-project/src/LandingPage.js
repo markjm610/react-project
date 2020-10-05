@@ -91,7 +91,6 @@ const LandingPage = () => {
     return (
 
         <div className='landing-page'>
-            <Test />
             <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <Title />
                 <DragDropContext onDragStart={onDragStart} onDragEnd={onDragEnd} onDragUpdate={onDragUpdate}>

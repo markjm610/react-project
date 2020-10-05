@@ -21,7 +21,7 @@ import { Layer } from 'grommet';
 import ProjectNavMain from './ProjectNavMain'
 import AddInstructionalProject from './AddInstructionalProject';
 import ControlSpeed from './ControlSpeed';
-
+import SwitchMode from './SwitchMode'
 
 
 const Home = ({ history }) => {
@@ -49,7 +49,8 @@ const Home = ({ history }) => {
         updateColumns,
         setUpdateColumns,
         setDraggingTaskId,
-        taskRefs
+        taskRefs,
+        integrationMode
     } = useContext(Context);
 
     const [showInstructions, setShowInstructions] = useState(true)
@@ -85,8 +86,6 @@ const Home = ({ history }) => {
                 })
                 setSelectedProject(projectObj)
             }
-
-
 
             const listProjectArr = projects.slice(5)
             setMainProjectArr(mainProjectArr)
@@ -154,7 +153,8 @@ const Home = ({ history }) => {
         }
 
         if (type === 'task') {
-
+            // console.log(destination)
+            // console.log(source)
             let copy = [...displayedColumns];
 
             if (destination.droppableId === source.droppableId) {
@@ -210,9 +210,13 @@ const Home = ({ history }) => {
 
 
                 // Reassign columnId of dragged task, now in its new spot
-                newColumn[destination.index].columnId = parseInt(destination.droppableId)
+                if (!integrationMode) {
+                    newColumn[destination.index].columnId = parseInt(destination.droppableId)
+                } else {
+                    newColumn[destination.index].columnId = destination.droppableId
+                }
 
-                // console.log(newColumn[destination.index].columnId)
+
 
                 copy.forEach(column => {
                     if (`${column.id}` === destination.droppableId) {
@@ -238,7 +242,7 @@ const Home = ({ history }) => {
 
             let sendArr = [];
 
-
+            // console.log(copy)
             copy.forEach(column => {
                 if (`${column.id}` === destination.droppableId) {
                     // console.log('column.id === columnId')
@@ -253,13 +257,27 @@ const Home = ({ history }) => {
             // console.log(sendArr)
 
             try {
-                const res = await fetch(`${apiBaseUrl}/tasks`, {
-                    method: 'PUT',
-                    body: JSON.stringify({ sendArr }),
-                    headers: {
-                        "Content-Type": 'application/json',
-                    }
-                })
+                let res;
+
+                if (!integrationMode) {
+                    res = await fetch(`${apiBaseUrl}/tasks`, {
+                        method: 'PUT',
+                        body: JSON.stringify({ sendArr }),
+                        headers: {
+                            "Content-Type": 'application/json',
+                        }
+                    })
+                } else {
+
+                    res = await fetch(`${apiBaseUrl}/tasks/integration`, {
+                        method: 'PUT',
+                        body: JSON.stringify({ sendArr }),
+                        headers: {
+                            "Content-Type": 'application/json',
+                        }
+                    })
+                }
+
                 // console.log(await res.json())
             } catch (e) {
                 console.error(e)
@@ -267,9 +285,6 @@ const Home = ({ history }) => {
 
         } else if (type === 'column') {
 
-            // const drag = currentlyDraggingColumn;
-
-            // let startingColumn;
 
             let copy = [...displayedColumns];
 
@@ -287,13 +302,24 @@ const Home = ({ history }) => {
 
 
             try {
-                await fetch(`${apiBaseUrl}/columns`, {
-                    method: 'PUT',
-                    body: JSON.stringify({ sendArr: copy }),
-                    headers: {
-                        "Content-Type": 'application/json',
-                    }
-                })
+                if (!integrationMode) {
+                    await fetch(`${apiBaseUrl}/columns`, {
+                        method: 'PUT',
+                        body: JSON.stringify({ sendArr: copy }),
+                        headers: {
+                            "Content-Type": 'application/json',
+                        }
+                    })
+
+                } else {
+                    await fetch(`${apiBaseUrl}/columns/integration`, {
+                        method: 'PUT',
+                        body: JSON.stringify({ sendArr: copy }),
+                        headers: {
+                            "Content-Type": 'application/json',
+                        }
+                    })
+                }
 
             } catch (e) {
                 console.error(e)
@@ -302,9 +328,9 @@ const Home = ({ history }) => {
         }
         else if (type === 'project') {
             console.log(result)
-            if (destination.droppableId === 'project-nav-list' && source.droppableId === 'project-nav-main') {
-                return
-            }
+            // if (destination.droppableId === 'project-nav-list' && source.droppableId === 'project-nav-main') {
+            //     return
+            // }
             let sendArr = []
 
             if (draggableId.startsWith('m') && destination.droppableId === 'project-nav-main') {
@@ -364,6 +390,7 @@ const Home = ({ history }) => {
                 setMainProjectArr(mainCopy)
                 setListProjectArr(listCopy);
             } else if (draggableId.startsWith('m') && destination.droppableId === 'project-nav-list') {
+
                 let mainCopy = [...mainProjectArr];
                 let listCopy = [...listProjectArr]
                 const moved = mainCopy.splice(source.index, 1);
@@ -384,11 +411,13 @@ const Home = ({ history }) => {
                 sendArr.push(...listCopy)
                 setMainProjectArr(mainCopy)
                 setListProjectArr(listCopy);
+                console.log(sendArr)
             }
 
 
 
             try {
+                // console.log(sendArr)
                 await fetch(`${apiBaseUrl}/projects`, {
                     method: 'PUT',
                     body: JSON.stringify({ sendArr }),
@@ -458,6 +487,7 @@ const Home = ({ history }) => {
                 <div className='sidebar-left'>
                     <AddInstructionalProject />
                     <UserDisplay />
+                    <SwitchMode />
                     <div className='project-stuff'>
                         <AddProject />
                         <ProjectNavBar />
@@ -485,6 +515,7 @@ const Home = ({ history }) => {
 
                 <div className='sidebar-right'>
                     <ControlSpeed />
+
                     <AddColumn />
                     <Invite />
                     <ProjectMembers />

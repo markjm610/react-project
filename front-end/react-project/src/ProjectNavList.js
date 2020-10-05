@@ -10,17 +10,37 @@ import { Draggable } from 'react-beautiful-dnd';
 
 const ProjectNavList = ({ id, name, position, dropZone }) => {
 
-    const { alphabetizing, setAlphabetizing, setUpdateColumns, selectedProject, setSelectedProject, topOfList, listProjectArr, setListProjectArr, setProjectMembers, setDisplayedColumns, setCurrentProjectId, currentlyDraggingProject, setCurrentlyDraggingProject } = useContext(Context);
+    const {
+        integrationMode,
+        setIntegrationMode,
+        alphabetizing,
+        setAlphabetizing,
+        setUpdateColumns,
+        selectedProject,
+        setSelectedProject,
+        topOfList,
+        listProjectArr,
+        setListProjectArr,
+        setProjectMembers,
+        setDisplayedColumns,
+        setCurrentProjectId,
+        currentlyDraggingProject,
+        setCurrentlyDraggingProject
+    } = useContext(Context);
 
     const handleProjectNavLinkClick = async () => {
         if (alphabetizing) {
             setAlphabetizing(false)
+        }
+        if (integrationMode) {
+            setIntegrationMode(false)
         }
         const usersRes = await fetch(`${apiBaseUrl}/projects/${id}/users`);
         const parsedUsersRes = await usersRes.json();
 
         const res = await fetch(`${apiBaseUrl}/projects/${id}`);
         const parsedRes = await res.json();
+        // console.log(parsedRes)
         const columns = parsedRes.projectInfo.Columns;
 
         let selectedProjectCopy = { ...selectedProject }

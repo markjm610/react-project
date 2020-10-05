@@ -1,16 +1,15 @@
 const express = require('express');
 const { check } = require("express-validator");
 const { requireAuth } = require('../auth');
-
+const fetch = require('node-fetch');
 const { Column, Task } = require('../db/models');
 const { asyncHandler, handleValidationErrors } = require('../utils');
-
+const { key, token, boardId } = require('../tokens')
 
 
 const router = express.Router();
 
 // router.use(requireAuth);
-
 
 router.get('/projects/:projectId/columns', asyncHandler(async (req, res) => {
     const projectId = parseInt(req.params.projectId, 10);
@@ -47,6 +46,28 @@ router.delete('/columns/:columnId', asyncHandler(async (req, res) => {
 
 }))
 
+router.delete('/columns/:columnId/integration', asyncHandler(async (req, res) => {
+    try {
+        const columnId = req.params.columnId
+
+        await fetch(`https://api.trello.com/1/lists/${columnId}/closed?key=${key}&token=${token}`, {
+            method: 'PUT',
+            body: JSON.stringify({
+                value: true
+            }),
+            headers: {
+                "Content-Type": 'application/json',
+            }
+        })
+
+        res.json({ message: 'deleted' })
+    } catch (e) {
+        console.error(e)
+    }
+
+}))
+
+
 router.put('/columns', asyncHandler(async (req, res) => {
     try {
         const { sendArr } = req.body;
@@ -61,5 +82,42 @@ router.put('/columns', asyncHandler(async (req, res) => {
     }
 }))
 
+router.put('/columns/integration', asyncHandler(async (req, res) => {
+    try {
+        const { sendArr } = req.body;
+        for (let i = sendArr.length - 1; i >= 0; i--) {
+            await fetch(`https://api.trello.com/1/lists/${sendArr[i].id}?key=${key}&token=${token}&pos=top`, {
+                method: 'PUT'
+            })
+
+        }
+        res.json({ message: 'success' })
+    } catch (e) {
+        console.error(e)
+    }
+}))
+
+router.post('/columns/integration', asyncHandler(async (req, res) => {
+    const { name } = req.body
+    try {
+        const apiRes = await fetch(`https://api.trello.com/1/lists?key=${key}&token=${token}&name=${name}&idBoard=${boardId}&pos=bottom`, {
+            method: 'POST'
+        })
+
+        const { name: apiName, id: apiId } = await apiRes.json()
+
+        res.json({
+            newColumn: {
+                name: apiName,
+                id: apiId,
+                projectId: boardId
+            }
+        })
+    } catch (e) {
+        console.error(e)
+    }
+
+
+}))
 
 module.exports = router;
