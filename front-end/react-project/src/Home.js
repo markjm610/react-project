@@ -327,10 +327,10 @@ const Home = ({ history }) => {
 
         }
         else if (type === 'project') {
-            // console.log(result)
-            if (destination.droppableId === 'project-nav-list' && source.droppableId === 'project-nav-main') {
-                return
-            }
+            console.log(result)
+            // if (destination.droppableId === 'project-nav-list' && source.droppableId === 'project-nav-main') {
+            //     return
+            // }
             let sendArr = []
 
             if (draggableId.startsWith('m') && destination.droppableId === 'project-nav-main') {
@@ -390,6 +390,7 @@ const Home = ({ history }) => {
                 setMainProjectArr(mainCopy)
                 setListProjectArr(listCopy);
             } else if (draggableId.startsWith('m') && destination.droppableId === 'project-nav-list') {
+
                 let mainCopy = [...mainProjectArr];
                 let listCopy = [...listProjectArr]
                 const moved = mainCopy.splice(source.index, 1);
@@ -410,11 +411,13 @@ const Home = ({ history }) => {
                 sendArr.push(...listCopy)
                 setMainProjectArr(mainCopy)
                 setListProjectArr(listCopy);
+                console.log(sendArr)
             }
 
 
 
             try {
+                // console.log(sendArr)
                 await fetch(`${apiBaseUrl}/projects`, {
                     method: 'PUT',
                     body: JSON.stringify({ sendArr }),
