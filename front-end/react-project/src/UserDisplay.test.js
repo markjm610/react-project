@@ -109,6 +109,11 @@ it('displays a popup message when the notification icon is clicked', () => {
 //                 id: 20
 //             }
 //         }],
+//         // setInvites: (inviteArr) => {
+//         //     return {
+//         //         invites: inviteArr
+//         //     }
+//         // },
 //         setInvites: () => { },
 //         currentUserId: 1,
 //         mainProjectArr: [],
