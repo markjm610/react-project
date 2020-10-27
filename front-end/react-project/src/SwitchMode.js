@@ -81,21 +81,21 @@ const SwitchMode = () => {
                     }}>
                 Trello Integration Project
             </div>
-            { show &&
+            {(show && !integrationMode) &&
                 <Layer
                     onEsc={() => setShow(false)}
                     onClickOutside={() => {
                         setClickedButton(false)
                         setShow(false)
                     }}>
-                    {!integrationMode &&
-                        <div className='popup-container'>
-                            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-                                <div className='popup-text'>This will open a project that is integrated with the Trello Developer API. Changes you make will be reflected on <a href="https://trello.com/b/VlAlibRo/taskflow" target="_blank" rel="noopener noreferrer">this board</a>.</div>
 
-                                <div className={clickedButton ? 'popup-button-clicked' : 'popup-button'} onClick={switchModeClick}>Switch</div>
-                            </div>
-                        </div>}
+                    <div className='popup-container'>
+                        <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+                            <div className='popup-text'>This will open a project that is integrated with the Trello Developer API. Changes you make will be reflected on <a href="https://trello.com/b/kxGtyCNW/taskflow" target="_blank" rel="noopener noreferrer">this board</a>.</div>
+
+                            <div className={clickedButton ? 'popup-button-clicked' : 'popup-button'} onClick={switchModeClick}>Switch</div>
+                        </div>
+                    </div>
                     {/* {integrationMode &&
                         <div className='popup-container'>
                             <div className='popup-text'>Switch back to normal mode?</div>

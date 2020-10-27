@@ -42,7 +42,7 @@ it('displays a message instead of a user list when in integration mode', () => {
     )).toBe(false)
     expect(wrapper.contains(
         <div className='project-members'>
-            <div className='integration-description'>Changes to this project are reflected on <a href="https://trello.com/b/VlAlibRo/taskflow" target="_blank" rel="noopener noreferrer">this board</a>.</div>
+            <div className='integration-description'>Changes to this project are reflected on <a href="https://trello.com/b/kxGtyCNW/taskflow" target="_blank" rel="noopener noreferrer">this board</a>.</div>
             <div className='integration-description'>Add things, move things around, and check the Trello board to see your changes.</div>
         </div>
     )).toBe(true)
