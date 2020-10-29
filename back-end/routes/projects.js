@@ -438,4 +438,30 @@ router.get('/users/:userId/projects/instructions', asyncHandler(async (req, res,
 }))
 
 
+router.post('/projects/publish', asyncHandler(async (req, res, next) => {
+    try {
+        const data = {
+            name: 'NAME'
+        }
+
+        const testRes = await fetch(`https://api.trello.com/1/boards/?key=${key}&token=${token}`, {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                "Content-Type": 'application/json',
+            }
+        })
+        console.log(testRes)
+        const parsedTestRes = await testRes.json()
+
+        res.json(parsedTestRes)
+    } catch (e) {
+        console.error(e)
+    }
+
+
+
+}))
+
+
 module.exports = router;
