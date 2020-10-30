@@ -440,8 +440,11 @@ router.get('/users/:userId/projects/instructions', asyncHandler(async (req, res,
 
 router.post('/projects/publish', asyncHandler(async (req, res, next) => {
     try {
+        // const { name } = req.body
+
         const data = {
-            name: 'NAME'
+            defaultLists: false,
+            name: 'test'
         }
 
         const testRes = await fetch(`https://api.trello.com/1/boards/?key=${key}&token=${token}`, {
@@ -451,10 +454,25 @@ router.post('/projects/publish', asyncHandler(async (req, res, next) => {
                 "Content-Type": 'application/json',
             }
         })
-        console.log(testRes)
-        const parsedTestRes = await testRes.json()
 
-        res.json(parsedTestRes)
+        const { id: newBoardId } = await testRes.json()
+
+
+        columns.forEach(async (column) => {
+            const columnRes = await fetch(`https://api.trello.com/1/lists?key=${key}&token=${token}&name=${name}&idBoard=${newBoardId}&pos=bottom`, {
+                method: 'POST',
+                body: JSON.stringify({
+                    // column name
+                }),
+                headers: {
+                    "Content-Type": 'application/json',
+                }
+            })
+        })
+
+
+
+        res.json(projectId)
     } catch (e) {
         console.error(e)
     }

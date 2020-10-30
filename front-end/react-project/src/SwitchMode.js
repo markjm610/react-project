@@ -79,7 +79,7 @@ const SwitchMode = () => {
                     {
                         textDecoration: 'none'
                     }}>
-                Trello Integration Project
+                Trello Integration Demo
             </div>
             {(show && !integrationMode) &&
                 <Layer
