@@ -462,7 +462,7 @@ router.post('/projects/publish', asyncHandler(async (req, res, next) => {
             const columnRes = await fetch(`https://api.trello.com/1/lists?key=${key}&token=${token}&name=${name}&idBoard=${newBoardId}&pos=bottom`, {
                 method: 'POST',
                 body: JSON.stringify({
-                    // column name
+
                 }),
                 headers: {
                     "Content-Type": 'application/json',
